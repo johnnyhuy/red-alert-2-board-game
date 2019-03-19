@@ -1,4 +1,4 @@
-package models.Player;
+package models.player;
 
 public class Player {
 }
