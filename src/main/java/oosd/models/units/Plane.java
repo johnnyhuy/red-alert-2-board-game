@@ -1,4 +1,4 @@
-package models.units;
+package oosd.models.units;
 
 public class Plane extends Unit {
 }

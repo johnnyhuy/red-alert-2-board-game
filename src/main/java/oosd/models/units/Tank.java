@@ -1,4 +1,4 @@
-package models.units;
+package oosd.models.units;
 
 public class Tank extends Unit {
 }
