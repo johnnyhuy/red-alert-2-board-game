@@ -2,10 +2,10 @@ package oosd.views;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oosd.models.board.Board;
+import oosd.models.board.Hexagon;
 
 public class BoardView extends View {
     private Board board;
@@ -18,6 +18,8 @@ public class BoardView extends View {
 
     @Override
     public void render() {
+        Hexagon[][] hexagons = this.board.getHexagons();
+
         // Size of each side
         final double size = 50;
 
@@ -27,52 +29,58 @@ public class BoardView extends View {
         // Small gap between each shape (the left/right triangle bit)
         double gap = size * 1.5;
 
-        double height = (this.board.getRows() + 1) * (tHeight * size);
-        double width = (this.board.getColumns() + 1) * (size + (size / 2));
-
         // Increments used to place the next polygon
         double halfIncrement = size * (tHeight / 2.0);
         double fullIncrement = size * tHeight;
 
-        int count = 0;
+        int xOffset = 100;
+        int yOffset = 100;
 
-        for (double y = 100; y < height; y += fullIncrement)
+        int hexagonCount = 0;
+        double x = 0;
+        double y = 0;
+
+        for (int yIndex = 0; yIndex < this.board.getRows(); yIndex++)
         {
-            for (double x = 100; x < width; x += gap)
+            for (int xIndex = 0; xIndex < this.board.getColumns(); xIndex++)
             {
-                Polygon tile = new Polygon();
-                tile.getPoints().addAll(
-                    x, y,
-                    x + size, y,
-                    x + gap, y + halfIncrement,
-                    x + size, y + fullIncrement,
-                    x, y + fullIncrement,
-                    x - (size / 2.0), y + halfIncrement
+                Hexagon hexagon = hexagons[xIndex][yIndex];
+                hexagon.getPoints().addAll(
+                xOffset + x, yOffset + y,
+                    xOffset + x + size, yOffset + y,
+                    xOffset + x + gap, yOffset + y + halfIncrement,
+                    xOffset + x + size, yOffset + y + fullIncrement,
+                    xOffset + x, yOffset + y + fullIncrement,
+                    xOffset + x - (size / 2.0), yOffset + y + halfIncrement
                 );
 
                 // TODO: DEBUG
                 Text text = new Text();
-                text.setX(x);
-                text.setY(y);
+                text.setX(x + xOffset);
+                text.setY(y + yOffset);
                 text.setFont(new Font(10));
-                text.setText(Math.floor(x) + ", " + Math.floor(y));
+                text.setText(xIndex + ", " + yIndex);
                 // DEBUG
 
-                tile.setFill(Paint.valueOf("#ffffff"));
-                tile.setStrokeWidth(2);
-                tile.setStroke(Paint.valueOf("#000000") );
-                this.tilePane.getChildren().add(tile);
+                hexagon.setFill(Paint.valueOf("#ffffff"));
+                hexagon.setStrokeWidth(2);
+                hexagon.setStroke(Paint.valueOf("#000000") );
+                this.tilePane.getChildren().add(hexagon);
                 this.tilePane.getChildren().add(text);
 
                 // Every even element set the y value down
-                if (count % 2 == 0) {
+                if (hexagonCount % 2 == 0) {
                     y = y + halfIncrement;
                 } else {
                     y = y - halfIncrement;
                 }
 
-                count++;
+                hexagonCount++;
+
+                x = xIndex == this.board.getColumns() - 1 ? 0 : x + gap;
             }
+
+            y = yIndex == this.board.getRows() - 1 ? 0 : y + fullIncrement;
         }
     }
 }
