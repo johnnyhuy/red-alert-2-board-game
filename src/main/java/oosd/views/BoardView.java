@@ -27,20 +27,21 @@ public class BoardView extends View {
 
         double xIncrement = size * (tHeight / 2.0);
         double yIncrement = size * tHeight;
-        double xOrigin, yOrigin, yOffset;
+        double xOrigin, yOrigin;
+        int count = 0;
 
         for (yOrigin = 100; yOrigin < height; yOrigin += yIncrement)
         {
-            for (xOrigin = 100, yOffset = yOrigin; xOrigin < width; xOrigin += distanceBetween)
+            for (xOrigin = 100; xOrigin < width; xOrigin += distanceBetween)
             {
                 Polygon tile = new Polygon();
                 tile.getPoints().addAll(
-                    xOrigin, yOffset,
-                    xOrigin + size, yOffset,
-                    xOrigin + distanceBetween, yOffset + xIncrement,
-                    xOrigin + size, yOffset + yIncrement,
-                    xOrigin, yOffset + yIncrement,
-                    xOrigin - (size / 2.0), yOffset + xIncrement
+                    xOrigin, yOrigin,
+                    xOrigin + size, yOrigin,
+                    xOrigin + distanceBetween, yOrigin + xIncrement,
+                    xOrigin + size, yOrigin + yIncrement,
+                    xOrigin, yOrigin + yIncrement,
+                    xOrigin - (size / 2.0), yOrigin + xIncrement
                 );
 
                 // TODO: DEBUG
@@ -57,7 +58,14 @@ public class BoardView extends View {
                 this.tilePane.getChildren().add(tile);
                 this.tilePane.getChildren().add(text);
 
-                yOffset = yOffset == yOrigin ? yOffset + xIncrement : yOrigin;
+                // Every even element set the y value down
+                if (count % 2 == 0) {
+                    yOrigin += xIncrement;
+                } else {
+                    yOrigin -= xIncrement;
+                }
+
+                count++;
             }
         }
     }
