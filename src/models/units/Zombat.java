@@ -8,6 +8,10 @@ public class Zombat extends Unit {
 		super(location, player);
 	}
 
+	Zombat() {
+		super();
+	}
+
 	@Override
 	public void setWinnables() {
 		// no winnables

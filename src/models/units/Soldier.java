@@ -8,6 +8,10 @@ public class Soldier extends Unit {
 		super(location, player);
 	}
 
+	Soldier() {
+		super();
+	}
+
 	@Override
 	public void setWinnables() {
 		super.getWinnables().add(new Zombat());

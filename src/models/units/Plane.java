@@ -8,6 +8,10 @@ public class Plane extends Unit {
 		super(location, player);
 	}
 
+	Plane() {
+		super();
+	}
+
 	@Override
 	public void setWinnables() {
 		super.getWinnables().add(new Zombat());

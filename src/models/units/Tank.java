@@ -8,6 +8,10 @@ public class Tank extends Unit {
 		super(location, player);
 	}
 
+	Tank() {
+		super();
+	}
+
 	@Override
 	public void setWinnables() {
 		super.getWinnables().add(new Zombat());
