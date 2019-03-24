@@ -8,6 +8,10 @@ public class ScoutZombie extends Unit {
 		super(location, player);
 	}
 
+	ScoutZombie() {
+		super();
+	}
+
 	@Override
 	public void setWinnables() {
 		super.getWinnables().add(new Zombat());
