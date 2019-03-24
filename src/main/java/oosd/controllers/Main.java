@@ -7,17 +7,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private final String windowTitle = "OOSD Game Board";
-    private final String boardFileName = "board.fxml";
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource(this.boardFileName));
+        final String boardFileName = "board.fxml";
+        final String windowTitle = "OOSD Game Board";
 
-        Scene content = new Scene(root, 800, 800);
+        Parent root = FXMLLoader.load(getClass().getResource(boardFileName));
+
+        Scene content = new Scene(root, 625, 775);
         primaryStage.setScene(content);
 
-        primaryStage.setTitle(this.windowTitle);
+        primaryStage.setTitle(windowTitle);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }
