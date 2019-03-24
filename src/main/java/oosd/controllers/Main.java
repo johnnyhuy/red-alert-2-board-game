@@ -13,43 +13,44 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 //        Parent root = FXMLLoader.load(getClass().getResource("board.fxml"));
-//        primaryStage.setTitle("OOSD Board");
-//        primaryStage.setScene(new Scene(root, 300, 275));
-//        primaryStage.show();
+        primaryStage.setTitle("OOSD Board");
 
         AnchorPane tileMap = new AnchorPane();
-        Scene content = new Scene(tileMap, 700, 700);
+        Scene content = new Scene(tileMap, 800, 800);
         primaryStage.setScene(content);
+        primaryStage.setAlwaysOnTop(true);
 
-        final double scale = 100;
-        double height = 6 * scale;
-        double width = 3 * scale;
-
+        final double size = 50;
         final double tHeight = Math.sqrt(3);
-        final double size = scale / 2;
+        final int boardHeight = 4;
+        final int boardWidth = 7;
+
+        double distanceBetween = size * 1.5;
+        double height = (boardHeight + 1) * (tHeight * size);
+        double width = (boardWidth + 1) * (size + (size / 2));
 
         double xScale = size * (tHeight / 2.0), yScale = size * tHeight;
         double xOrigin, yOrigin, yOffset;
-        double distanceBetween = size * (3.0 / 2.0);
 
-        for (yOrigin = scale; yOrigin < height; yOrigin += yScale)
+        for (yOrigin = 100; yOrigin < height; yOrigin += yScale)
         {
-            for (xOrigin = scale, yOffset = yOrigin; xOrigin < width; xOrigin += distanceBetween)
+            for (xOrigin = 100, yOffset = yOrigin; xOrigin < width; xOrigin += distanceBetween)
             {
                 Polygon tile = new Polygon();
                 tile.getPoints().addAll(
                     xOrigin, yOffset,
                     xOrigin + size, yOffset,
-                    xOrigin + distanceBetween, yOffset + xScale,
-                    xOrigin + size, yOffset + yScale,
-                    xOrigin, yOffset + yScale,
-                    xOrigin - (size / 2.0), yOffset + xScale
+                    xOrigin + distanceBetween, yOffset + xScale
+//                    xOrigin + size, yOffset + yScale,
+//                    xOrigin, yOffset + yScale,
+//                    xOrigin - (size / 2.0), yOffset + xScale
                 );
 
                 Text text = new Text();
-                text.setFont(new Font(20));
-                text.setText("test");
-
+                text.setX(xOrigin);
+                text.setY(yOrigin);
+                text.setFont(new Font(10));
+                text.setText(Math.floor(xOrigin) + ", " + Math.floor(yOrigin));
                 tile.setFill(Paint.valueOf("#ffffff"));
                 tile.setStrokeWidth(2);
                 tile.setStroke(Paint.valueOf("#000000") );
