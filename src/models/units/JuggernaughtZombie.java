@@ -8,6 +8,10 @@ public class JuggernaughtZombie extends Unit{
 		super(location, player);			
 	}
 
+	JuggernaughtZombie() {
+		super();
+	}
+
 	@Override
 	public void setWinnables() {
 		super.getWinnables().add(new Zombat());
