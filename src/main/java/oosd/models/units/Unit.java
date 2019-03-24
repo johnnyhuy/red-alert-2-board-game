@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public abstract class Unit {
     private Hexagon location;
     private Player player;
-    private ArrayList<Unit> winnables = new ArrayList<Unit>();
-    private ArrayList<Player> allies = new ArrayList<Player>();
+    private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
+    private ArrayList<Player> allies = new ArrayList<>();
     private boolean captured;
 
     Unit(Hexagon location, Player player) {
@@ -25,8 +25,8 @@ public abstract class Unit {
         this.captured = captured;
     }
 
-    public void setLocation(Hexagon location) {
-        this.location = location;
+    public Hexagon getLocation() {
+        return this.location;
     }
 
     public void setAlly(Player ally) {
@@ -37,9 +37,11 @@ public abstract class Unit {
         return allies;
     }
 
-    public ArrayList<Unit> getWinnables() {
+    ArrayList<Class<? extends Unit>> getWinnables() {
         return winnables;
     }
 
-    abstract public void setWinnables();
+    public Player getPlayer() {
+        return this.player;
+    }
 }
