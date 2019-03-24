@@ -5,11 +5,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import oosd.models.board.Board;
 
 public class BoardView extends View {
+    private Board board;
     private AnchorPane tilePane;
 
-    public BoardView(AnchorPane tilePane) {
+    public BoardView(Board board, AnchorPane tilePane) {
+        this.board = board;
         this.tilePane = tilePane;
     }
 
@@ -17,12 +20,10 @@ public class BoardView extends View {
     public void render() {
         final double size = 50;
         final double tHeight = Math.sqrt(3);
-        final int boardHeight = 4;
-        final int boardWidth = 2;
 
         double distanceBetween = size * 1.5;
-        double height = (boardHeight + 1) * (tHeight * size);
-        double width = (boardWidth + 1) * (size + (size / 2));
+        double height = (this.board.getRows() + 1) * (tHeight * size);
+        double width = (this.board.getColumns() + 1) * (size + (size / 2));
 
         double xIncrement = size * (tHeight / 2.0);
         double yIncrement = size * tHeight;

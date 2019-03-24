@@ -16,9 +16,9 @@ public class Board
 
     public void create()
     {
-        for (int rowIndex = 0; rowIndex < this.rows; rowIndex++)
+        for (int rowIndex = 0; rowIndex < this.getRows(); rowIndex++)
         {
-            for (int columnIndex = 0; columnIndex < this.columns; columnIndex++)
+            for (int columnIndex = 0; columnIndex < this.getColumns(); columnIndex++)
             {
                 this.hexagonBoard[rowIndex][columnIndex] = new Hexagon(rowIndex, columnIndex);
             }
@@ -28,5 +28,13 @@ public class Board
     public Hexagon[][] getHexagons()
     {
         return this.hexagonBoard;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
     }
 }
