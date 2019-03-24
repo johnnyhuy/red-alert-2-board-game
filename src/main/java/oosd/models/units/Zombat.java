@@ -4,16 +4,16 @@ import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 
 public class Zombat extends Unit {
-	Zombat(Hexagon location, Player player) {
-		super(location, player);
-	}
+    Zombat(Hexagon location, Player player) {
+        super(location, player);
+    }
 
-	Zombat() {
-		super();
-	}
+    Zombat() {
+        super();
+    }
 
-	@Override
-	public void setWinnables() {
-		// no winnables
-	}
+    @Override
+    public void setWinnables() {
+        // no winnables
+    }
 }
