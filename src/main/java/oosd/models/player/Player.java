@@ -9,26 +9,29 @@ public class Player {
     private Team team;
     private List<Unit> units;
 
-    public Player(String playerName, Team team, List<Unit> units) {
+    public Player(String playerName, Team team) {
         super();
         this.playerName = playerName;
         this.team = team;
-        this.units = units;
     }
 
     public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+        return this.playerName;
     }
 
     public Team getTeam() {
-        return team;
+        return this.team;
     }
 
     public List<Unit> getUnits() {
-        return units;
+        return this.units;
+    }
+
+    public void addUnit(Unit newUnit) throws IllegalArgumentException {
+        for (Unit unit : this.units) {
+//            if (unit.getLocation())
+        }
+
+//        this.units.add(unit);
     }
 }
