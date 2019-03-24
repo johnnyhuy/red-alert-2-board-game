@@ -18,9 +18,6 @@ public abstract class Unit {
         this.captured = false;
     }
 
-    Unit() {
-    }
-
     public void setStatus(boolean captured) {
         this.captured = captured;
     }
