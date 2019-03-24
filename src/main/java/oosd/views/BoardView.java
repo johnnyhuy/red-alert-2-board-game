@@ -18,38 +18,44 @@ public class BoardView extends View {
 
     @Override
     public void render() {
+        // Size of each side
         final double size = 50;
+
+        // Height of the equilateral triangle
         final double tHeight = Math.sqrt(3);
 
-        double distanceBetween = size * 1.5;
+        // Small gap between each shape (the left/right triangle bit)
+        double gap = size * 1.5;
+
         double height = (this.board.getRows() + 1) * (tHeight * size);
         double width = (this.board.getColumns() + 1) * (size + (size / 2));
 
-        double xIncrement = size * (tHeight / 2.0);
-        double yIncrement = size * tHeight;
-        double xOrigin, yOrigin;
+        // Increments used to place the next polygon
+        double halfIncrement = size * (tHeight / 2.0);
+        double fullIncrement = size * tHeight;
+
         int count = 0;
 
-        for (yOrigin = 100; yOrigin < height; yOrigin += yIncrement)
+        for (double y = 100; y < height; y += fullIncrement)
         {
-            for (xOrigin = 100; xOrigin < width; xOrigin += distanceBetween)
+            for (double x = 100; x < width; x += gap)
             {
                 Polygon tile = new Polygon();
                 tile.getPoints().addAll(
-                    xOrigin, yOrigin,
-                    xOrigin + size, yOrigin,
-                    xOrigin + distanceBetween, yOrigin + xIncrement,
-                    xOrigin + size, yOrigin + yIncrement,
-                    xOrigin, yOrigin + yIncrement,
-                    xOrigin - (size / 2.0), yOrigin + xIncrement
+                    x, y,
+                    x + size, y,
+                    x + gap, y + halfIncrement,
+                    x + size, y + fullIncrement,
+                    x, y + fullIncrement,
+                    x - (size / 2.0), y + halfIncrement
                 );
 
                 // TODO: DEBUG
                 Text text = new Text();
-                text.setX(xOrigin);
-                text.setY(yOrigin);
+                text.setX(x);
+                text.setY(y);
                 text.setFont(new Font(10));
-                text.setText(Math.floor(xOrigin) + ", " + Math.floor(yOrigin));
+                text.setText(Math.floor(x) + ", " + Math.floor(y));
                 // DEBUG
 
                 tile.setFill(Paint.valueOf("#ffffff"));
@@ -60,9 +66,9 @@ public class BoardView extends View {
 
                 // Every even element set the y value down
                 if (count % 2 == 0) {
-                    yOrigin += xIncrement;
+                    y = y + halfIncrement;
                 } else {
-                    yOrigin -= xIncrement;
+                    y = y - halfIncrement;
                 }
 
                 count++;
