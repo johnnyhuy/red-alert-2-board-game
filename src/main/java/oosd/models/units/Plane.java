@@ -6,18 +6,10 @@ import oosd.models.player.Player;
 public class Plane extends Unit {
     public Plane(Hexagon location, Player player) {
         super(location, player);
-    }
-
-    Plane() {
-        super();
-    }
-
-    @Override
-    public void setWinnables() {
-        super.getWinnables().add(new Zombat());
-        super.getWinnables().add(new ScoutZombie());
-        super.getWinnables().add(new Soldier());
-        super.getWinnables().add(new JuggernaughtZombie());
-        super.getWinnables().add(new Tank());
+        super.getWinnables().add(Zombat.class);
+        super.getWinnables().add(ScoutZombie.class);
+        super.getWinnables().add(Soldier.class);
+        super.getWinnables().add(JuggernautZombie.class);
+        super.getWinnables().add(Tank.class);
     }
 }
