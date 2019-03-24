@@ -41,25 +41,23 @@ public class BoardView extends View {
         double x = 0;
         double y = 0;
 
-        for (int yIndex = 0; yIndex < this.board.getRows(); yIndex++)
-        {
-            for (int xIndex = 0; xIndex < this.board.getColumns(); xIndex++)
-            {
+        for (int yIndex = 0; yIndex < this.board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < this.board.getColumns(); xIndex++) {
                 Hexagon hexagon = hexagons[xIndex][yIndex];
                 hexagon.setOnMouseClicked(event -> controller.handleHexagonClick(event, hexagon));
 
                 hexagon.getPoints().addAll(
-                xOffset + x, yOffset + y,
-                    xOffset + x + size, yOffset + y,
-                    xOffset + x + gap, yOffset + y + halfIncrement,
-                    xOffset + x + size, yOffset + y + fullIncrement,
-                    xOffset + x, yOffset + y + fullIncrement,
-                    xOffset + x - (size / 2.0), yOffset + y + halfIncrement
+                        xOffset + x, yOffset + y,
+                        xOffset + x + size, yOffset + y,
+                        xOffset + x + gap, yOffset + y + halfIncrement,
+                        xOffset + x + size, yOffset + y + fullIncrement,
+                        xOffset + x, yOffset + y + fullIncrement,
+                        xOffset + x - (size / 2.0), yOffset + y + halfIncrement
                 );
 
                 hexagon.setFill(Paint.valueOf("#ffffff"));
                 hexagon.setStrokeWidth(2);
-                hexagon.setStroke(Paint.valueOf("#000000") );
+                hexagon.setStroke(Paint.valueOf("#000000"));
                 this.tilePane.getChildren().add(hexagon);
 
                 // Every even element set the y value down

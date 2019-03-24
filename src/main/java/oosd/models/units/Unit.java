@@ -12,33 +12,34 @@ public abstract class Unit {
     private ArrayList<Player> allies = new ArrayList<Player>();
     private boolean captured;
 
-    Unit(Hexagon location, Player player){
+    Unit(Hexagon location, Player player) {
         this.location = location;
         this.player = player;
         this.captured = false;
     }
 
-    Unit() {}
+    Unit() {
+    }
 
     public void setStatus(boolean captured) {
-    	this.captured = captured;
+        this.captured = captured;
     }
 
     public void setLocation(Hexagon location) {
-    	this.location = location;
+        this.location = location;
     }
 
     public void setAlly(Player ally) {
-    	this.allies.add(ally);
+        this.allies.add(ally);
     }
 
     public ArrayList<Player> getAllies() {
-    	return allies;
+        return allies;
     }
 
     public ArrayList<Unit> getWinnables() {
-    	return winnables;
-	}
+        return winnables;
+    }
 
     abstract public void setWinnables();
 }

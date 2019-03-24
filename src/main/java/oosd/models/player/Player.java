@@ -9,8 +9,7 @@ public class Player {
     private Team team;
     private List<Unit> units;
 
-    public Player(String playerName, Team team, List<Unit> units)
-    {
+    public Player(String playerName, Team team, List<Unit> units) {
         super();
         this.playerName = playerName;
         this.team = team;
