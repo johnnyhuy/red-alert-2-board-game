@@ -2,16 +2,17 @@ package oosd.views;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
 
 public class BoardView extends View {
-    private Board board;
-    private AnchorPane tilePane;
+    private final GameController controller;
+    private final Board board;
+    private final AnchorPane tilePane;
 
-    public BoardView(Board board, AnchorPane tilePane) {
+    public BoardView(GameController controller, Board board, AnchorPane tilePane) {
+        this.controller = controller;
         this.board = board;
         this.tilePane = tilePane;
     }
@@ -45,6 +46,8 @@ public class BoardView extends View {
             for (int xIndex = 0; xIndex < this.board.getColumns(); xIndex++)
             {
                 Hexagon hexagon = hexagons[xIndex][yIndex];
+                hexagon.setOnMouseClicked(event -> controller.handleHexagonClick(event, hexagon));
+
                 hexagon.getPoints().addAll(
                 xOffset + x, yOffset + y,
                     xOffset + x + size, yOffset + y,
@@ -54,19 +57,10 @@ public class BoardView extends View {
                     xOffset + x - (size / 2.0), yOffset + y + halfIncrement
                 );
 
-                // TODO: DEBUG
-                Text text = new Text();
-                text.setX(x + xOffset);
-                text.setY(y + yOffset);
-                text.setFont(new Font(10));
-                text.setText(xIndex + ", " + yIndex);
-                // DEBUG
-
                 hexagon.setFill(Paint.valueOf("#ffffff"));
                 hexagon.setStrokeWidth(2);
                 hexagon.setStroke(Paint.valueOf("#000000") );
                 this.tilePane.getChildren().add(hexagon);
-                this.tilePane.getChildren().add(text);
 
                 // Every even element set the y value down
                 if (hexagonCount % 2 == 0) {

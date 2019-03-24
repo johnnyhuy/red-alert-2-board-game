@@ -6,7 +6,7 @@ public class Hexagon extends Polygon {
     private int row;
     private int column;
 
-    public Hexagon(int row, int column) {
+    Hexagon(int row, int column) {
         super();
         this.row = row;
         this.column = column;
