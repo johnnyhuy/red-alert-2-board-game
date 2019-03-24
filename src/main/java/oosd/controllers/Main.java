@@ -8,13 +8,15 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         final String boardFileName = "board.fxml";
         final String windowTitle = "OOSD Game Board";
+        final int sceneWidth = 625;
+        final int sceneHeight = 775;
 
         Parent root = FXMLLoader.load(getClass().getResource(boardFileName));
 
-        Scene content = new Scene(root, 625, 775);
+        Scene content = new Scene(root, sceneWidth, sceneHeight);
         primaryStage.setScene(content);
 
         primaryStage.setTitle(windowTitle);
