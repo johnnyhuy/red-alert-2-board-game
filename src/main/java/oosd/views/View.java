@@ -1,4 +1,5 @@
 package oosd.views;
 
-public abstract class View {
+abstract class View {
+    abstract void render();
 }

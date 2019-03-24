@@ -1,5 +1,5 @@
 package oosd.controllers;
 
-public interface Controller {
-    void initialize();
+abstract class Controller {
+    abstract void initialize();
 }
