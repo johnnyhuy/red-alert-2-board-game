@@ -15,10 +15,10 @@ public class GameEngine {
     }
 
     public void initialize() {
-        Hexagon[][] hexgons = this.board.getHexagons();
+        Hexagon[][] hexagons = this.board.getHexagons();
         Player playerOne = new Player("Johnny Dave", Team.RED);
 
-        Unit scoutZombie = new ScoutZombie(hexgons[1][1], playerOne);
+        Unit scoutZombie = new ScoutZombie(hexagons[1][1], playerOne);
     }
 
     public Board getBoard() {

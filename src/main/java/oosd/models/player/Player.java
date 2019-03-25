@@ -2,6 +2,7 @@ package oosd.models.player;
 
 import oosd.models.units.Unit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -10,9 +11,9 @@ public class Player {
     private List<Unit> units;
 
     public Player(String playerName, Team team) {
-        super();
         this.playerName = playerName;
         this.team = team;
+        this.units = new ArrayList<>();
     }
 
     public String getPlayerName() {
@@ -27,11 +28,7 @@ public class Player {
         return this.units;
     }
 
-    public void addUnit(Unit newUnit) throws IllegalArgumentException {
-        for (Unit unit : this.units) {
-//            if (unit.getLocation())
-        }
-
-//        this.units.add(unit);
+    public void addUnit(Unit newUnit) {
+        this.units.add(newUnit);
     }
 }

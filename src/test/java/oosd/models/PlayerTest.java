@@ -58,22 +58,4 @@ class PlayerTest {
         assertEquals(2, player.getUnits().size());
         assertNotNull(player.getUnits());
     }
-
-    @Test
-    void testThrowExceptionOnSameLocationUnits() {
-        // Arrange
-        int row = 1;
-        int column = 1;
-        Hexagon hexagon = new Hexagon(row, column);
-        Player player = new Player("Jane Doe", Team.RED);
-        Unit firstUnit = new Soldier(hexagon, player);
-        Unit secondUnit = new JuggernautZombie(hexagon, player);
-        player.addUnit(firstUnit);
-
-        // Act
-        Executable addAnotherUnit = () -> player.addUnit(secondUnit);
-
-        // Assert
-        assertThrows(IllegalArgumentException.class, addAnotherUnit);
-    }
 }
