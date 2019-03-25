@@ -11,15 +11,15 @@ public class GameController extends Controller {
     private final GameEngine gameEngine;
 
     @FXML
-    private AnchorPane tilePane;
+    private AnchorPane boardPane;
 
-    public GameController() {
-        this.gameEngine = new GameEngine();
+    GameController(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
     }
 
     @Override
     public void initialize() {
-        BoardView boardView = new BoardView(this, this.gameEngine.getBoard(), tilePane);
+        BoardView boardView = new BoardView(this, this.gameEngine.getBoard(), boardPane);
         boardView.render();
     }
 

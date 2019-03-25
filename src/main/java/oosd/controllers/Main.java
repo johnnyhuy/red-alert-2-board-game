@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import oosd.models.GameEngine;
 
 public class Main extends Application {
     @Override
@@ -14,11 +16,16 @@ public class Main extends Application {
         final int sceneWidth = 625;
         final int sceneHeight = 775;
 
-        Parent root = FXMLLoader.load(getClass().getResource(boardFileName));
+        GameEngine gameEngine = new GameEngine();
+        GameController gameController = new GameController(gameEngine);
 
-        Scene content = new Scene(root, sceneWidth, sceneHeight);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(boardFileName));
+        loader.setController(gameController);
+
+        AnchorPane anchorPane = loader.load();
+        Scene content = new Scene(anchorPane, sceneWidth, sceneHeight);
+
         primaryStage.setScene(content);
-
         primaryStage.setTitle(windowTitle);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
