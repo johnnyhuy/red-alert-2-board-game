@@ -8,13 +8,11 @@ import oosd.models.board.Hexagon;
 import oosd.views.BoardView;
 
 public class GameController extends Controller {
-    private final GameEngine gameEngine;
-
     @FXML
     private AnchorPane boardPane;
 
     GameController(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+        super(gameEngine);
     }
 
     @Override
