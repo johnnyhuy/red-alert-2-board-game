@@ -19,4 +19,15 @@ public class Hexagon extends Polygon {
     public int getColumn() {
         return column;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Hexagon)) {
+            return false;
+        }
+
+        Hexagon hexagon = (Hexagon) obj;
+
+        return hexagon.getRow() == this.getRow() && hexagon.getColumn() == this.getColumn();
+    }
 }
