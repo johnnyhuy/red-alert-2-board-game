@@ -2,6 +2,7 @@ package oosd.views;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
@@ -44,9 +45,10 @@ public class BoardView extends View {
         for (int yIndex = 0; yIndex < this.board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < this.board.getColumns(); xIndex++) {
                 Hexagon hexagon = hexagons[xIndex][yIndex];
-                hexagon.setOnMouseClicked(event -> controller.handleHexagonClick(event, hexagon));
 
-                hexagon.getPoints().addAll(
+                Polygon hexagonPolygon = new Polygon();
+                hexagonPolygon.setOnMouseClicked(event -> controller.handleHexagonClick(event, hexagon));
+                hexagonPolygon.getPoints().addAll(
                         xOffset + x, yOffset + y,
                         xOffset + x + size, yOffset + y,
                         xOffset + x + gap, yOffset + y + halfIncrement,
@@ -55,10 +57,10 @@ public class BoardView extends View {
                         xOffset + x - (size / 2.0), yOffset + y + halfIncrement
                 );
 
-                hexagon.setFill(Paint.valueOf("#ffffff"));
-                hexagon.setStrokeWidth(2);
-                hexagon.setStroke(Paint.valueOf("#000000"));
-                this.boardPane.getChildren().add(hexagon);
+                hexagonPolygon.setFill(Paint.valueOf("#ffffff"));
+                hexagonPolygon.setStrokeWidth(2);
+                hexagonPolygon.setStroke(Paint.valueOf("#000000"));
+                this.boardPane.getChildren().add(hexagonPolygon);
 
                 // Every even element set the y value down
                 if (hexagonCount % 2 == 0) {
