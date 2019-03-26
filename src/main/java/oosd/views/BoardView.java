@@ -4,23 +4,25 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import oosd.controllers.GameController;
+import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
 
 public class BoardView extends View {
     private final GameController controller;
-    private final Board board;
+    private final GameEngine gameEngine;
     private final AnchorPane boardPane;
 
-    public BoardView(GameController controller, Board board, AnchorPane boardPane) {
+    public BoardView(GameController controller, GameEngine gameEngine, AnchorPane boardPane) {
         this.controller = controller;
-        this.board = board;
+        this.gameEngine = gameEngine;
         this.boardPane = boardPane;
     }
 
     @Override
     public void render() {
-        Hexagon[][] hexagons = this.board.getHexagons();
+        Board board = this.gameEngine.getBoard();
+        Hexagon[][] hexagons = board.getHexagons();
 
         // Size of each side
         final double size = 50;
@@ -42,8 +44,8 @@ public class BoardView extends View {
         double x = 0;
         double y = 0;
 
-        for (int yIndex = 0; yIndex < this.board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < this.board.getColumns(); xIndex++) {
+        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 Hexagon hexagon = hexagons[xIndex][yIndex];
 
                 Polygon hexagonPolygon = new Polygon();
@@ -71,10 +73,10 @@ public class BoardView extends View {
 
                 hexagonCount++;
 
-                x = xIndex == this.board.getColumns() - 1 ? 0 : x + gap;
+                x = xIndex == board.getColumns() - 1 ? 0 : x + gap;
             }
 
-            y = yIndex == this.board.getRows() - 1 ? 0 : y + fullIncrement;
+            y = yIndex == board.getRows() - 1 ? 0 : y + fullIncrement;
         }
     }
 }
