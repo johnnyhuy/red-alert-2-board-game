@@ -1,10 +1,11 @@
-package oosd.controllers;
+package oosd;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 
 public class Main extends Application {
@@ -18,7 +19,7 @@ public class Main extends Application {
         GameEngine gameEngine = new GameEngine();
         GameController gameController = new GameController(gameEngine);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(boardFileName));
+        FXMLLoader loader = new FXMLLoader(GameController.class.getResource(boardFileName));
         loader.setController(gameController);
 
         AnchorPane anchorPane = loader.load();

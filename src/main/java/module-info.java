@@ -1,8 +1,10 @@
-module another.javafx {
+module board.javafx {
     requires javafx.controls;
     requires javafx.fxml;
     requires kotlin.stdlib;
 
     opens oosd.controllers to javafx.fxml;
-    exports oosd.controllers;
+    opens oosd to javafx.fxml;
+
+    exports oosd;
 }
