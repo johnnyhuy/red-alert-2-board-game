@@ -9,12 +9,12 @@ import oosd.models.board.Hexagon;
 public class BoardView extends View {
     private final GameController controller;
     private final Board board;
-    private final AnchorPane tilePane;
+    private final AnchorPane boardPane;
 
-    public BoardView(GameController controller, Board board, AnchorPane tilePane) {
+    public BoardView(GameController controller, Board board, AnchorPane boardPane) {
         this.controller = controller;
         this.board = board;
-        this.tilePane = tilePane;
+        this.boardPane = boardPane;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BoardView extends View {
                 hexagon.setFill(Paint.valueOf("#ffffff"));
                 hexagon.setStrokeWidth(2);
                 hexagon.setStroke(Paint.valueOf("#000000"));
-                this.tilePane.getChildren().add(hexagon);
+                this.boardPane.getChildren().add(hexagon);
 
                 // Every even element set the y value down
                 if (hexagonCount % 2 == 0) {
