@@ -19,7 +19,7 @@ public class GameController extends Controller {
 
     @Override
     public void initialize() {
-        BoardView boardView = new BoardView(this, this.gameEngine.getBoard(), this.boardPane);
+        BoardView boardView = new BoardView(this, this.gameEngine, this.boardPane);
         boardView.render();
     }
 
