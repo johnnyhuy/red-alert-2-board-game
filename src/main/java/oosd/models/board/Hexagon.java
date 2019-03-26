@@ -1,8 +1,6 @@
 package oosd.models.board;
 
-import javafx.scene.shape.Polygon;
-
-public class Hexagon extends Polygon {
+public class Hexagon {
     private int row;
     private int column;
 
