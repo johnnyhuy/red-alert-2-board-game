@@ -13,13 +13,13 @@ public class GameController extends Controller {
     @FXML
     private AnchorPane boardPane;
 
-    GameController(GameEngine gameEngine) {
+    public GameController(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
     @Override
     public void initialize() {
-        BoardView boardView = new BoardView(this, this.gameEngine.getBoard(), boardPane);
+        BoardView boardView = new BoardView(this, this.gameEngine.getBoard(), this.boardPane);
         boardView.render();
     }
 
