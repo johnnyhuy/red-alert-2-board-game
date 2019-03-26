@@ -3,14 +3,13 @@ package oosd.models;
 import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
-import oosd.models.units.JuggernautZombie;
 import oosd.models.units.Soldier;
 import oosd.models.units.Unit;
 import oosd.models.units.Zombat;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class PlayerTest {
     @Test
@@ -57,23 +56,5 @@ class PlayerTest {
         // Assert
         assertEquals(2, player.getUnits().size());
         assertNotNull(player.getUnits());
-    }
-
-    @Test
-    void testThrowExceptionOnSameLocationUnits() {
-        // Arrange
-        int row = 1;
-        int column = 1;
-        Hexagon hexagon = new Hexagon(row, column);
-        Player player = new Player("Jane Doe", Team.RED);
-        Unit firstUnit = new Soldier(hexagon, player);
-        Unit secondUnit = new JuggernautZombie(hexagon, player);
-        player.addUnit(firstUnit);
-
-        // Act
-        Executable addAnotherUnit = () -> player.addUnit(secondUnit);
-
-        // Assert
-        assertThrows(IllegalArgumentException.class, addAnotherUnit);
     }
 }
