@@ -32,7 +32,7 @@ public class BoardView extends View {
 
         // Small gap between each shape (the left/right triangle bit)
         double gap = size * 1.5;
-
+        
         // Increments used to place the next polygon
         double halfIncrement = size * (tHeight / 2.0);
         double fullIncrement = size * tHeight;

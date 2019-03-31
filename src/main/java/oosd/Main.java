@@ -7,6 +7,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
+import com.google.java.contract.Ensures;
+import com.google.java.contract.Invariant;
+import com.google.java.contract.Requires;
 
 public class Main extends Application {
     @Override

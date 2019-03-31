@@ -27,3 +27,5 @@ hs_err_pid*
 **/.settings/
 **/.DS_Store
 /target/
+/.apt_generated/
+/.apt_generated_tests/
