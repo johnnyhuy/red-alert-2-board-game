@@ -23,7 +23,7 @@ public class GameController extends Controller {
         boardView.render();
     }
 
-    public void handleHexagonClick(MouseEvent event, Hexagon hexagon) {
+    public void board(MouseEvent event, GameEngine gameEngine, Hexagon hexagon) {
         System.out.println("column " + hexagon.getColumn());
         System.out.println("row " + hexagon.getRow());
     }
