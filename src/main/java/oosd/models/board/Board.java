@@ -5,14 +5,14 @@ public class Board {
     private int rows;
     private int columns;
 
-    public Board(int rows, int columns) {
+    public Board(int columns, int rows) {
         this.rows = rows;
         this.columns = columns;
-        this.hexagons = new Hexagon[rows][columns];
+        this.hexagons = new Hexagon[columns][rows];
 
         for (int rowIndex = 0; rowIndex < this.getRows(); rowIndex++) {
             for (int columnIndex = 0; columnIndex < this.getColumns(); columnIndex++) {
-                this.hexagons[rowIndex][columnIndex] = new Hexagon(rowIndex, columnIndex);
+                this.hexagons[columnIndex][rowIndex] = new Hexagon(columnIndex, rowIndex);
             }
         }
     }

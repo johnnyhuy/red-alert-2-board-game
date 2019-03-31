@@ -11,10 +11,10 @@ public class GameEngine {
     private Board board;
 
     public GameEngine() {
-        final int boardRow = 6;
+        final int boardRow = 4;
         final int boardColumn = 6;
 
-        this.board = new Board(boardRow, boardColumn);
+        this.board = new Board(boardColumn, boardRow);
     }
 
     public void initialize() {
