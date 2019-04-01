@@ -56,12 +56,12 @@ public class BoardView extends View {
                 Polygon hexagonPolygon = new Polygon();
                 hexagonPolygon.setOnMouseClicked(event -> controller.board(event, this.gameEngine, hexagon));
                 hexagonPolygon.getPoints().addAll(
-                        xOffset + x, yOffset + y,
-                        xOffset + x + size, yOffset + y,
-                        xOffset + x + gap, yOffset + y + halfIncrement,
-                        xOffset + x + size, yOffset + y + fullIncrement,
-                        xOffset + x, yOffset + y + fullIncrement,
-                        xOffset + x - (size / 2.0), yOffset + y + halfIncrement
+                        x, y,
+                        x + size, y,
+                        x + gap, y + halfIncrement,
+                        x + size, y + fullIncrement,
+                        x, y + fullIncrement,
+                        x - (size / 2.0), y + halfIncrement
                 );
                 hexagonPolygons[xIndex][yIndex] = hexagonPolygon;
 
@@ -69,12 +69,10 @@ public class BoardView extends View {
                 hexagonPolygon.setStrokeWidth(2);
                 hexagonPolygon.setStroke(Paint.valueOf("#000000"));
 
-                String name = "";
-                if (hexagon.getUnit() != null) {
-                    name = hexagon.getUnit().getName();
-                }
+                String name = hexagon.getUnit() != null ? hexagon.getUnit().getName() : "";
                 final Text text = new Text();
                 text.setText(name);
+
                 final StackPane stack = new StackPane();
                 stack.getChildren().addAll(hexagonPolygon, text);
                 stack.setLayoutX(xOffset + x);
