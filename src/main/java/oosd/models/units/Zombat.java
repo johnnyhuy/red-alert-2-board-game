@@ -11,4 +11,9 @@ public class Zombat extends Unit {
     public String getName() {
         return "Zombat";
     }
+
+    @Override
+    public int getMove() {
+        return 5;
+    }
 }

@@ -12,4 +12,9 @@ public class ScoutZombie extends Unit {
     public String getName() {
         return "Scout Zombie";
     }
+
+    @Override
+    public int getMove() {
+        return 5;
+    }
 }

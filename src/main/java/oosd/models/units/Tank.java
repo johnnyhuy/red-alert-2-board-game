@@ -15,4 +15,9 @@ public class Tank extends Unit {
     public String getName() {
         return "Tank";
     }
+
+    @Override
+    public int getMove() {
+        return 4;
+    }
 }

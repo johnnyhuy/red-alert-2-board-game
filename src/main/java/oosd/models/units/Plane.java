@@ -16,4 +16,9 @@ public class Plane extends Unit {
     public String getName() {
         return "Plane";
     }
+
+    @Override
+    public int getMove() {
+        return 6;
+    }
 }
