@@ -21,12 +21,12 @@ public class GameEngine {
         Player playerOne = new Player("Johnny Dave", Team.RED);
         Player playerTwo = new Player("Jane Doe", Team.BLUE);
 
-        Unit tank = new Tank(hexagons[0][0], playerOne);
-        Unit plane = new Plane(hexagons[1][0], playerOne);
-        Unit soldier = new Soldier(hexagons[2][0], playerOne);
-        Unit juggernautZombie = new JuggernautZombie(hexagons[0][5], playerOne);
-        Unit scoutZombie = new ScoutZombie(hexagons[1][5], playerOne);
-        Unit zombat = new Zombat(hexagons[2][5], playerOne);
+        Unit tank = new Tank(playerOne);
+        Unit plane = new Plane(playerOne);
+        Unit soldier = new Soldier(playerOne);
+        Unit juggernautZombie = new JuggernautZombie(playerTwo);
+        Unit scoutZombie = new ScoutZombie(playerTwo);
+        Unit zombat = new Zombat(playerTwo);
     }
 
     public Board getBoard() {
