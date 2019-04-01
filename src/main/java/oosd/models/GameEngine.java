@@ -21,12 +21,12 @@ public class GameEngine {
         Player playerOne = new Player("Johnny Dave", Team.RED);
         Player playerTwo = new Player("Jane Doe", Team.BLUE);
 
-        Unit tank = new Tank(playerOne);
-        Unit plane = new Plane(playerOne);
-        Unit soldier = new Soldier(playerOne);
-        Unit juggernautZombie = new JuggernautZombie(playerTwo);
-        Unit scoutZombie = new ScoutZombie(playerTwo);
-        Unit zombat = new Zombat(playerTwo);
+        hexagons[0][0].setUnit(new Tank(playerOne));
+        hexagons[1][0].setUnit(new Plane(playerOne));
+        hexagons[2][0].setUnit(new Soldier(playerOne));
+        hexagons[0][5].setUnit(new JuggernautZombie(playerTwo));
+        hexagons[1][5].setUnit(new ScoutZombie(playerTwo));
+        hexagons[2][5].setUnit(new Zombat(playerTwo));
     }
 
     public Board getBoard() {
