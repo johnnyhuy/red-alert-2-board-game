@@ -17,6 +17,7 @@ public class Main extends Application {
         final int sceneHeight = 775;
 
         GameEngine gameEngine = new GameEngine();
+        gameEngine.initialize();
         GameController gameController = new GameController(gameEngine);
 
         FXMLLoader loader = new FXMLLoader(GameController.class.getResource(boardFileName));
