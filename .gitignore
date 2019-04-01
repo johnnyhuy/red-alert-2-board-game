@@ -27,3 +27,7 @@ hs_err_pid*
 **/.settings/
 **/.DS_Store
 /target/
+
+.project
+.classpath
+.settings/
