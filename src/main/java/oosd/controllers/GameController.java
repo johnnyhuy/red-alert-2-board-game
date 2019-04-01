@@ -13,18 +13,20 @@ public class GameController extends Controller {
     @FXML
     private AnchorPane boardPane;
 
+    private BoardView boardView;
+
     public GameController(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
     @Override
     public void initialize() {
-        BoardView boardView = new BoardView(this, this.gameEngine, this.boardPane);
-        boardView.render();
+        this.boardView = new BoardView(this, this.gameEngine, this.boardPane);
+        this.boardView.render();
     }
 
     public void board(MouseEvent event, GameEngine gameEngine, Hexagon hexagon) {
-        System.out.println("column " + hexagon.getColumn());
-        System.out.println("row " + hexagon.getRow());
+        this.gameEngine.setSelectedUnit(hexagon.getUnit());
+        this.boardView.update(gameEngine, hexagon);
     }
 }
