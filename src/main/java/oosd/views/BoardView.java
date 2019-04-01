@@ -49,7 +49,7 @@ public class BoardView extends View {
                 Hexagon hexagon = hexagons[xIndex][yIndex];
 
                 Polygon hexagonPolygon = new Polygon();
-                hexagonPolygon.setOnMouseClicked(event -> controller.handleHexagonClick(event, hexagon));
+                hexagonPolygon.setOnMouseClicked(event -> controller.board(event, this.gameEngine, hexagon));
                 hexagonPolygon.getPoints().addAll(
                         xOffset + x, yOffset + y,
                         xOffset + x + size, yOffset + y,
