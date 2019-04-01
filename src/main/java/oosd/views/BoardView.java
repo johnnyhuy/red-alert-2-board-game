@@ -26,6 +26,13 @@ public class BoardView extends View {
         this.hexagonPolygons = new Polygon[board.getColumns()][board.getRows()];
     }
 
+    public void update(GameEngine gameEngine, Hexagon hexagon) {
+        // TODO: X Y are flipped idk why
+        System.out.println("X " + hexagon.getColumn());
+        System.out.println("Y " + hexagon.getRow());
+        this.hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
+    }
+
     @Override
     public void render() {
         Hexagon[][] hexagons = board.getHexagons();
@@ -64,7 +71,8 @@ public class BoardView extends View {
                         x, y + fullIncrement,
                         x - (size / 2.0), y + halfIncrement
                 );
-                hexagonPolygons[xIndex][yIndex] = hexagonPolygon;
+
+                this.hexagonPolygons[xIndex][yIndex] = hexagonPolygon;
 
                 hexagonPolygon.setFill(Paint.valueOf("#ffffff"));
                 hexagonPolygon.setStrokeWidth(2);
