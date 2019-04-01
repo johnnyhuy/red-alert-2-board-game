@@ -8,4 +8,9 @@ public class Soldier extends Unit {
         super.getWinnables().add(Zombat.class);
         super.getWinnables().add(ScoutZombie.class);
     }
+
+    @Override
+    public String getName() {
+        return "Solider";
+    }
 }

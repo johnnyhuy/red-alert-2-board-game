@@ -29,4 +29,6 @@ public abstract class Unit {
     public Player getPlayer() {
         return this.player;
     }
+
+    public abstract String getName();
 }

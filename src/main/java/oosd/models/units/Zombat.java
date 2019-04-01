@@ -6,4 +6,9 @@ public class Zombat extends Unit {
     public Zombat(Player player) {
         super(player);
     }
+
+    @Override
+    public String getName() {
+        return "Zombat";
+    }
 }

@@ -1,8 +1,10 @@
 package oosd.views;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
@@ -12,16 +14,19 @@ public class BoardView extends View {
     private final GameController controller;
     private final GameEngine gameEngine;
     private final AnchorPane boardPane;
+    private final Polygon[][] hexagonPolygons;
+    private final Board board;
 
     public BoardView(GameController controller, GameEngine gameEngine, AnchorPane boardPane) {
         this.controller = controller;
         this.gameEngine = gameEngine;
         this.boardPane = boardPane;
+        this.board = this.gameEngine.getBoard();
+        this.hexagonPolygons = new Polygon[board.getColumns()][board.getRows()];
     }
 
     @Override
     public void render() {
-        Board board = this.gameEngine.getBoard();
         Hexagon[][] hexagons = board.getHexagons();
 
         // Size of each side
@@ -58,11 +63,23 @@ public class BoardView extends View {
                         xOffset + x, yOffset + y + fullIncrement,
                         xOffset + x - (size / 2.0), yOffset + y + halfIncrement
                 );
+                hexagonPolygons[xIndex][yIndex] = hexagonPolygon;
 
                 hexagonPolygon.setFill(Paint.valueOf("#ffffff"));
                 hexagonPolygon.setStrokeWidth(2);
                 hexagonPolygon.setStroke(Paint.valueOf("#000000"));
-                this.boardPane.getChildren().add(hexagonPolygon);
+
+                String name = "";
+                if (hexagon.getUnit() != null) {
+                    name = hexagon.getUnit().getName();
+                }
+                final Text text = new Text();
+                text.setText(name);
+                final StackPane stack = new StackPane();
+                stack.getChildren().addAll(hexagonPolygon, text);
+                stack.setLayoutX(xOffset + x);
+                stack.setLayoutY(yOffset + y);
+                this.boardPane.getChildren().add(stack);
 
                 // Every even element set the y value down
                 if (hexagonCount % 2 == 0) {

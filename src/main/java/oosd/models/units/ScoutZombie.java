@@ -7,4 +7,9 @@ public class ScoutZombie extends Unit {
         super(player);
         super.getWinnables().add(Zombat.class);
     }
+
+    @Override
+    public String getName() {
+        return "Scout Zombie";
+    }
 }
