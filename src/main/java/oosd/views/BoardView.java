@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
@@ -27,9 +28,6 @@ public class BoardView extends View {
     }
 
     public void update(GameEngine gameEngine, Hexagon hexagon) {
-        // TODO: X Y are flipped idk why
-        System.out.println("X " + hexagon.getColumn());
-        System.out.println("Y " + hexagon.getRow());
         this.hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
     }
 
@@ -78,12 +76,18 @@ public class BoardView extends View {
                 hexagonPolygon.setStrokeWidth(2);
                 hexagonPolygon.setStroke(Paint.valueOf("#000000"));
 
+                Circle unitCircle = new Circle();
+                unitCircle.setRadius(size / 4);
+                unitCircle.setFill(Paint.valueOf("#DADADA"));
+                double unitOpacity = hexagon.getUnit() != null ? 1 : 0;
+                unitCircle.setOpacity(unitOpacity);
+
                 String name = hexagon.getUnit() != null ? hexagon.getUnit().getName() : "";
                 final Text text = new Text();
                 text.setText(name);
 
                 final StackPane stack = new StackPane();
-                stack.getChildren().addAll(hexagonPolygon, text);
+                stack.getChildren().addAll(hexagonPolygon, unitCircle, text);
                 stack.setLayoutX(xOffset + x);
                 stack.setLayoutY(yOffset + y);
                 stack.setAlignment(Pos.CENTER);
