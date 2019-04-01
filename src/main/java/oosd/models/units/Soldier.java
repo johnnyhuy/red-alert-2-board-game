@@ -13,4 +13,9 @@ public class Soldier extends Unit {
     public String getName() {
         return "Solider";
     }
+
+    @Override
+    public int getMove() {
+        return 3;
+    }
 }

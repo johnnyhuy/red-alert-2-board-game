@@ -31,4 +31,6 @@ public abstract class Unit {
     }
 
     public abstract String getName();
+
+    public abstract int getMove();
 }
