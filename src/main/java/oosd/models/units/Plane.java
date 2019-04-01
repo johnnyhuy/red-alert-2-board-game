@@ -11,4 +11,9 @@ public class Plane extends Unit {
         super.getWinnables().add(JuggernautZombie.class);
         super.getWinnables().add(Tank.class);
     }
+
+    @Override
+    public String getName() {
+        return "Plane";
+    }
 }

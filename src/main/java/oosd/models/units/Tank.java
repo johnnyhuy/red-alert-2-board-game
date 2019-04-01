@@ -10,4 +10,9 @@ public class Tank extends Unit {
         super.getWinnables().add(Soldier.class);
         super.getWinnables().add(JuggernautZombie.class);
     }
+
+    @Override
+    public String getName() {
+        return "Tank";
+    }
 }

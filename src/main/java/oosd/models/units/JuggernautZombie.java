@@ -9,4 +9,8 @@ public class JuggernautZombie extends Unit {
         super.getWinnables().add(ScoutZombie.class);
         super.getWinnables().add(Soldier.class);
     }
+
+    public String getName() {
+        return "Juggernaut Zombie";
+    }
 }
