@@ -11,7 +11,7 @@ public class JuggernautZombie extends Unit {
     }
 
     public String getName() {
-        return "Juggernaut Zombie";
+        return "Jug Zombie";
     }
 
     @Override
