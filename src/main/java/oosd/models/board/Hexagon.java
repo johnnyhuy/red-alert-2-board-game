@@ -1,8 +1,11 @@
 package oosd.models.board;
 
+import oosd.models.units.Unit;
+
 public class Hexagon {
     private int row;
     private int column;
+    private Unit unit;
 
     public Hexagon(int row, int column) {
         super();
@@ -27,5 +30,13 @@ public class Hexagon {
         Hexagon hexagon = (Hexagon) object;
 
         return hexagon.getRow() == this.getRow() && hexagon.getColumn() == this.getColumn();
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

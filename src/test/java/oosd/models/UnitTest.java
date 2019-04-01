@@ -6,8 +6,9 @@ import oosd.models.player.Team;
 import oosd.models.units.*;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class UnitTest {
     @Test
@@ -131,5 +132,41 @@ class UnitTest {
         assertNotNull(unit.getLocation());
         assertEquals(row, unit.getLocation().getRow());
         assertEquals(column, unit.getLocation().getColumn());
+    }
+
+    @Test
+    void testWinnableUnits() {
+        // Arrange
+        int row = 1;
+        int column = 1;
+        Player player = new Player("Jane Doe", Team.RED);
+        Hexagon hexagon = new Hexagon(row, column);
+        Unit unit = new Soldier(hexagon, player);
+
+        // Act
+        ArrayList<Class<? extends Unit>> winnables = unit.getWinnables();
+
+        // Assert
+        assertTrue(winnables.contains(Zombat.class));
+        assertTrue(winnables.contains(ScoutZombie.class));
+        assertFalse(winnables.contains(Soldier.class));
+    }
+
+    @Test
+    void testUnitCaptured() {
+        // Arrange
+        int row = 1;
+        int column = 1;
+        Player player = new Player("Jane Doe", Team.RED);
+        Hexagon hexagon = new Hexagon(row, column);
+        Unit unit = new Soldier(hexagon, player);
+        Unit otherUnit = new Soldier(hexagon, player);
+
+        // Act
+        unit.setCaptured(true);
+
+        // Assert
+        assertTrue(unit.getCaptured());
+        assertFalse(otherUnit.getCaptured());
     }
 }

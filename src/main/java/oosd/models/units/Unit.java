@@ -9,7 +9,6 @@ public abstract class Unit {
     private Hexagon location;
     private Player player;
     private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
-    private ArrayList<Player> allies = new ArrayList<>();
     private boolean captured;
 
     Unit(Hexagon location, Player player) {
@@ -18,7 +17,11 @@ public abstract class Unit {
         this.captured = false;
     }
 
-    public void setStatus(boolean captured) {
+    public boolean getCaptured() {
+        return this.captured;
+    }
+
+    public void setCaptured(boolean captured) {
         this.captured = captured;
     }
 
@@ -26,15 +29,7 @@ public abstract class Unit {
         return this.location;
     }
 
-    public void setAlly(Player ally) {
-        this.allies.add(ally);
-    }
-
-    public ArrayList<Player> getAllies() {
-        return allies;
-    }
-
-    ArrayList<Class<? extends Unit>> getWinnables() {
+    public ArrayList<Class<? extends Unit>> getWinnables() {
         return winnables;
     }
 
