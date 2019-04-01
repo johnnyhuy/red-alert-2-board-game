@@ -1,5 +1,6 @@
 package oosd.views;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
@@ -42,8 +43,8 @@ public class BoardView extends View {
         double halfIncrement = size * (tHeight / 2.0);
         double fullIncrement = size * tHeight;
 
-        int xOffset = 100;
-        int yOffset = 100;
+        int xOffset = 80;
+        int yOffset = 80;
 
         int hexagonCount = 0;
         double x = 0;
@@ -77,6 +78,8 @@ public class BoardView extends View {
                 stack.getChildren().addAll(hexagonPolygon, text);
                 stack.setLayoutX(xOffset + x);
                 stack.setLayoutY(yOffset + y);
+                stack.setAlignment(Pos.CENTER);
+
                 this.boardPane.getChildren().add(stack);
 
                 // Every even element set the y value down
