@@ -12,6 +12,10 @@ import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
 
+/**
+ * SOLID:  Single Responsibility Principle
+ * The view should only be responsible for managing the user interface (e.g. interacting with the JavaFX library)
+ */
 public class BoardView extends View {
     private final GameController controller;
     private final GameEngine gameEngine;
@@ -41,8 +45,7 @@ public class BoardView extends View {
         this.hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
     }
 
-    @Override
-    public void render() {
+    public void initialize() {
         Hexagon[][] hexagons = board.getHexagons();
 
         int xOffset = 80;

@@ -7,6 +7,12 @@ import oosd.models.GameEngine;
 import oosd.models.board.Hexagon;
 import oosd.views.BoardView;
 
+/**
+ * GRASP: The controller
+ * Used to handle requests from other objects include the view and model.
+ * Acts as a middleman that delegates tasks to other objects.
+ * Cleanly separates the user interface (view) from the business objects (model)
+ */
 public class GameController extends Controller {
     private final GameEngine gameEngine;
 
@@ -22,7 +28,7 @@ public class GameController extends Controller {
     @Override
     public void initialize() {
         this.boardView = new BoardView(this, this.gameEngine, this.boardPane);
-        this.boardView.render();
+        this.boardView.initialize();
     }
 
     public void board(MouseEvent event, Hexagon hexagon) {
