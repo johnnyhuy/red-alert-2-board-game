@@ -34,7 +34,10 @@ public class BoardView extends View {
     }
 
     public void selectUnit(Hexagon previousHexagon, Hexagon hexagon) {
-        this.hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+        if (previousHexagon != null) {
+            this.hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+        }
+
         this.hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
     }
 
