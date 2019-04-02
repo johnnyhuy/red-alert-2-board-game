@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import oosd.models.GameEngine;
 import oosd.models.board.Hexagon;
 import oosd.views.BoardView;
+import com.google.java.contract.Requires;
 
 public class GameController extends Controller {
     private final GameEngine gameEngine;
@@ -23,6 +24,7 @@ public class GameController extends Controller {
         boardView.render();
     }
 
+    @Requires("hexagon != null")
     public void board(MouseEvent event, GameEngine gameEngine, Hexagon hexagon) {
         System.out.println("column " + hexagon.getColumn());
         System.out.println("row " + hexagon.getRow());
