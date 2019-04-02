@@ -26,8 +26,10 @@ public class GameController extends Controller {
     }
 
     public void board(MouseEvent event, Hexagon hexagon) {
-        Hexagon previousHexagon = gameEngine.getSelectedHexagon();
-        this.gameEngine.setSelectedHexagon(hexagon);
-        this.boardView.selectUnit(previousHexagon, hexagon);
+        if (hexagon.getUnit() != null) {
+            Hexagon previousHexagon = gameEngine.getSelectedHexagon();
+            this.gameEngine.setSelectedHexagon(hexagon);
+            this.boardView.selectUnit(previousHexagon, hexagon);
+        }
     }
 }
