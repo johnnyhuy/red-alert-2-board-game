@@ -8,7 +8,7 @@ import oosd.models.units.*;
 
 public class GameEngine {
     private Board board;
-    private Unit selectedUnit;
+    private Hexagon selectedHexagon;
 
     public GameEngine() {
         final int boardRow = 6;
@@ -40,17 +40,11 @@ public class GameEngine {
         return this.board;
     }
 
-    public boolean getSelectUnit(Unit unit) {
-        this.setSelectedUnit(unit);
-
-        return true;
+    public Hexagon getSelectedHexagon() {
+        return selectedHexagon;
     }
 
-    public Unit getSelectedUnit() {
-        return selectedUnit;
-    }
-
-    public void setSelectedUnit(Unit selectedUnit) {
-        this.selectedUnit = selectedUnit;
+    public void setSelectedHexagon(Hexagon selectedHexagon) {
+        this.selectedHexagon = selectedHexagon;
     }
 }

@@ -19,6 +19,12 @@ public class BoardView extends View {
     private final Polygon[][] hexagonPolygons;
     private final Board board;
 
+    private final double size = 50;
+    private final double gap = size * 1.5;
+    private final double tHeight = Math.sqrt(3);
+    private final double halfIncrement = size * (tHeight / 2.0);
+    private final double fullIncrement = size * tHeight;
+
     public BoardView(GameController controller, GameEngine gameEngine, AnchorPane boardPane) {
         this.controller = controller;
         this.gameEngine = gameEngine;
@@ -27,7 +33,8 @@ public class BoardView extends View {
         this.hexagonPolygons = new Polygon[board.getColumns()][board.getRows()];
     }
 
-    public void update(GameEngine gameEngine, Hexagon hexagon) {
+    public void selectUnit(Hexagon previousHexagon, Hexagon hexagon) {
+        this.hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
         this.hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
     }
 
@@ -35,22 +42,8 @@ public class BoardView extends View {
     public void render() {
         Hexagon[][] hexagons = board.getHexagons();
 
-        // Size of each side
-        final double size = 50;
-
-        // Height of the equilateral triangle
-        final double tHeight = Math.sqrt(3);
-
-        // Small gap between each shape (the left/right triangle bit)
-        double gap = size * 1.5;
-
-        // Increments used to place the next polygon
-        double halfIncrement = size * (tHeight / 2.0);
-        double fullIncrement = size * tHeight;
-
         int xOffset = 80;
         int yOffset = 80;
-
         int hexagonCount = 0;
         double x = 0;
         double y = 0;
@@ -59,22 +52,8 @@ public class BoardView extends View {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 Hexagon hexagon = hexagons[xIndex][yIndex];
 
-                Polygon hexagonPolygon = new Polygon();
-                hexagonPolygon.setOnMouseClicked(event -> controller.board(event, this.gameEngine, hexagon));
-                hexagonPolygon.getPoints().addAll(
-                        x, y,
-                        x + size, y,
-                        x + gap, y + halfIncrement,
-                        x + size, y + fullIncrement,
-                        x, y + fullIncrement,
-                        x - (size / 2.0), y + halfIncrement
-                );
-
+                Polygon hexagonPolygon = DrawHexagon(x, y, hexagon);
                 this.hexagonPolygons[xIndex][yIndex] = hexagonPolygon;
-
-                hexagonPolygon.setFill(Paint.valueOf("#ffffff"));
-                hexagonPolygon.setStrokeWidth(2);
-                hexagonPolygon.setStroke(Paint.valueOf("#000000"));
 
                 Circle unitCircle = new Circle();
                 unitCircle.setRadius(size / 4);
@@ -108,5 +87,23 @@ public class BoardView extends View {
 
             y = yIndex == board.getRows() - 1 ? 0 : y + fullIncrement;
         }
+    }
+
+    private Polygon DrawHexagon(double x, double y, Hexagon hexagon) {
+        Polygon hexagonPolygon = new Polygon();
+        hexagonPolygon.setOnMouseClicked(event -> controller.board(event, hexagon));
+        hexagonPolygon.setFill(Paint.valueOf("#ffffff"));
+        hexagonPolygon.setStrokeWidth(2);
+        hexagonPolygon.setStroke(Paint.valueOf("#000000"));
+        hexagonPolygon.getPoints().addAll(
+                x, y,
+                x + size, y,
+                x + gap, y + halfIncrement,
+                x + size, y + fullIncrement,
+                x, y + fullIncrement,
+                x - (size / 2.0), y + halfIncrement
+        );
+
+        return hexagonPolygon;
     }
 }
