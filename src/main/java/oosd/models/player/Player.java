@@ -1,9 +1,9 @@
 package oosd.models.player;
 
 import oosd.models.units.Unit;
-
 import java.util.ArrayList;
 import java.util.List;
+import com.google.java.contract.Ensures;
 
 public class Player {
     private String playerName;
@@ -28,6 +28,7 @@ public class Player {
         return this.units;
     }
 
+    @Ensures("Unit.size() == old (Unit.size()) + 1")
     public void addUnit(Unit newUnit) {
         this.units.add(newUnit);
     }
