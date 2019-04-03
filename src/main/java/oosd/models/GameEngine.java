@@ -17,6 +17,10 @@ public class GameEngine {
         this.board = new Board(boardColumn, boardRow);
     }
 
+    /**
+     * GRASP: The creator
+     * Responsible to initialize game pieces and players in the board.
+     */
     public void initialize() {
         Hexagon[][] hexagons = this.board.getHexagons();
         Player playerOne = new Player("Johnny Dave", Team.RED);
