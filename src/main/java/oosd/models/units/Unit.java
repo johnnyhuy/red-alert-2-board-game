@@ -4,6 +4,10 @@ import oosd.models.player.Player;
 
 import java.util.ArrayList;
 
+/**
+ * SOLID: Open for extension and close for modification
+ * Units can be extended with more sub-classes allowing different unit behaviour.
+ */
 public abstract class Unit {
     private Player player;
     private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
