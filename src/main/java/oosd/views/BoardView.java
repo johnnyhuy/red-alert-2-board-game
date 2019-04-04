@@ -29,7 +29,7 @@ public class BoardView extends View {
     public BoardView(GameController controller, GameEngine gameEngine, AnchorPane boardPane) {
         this.controller = controller;
         this.boardPane = boardPane;
-        board = gameEngine.getBoard();
+        this.board = gameEngine.getBoard();
 
         this.boardFactory = new BoardFactory(board.getColumns(), board.getRows());
         this.hexagonPolygons = boardFactory.createHexagon();
@@ -67,6 +67,7 @@ public class BoardView extends View {
                 unitText[xIndex][yIndex].setText(name);
 
                 final StackPane stack = new StackPane();
+                stack.setOnMouseClicked(event -> controller.board(event, hexagon));
                 stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex]);
                 stack.setLayoutX(xOffset + x);
                 stack.setLayoutY(yOffset + y);
