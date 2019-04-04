@@ -45,7 +45,7 @@ class BoardTest {
         // Arrange
         Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
-        Unit unit = new Soldier(hexagon, player);
+        Unit unit = new Soldier(player);
 
         // Act
         hexagon.setUnit(unit);

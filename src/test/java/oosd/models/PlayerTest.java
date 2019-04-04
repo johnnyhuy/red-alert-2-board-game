@@ -1,6 +1,5 @@
 package oosd.models;
 
-import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Soldier;
@@ -44,10 +43,9 @@ class PlayerTest {
     @Test
     void testPlayerAddUnit() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
-        Unit soldier = new Soldier(hexagon, player);
-        Unit zombat = new Zombat(hexagon, player);
+        Unit soldier = new Soldier(player);
+        Unit zombat = new Zombat(player);
 
         // Act
         player.addUnit(zombat);
