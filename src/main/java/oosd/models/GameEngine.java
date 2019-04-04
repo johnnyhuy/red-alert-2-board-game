@@ -6,6 +6,9 @@ import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameEngine {
     private Board board;
     private Hexagon selectedHexagon;
@@ -54,5 +57,110 @@ public class GameEngine {
 
     public void setSelectedHexagon(Hexagon selectedHexagon) {
         this.selectedHexagon = selectedHexagon;
+    }
+
+    public List<Hexagon> getValidMoves() {
+        List<Hexagon> hexagons = new ArrayList<>();
+        Hexagon selectedHexagon = getSelectedHexagon();
+        int northEastOffset = 0;
+        int northWestOffset = 0;
+        int southEastOffset = 0;
+        int southWestOffset = 0;
+
+        if (selectedHexagon == null) {
+            return hexagons;
+        }
+
+        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
+            int north = selectedHexagon.getRow() - move;
+            if (north >= board.getRows() || north < 0) {
+                continue;
+            }
+
+            hexagons.add(new Hexagon(selectedHexagon.getColumn(), north));
+        }
+
+        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
+            int south = selectedHexagon.getRow() + move;
+            if (south >= board.getRows()) {
+                continue;
+            }
+
+            hexagons.add(new Hexagon(selectedHexagon.getColumn(), south));
+        }
+
+        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
+            int west = selectedHexagon.getColumn() - move;
+            if (west >= board.getColumns() || west < 0) {
+                continue;
+            }
+
+            if (west % 2 != 0) {
+                northWestOffset++;
+            }
+
+            int northWest = selectedHexagon.getRow() - northWestOffset;
+            if (northWest >= board.getRows() || northWest < 0) {
+                continue;
+            }
+
+            hexagons.add(new Hexagon(west, northWest));
+        }
+
+        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
+            int west = selectedHexagon.getColumn() - move;
+            if (west >= board.getColumns() || west < 0) {
+                continue;
+            }
+
+            if (west % 2 == 0) {
+                southWestOffset++;
+            }
+
+            int southWest = selectedHexagon.getRow() + southWestOffset;
+            if (southWest >= board.getRows()) {
+                continue;
+            }
+
+            hexagons.add(new Hexagon(west, southWest));
+        }
+
+        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
+            int east = selectedHexagon.getColumn() + move;
+            if (east >= board.getColumns()) {
+                continue;
+            }
+
+            if (east % 2 != 0) {
+                northEastOffset++;
+            }
+
+            int northEast = selectedHexagon.getRow() - northEastOffset;
+            if (northEast >= board.getRows() || northEast < 0) {
+                continue;
+            }
+
+            hexagons.add(new Hexagon(east, northEast));
+        }
+
+        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
+            int east = selectedHexagon.getColumn() + move;
+            if (east >= board.getColumns()) {
+                continue;
+            }
+
+            if (east % 2 == 0) {
+                southEastOffset++;
+            }
+
+            int southEast = selectedHexagon.getRow() + southEastOffset;
+            if (southEast >= board.getRows()) {
+                continue;
+            }
+
+            hexagons.add(new Hexagon(east, southEast));
+        }
+
+        return hexagons;
     }
 }
