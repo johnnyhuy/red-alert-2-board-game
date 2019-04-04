@@ -12,12 +12,14 @@ import java.util.List;
 public class GameEngine {
     private Board board;
     private Hexagon selectedHexagon;
+    private final Hexagon[][] hexagons;
 
     public GameEngine() {
         final int boardRow = 10;
         final int boardColumn = 10;
 
         this.board = new Board(boardColumn, boardRow);
+        this.hexagons = board.getHexagons();
     }
 
     /**
@@ -25,7 +27,6 @@ public class GameEngine {
      * Responsible to initialize game pieces and players in the board.
      */
     public void initialize() {
-        Hexagon[][] hexagons = this.board.getHexagons();
         Player playerOne = new Player("Johnny Dave", Team.RED);
         Player playerTwo = new Player("Jane Doe", Team.BLUE);
 
@@ -60,11 +61,13 @@ public class GameEngine {
     }
 
     public List<Hexagon> getValidMoves(Hexagon hexagon) {
-        List<Hexagon> hexagons = new ArrayList<>();
+        List<Hexagon> validMoves = new ArrayList<>();
         int northEastOffset = 0;
         int northWestOffset = 0;
         int southEastOffset = 0;
         int southWestOffset = 0;
+
+        // TODO: Please refactor me :(
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
             int north = hexagon.getRow() - move;
@@ -72,7 +75,11 @@ public class GameEngine {
                 continue;
             }
 
-            hexagons.add(new Hexagon(hexagon.getColumn(), north));
+            if (hexagons[hexagon.getColumn()][north].getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(hexagon.getColumn(), north));
         }
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
@@ -81,7 +88,11 @@ public class GameEngine {
                 continue;
             }
 
-            hexagons.add(new Hexagon(hexagon.getColumn(), south));
+            if (hexagons[hexagon.getColumn()][south].getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(hexagon.getColumn(), south));
         }
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
@@ -99,7 +110,11 @@ public class GameEngine {
                 continue;
             }
 
-            hexagons.add(new Hexagon(west, northWest));
+            if (hexagons[west][northWest].getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(west, northWest));
         }
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
@@ -117,7 +132,11 @@ public class GameEngine {
                 continue;
             }
 
-            hexagons.add(new Hexagon(west, southWest));
+            if (hexagons[west][southWest].getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(west, southWest));
         }
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
@@ -135,7 +154,11 @@ public class GameEngine {
                 continue;
             }
 
-            hexagons.add(new Hexagon(east, northEast));
+            if (hexagons[east][northEast].getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(east, northEast));
         }
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
@@ -153,9 +176,13 @@ public class GameEngine {
                 continue;
             }
 
-            hexagons.add(new Hexagon(east, southEast));
+            if (hexagons[east][southEast].getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(east, southEast));
         }
 
-        return hexagons;
+        return validMoves;
     }
 }
