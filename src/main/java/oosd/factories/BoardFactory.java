@@ -14,7 +14,6 @@ import javafx.scene.text.Text;
  * No one else should alter or make different sized polygons other than this class.
  */
 public class BoardFactory {
-    private final double size = 50;
     private final double equalTriangleHeight = Math.sqrt(3);
     private final double halfIncrement = getSize() * (getEqualTriangleHeight() / 2.0);
     private final double fullIncrement = getSize() * getEqualTriangleHeight();
@@ -30,11 +29,11 @@ public class BoardFactory {
     public Circle[][] createUnitCircle() {
         Circle[][] unitCircles = new Circle[this.columns][this.rows];
 
-        for (int columnIndex = 0; columnIndex < this.rows; columnIndex++) {
-            for (int rowIndex = 0; rowIndex < this.columns; rowIndex++) {
-                unitCircles[columnIndex][rowIndex] = new Circle();
-                unitCircles[columnIndex][rowIndex].setRadius(getSize() / 4);
-                unitCircles[columnIndex][rowIndex].setFill(Paint.valueOf("#DADADA"));
+        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
+            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
+                unitCircles[xIndex][yIndex] = new Circle();
+                unitCircles[xIndex][yIndex].setRadius(getSize() / 4);
+                unitCircles[xIndex][yIndex].setFill(Paint.valueOf("#DADADA"));
             }
         }
 
@@ -46,13 +45,13 @@ public class BoardFactory {
         double x = 0;
         double y = 0;
 
-        for (int columnIndex = 0; columnIndex < this.rows; columnIndex++) {
-            for (int rowIndex = 0; rowIndex < this.columns; rowIndex++) {
-                hexagons[columnIndex][rowIndex] = new Polygon();
-                hexagons[columnIndex][rowIndex].setFill(Paint.valueOf("#ffffff"));
-                hexagons[columnIndex][rowIndex].setStrokeWidth(2);
-                hexagons[columnIndex][rowIndex].setStroke(Paint.valueOf("#000000"));
-                hexagons[columnIndex][rowIndex].getPoints().addAll(
+        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
+            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
+                hexagons[xIndex][yIndex] = new Polygon();
+                hexagons[xIndex][yIndex].setFill(Paint.valueOf("#ffffff"));
+                hexagons[xIndex][yIndex].setStrokeWidth(2);
+                hexagons[xIndex][yIndex].setStroke(Paint.valueOf("#000000"));
+                hexagons[xIndex][yIndex].getPoints().addAll(
                         x, y,
                         x + getSize(), y,
                         x + getGap(), y + getHalfIncrement(),
@@ -69,9 +68,9 @@ public class BoardFactory {
     public Text[][] createUnitText() {
         Text[][] text = new Text[this.columns][this.rows];
 
-        for (int columnIndex = 0; columnIndex < this.rows; columnIndex++) {
-            for (int rowIndex = 0; rowIndex < this.columns; rowIndex++) {
-                text[columnIndex][rowIndex] = new Text();
+        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
+            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
+                text[xIndex][yIndex] = new Text();
             }
         }
 
@@ -79,7 +78,7 @@ public class BoardFactory {
     }
 
     public double getSize() {
-        return size;
+        return 50;
     }
 
     public double getEqualTriangleHeight() {
