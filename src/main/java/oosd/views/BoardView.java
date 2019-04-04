@@ -42,70 +42,99 @@ public class BoardView extends View {
             hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
         }
 
-        int northEastMoveOffset = 0;
-        int northWestMoveOffset = 0;
-        int southEastMoveOffset = 0;
-        int southWestMoveOffset = 0;
+        int northEastOffset = 0;
+        int northWestOffset = 0;
+        int southEastOffset = 0;
+        int southWestOffset = 0;
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
             int north = hexagon.getRow() - move;
             if (north >= board.getRows() || north < 0) {
-                north = hexagon.getRow();
-            }
-
-            int south = hexagon.getRow() + move;
-            if (south >= board.getRows()) {
-                south = hexagon.getRow();
-            }
-
-            int west = hexagon.getColumn() - move;
-            if (west >= board.getColumns() || west < 0) {
-                west = hexagon.getColumn();
-            }
-
-            int east = hexagon.getColumn() + move;
-            if (east >= board.getColumns()) {
-                east = hexagon.getColumn();
-            }
-
-            if (east % 2 != 0) {
-                northEastMoveOffset++;
-            } else {
-                southEastMoveOffset++;
-            }
-
-            if (west % 2 != 0) {
-                northWestMoveOffset++;
-            } else {
-                southWestMoveOffset++;
-            }
-
-            int northEastOffset = hexagon.getRow() - northEastMoveOffset;
-            if (northEastOffset >= board.getRows() || northEastOffset < 0) {
-                northEastOffset = hexagon.getRow();
-            }
-
-            int northWestOffset = hexagon.getRow() - northWestMoveOffset;
-            if (northWestOffset >= board.getRows() || northWestOffset < 0) {
-                northWestOffset = hexagon.getRow();
-            }
-
-            int southEastOffset = hexagon.getRow() + southEastMoveOffset;
-            if (southEastOffset >= board.getRows()) {
-                southEastOffset = hexagon.getRow();
-            }
-
-            int southWestOffset = hexagon.getRow() + southWestMoveOffset;
-            if (southWestOffset >= board.getRows()) {
-                southWestOffset = hexagon.getRow();
+                continue;
             }
 
             hexagonPolygons[hexagon.getColumn()][north].setFill(Paint.valueOf("green"));
+        }
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int south = hexagon.getRow() + move;
+            if (south >= board.getRows()) {
+                continue;
+            }
+
             hexagonPolygons[hexagon.getColumn()][south].setFill(Paint.valueOf("green"));
-            hexagonPolygons[east][northEastOffset].setFill(Paint.valueOf("green"));
-            hexagonPolygons[west][northWestOffset].setFill(Paint.valueOf("green"));
-            hexagonPolygons[east][southEastOffset].setFill(Paint.valueOf("red"));
-            hexagonPolygons[west][southWestOffset].setFill(Paint.valueOf("red"));
+        }
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int west = hexagon.getColumn() - move;
+            if (west >= board.getColumns() || west < 0) {
+                continue;
+            }
+
+            if (west % 2 != 0) {
+                northWestOffset++;
+            }
+
+            int northWest = hexagon.getRow() - northWestOffset;
+            if (northWest >= board.getRows() || northWest < 0) {
+                continue;
+            }
+
+            hexagonPolygons[west][northWest].setFill(Paint.valueOf("green"));
+        }
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int west = hexagon.getColumn() - move;
+            if (west >= board.getColumns() || west < 0) {
+                continue;
+            }
+
+            if (west % 2 == 0) {
+                southWestOffset++;
+            }
+
+            int southWest = hexagon.getRow() + southWestOffset;
+            if (southWest >= board.getRows()) {
+                continue;
+            }
+
+            hexagonPolygons[west][southWest].setFill(Paint.valueOf("red"));
+        }
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int east = hexagon.getColumn() + move;
+            if (east >= board.getColumns()) {
+                continue;
+            }
+
+            if (east % 2 != 0) {
+                northEastOffset++;
+            }
+
+            int northEast = hexagon.getRow() - northEastOffset;
+            if (northEast >= board.getRows() || northEast < 0) {
+                continue;
+            }
+
+            hexagonPolygons[east][northEast].setFill(Paint.valueOf("green"));
+        }
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int east = hexagon.getColumn() + move;
+            if (east >= board.getColumns()) {
+                continue;
+            }
+
+            if (east % 2 == 0) {
+                southEastOffset++;
+            }
+
+            int southEast = hexagon.getRow() + southEastOffset;
+            if (southEast >= board.getRows()) {
+                continue;
+            }
+
+            hexagonPolygons[east][southEast].setFill(Paint.valueOf("red"));
         }
 
         hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
