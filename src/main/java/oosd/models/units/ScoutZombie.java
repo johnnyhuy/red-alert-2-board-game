@@ -1,11 +1,20 @@
 package oosd.models.units;
 
-import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 
 public class ScoutZombie extends Unit {
-    public ScoutZombie(Hexagon location, Player player) {
-        super(location, player);
+    public ScoutZombie(Player player) {
+        super(player);
         super.getWinnables().add(Zombat.class);
+    }
+
+    @Override
+    public String getName() {
+        return "Scout Zombie";
+    }
+
+    @Override
+    public int getMove() {
+        return 5;
     }
 }

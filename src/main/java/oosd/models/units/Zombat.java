@@ -1,10 +1,19 @@
 package oosd.models.units;
 
-import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 
 public class Zombat extends Unit {
-    public Zombat(Hexagon location, Player player) {
-        super(location, player);
+    public Zombat(Player player) {
+        super(player);
+    }
+
+    @Override
+    public String getName() {
+        return "Zombat";
+    }
+
+    @Override
+    public int getMove() {
+        return 5;
     }
 }

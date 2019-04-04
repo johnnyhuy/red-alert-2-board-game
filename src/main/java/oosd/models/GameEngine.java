@@ -8,6 +8,7 @@ import oosd.models.units.*;
 
 public class GameEngine {
     private Board board;
+    private Hexagon selectedHexagon;
 
     public GameEngine() {
         final int boardRow = 6;
@@ -16,20 +17,38 @@ public class GameEngine {
         this.board = new Board(boardColumn, boardRow);
     }
 
+    /**
+     * GRASP: The creator
+     * Responsible to initialize game pieces and players in the board.
+     */
     public void initialize() {
         Hexagon[][] hexagons = this.board.getHexagons();
         Player playerOne = new Player("Johnny Dave", Team.RED);
         Player playerTwo = new Player("Jane Doe", Team.BLUE);
 
-        Unit tank = new Tank(hexagons[0][0], playerOne);
-        Unit plane = new Plane(hexagons[1][0], playerOne);
-        Unit soldier = new Soldier(hexagons[2][0], playerOne);
-        Unit juggernautZombie = new JuggernautZombie(hexagons[0][5], playerOne);
-        Unit scoutZombie = new ScoutZombie(hexagons[1][5], playerOne);
-        Unit zombat = new Zombat(hexagons[2][5], playerOne);
+        hexagons[0][0].setUnit(new Tank(playerOne));
+        hexagons[1][0].setUnit(new Plane(playerOne));
+        hexagons[2][0].setUnit(new Soldier(playerOne));
+        hexagons[3][0].setUnit(new Soldier(playerOne));
+        hexagons[4][0].setUnit(new Soldier(playerOne));
+        hexagons[5][0].setUnit(new Soldier(playerOne));
+        hexagons[0][5].setUnit(new JuggernautZombie(playerTwo));
+        hexagons[1][5].setUnit(new ScoutZombie(playerTwo));
+        hexagons[2][5].setUnit(new Zombat(playerTwo));
+        hexagons[3][5].setUnit(new ScoutZombie(playerTwo));
+        hexagons[4][5].setUnit(new ScoutZombie(playerTwo));
+        hexagons[5][5].setUnit(new ScoutZombie(playerTwo));
     }
 
     public Board getBoard() {
         return this.board;
+    }
+
+    public Hexagon getSelectedHexagon() {
+        return selectedHexagon;
+    }
+
+    public void setSelectedHexagon(Hexagon selectedHexagon) {
+        this.selectedHexagon = selectedHexagon;
     }
 }

@@ -9,6 +9,13 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 
 public class Main extends Application {
+    /**
+     * GRASP: The creator
+     * Creates the initialized game logic and base UI objects at the start of the program.
+     *
+     * @param primaryStage JavaFX primary window
+     * @throws Exception if the startup dies
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         final String boardFileName = "board.fxml";
@@ -17,6 +24,7 @@ public class Main extends Application {
         final int sceneHeight = 775;
 
         GameEngine gameEngine = new GameEngine();
+        gameEngine.initialize();
         GameController gameController = new GameController(gameEngine);
 
         FXMLLoader loader = new FXMLLoader(GameController.class.getResource(boardFileName));
