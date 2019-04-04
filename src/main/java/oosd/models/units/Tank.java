@@ -18,6 +18,6 @@ public class Tank extends Unit {
 
     @Override
     public int getMove() {
-        return 4;
+        return 3;
     }
 }

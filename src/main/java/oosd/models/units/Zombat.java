@@ -14,6 +14,6 @@ public class Zombat extends Unit {
 
     @Override
     public int getMove() {
-        return 5;
+        return 6;
     }
 }

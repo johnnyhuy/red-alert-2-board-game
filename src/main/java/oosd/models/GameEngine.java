@@ -11,8 +11,8 @@ public class GameEngine {
     private Hexagon selectedHexagon;
 
     public GameEngine() {
-        final int boardRow = 6;
-        final int boardColumn = 6;
+        final int boardRow = 10;
+        final int boardColumn = 10;
 
         this.board = new Board(boardColumn, boardRow);
     }
@@ -31,13 +31,17 @@ public class GameEngine {
         hexagons[2][0].setUnit(new Soldier(playerOne));
         hexagons[3][0].setUnit(new Soldier(playerOne));
         hexagons[4][0].setUnit(new Soldier(playerOne));
-        hexagons[5][0].setUnit(new Soldier(playerOne));
-        hexagons[0][5].setUnit(new JuggernautZombie(playerTwo));
-        hexagons[1][5].setUnit(new ScoutZombie(playerTwo));
-        hexagons[2][5].setUnit(new Zombat(playerTwo));
-        hexagons[3][5].setUnit(new ScoutZombie(playerTwo));
-        hexagons[4][5].setUnit(new ScoutZombie(playerTwo));
-        hexagons[5][5].setUnit(new ScoutZombie(playerTwo));
+        hexagons[4][4].setUnit(new Zombat(playerOne));
+        hexagons[0][9].setUnit(new Zombat(playerTwo));
+        hexagons[1][9].setUnit(new ScoutZombie(playerTwo));
+        hexagons[2][9].setUnit(new Zombat(playerTwo));
+        hexagons[3][9].setUnit(new JuggernautZombie(playerTwo));
+        hexagons[4][9].setUnit(new ScoutZombie(playerTwo));
+        hexagons[5][9].setUnit(new ScoutZombie(playerTwo));
+        hexagons[6][9].setUnit(new ScoutZombie(playerTwo));
+        hexagons[7][9].setUnit(new ScoutZombie(playerTwo));
+        hexagons[8][9].setUnit(new ScoutZombie(playerTwo));
+        hexagons[9][9].setUnit(new ScoutZombie(playerTwo));
     }
 
     public Board getBoard() {

@@ -20,8 +20,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         final String boardFileName = "board.fxml";
         final String windowTitle = "OOSD Game Board";
-        final int sceneWidth = 625;
-        final int sceneHeight = 775;
+        final int sceneWidth = 950;
+        final int sceneHeight = 1100;
 
         GameEngine gameEngine = new GameEngine();
         gameEngine.initialize();
@@ -35,7 +35,7 @@ public class Main extends Application {
 
         primaryStage.setScene(content);
         primaryStage.setTitle(windowTitle);
-        primaryStage.setAlwaysOnTop(true);
+//        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }
 

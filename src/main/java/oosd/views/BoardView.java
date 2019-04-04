@@ -42,6 +42,72 @@ public class BoardView extends View {
             hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
         }
 
+        int northEastMoveOffset = 0;
+        int northWestMoveOffset = 0;
+        int southEastMoveOffset = 0;
+        int southWestMoveOffset = 0;
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int north = hexagon.getRow() - move;
+            if (north >= board.getRows() || north < 0) {
+                north = hexagon.getRow();
+            }
+
+            int south = hexagon.getRow() + move;
+            if (south >= board.getRows()) {
+                south = hexagon.getRow();
+            }
+
+            int west = hexagon.getColumn() - move;
+            if (west >= board.getColumns() || west < 0) {
+                west = hexagon.getColumn();
+            }
+
+            int east = hexagon.getColumn() + move;
+            if (east >= board.getColumns()) {
+                east = hexagon.getColumn();
+            }
+
+            if (east % 2 != 0) {
+                northEastMoveOffset++;
+            } else {
+                southEastMoveOffset++;
+            }
+
+            if (west % 2 != 0) {
+                northWestMoveOffset++;
+            } else {
+                southWestMoveOffset++;
+            }
+
+            int northEastOffset = hexagon.getRow() - northEastMoveOffset;
+            if (northEastOffset >= board.getRows() || northEastOffset < 0) {
+                northEastOffset = hexagon.getRow();
+            }
+
+            int northWestOffset = hexagon.getRow() - northWestMoveOffset;
+            if (northWestOffset >= board.getRows() || northWestOffset < 0) {
+                northWestOffset = hexagon.getRow();
+            }
+
+            int southEastOffset = hexagon.getRow() + southEastMoveOffset;
+            if (southEastOffset >= board.getRows()) {
+                southEastOffset = hexagon.getRow();
+            }
+
+            int southWestOffset = hexagon.getRow() + southWestMoveOffset;
+            if (southWestOffset >= board.getRows()) {
+                southWestOffset = hexagon.getRow();
+            }
+
+            hexagonPolygons[hexagon.getColumn()][north].setFill(Paint.valueOf("green"));
+            hexagonPolygons[hexagon.getColumn()][south].setFill(Paint.valueOf("green"));
+            hexagonPolygons[east][northEastOffset].setFill(Paint.valueOf("green"));
+            hexagonPolygons[west][northWestOffset].setFill(Paint.valueOf("green"));
+            hexagonPolygons[east][southEastOffset].setFill(Paint.valueOf("red"));
+            hexagonPolygons[west][southWestOffset].setFill(Paint.valueOf("red"));
+        }
+
         hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#dadada"));
     }
 
@@ -64,11 +130,13 @@ public class BoardView extends View {
                 unitCircles[xIndex][yIndex].setOpacity(unitOpacity);
 
                 String name = hexagon.getUnit() != null ? hexagon.getUnit().getName() : "";
-                unitText[xIndex][yIndex].setText(name);
+//                unitText[xIndex][yIndex].setText(name);
+
+                Text test = new Text(xIndex + ", " + yIndex);
 
                 final StackPane stack = new StackPane();
                 stack.setOnMouseClicked(event -> controller.board(event, hexagon));
-                stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex]);
+                stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex], test);
                 stack.setLayoutX(xOffset + x);
                 stack.setLayoutY(yOffset + y);
                 stack.setAlignment(Pos.CENTER);
