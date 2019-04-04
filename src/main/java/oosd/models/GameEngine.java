@@ -59,38 +59,33 @@ public class GameEngine {
         this.selectedHexagon = selectedHexagon;
     }
 
-    public List<Hexagon> getValidMoves() {
+    public List<Hexagon> getValidMoves(Hexagon hexagon) {
         List<Hexagon> hexagons = new ArrayList<>();
-        Hexagon selectedHexagon = getSelectedHexagon();
         int northEastOffset = 0;
         int northWestOffset = 0;
         int southEastOffset = 0;
         int southWestOffset = 0;
 
-        if (selectedHexagon == null) {
-            return hexagons;
-        }
-
-        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
-            int north = selectedHexagon.getRow() - move;
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int north = hexagon.getRow() - move;
             if (north >= board.getRows() || north < 0) {
                 continue;
             }
 
-            hexagons.add(new Hexagon(selectedHexagon.getColumn(), north));
+            hexagons.add(new Hexagon(hexagon.getColumn(), north));
         }
 
-        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
-            int south = selectedHexagon.getRow() + move;
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int south = hexagon.getRow() + move;
             if (south >= board.getRows()) {
                 continue;
             }
 
-            hexagons.add(new Hexagon(selectedHexagon.getColumn(), south));
+            hexagons.add(new Hexagon(hexagon.getColumn(), south));
         }
 
-        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
-            int west = selectedHexagon.getColumn() - move;
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int west = hexagon.getColumn() - move;
             if (west >= board.getColumns() || west < 0) {
                 continue;
             }
@@ -99,7 +94,7 @@ public class GameEngine {
                 northWestOffset++;
             }
 
-            int northWest = selectedHexagon.getRow() - northWestOffset;
+            int northWest = hexagon.getRow() - northWestOffset;
             if (northWest >= board.getRows() || northWest < 0) {
                 continue;
             }
@@ -107,8 +102,8 @@ public class GameEngine {
             hexagons.add(new Hexagon(west, northWest));
         }
 
-        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
-            int west = selectedHexagon.getColumn() - move;
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int west = hexagon.getColumn() - move;
             if (west >= board.getColumns() || west < 0) {
                 continue;
             }
@@ -117,7 +112,7 @@ public class GameEngine {
                 southWestOffset++;
             }
 
-            int southWest = selectedHexagon.getRow() + southWestOffset;
+            int southWest = hexagon.getRow() + southWestOffset;
             if (southWest >= board.getRows()) {
                 continue;
             }
@@ -125,8 +120,8 @@ public class GameEngine {
             hexagons.add(new Hexagon(west, southWest));
         }
 
-        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
-            int east = selectedHexagon.getColumn() + move;
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int east = hexagon.getColumn() + move;
             if (east >= board.getColumns()) {
                 continue;
             }
@@ -135,7 +130,7 @@ public class GameEngine {
                 northEastOffset++;
             }
 
-            int northEast = selectedHexagon.getRow() - northEastOffset;
+            int northEast = hexagon.getRow() - northEastOffset;
             if (northEast >= board.getRows() || northEast < 0) {
                 continue;
             }
@@ -143,8 +138,8 @@ public class GameEngine {
             hexagons.add(new Hexagon(east, northEast));
         }
 
-        for (int move = 1; move <= selectedHexagon.getUnit().getMove(); move++) {
-            int east = selectedHexagon.getColumn() + move;
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+            int east = hexagon.getColumn() + move;
             if (east >= board.getColumns()) {
                 continue;
             }
@@ -153,7 +148,7 @@ public class GameEngine {
                 southEastOffset++;
             }
 
-            int southEast = selectedHexagon.getRow() + southEastOffset;
+            int southEast = hexagon.getRow() + southEastOffset;
             if (southEast >= board.getRows()) {
                 continue;
             }

@@ -42,9 +42,13 @@ public class BoardView extends View {
     public void selectUnit(Hexagon previousHexagon, Hexagon selectedHexagon) {
         if (previousHexagon != null) {
             hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+
+            for (Hexagon hexagon : gameEngine.getValidMoves(previousHexagon)) {
+                hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+            }
         }
 
-        for (Hexagon hexagon : gameEngine.getValidMoves()) {
+        for (Hexagon hexagon : gameEngine.getValidMoves(selectedHexagon)) {
             hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("green"));
         }
 
