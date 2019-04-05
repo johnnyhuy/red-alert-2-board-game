@@ -26,7 +26,7 @@ public class BoardFactory {
         this.rows = rows;
     }
 
-    public Circle[][] createUnitCircle() {
+    public Circle[][] createUnitCircles() {
         Circle[][] unitCircles = new Circle[this.columns][this.rows];
 
         for (int xIndex = 0; xIndex < this.rows; xIndex++) {

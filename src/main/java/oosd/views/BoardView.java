@@ -1,6 +1,5 @@
 package oosd.views;
 
-import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
@@ -36,7 +35,7 @@ public class BoardView extends View {
         this.boardFactory = new BoardFactory(board.getColumns(), board.getRows());
         this.hexagonPolygons = boardFactory.createHexagon();
         this.unitText = boardFactory.createUnitText();
-        this.unitCircles = boardFactory.createUnitCircle();
+        this.unitCircles = boardFactory.createUnitCircles();
     }
 
     public void moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
@@ -47,8 +46,10 @@ public class BoardView extends View {
         }
 
         hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
-        unitCircles[selectedHexagon.getColumn()][selectedHexagon.getRow()].setOpacity(0);
-        unitCircles[clickedHexagon.getColumn()][clickedHexagon.getRow()].setOpacity(1);
+        unitCircles[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
+        unitCircles[clickedHexagon.getColumn()][clickedHexagon.getRow()].setVisible(true);
+        unitText[selectedHexagon.getColumn()][selectedHexagon.getRow()].setText("");
+        unitText[clickedHexagon.getColumn()][clickedHexagon.getRow()].setText(clickedHexagon.getUnit().getName());
     }
 
     public void selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
@@ -78,20 +79,14 @@ public class BoardView extends View {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 Hexagon hexagon = board.getHexagon(new Hexagon(xIndex, yIndex));
 
-                double unitOpacity = hexagon.getUnit() != null ? 1 : 0;
-                unitCircles[xIndex][yIndex].setOpacity(unitOpacity);
-
-                String name = hexagon.getUnit() != null ? hexagon.getUnit().getName() : "";
-//                unitText[xIndex][yIndex].setText(name);
-
-                Text test = new Text(xIndex + ", " + yIndex);
+                unitCircles[xIndex][yIndex].setVisible(hexagon.getUnit() != null);
+                unitText[xIndex][yIndex].setText(hexagon.getUnit() != null ? hexagon.getUnit().getName() : "");
 
                 final StackPane stack = new StackPane();
                 stack.setOnMouseClicked(event -> controller.board(event, hexagon));
-                stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex], test);
+                stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex]);
                 stack.setLayoutX(xOffset + x);
                 stack.setLayoutY(yOffset + y);
-                stack.setAlignment(Pos.CENTER);
 
                 boardPane.getChildren().add(stack);
 
