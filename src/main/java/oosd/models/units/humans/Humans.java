@@ -3,8 +3,8 @@ package oosd.models.units.humans;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 
-public abstract class Humans extends Unit {
-    protected Humans(Player player) {
+abstract class Humans extends Unit {
+    Humans(Player player) {
         super(player);
     }
 }
