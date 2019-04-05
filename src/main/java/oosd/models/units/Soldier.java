@@ -16,6 +16,6 @@ public class Soldier extends Unit {
 
     @Override
     public int getMove() {
-        return 3;
+        return 2;
     }
 }
