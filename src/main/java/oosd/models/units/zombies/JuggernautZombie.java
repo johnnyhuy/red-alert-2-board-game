@@ -1,6 +1,8 @@
-package oosd.models.units;
+package oosd.models.units.zombies;
 
 import oosd.models.player.Player;
+import oosd.models.units.Unit;
+import oosd.models.units.humans.Soldier;
 
 public class JuggernautZombie extends Unit {
     public JuggernautZombie(Player player) {

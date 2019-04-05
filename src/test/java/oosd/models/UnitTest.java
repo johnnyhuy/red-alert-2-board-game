@@ -2,7 +2,13 @@ package oosd.models;
 
 import oosd.models.player.Player;
 import oosd.models.player.Team;
-import oosd.models.units.*;
+import oosd.models.units.Unit;
+import oosd.models.units.humans.Plane;
+import oosd.models.units.humans.Soldier;
+import oosd.models.units.humans.Tank;
+import oosd.models.units.zombies.JuggernautZombie;
+import oosd.models.units.zombies.ScoutZombie;
+import oosd.models.units.zombies.Zombat;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

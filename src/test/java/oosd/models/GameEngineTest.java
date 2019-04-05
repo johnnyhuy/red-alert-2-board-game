@@ -3,8 +3,8 @@ package oosd.models;
 import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
-import oosd.models.units.Soldier;
 import oosd.models.units.Unit;
+import oosd.models.units.humans.Soldier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
