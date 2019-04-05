@@ -1,5 +1,5 @@
 package oosd.views;
 
-interface Viewable {
+interface View {
     void initialize();
 }
