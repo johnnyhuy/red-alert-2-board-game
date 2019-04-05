@@ -1,5 +1,5 @@
 package oosd.views;
 
-interface View {
-    void initialize();
+public abstract class View {
+
 }
