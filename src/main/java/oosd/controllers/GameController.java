@@ -27,8 +27,8 @@ public class GameController extends Controller {
 
     @Override
     public void initialize() {
-        this.boardView = new BoardView(this, this.gameEngine, this.boardPane);
-        this.boardView.initialize();
+        boardView = new BoardView(this, gameEngine, boardPane);
+        boardView.initialize();
     }
 
     public void board(MouseEvent event, Hexagon hexagon) {

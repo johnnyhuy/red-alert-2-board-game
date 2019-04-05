@@ -1,5 +1,6 @@
 package oosd.models;
 
+import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
@@ -52,5 +53,50 @@ class BoardTest {
 
         // Assert
         assertEquals(unit, hexagon.getUnit());
+    }
+
+    @Test
+    void testGetHexagonWithObject() {
+        // Arrange
+        Board board = new Board(6, 6);
+        Hexagon hexagon = new Hexagon(1, 1);
+
+        // Act
+        Hexagon selectedHexagon = board.getHexagon(hexagon);
+
+        // Assert
+        assertEquals(selectedHexagon.getColumn(), 1);
+        assertEquals(selectedHexagon.getRow(), 1);
+    }
+
+    @Test
+    void testGetHexagonWithInt() {
+        // Arrange
+        Board board = new Board(6, 6);
+
+        // Act
+        Hexagon selectedHexagon = board.getHexagon(1, 1);
+
+        // Assert
+        assertEquals(selectedHexagon.getColumn(), 1);
+        assertEquals(selectedHexagon.getRow(), 1);
+    }
+
+    @Test
+    void testGetHexagonSetUnit() {
+        // Arrange
+        Player player = new Player("John Tester", Team.RED);
+        Unit unit = new Soldier(player);
+        Board board = new Board(6, 6);
+        Hexagon hexagon = new Hexagon(1, 1);
+
+        // Act
+        board.getHexagon(hexagon).setUnit(unit);
+        Hexagon selectedHexagon = board.getHexagon(hexagon);
+
+        // Assert
+        assertEquals(selectedHexagon.getColumn(), 1);
+        assertEquals(selectedHexagon.getRow(), 1);
+        assertEquals(selectedHexagon.getUnit(), unit);
     }
 }
