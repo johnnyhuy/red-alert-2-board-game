@@ -39,20 +39,32 @@ public class BoardView extends View {
         this.unitCircles = boardFactory.createUnitCircle();
     }
 
-    public void selectUnit(Hexagon previousHexagon, Hexagon selectedHexagon) {
-        if (previousHexagon != null) {
-            hexagonPolygons[previousHexagon.getColumn()][previousHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+    public void moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
+        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
+                hexagonPolygons[xIndex][yIndex].setFill(Paint.valueOf("#ffffff"));
+            }
+        }
 
-            for (Hexagon hexagon : gameEngine.getValidMoves(previousHexagon)) {
+        hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+        unitCircles[selectedHexagon.getColumn()][selectedHexagon.getRow()].setOpacity(0);
+        unitCircles[clickedHexagon.getColumn()][clickedHexagon.getRow()].setOpacity(1);
+    }
+
+    public void selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
+        if (selectedHexagon != null) {
+            hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+
+            for (Hexagon hexagon : gameEngine.getValidMoves(selectedHexagon)) {
                 hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
             }
         }
 
-        for (Hexagon hexagon : gameEngine.getValidMoves(selectedHexagon)) {
+        for (Hexagon hexagon : gameEngine.getValidMoves(clickedHexagon)) {
             hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("green"));
         }
 
-        hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
+        hexagonPolygons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
     }
 
     public void initialize() {
@@ -61,11 +73,9 @@ public class BoardView extends View {
         double x = 0;
         double y = 0;
         int hexagonCount = 0;
-        int rows = board.getRows();
-        int columns = board.getColumns();
 
-        for (int yIndex = 0; yIndex < rows; yIndex++) {
-            for (int xIndex = 0; xIndex < columns; xIndex++) {
+        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 Hexagon hexagon = board.getHexagon(new Hexagon(xIndex, yIndex));
 
                 double unitOpacity = hexagon.getUnit() != null ? 1 : 0;
@@ -93,10 +103,10 @@ public class BoardView extends View {
 
                 hexagonCount++;
 
-                x = xIndex == columns - 1 ? 0 : x + boardFactory.getGap();
+                x = xIndex == board.getColumns() - 1 ? 0 : x + boardFactory.getGap();
             }
 
-            y = yIndex == rows - 1 ? 0 : y + boardFactory.getFullIncrement();
+            y = yIndex == board.getRows() - 1 ? 0 : y + boardFactory.getFullIncrement();
         }
     }
 }
