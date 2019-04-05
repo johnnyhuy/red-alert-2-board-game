@@ -1,21 +1,21 @@
-package oosd.models.units;
+package oosd.models.units.zombies;
 
 import oosd.models.player.Player;
+import oosd.models.units.Unit;
 
-public class Soldier extends Unit {
-    public Soldier(Player player) {
+public class ScoutZombie extends Unit {
+    public ScoutZombie(Player player) {
         super(player);
         super.getWinnables().add(Zombat.class);
-        super.getWinnables().add(ScoutZombie.class);
     }
 
     @Override
     public String getName() {
-        return "Solider";
+        return "Scout Zombie";
     }
 
     @Override
     public int getMove() {
-        return 2;
+        return 4;
     }
 }

@@ -1,6 +1,10 @@
-package oosd.models.units;
+package oosd.models.units.humans;
 
 import oosd.models.player.Player;
+import oosd.models.units.Unit;
+import oosd.models.units.zombies.JuggernautZombie;
+import oosd.models.units.zombies.ScoutZombie;
+import oosd.models.units.zombies.Zombat;
 
 public class Plane extends Unit {
     public Plane(Player player) {
