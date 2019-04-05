@@ -31,11 +31,24 @@ public class GameController extends Controller {
         boardView.initialize();
     }
 
-    public void board(MouseEvent event, Hexagon hexagon) {
-        if (hexagon.getUnit() != null) {
-            Hexagon previousHexagon = gameEngine.getSelectedHexagon();
-            this.gameEngine.setSelectedHexagon(hexagon);
-            this.boardView.selectUnit(previousHexagon, hexagon);
+    public void board(MouseEvent event, Hexagon clickedHexagon) {
+        Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
+
+        // TODO: refactor me!
+        if (clickedHexagon.getUnit() != null) {
+            gameEngine.setSelectedHexagon(clickedHexagon);
+
+            boardView.selectUnit(selectedHexagon, clickedHexagon);
+        } else if (selectedHexagon != null) {
+            if (!gameEngine.isValidMove(clickedHexagon)) {
+                return;
+            }
+
+            clickedHexagon.setUnit(selectedHexagon.getUnit());
+            selectedHexagon.setUnit(null);
+            gameEngine.setSelectedHexagon(null);
+
+            boardView.moveUnit(selectedHexagon, clickedHexagon);
         }
     }
 }

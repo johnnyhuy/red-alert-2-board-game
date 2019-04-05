@@ -28,7 +28,7 @@ public class Hexagon {
 
         Hexagon hexagon = (Hexagon) object;
 
-        return hexagon.getRow() == this.getRow() && hexagon.getColumn() == this.getColumn();
+        return hexagon.getRow() == getRow() && hexagon.getColumn() == getColumn();
     }
 
     public Unit getUnit() {
