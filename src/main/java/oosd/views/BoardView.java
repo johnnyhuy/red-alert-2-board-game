@@ -56,8 +56,6 @@ public class BoardView extends View {
     }
 
     public void initialize() {
-        Hexagon[][] hexagons = board.getHexagons();
-
         int xOffset = 80;
         int yOffset = 80;
         double x = 0;
@@ -68,7 +66,7 @@ public class BoardView extends View {
 
         for (int yIndex = 0; yIndex < rows; yIndex++) {
             for (int xIndex = 0; xIndex < columns; xIndex++) {
-                Hexagon hexagon = hexagons[xIndex][yIndex];
+                Hexagon hexagon = board.getHexagon(new Hexagon(xIndex, yIndex));
 
                 double unitOpacity = hexagon.getUnit() != null ? 1 : 0;
                 unitCircles[xIndex][yIndex].setOpacity(unitOpacity);

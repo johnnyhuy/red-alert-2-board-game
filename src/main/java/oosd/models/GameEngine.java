@@ -12,14 +12,12 @@ import java.util.List;
 public class GameEngine {
     private Board board;
     private Hexagon selectedHexagon;
-    private final Hexagon[][] hexagons;
 
     public GameEngine() {
         final int boardRow = 10;
         final int boardColumn = 10;
 
         this.board = new Board(boardColumn, boardRow);
-        this.hexagons = board.getHexagons();
     }
 
     /**
@@ -30,22 +28,22 @@ public class GameEngine {
         Player playerOne = new Player("Johnny Dave", Team.RED);
         Player playerTwo = new Player("Jane Doe", Team.BLUE);
 
-        hexagons[0][0].setUnit(new Tank(playerOne));
-        hexagons[1][0].setUnit(new Plane(playerOne));
-        hexagons[2][0].setUnit(new Soldier(playerOne));
-        hexagons[3][0].setUnit(new Soldier(playerOne));
-        hexagons[4][0].setUnit(new Soldier(playerOne));
-        hexagons[4][4].setUnit(new Zombat(playerOne));
-        hexagons[0][9].setUnit(new Zombat(playerTwo));
-        hexagons[1][9].setUnit(new ScoutZombie(playerTwo));
-        hexagons[2][9].setUnit(new Zombat(playerTwo));
-        hexagons[3][9].setUnit(new JuggernautZombie(playerTwo));
-        hexagons[4][9].setUnit(new ScoutZombie(playerTwo));
-        hexagons[5][9].setUnit(new ScoutZombie(playerTwo));
-        hexagons[6][9].setUnit(new ScoutZombie(playerTwo));
-        hexagons[7][9].setUnit(new ScoutZombie(playerTwo));
-        hexagons[8][9].setUnit(new ScoutZombie(playerTwo));
-        hexagons[9][9].setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(0, 0).setUnit(new Tank(playerOne));
+        board.getHexagon(1, 0).setUnit(new Plane(playerOne));
+        board.getHexagon(2, 0).setUnit(new Soldier(playerOne));
+        board.getHexagon(3, 0).setUnit(new Soldier(playerOne));
+        board.getHexagon(4, 0).setUnit(new Soldier(playerOne));
+        board.getHexagon(4, 4).setUnit(new Zombat(playerOne));
+        board.getHexagon(0, 9).setUnit(new Zombat(playerTwo));
+        board.getHexagon(1, 9).setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(2, 9).setUnit(new Zombat(playerTwo));
+        board.getHexagon(3, 9).setUnit(new JuggernautZombie(playerTwo));
+        board.getHexagon(4, 9).setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(5, 9).setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(6, 9).setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(7, 9).setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(8, 9).setUnit(new ScoutZombie(playerTwo));
+        board.getHexagon(9, 9).setUnit(new ScoutZombie(playerTwo));
     }
 
     public Board getBoard() {
@@ -75,7 +73,7 @@ public class GameEngine {
                 continue;
             }
 
-            if (hexagons[hexagon.getColumn()][north].getUnit() != null) {
+            if (board.getHexagon(hexagon.getColumn(), north).getUnit() != null) {
                 break;
             }
 
@@ -88,7 +86,7 @@ public class GameEngine {
                 continue;
             }
 
-            if (hexagons[hexagon.getColumn()][south].getUnit() != null) {
+            if (board.getHexagon(hexagon.getColumn(), south).getUnit() != null) {
                 break;
             }
 
@@ -110,7 +108,7 @@ public class GameEngine {
                 continue;
             }
 
-            if (hexagons[west][northWest].getUnit() != null) {
+            if (board.getHexagon(west, northWest).getUnit() != null) {
                 break;
             }
 
@@ -132,7 +130,7 @@ public class GameEngine {
                 continue;
             }
 
-            if (hexagons[west][southWest].getUnit() != null) {
+            if (board.getHexagon(west, southWest).getUnit() != null) {
                 break;
             }
 
@@ -154,7 +152,7 @@ public class GameEngine {
                 continue;
             }
 
-            if (hexagons[east][northEast].getUnit() != null) {
+            if (board.getHexagon(east, northEast).getUnit() != null) {
                 break;
             }
 
@@ -176,7 +174,7 @@ public class GameEngine {
                 continue;
             }
 
-            if (hexagons[east][southEast].getUnit() != null) {
+            if (board.getHexagon(east, southEast).getUnit() != null) {
                 break;
             }
 
@@ -184,5 +182,15 @@ public class GameEngine {
         }
 
         return validMoves;
+    }
+
+    public boolean isValidMove(Hexagon selectedHexagon) {
+        for (Hexagon hexagon : getValidMoves(selectedHexagon)) {
+            if (hexagon.equals(selectedHexagon)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

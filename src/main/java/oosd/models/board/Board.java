@@ -17,8 +17,12 @@ public class Board {
         }
     }
 
-    public Hexagon[][] getHexagons() {
-        return this.hexagons;
+    public Hexagon getHexagon(Hexagon hexagon) {
+        return hexagons[hexagon.getColumn()][hexagon.getRow()];
+    }
+
+    public Hexagon getHexagon(int column, int row) {
+        return hexagons[column][row];
     }
 
     public int getRows() {
