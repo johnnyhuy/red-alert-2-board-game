@@ -8,51 +8,33 @@ import oosd.models.units.Soldier;
 import oosd.models.units.Unit;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoardTest {
     @Test
-    void testCompareLocationsHexagon() {
+    void testGetBoardColumns() {
         // Arrange
-        Hexagon hexagonOne = new Hexagon(1, 1);
-        Hexagon hexagonTwo = new Hexagon(1, 1);
-        Hexagon hexagonThree = new Hexagon(2, 5);
+        final int expectedColumns = 6;
+        Board board = new Board(expectedColumns, 6);
 
         // Act
-        boolean shouldEqual = hexagonOne.equals(hexagonTwo);
-        boolean shouldNotEqual = hexagonOne.equals(hexagonThree);
+        int columns = board.getColumns();
 
         // Assert
-        assertTrue(shouldEqual);
-        assertFalse(shouldNotEqual);
+        assertEquals(expectedColumns, columns);
     }
 
     @Test
-    void testGetHexagonLocation() {
+    void testGetBoardRow() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
+        final int expectedRows = 6;
+        Board board = new Board(expectedRows, 6);
 
         // Act
-        int row = hexagon.getRow();
-        int column = hexagon.getColumn();
+        int rows = board.getRows();
 
         // Assert
-        assertEquals(1, row);
-        assertEquals(1, column);
-    }
-
-    @Test
-    void testGetHexagonPlayer() {
-        // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
-        Player player = new Player("John Tester", Team.RED);
-        Unit unit = new Soldier(player);
-
-        // Act
-        hexagon.setUnit(unit);
-
-        // Assert
-        assertEquals(unit, hexagon.getUnit());
+        assertEquals(expectedRows, rows);
     }
 
     @Test
@@ -83,7 +65,7 @@ class BoardTest {
     }
 
     @Test
-    void testGetHexagonSetUnit() {
+    void testGetHexagonAndSetUnit() {
         // Arrange
         Player player = new Player("John Tester", Team.RED);
         Unit unit = new Soldier(player);

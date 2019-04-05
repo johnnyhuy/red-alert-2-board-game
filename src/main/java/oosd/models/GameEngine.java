@@ -13,11 +13,8 @@ public class GameEngine {
     private Board board;
     private Hexagon selectedHexagon;
 
-    public GameEngine() {
-        final int boardRow = 10;
-        final int boardColumn = 10;
-
-        this.board = new Board(boardColumn, boardRow);
+    public GameEngine(int boardColumns, int boardRows) {
+        this.board = new Board(boardColumns, boardRows);
     }
 
     /**
@@ -46,19 +43,44 @@ public class GameEngine {
         board.getHexagon(9, 9).setUnit(new ScoutZombie(playerTwo));
     }
 
+    /**
+     * Get the game board.
+     *
+     * @return board that contains the game
+     */
     public Board getBoard() {
         return this.board;
     }
 
+    /**
+     * Get the selected hexagon user clicks.
+     *
+     * @return selected hexagon
+     */
     public Hexagon getSelectedHexagon() {
         return selectedHexagon;
     }
 
+    /**
+     * Set the selected hexagon on in the game.
+     *
+     * @param selectedHexagon selected hexagon
+     */
     public void setSelectedHexagon(Hexagon selectedHexagon) {
         this.selectedHexagon = selectedHexagon;
     }
 
+    /**
+     * Get valid moves from a given hexagon.
+     *
+     * @param hexagon used to validate against
+     * @return list of valid hexagons
+     */
     public List<Hexagon> getValidMoves(Hexagon hexagon) {
+        if (hexagon.getUnit() == null) {
+            throw new NullPointerException("Selected hexagon must have a unit to check move validation.");
+        }
+
         List<Hexagon> validMoves = new ArrayList<>();
         int northEastOffset = 0;
         int northWestOffset = 0;
@@ -184,6 +206,12 @@ public class GameEngine {
         return validMoves;
     }
 
+    /**
+     * Check whether the given hexagon is valid based on the selected hexagon.
+     *
+     * @param checkHexagon used to check against the selected hexagon valid moves
+     * @return whether the hexagon location is a valid move
+     */
     public boolean isValidMove(Hexagon checkHexagon) {
         for (Hexagon hexagon : getValidMoves(selectedHexagon)) {
             if (hexagon.equals(checkHexagon)) {

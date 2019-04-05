@@ -12,14 +12,30 @@ public class Hexagon {
         this.row = row;
     }
 
+    /**
+     * Get the row of the hexagon.
+     *
+     * @return location of row on the board
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Get the column of the hexagon.
+     *
+     * @return location of column on the board
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * Compare hexagons based on their location.
+     *
+     * @param object any given object
+     * @return whether the hexagon is equal by coordinates
+     */
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Hexagon)) {
@@ -31,10 +47,20 @@ public class Hexagon {
         return hexagon.getRow() == getRow() && hexagon.getColumn() == getColumn();
     }
 
+    /**
+     * Get the unit.
+     *
+     * @return unit of the hexagon
+     */
     public Unit getUnit() {
         return unit;
     }
 
+    /**
+     * Set the unit.
+     *
+     * @param unit used to set to the hexagon
+     */
     public void setUnit(Unit unit) {
         this.unit = unit;
     }

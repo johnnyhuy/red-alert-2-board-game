@@ -22,8 +22,10 @@ public class Main extends Application {
         final String windowTitle = "OOSD Game Board";
         final int sceneWidth = 950;
         final int sceneHeight = 1100;
+        final int boardColumns = 10;
+        final int boardRows = 10;
 
-        GameEngine gameEngine = new GameEngine();
+        GameEngine gameEngine = new GameEngine(boardColumns, boardRows);
         gameEngine.initialize();
         GameController gameController = new GameController(gameEngine);
 
