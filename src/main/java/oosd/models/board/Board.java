@@ -17,14 +17,41 @@ public class Board {
         }
     }
 
-    public Hexagon[][] getHexagons() {
-        return this.hexagons;
+    /**
+     * Get the hexagon given the object
+     *
+     * @param hexagon object
+     * @return hexagon object
+     */
+    public Hexagon getHexagon(Hexagon hexagon) {
+        return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
 
+    /**
+     * Get hexagon by int coordinates.
+     *
+     * @param column x coordinate
+     * @param row    y coordinate
+     * @return hexagon object
+     */
+    public Hexagon getHexagon(int column, int row) {
+        return hexagons[column][row];
+    }
+
+    /**
+     * Get row size of the board.
+     *
+     * @return count of rows
+     */
     public int getRows() {
         return rows;
     }
 
+    /**
+     * Get column size of the board.
+     *
+     * @return count of columns
+     */
     public int getColumns() {
         return columns;
     }
