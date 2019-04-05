@@ -13,7 +13,7 @@ public abstract class Unit {
     private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
     private boolean captured;
 
-    Unit(Player player) {
+    protected Unit(Player player) {
         this.player = player;
         this.captured = false;
     }
