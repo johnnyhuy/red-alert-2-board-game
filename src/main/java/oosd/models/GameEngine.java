@@ -100,15 +100,28 @@ public class GameEngine {
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
             int north = hexagon.getRow() - move;
+            if (north >= board.getRows() || north < 0) {
+                continue;
+            }
+
+            if (board.getHexagon(hexagon.getColumn(), north).getUnit() != null) {
+                break;
+            }
+
+            validMoves.add(new Hexagon(hexagon.getColumn(), north));
+        }
+
+        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
             int south = hexagon.getRow() + move;
-
-            if (north < board.getRows() && north > 0 && board.getHexagon(hexagon.getColumn(), north).getUnit() == null) {
-                validMoves.add(new Hexagon(hexagon.getColumn(), north));
+            if (south >= board.getRows()) {
+                continue;
             }
 
-            if (south < board.getRows() && board.getHexagon(hexagon.getColumn(), south).getUnit() == null) {
-                validMoves.add(new Hexagon(hexagon.getColumn(), south));
+            if (board.getHexagon(hexagon.getColumn(), south).getUnit() != null) {
+                break;
             }
+
+            validMoves.add(new Hexagon(hexagon.getColumn(), south));
         }
 
         for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
