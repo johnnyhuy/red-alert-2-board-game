@@ -184,9 +184,9 @@ public class GameEngine {
         return validMoves;
     }
 
-    public boolean isValidMove(Hexagon selectedHexagon) {
+    public boolean isValidMove(Hexagon checkHexagon) {
         for (Hexagon hexagon : getValidMoves(selectedHexagon)) {
-            if (hexagon.equals(selectedHexagon)) {
+            if (hexagon.equals(checkHexagon)) {
                 return true;
             }
         }
