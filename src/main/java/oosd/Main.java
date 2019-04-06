@@ -37,7 +37,6 @@ public class Main extends Application {
 
         primaryStage.setScene(content);
         primaryStage.setTitle(windowTitle);
-//        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }
 
