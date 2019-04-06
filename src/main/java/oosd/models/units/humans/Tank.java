@@ -22,11 +22,6 @@ public class Tank extends Humans {
     }
 
     @Override
-    public int getMove() {
-        return 3;
-    }
-
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(2);
     }
