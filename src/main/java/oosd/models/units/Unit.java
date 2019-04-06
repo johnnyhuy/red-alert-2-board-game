@@ -1,6 +1,8 @@
 package oosd.models.units;
 
+import oosd.models.GameEngine;
 import oosd.models.player.Player;
+import oosd.models.units.behaviour.UnitBehaviour;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
  * Units can be extended with more sub-classes allowing different unit behaviour.
  */
 public abstract class Unit {
+    protected GameEngine gameEngine;
     private Player player;
     private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
     private boolean captured;
@@ -37,4 +40,6 @@ public abstract class Unit {
     public abstract String getName();
 
     public abstract int getMove();
+
+    public abstract UnitBehaviour getUnitBehaviour();
 }

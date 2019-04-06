@@ -1,6 +1,8 @@
 package oosd.models.units.zombies;
 
 import oosd.models.player.Player;
+import oosd.models.units.behaviour.LinearUnitBehaviour;
+import oosd.models.units.behaviour.UnitBehaviour;
 
 public class ScoutZombie extends Zombie {
     public ScoutZombie(Player player) {
@@ -16,5 +18,10 @@ public class ScoutZombie extends Zombie {
     @Override
     public int getMove() {
         return 4;
+    }
+
+    @Override
+    public UnitBehaviour getUnitBehaviour() {
+        return new LinearUnitBehaviour(3);
     }
 }

@@ -65,7 +65,7 @@ class GameEngineTest {
         gameEngine.setSelectedHexagon(selectedHexagon);
 
         // Act
-        boolean isValidMove = gameEngine.isValidMove(unitHexagon);
+        boolean isValidMove = unitHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, unitHexagon);
 
         // Assert
         assertFalse(isValidMove);
@@ -81,7 +81,7 @@ class GameEngineTest {
         hexagon.setUnit(unit);
 
         // Act
-        List<Hexagon> validMove = gameEngine.getValidMoves(hexagon);
+        List<Hexagon> validMove = hexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, hexagon);
 
         // Assert
         assertTrue(validMove.size() > 0);
@@ -94,7 +94,7 @@ class GameEngineTest {
         Hexagon hexagon = gameEngine.getBoard().getHexagon(0, 1);
 
         // Act
-        Executable action = () -> gameEngine.getValidMoves(hexagon);
+        Executable action = () -> hexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, hexagon);
 
         // Assert
         Exception exception = assertThrows(NullPointerException.class, action);
