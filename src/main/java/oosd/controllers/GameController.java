@@ -40,7 +40,7 @@ public class GameController extends Controller {
 
             boardView.selectUnit(selectedHexagon, clickedHexagon);
         } else if (selectedHexagon != null) {
-            if (!gameEngine.isValidMove(clickedHexagon)) {
+            if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, clickedHexagon)) {
                 return;
             }
 

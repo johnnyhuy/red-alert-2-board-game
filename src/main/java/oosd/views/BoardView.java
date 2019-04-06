@@ -56,12 +56,12 @@ public class BoardView extends View {
         if (selectedHexagon != null) {
             hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
 
-            for (Hexagon hexagon : gameEngine.getValidMoves(selectedHexagon)) {
+            for (Hexagon hexagon : selectedHexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, selectedHexagon)) {
                 hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
             }
         }
 
-        for (Hexagon hexagon : gameEngine.getValidMoves(clickedHexagon)) {
+        for (Hexagon hexagon : clickedHexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedHexagon)) {
             hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("green"));
         }
 

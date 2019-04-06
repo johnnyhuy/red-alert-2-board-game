@@ -1,8 +1,9 @@
 package oosd.models.units;
 
 import oosd.models.player.Player;
+import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SOLID: Open for extension and close for modification
@@ -10,10 +11,9 @@ import java.util.ArrayList;
  */
 public abstract class Unit {
     private Player player;
-    private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
     private boolean captured;
 
-    Unit(Player player) {
+    protected Unit(Player player) {
         this.player = player;
         this.captured = false;
     }
@@ -26,9 +26,7 @@ public abstract class Unit {
         this.captured = captured;
     }
 
-    public ArrayList<Class<? extends Unit>> getWinnables() {
-        return winnables;
-    }
+    public abstract List<Class<? extends Unit>> getWinnables();
 
     public Player getPlayer() {
         return this.player;
@@ -36,5 +34,5 @@ public abstract class Unit {
 
     public abstract String getName();
 
-    public abstract int getMove();
+    public abstract UnitBehaviour getUnitBehaviour();
 }

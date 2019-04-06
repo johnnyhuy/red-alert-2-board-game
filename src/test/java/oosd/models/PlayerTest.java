@@ -2,9 +2,9 @@ package oosd.models;
 
 import oosd.models.player.Player;
 import oosd.models.player.Team;
-import oosd.models.units.Soldier;
 import oosd.models.units.Unit;
-import oosd.models.units.Zombat;
+import oosd.models.units.humans.Soldier;
+import oosd.models.units.zombies.Zombat;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
