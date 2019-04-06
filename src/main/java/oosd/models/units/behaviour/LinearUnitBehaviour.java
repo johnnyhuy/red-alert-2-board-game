@@ -7,6 +7,9 @@ import oosd.models.board.Hexagon;
 import java.util.ArrayList;
 import java.util.List;
 
+import static oosd.helpers.NumberHelper.isEven;
+import static oosd.helpers.NumberHelper.isOdd;
+
 public class LinearUnitBehaviour extends UnitBehaviour {
     private final int moves;
     private List<Hexagon> validMoves;
@@ -65,7 +68,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             return;
         }
 
-        if (west % 2 != 0) {
+        if (isOdd(west)) {
             northWestOffset++;
         }
 
@@ -91,7 +94,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             return;
         }
 
-        if (east % 2 != 0) {
+        if (isOdd(east)) {
             northEastOffset++;
         }
 
@@ -134,7 +137,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             return;
         }
 
-        if (west % 2 == 0) {
+        if (isEven(west)) {
             southWestOffset++;
         }
 
@@ -160,7 +163,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             return;
         }
 
-        if (east % 2 == 0) {
+        if (isEven(east)) {
             southEastOffset++;
         }
 
