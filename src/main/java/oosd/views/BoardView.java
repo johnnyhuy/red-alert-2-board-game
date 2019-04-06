@@ -34,9 +34,9 @@ public class BoardView extends View {
         this.board = gameEngine.getBoard();
         this.sidebar = sidebar;
         this.boardFactory = new BoardFactory(board.getColumns(), board.getRows());
-        this.backgroundHexagons = boardFactory.createHexagons(30);
-        this.unitHexagons = boardFactory.createHexagons(30);
-        this.selectionHexagons = boardFactory.createHexagons(30);
+        this.backgroundHexagons = boardFactory.createHexagons();
+        this.unitHexagons = boardFactory.createHexagons();
+        this.selectionHexagons = boardFactory.createHexagons();
         this.playerTurn = (Text) sidebar.lookup("#playerTurn");
     }
 
