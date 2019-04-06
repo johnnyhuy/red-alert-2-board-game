@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="windowGridPane" alignment="CENTER" hgap="0" vgap="0">
-    <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" GridPane.columnIndex="0" GridPane.rowIndex="0">
-    </AnchorPane>
-    <VBox fx:id="sidebar" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="1" minWidth="200">
-        <Text fx:id="playerTurn"/>
-    </VBox>
-</GridPane>
+<Pane xmlns:fx="http://javafx.com/fxml" fx:id="windowGridPane">
+    <Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" layoutX="90" layoutY="50">
+    </Pane>
+    <Pane fx:id="sidebar" layoutX="846" layoutY="322">
+        <Text fx:id="playerTurn" fill="#FAFB32" style="-fx-font-weight: bold" textAlignment="CENTER"/>
+    </Pane>
+</Pane>

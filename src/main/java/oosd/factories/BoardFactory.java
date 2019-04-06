@@ -40,36 +40,13 @@ public class BoardFactory {
         for (int xIndex = 0; xIndex < this.rows; xIndex++) {
             for (int yIndex = 0; yIndex < this.columns; yIndex++) {
                 hexagons[xIndex][yIndex] = new Polygon();
-                hexagons[xIndex][yIndex].setStrokeWidth(2);
                 hexagons[xIndex][yIndex].getPoints().addAll(
                         x, y,
                         x + getSize(), y,
                         x + getGap(), y + getHalfIncrement(),
                         x + getSize(), y + getFullIncrement(),
                         x, y + getFullIncrement(),
-                        x - (getSize() / 2), y + getHalfIncrement()
-                );
-            }
-        }
-
-        return hexagons;
-    }
-
-    public Polygon[][] createHexagons(int size) {
-        Polygon[][] hexagons = new Polygon[this.columns][this.rows];
-        double x = 0;
-        double y = 0;
-
-        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
-            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
-                hexagons[xIndex][yIndex] = new Polygon();
-                hexagons[xIndex][yIndex].getPoints().addAll(
-                        x, y,
-                        x + size, y,
-                        x + getGap(), y + getHalfIncrement(),
-                        x + size, y + getFullIncrement(),
-                        x, y + getFullIncrement(),
-                        x - (size / 2.0), y + getHalfIncrement()
+                        x - (getSize() / 2.0), y + getHalfIncrement()
                 );
             }
         }
@@ -89,8 +66,8 @@ public class BoardFactory {
         return text;
     }
 
-    public double getSize() {
-        return 30;
+    private double getSize() {
+        return 40;
     }
 
     public double getEqualTriangleHeight() {
