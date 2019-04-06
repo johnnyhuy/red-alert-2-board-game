@@ -31,7 +31,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
 
         // TODO: Please refactor me :(
 
-        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+        for (int move = 1; move <= moves; move++) {
             int north = hexagon.getRow() - move;
             if (north >= board.getRows() || north < 0) {
                 continue;
@@ -44,7 +44,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             validMoves.add(new Hexagon(hexagon.getColumn(), north));
         }
 
-        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+        for (int move = 1; move <= moves; move++) {
             int south = hexagon.getRow() + move;
             if (south >= board.getRows()) {
                 continue;
@@ -57,7 +57,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             validMoves.add(new Hexagon(hexagon.getColumn(), south));
         }
 
-        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+        for (int move = 1; move <= moves; move++) {
             int west = hexagon.getColumn() - move;
             if (west >= board.getColumns() || west < 0) {
                 continue;
@@ -79,7 +79,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             validMoves.add(new Hexagon(west, northWest));
         }
 
-        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+        for (int move = 1; move <= moves; move++) {
             int west = hexagon.getColumn() - move;
             if (west >= board.getColumns() || west < 0) {
                 continue;
@@ -101,7 +101,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             validMoves.add(new Hexagon(west, southWest));
         }
 
-        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+        for (int move = 1; move <= moves; move++) {
             int east = hexagon.getColumn() + move;
             if (east >= board.getColumns()) {
                 continue;
@@ -123,7 +123,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             validMoves.add(new Hexagon(east, northEast));
         }
 
-        for (int move = 1; move <= hexagon.getUnit().getMove(); move++) {
+        for (int move = 1; move <= moves; move++) {
             int east = hexagon.getColumn() + move;
             if (east >= board.getColumns()) {
                 continue;
