@@ -2,10 +2,10 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="windowGridPane" alignment="center" hgap="0" vgap="0">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:id="windowGridPane" alignment="CENTER" hgap="0" vgap="0">
     <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" GridPane.columnIndex="0" GridPane.rowIndex="0">
     </AnchorPane>
-    <VBox fx:id="sidebar" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="1">
+    <VBox fx:id="sidebar" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="1" minWidth="200">
         <Text fx:id="playerTurn"/>
     </VBox>
 </GridPane>
