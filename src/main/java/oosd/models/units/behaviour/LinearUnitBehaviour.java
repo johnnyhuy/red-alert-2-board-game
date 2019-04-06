@@ -9,7 +9,6 @@ import java.util.List;
 
 public class LinearUnitBehaviour extends UnitBehaviour {
     private final int moves;
-    private GameEngine gameEngine;
 
     public LinearUnitBehaviour(int moves) {
         this.moves = moves;
@@ -17,10 +16,6 @@ public class LinearUnitBehaviour extends UnitBehaviour {
 
     @Override
     public List<Hexagon> getValidMoves(GameEngine gameEngine, Hexagon hexagon) {
-        if (hexagon.getUnit() == null) {
-            throw new NullPointerException("Selected hexagon must have a unit to check move validation.");
-        }
-
         Board board = gameEngine.getBoard();
 
         List<Hexagon> validMoves = new ArrayList<>();
