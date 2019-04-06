@@ -23,7 +23,7 @@ public class Plane extends Humans {
 
     @Override
     public String getName() {
-        return "Plane";
+        return "P";
     }
 
     @Override
