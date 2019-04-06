@@ -1,6 +1,6 @@
 package oosd.views;
 
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -18,20 +18,21 @@ import oosd.models.board.Hexagon;
  */
 public class BoardView extends View {
     private final Board board;
+    private final Pane boardPane;
     private final GameController controller;
     private GameEngine gameEngine;
-    private final AnchorPane boardPane;
+    private Pane sidebar;
     private final Polygon[][] hexagonPolygons;
     private final Text[][] unitText;
     private final Circle[][] unitCircles;
     private final BoardFactory boardFactory;
 
-    public BoardView(GameController controller, GameEngine gameEngine, AnchorPane boardPane) {
+    public BoardView(GameController controller, GameEngine gameEngine, Pane boardPane, Pane sidebar) {
         this.controller = controller;
         this.gameEngine = gameEngine;
         this.boardPane = boardPane;
         this.board = gameEngine.getBoard();
-
+        this.sidebar = sidebar;
         this.boardFactory = new BoardFactory(board.getColumns(), board.getRows());
         this.hexagonPolygons = boardFactory.createHexagon();
         this.unitText = boardFactory.createUnitText();
@@ -69,11 +70,12 @@ public class BoardView extends View {
     }
 
     public void initialize() {
-        int xOffset = 80;
-        int yOffset = 80;
         double x = 0;
         double y = 0;
         int hexagonCount = 0;
+
+        Text text = (Text) sidebar.lookup("#playerTurn");
+        text.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
@@ -85,8 +87,8 @@ public class BoardView extends View {
                 final StackPane stack = new StackPane();
                 stack.setOnMouseClicked(event -> controller.board(event, hexagon));
                 stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex]);
-                stack.setLayoutX(xOffset + x);
-                stack.setLayoutY(yOffset + y);
+                stack.setLayoutX(x);
+                stack.setLayoutY(y);
 
                 boardPane.getChildren().add(stack);
 
