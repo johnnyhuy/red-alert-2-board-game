@@ -1,28 +1,33 @@
-package oosd.models.units.zombies;
+package oosd.models.units.soviet;
 
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.allied.GrizzlyTank;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
-import oosd.models.units.humans.Soldier;
-import oosd.models.units.humans.Tank;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Zombat extends Zombie {
-    public Zombat(Player player) {
+public class KirovAirship extends Soviet {
+    public KirovAirship(Player player) {
         super(player);
     }
 
     @Override
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(Soldier.class, Tank.class);
+        return Arrays.asList(GISoldier.class, GrizzlyTank.class);
     }
 
     @Override
     public String getName() {
-        return "ZB";
+        return "Kirov Airship";
+    }
+
+    @Override
+    public String getImage() {
+        return "kirov_airship";
     }
 
     @Override

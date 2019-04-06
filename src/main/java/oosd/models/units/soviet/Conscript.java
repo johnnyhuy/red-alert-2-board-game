@@ -1,26 +1,31 @@
-package oosd.models.units.zombies;
+package oosd.models.units.soviet;
 
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
+import oosd.models.units.allied.GISoldier;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
-import oosd.models.units.humans.Soldier;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class JuggernautZombie extends Zombie {
-    public JuggernautZombie(Player player) {
+public class Conscript extends Soviet {
+    public Conscript(Player player) {
         super(player);
     }
 
     @Override
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(Zombat.class, ScoutZombie.class, Soldier.class);
+        return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class);
     }
 
     public String getName() {
-        return "JZ";
+        return "Conscript";
+    }
+
+    @Override
+    public String getImage() {
+        return "conscript";
     }
 
     @Override

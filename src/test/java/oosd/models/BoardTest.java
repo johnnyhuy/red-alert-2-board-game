@@ -5,7 +5,7 @@ import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
-import oosd.models.units.humans.Soldier;
+import oosd.models.units.allied.GISoldier;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,7 +68,7 @@ class BoardTest {
     void testGetHexagonAndSetUnit() {
         // Arrange
         Player player = new Player("John Tester", Team.RED);
-        Unit unit = new Soldier(player);
+        Unit unit = new GISoldier(player);
         Board board = new Board(6, 6);
         Hexagon hexagon = new Hexagon(1, 1);
 

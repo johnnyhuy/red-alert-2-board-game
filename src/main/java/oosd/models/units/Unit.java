@@ -34,5 +34,7 @@ public abstract class Unit {
 
     public abstract String getName();
 
+    public abstract String getImage();
+
     public abstract UnitBehaviour getUnitBehaviour();
 }

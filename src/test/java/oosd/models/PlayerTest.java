@@ -3,8 +3,8 @@ package oosd.models;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
-import oosd.models.units.humans.Soldier;
-import oosd.models.units.zombies.Zombat;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.soviet.KirovAirship;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,8 +43,8 @@ class PlayerTest {
     void testPlayerAddUnit() {
         // Arrange
         Player player = new Player("John Tester", Team.RED);
-        Unit soldier = new Soldier(player);
-        Unit zombat = new Zombat(player);
+        Unit soldier = new GISoldier(player);
+        Unit zombat = new KirovAirship(player);
 
         // Act
         player.addUnit(zombat);
