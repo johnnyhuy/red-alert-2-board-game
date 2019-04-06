@@ -6,7 +6,6 @@ import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.humans.Soldier;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
 
@@ -85,19 +84,5 @@ class GameEngineTest {
 
         // Assert
         assertTrue(validMove.size() > 0);
-    }
-
-    @Test
-    void testGetValidMovesUnitDoesNotExist() {
-        // Arrange
-        GameEngine gameEngine = new GameEngine(2, 2);
-        Hexagon hexagon = gameEngine.getBoard().getHexagon(0, 1);
-
-        // Act
-        Executable action = () -> hexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, hexagon);
-
-        // Assert
-        Exception exception = assertThrows(NullPointerException.class, action);
-        assertEquals("Selected hexagon must have a unit to check move validation.", exception.getMessage());
     }
 }

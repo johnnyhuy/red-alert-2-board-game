@@ -11,7 +11,7 @@ import oosd.models.units.zombies.ScoutZombie;
 import oosd.models.units.zombies.Zombat;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -116,7 +116,7 @@ class UnitTest {
         Unit unit = new Soldier(player);
 
         // Act
-        ArrayList<Class<? extends Unit>> winnables = unit.getWinnables();
+        List<Class<? extends Unit>> winnables = unit.getWinnables();
 
         // Assert
         assertTrue(winnables.contains(Zombat.class));
