@@ -1,15 +1,13 @@
 package oosd.models;
 
-import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
-import oosd.models.units.Soldier;
 import oosd.models.units.Unit;
-import oosd.models.units.Zombat;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.soviet.KirovAirship;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     @Test
@@ -44,10 +42,9 @@ class PlayerTest {
     @Test
     void testPlayerAddUnit() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
-        Unit soldier = new Soldier(hexagon, player);
-        Unit zombat = new Zombat(hexagon, player);
+        Unit soldier = new GISoldier(player);
+        Unit zombat = new KirovAirship(player);
 
         // Act
         player.addUnit(zombat);
@@ -56,5 +53,24 @@ class PlayerTest {
         // Assert
         assertEquals(2, player.getUnits().size());
         assertNotNull(player.getUnits());
+    }
+
+    @Test
+    void testComparePlayers() {
+        // Arrange
+        Player firstPlayer = new Player("John Tester", Team.RED);
+        Player secondPlayer = new Player("Jane Tester", Team.BLUE);
+        Player thirdPlayer = new Player("John Tester", Team.BLUE);
+        Player forthPlayer = new Player("John Tester", Team.RED);
+
+        // Act
+        boolean differentPlayer = firstPlayer.equals(secondPlayer);
+        boolean sameNameDifferentTeam = firstPlayer.equals(thirdPlayer);
+        boolean sameNameAndTeam = firstPlayer.equals(forthPlayer);
+
+        // Assert
+        assertFalse(differentPlayer);
+        assertFalse(sameNameDifferentTeam);
+        assertTrue(sameNameAndTeam);
     }
 }

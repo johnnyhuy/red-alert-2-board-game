@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane fx:id="boardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-</AnchorPane>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+<Pane xmlns:fx="http://javafx.com/fxml" fx:id="windowGridPane">
+    <Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" layoutX="90" layoutY="50">
+    </Pane>
+    <Pane fx:id="sidebar" layoutX="846" layoutY="322">
+        <Text fx:id="playerTurn" fill="#FAFB32" style="-fx-font-weight: bold" textAlignment="CENTER"/>
+    </Pane>
+</Pane>

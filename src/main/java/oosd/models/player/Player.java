@@ -1,9 +1,10 @@
 package oosd.models.player;
 
+import com.google.java.contract.Ensures;
 import oosd.models.units.Unit;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.google.java.contract.Ensures;
 
 public class Player {
     private String playerName;
@@ -31,5 +32,16 @@ public class Player {
     @Ensures("Unit.size() == old (Unit.size()) + 1")
     public void addUnit(Unit newUnit) {
         this.units.add(newUnit);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Player)) {
+            return false;
+        }
+
+        Player player = (Player) object;
+
+        return player.getTeam() == getTeam() && player.getPlayerName() == getPlayerName();
     }
 }

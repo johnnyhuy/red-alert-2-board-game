@@ -1,18 +1,19 @@
 package oosd.models.units;
 
-import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
+import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * SOLID: Open for extension and close for modification
+ * Units can be extended with more sub-classes allowing different unit behaviour.
+ */
 public abstract class Unit {
-    private Hexagon location;
     private Player player;
-    private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
     private boolean captured;
 
-    Unit(Hexagon location, Player player) {
-        this.location = location;
+    protected Unit(Player player) {
         this.player = player;
         this.captured = false;
     }
@@ -25,15 +26,15 @@ public abstract class Unit {
         this.captured = captured;
     }
 
-    public Hexagon getLocation() {
-        return this.location;
-    }
-
-    public ArrayList<Class<? extends Unit>> getWinnables() {
-        return winnables;
-    }
+    public abstract List<Class<? extends Unit>> getWinnables();
 
     public Player getPlayer() {
         return this.player;
     }
+
+    public abstract String getName();
+
+    public abstract String getImage();
+
+    public abstract UnitBehaviour getUnitBehaviour();
 }
