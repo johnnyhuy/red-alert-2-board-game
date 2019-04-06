@@ -3,46 +3,92 @@ package oosd.models;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
-import oosd.models.player.Team;
-import oosd.models.units.*;
-import com.google.java.contract.Ensures;
+
+import java.util.Iterator;
+import java.util.List;
+
+import static oosd.helpers.ListHelper.isNotEmpty;
 
 public class GameEngine {
     private Board board;
+    private Hexagon selectedHexagon;
+    private Player turn;
+    private List<Player> players;
+    private Iterator<Player> playersIterator;
 
-    public GameEngine() {
-        final int boardRow = 6;
-        final int boardColumn = 6;
+    public GameEngine(Board board, List<Player> players) {
+        this.board = board;
+        this.players = players;
 
-        this.board = new Board(boardColumn, boardRow);
+        // Whoever we add to the players list, the first one takes the turn
+        if (isNotEmpty(players)) {
+            this.playersIterator = players.listIterator();
+            this.turn = playersIterator.next();
+        }
     }
 
-    @Ensures({
-    	"String i = playerOne.getPlayerName()",
-    	"i.compareTo('Johnny Dave') == true",
-    	"String j = playerTwo.getPlayerName()",
-    	"j.compareTo('Jane Doe') == true",
-    	"tank.getLocation() == hexagons[0][0]",
-    	"plane.getLocation() == hexagons[1][0]",
-    	"soldier.getLocation() == hexagons[2][0]",
-    	"juggernautZombie.getLocation() == hexagons[0][5]",
-    	"scoutZombie.getLocation() == hexagons[1][5]",
-    	"zombat.getLocation() == hexagons[2][5]"
-    })
-    public void initialize() {
-    	Hexagon[][] hexagons = this.board.getHexagons();
-        Player playerOne = new Player("Johnny Dave", Team.RED);
-        Player playerTwo = new Player("Jane Doe", Team.BLUE);
-        
-        Unit tank = new Tank(hexagons[0][0], playerOne);
-        Unit plane = new Plane(hexagons[1][0], playerOne);
-        Unit soldier = new Soldier(hexagons[2][0], playerOne);
-        Unit juggernautZombie = new JuggernautZombie(hexagons[0][5], playerOne);
-        Unit scoutZombie = new ScoutZombie(hexagons[1][5], playerOne);
-        Unit zombat = new Zombat(hexagons[2][5], playerOne);
-    }
-
+    /**
+     * Get the game board.
+     *
+     * @return board that contains the game
+     */
     public Board getBoard() {
         return this.board;
+    }
+
+    /**
+     * Get the selected hexagon user clicks.
+     *
+     * @return selected hexagon
+     */
+    public Hexagon getSelectedHexagon() {
+        return selectedHexagon;
+    }
+
+    /**
+     * Set the selected hexagon on in the game.
+     *
+     * @param selectedHexagon selected hexagon
+     */
+    public void setSelectedHexagon(Hexagon selectedHexagon) {
+        this.selectedHexagon = selectedHexagon;
+    }
+
+    /**
+     * Get the players in the game.
+     *
+     * @return list of players in the game
+     */
+    public List<Player> getPlayers() {
+        return this.players;
+    }
+
+    /**
+     * Get the turn of the game.
+     *
+     * @return a player in the turn
+     */
+    public Player getTurn() {
+        return this.turn;
+    }
+
+    /**
+     * Get the next turn by going through the list sequentially.
+     *
+     * @return player in the turn
+     */
+    public Player getNextTurn() {
+        if (playersIterator.hasNext()) {
+            Player nextPlayer = playersIterator.next();
+            turn = nextPlayer;
+
+            return nextPlayer;
+        }
+
+        playersIterator = players.listIterator();
+        Player nextPlayer = playersIterator.next();
+        turn = nextPlayer;
+
+        return nextPlayer;
     }
 }

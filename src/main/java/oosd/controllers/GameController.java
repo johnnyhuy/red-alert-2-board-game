@@ -1,18 +1,32 @@
 package oosd.controllers;
 
+import com.google.java.contract.Requires;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import oosd.models.GameEngine;
 import oosd.models.board.Hexagon;
 import oosd.views.BoardView;
-import com.google.java.contract.Requires;
 
+/**
+ * GRASP: The controller
+ * Used to handle requests from other objects include the view and model.
+ * Acts as a middleman that delegates tasks to other objects.
+ * Cleanly separates the user interface (view) from the business objects (model)
+ */
 public class GameController extends Controller {
     private final GameEngine gameEngine;
 
     @FXML
-    private AnchorPane boardPane;
+    private Pane windowGridPane;
+
+    @FXML
+    private Pane boardPane;
+
+    @FXML
+    private Pane sidebar;
+
+    private BoardView boardView;
 
     public GameController(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
@@ -20,13 +34,34 @@ public class GameController extends Controller {
 
     @Override
     public void initialize() {
-        BoardView boardView = new BoardView(this, this.gameEngine, this.boardPane);
-        boardView.render();
+        boardView = new BoardView(this, gameEngine, boardPane, sidebar);
+        boardView.initialize();
     }
 
-    @Requires("hexagon != null")
-    public void board(MouseEvent event, GameEngine gameEngine, Hexagon hexagon) {
-        System.out.println("column " + hexagon.getColumn());
-        System.out.println("row " + hexagon.getRow());
+    @Requires("clickedHexagon == null")
+    public void board(MouseEvent event, Hexagon clickedHexagon) {
+        Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
+
+        if (clickedHexagon.getUnit() != null) {
+            if (!clickedHexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+                return;
+            }
+
+            gameEngine.setSelectedHexagon(clickedHexagon);
+            boardView.selectUnit(selectedHexagon, clickedHexagon);
+            return;
+        }
+
+        if (selectedHexagon != null) {
+            if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, clickedHexagon)) {
+                return;
+            }
+
+            clickedHexagon.setUnit(selectedHexagon.getUnit());
+            selectedHexagon.setUnit(null);
+            gameEngine.setSelectedHexagon(null);
+            gameEngine.getNextTurn();
+            boardView.moveUnit(selectedHexagon, clickedHexagon);
+        }
     }
 }
