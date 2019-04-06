@@ -26,6 +26,7 @@ public class BoardView extends View {
     private final Text[][] unitText;
     private final Circle[][] unitCircles;
     private final BoardFactory boardFactory;
+    private Text playerTurn;
 
     public BoardView(GameController controller, GameEngine gameEngine, Pane boardPane, Pane sidebar) {
         this.controller = controller;
@@ -37,9 +38,10 @@ public class BoardView extends View {
         this.hexagonPolygons = boardFactory.createHexagon();
         this.unitText = boardFactory.createUnitText();
         this.unitCircles = boardFactory.createUnitCircles();
+        this.playerTurn = (Text) sidebar.lookup("#playerTurn");
     }
 
-    public View moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
+    public void moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 hexagonPolygons[xIndex][yIndex].setFill(Paint.valueOf("#ffffff"));
@@ -51,11 +53,10 @@ public class BoardView extends View {
         unitCircles[clickedHexagon.getColumn()][clickedHexagon.getRow()].setVisible(true);
         unitText[selectedHexagon.getColumn()][selectedHexagon.getRow()].setText("");
         unitText[clickedHexagon.getColumn()][clickedHexagon.getRow()].setText(clickedHexagon.getUnit().getName());
-
-        return this;
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
-    public View selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
+    public void selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         if (selectedHexagon != null) {
             hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
 
@@ -69,17 +70,14 @@ public class BoardView extends View {
         }
 
         hexagonPolygons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
-
-        return this;
     }
 
-    public View initialize() {
+    public void initialize() {
         double x = 0;
         double y = 0;
         int hexagonCount = 0;
 
-        Text text = (Text) sidebar.lookup("#playerTurn");
-        text.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
@@ -109,7 +107,5 @@ public class BoardView extends View {
 
             y = yIndex == board.getRows() - 1 ? 0 : y + boardFactory.getFullIncrement();
         }
-
-        return this;
     }
 }
