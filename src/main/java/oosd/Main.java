@@ -31,8 +31,8 @@ public class Main extends Application {
     private final int boardRows = 10;
     private final String boardFileName = "board.fxml";
     private final String windowTitle = "OOSD Game Board";
-    private final int sceneWidth = 950;
-    private final int sceneHeight = 1100;
+    private final int sceneWidth = 800;
+    private final int sceneHeight = 600;
 
     /**
      * Boilerplate code for JavaFX.

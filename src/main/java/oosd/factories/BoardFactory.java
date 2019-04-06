@@ -78,7 +78,7 @@ public class BoardFactory {
     }
 
     public double getSize() {
-        return 50;
+        return 30;
     }
 
     public double getEqualTriangleHeight() {
