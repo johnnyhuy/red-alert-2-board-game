@@ -3,7 +3,9 @@ package oosd;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
@@ -16,6 +18,7 @@ import oosd.models.units.allied.Harrier;
 import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
+import oosd.views.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +34,8 @@ public class Main extends Application {
     private final int boardRows = 10;
     private final String boardFileName = "board.fxml";
     private final String windowTitle = "OOSD Game Board";
-    private final int sceneWidth = 800;
-    private final int sceneHeight = 600;
+    private final int sceneWidth = 1024;
+    private final int sceneHeight = 856;
 
     /**
      * Boilerplate code for JavaFX.
@@ -59,9 +62,12 @@ public class Main extends Application {
 
         Pane pane = loader.load();
         Scene content = new Scene(pane, sceneWidth, sceneHeight);
+        content.setFill(new ImagePattern(new Image(View.class.getResource("menu.png").toString())));
 
         primaryStage.setScene(content);
         primaryStage.setTitle(windowTitle);
+        primaryStage.setResizable(false);
+        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }
 
