@@ -9,46 +9,27 @@ import java.util.List;
 
 public class LinearUnitBehaviour extends UnitBehaviour {
     private final int moves;
+    private List<Hexagon> validMoves;
+    private boolean trackNorth = true;
+    private boolean trackSouth = true;
 
     public LinearUnitBehaviour(int moves) {
         this.moves = moves;
+        this.validMoves = new ArrayList<>();
     }
 
     @Override
     public List<Hexagon> getValidMoves(GameEngine gameEngine, Hexagon hexagon) {
         Board board = gameEngine.getBoard();
 
-        List<Hexagon> validMoves = new ArrayList<>();
         int northEastOffset = 0;
         int northWestOffset = 0;
         int southEastOffset = 0;
         int southWestOffset = 0;
-        boolean trackNorth = true;
-        boolean trackSouth = true;
 
         for (int move = 1; move <= moves; move++) {
-            int north = hexagon.getRow() - move;
-            int south = hexagon.getRow() + move;
-
-            if (north < board.getRows() && north >= 0 && trackNorth) {
-                if (board.getHexagon(hexagon.getColumn(), north).getUnit() != null) {
-                    trackNorth = false;
-                }
-
-                if (trackNorth) {
-                    validMoves.add(new Hexagon(hexagon.getColumn(), north));
-                }
-            }
-
-            if (south < board.getRows()) {
-                if (board.getHexagon(hexagon.getColumn(), south).getUnit() != null) {
-                    trackSouth = false;
-                }
-
-                if (trackSouth) {
-                    validMoves.add(new Hexagon(hexagon.getColumn(), south));
-                }
-            }
+            addNorthValidMoves(hexagon, board, move);
+            addSouthValidMoves(hexagon, board, move);
         }
 
         for (int move = 1; move <= moves; move++) {
@@ -140,6 +121,40 @@ public class LinearUnitBehaviour extends UnitBehaviour {
         }
 
         return validMoves;
+    }
+
+    private void addNorthValidMoves(Hexagon hexagon, Board board, int move) {
+        int north = hexagon.getRow() - move;
+        if (north >= board.getRows() || north < 0) {
+            return;
+        }
+
+        if (board.getHexagon(hexagon.getColumn(), north).getUnit() != null) {
+            trackNorth = false;
+        }
+
+        if (!trackNorth) {
+            return;
+        }
+
+        validMoves.add(new Hexagon(hexagon.getColumn(), north));
+    }
+
+    private void addSouthValidMoves(Hexagon hexagon, Board board, int move) {
+        int south = hexagon.getRow() + move;
+        if (south >= board.getRows()) {
+            return;
+        }
+
+        if (board.getHexagon(hexagon.getColumn(), south).getUnit() != null) {
+            trackSouth = false;
+        }
+
+        if (!trackSouth) {
+            return;
+        }
+
+        validMoves.add(new Hexagon(hexagon.getColumn(), south));
     }
 
     @Override
