@@ -39,7 +39,7 @@ public class BoardView extends View {
         this.unitCircles = boardFactory.createUnitCircles();
     }
 
-    public void moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
+    public View moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 hexagonPolygons[xIndex][yIndex].setFill(Paint.valueOf("#ffffff"));
@@ -51,9 +51,11 @@ public class BoardView extends View {
         unitCircles[clickedHexagon.getColumn()][clickedHexagon.getRow()].setVisible(true);
         unitText[selectedHexagon.getColumn()][selectedHexagon.getRow()].setText("");
         unitText[clickedHexagon.getColumn()][clickedHexagon.getRow()].setText(clickedHexagon.getUnit().getName());
+
+        return this;
     }
 
-    public void selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
+    public View selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         if (selectedHexagon != null) {
             hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
 
@@ -67,9 +69,11 @@ public class BoardView extends View {
         }
 
         hexagonPolygons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
+
+        return this;
     }
 
-    public void initialize() {
+    public View initialize() {
         double x = 0;
         double y = 0;
         int hexagonCount = 0;
@@ -105,5 +109,7 @@ public class BoardView extends View {
 
             y = yIndex == board.getRows() - 1 ? 0 : y + boardFactory.getFullIncrement();
         }
+
+        return this;
     }
 }
