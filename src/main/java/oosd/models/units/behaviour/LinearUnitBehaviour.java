@@ -23,33 +23,32 @@ public class LinearUnitBehaviour extends UnitBehaviour {
         int northWestOffset = 0;
         int southEastOffset = 0;
         int southWestOffset = 0;
-
-        // TODO: Please refactor me :(
+        boolean trackNorth = true;
+        boolean trackSouth = true;
 
         for (int move = 1; move <= moves; move++) {
             int north = hexagon.getRow() - move;
-            if (north >= board.getRows() || north < 0) {
-                continue;
-            }
-
-            if (board.getHexagon(hexagon.getColumn(), north).getUnit() != null) {
-                break;
-            }
-
-            validMoves.add(new Hexagon(hexagon.getColumn(), north));
-        }
-
-        for (int move = 1; move <= moves; move++) {
             int south = hexagon.getRow() + move;
-            if (south >= board.getRows()) {
-                continue;
+
+            if (north < board.getRows() && north >= 0 && trackNorth) {
+                if (board.getHexagon(hexagon.getColumn(), north).getUnit() != null) {
+                    trackNorth = false;
+                }
+
+                if (trackNorth) {
+                    validMoves.add(new Hexagon(hexagon.getColumn(), north));
+                }
             }
 
-            if (board.getHexagon(hexagon.getColumn(), south).getUnit() != null) {
-                break;
-            }
+            if (south < board.getRows()) {
+                if (board.getHexagon(hexagon.getColumn(), south).getUnit() != null) {
+                    trackSouth = false;
+                }
 
-            validMoves.add(new Hexagon(hexagon.getColumn(), south));
+                if (trackSouth) {
+                    validMoves.add(new Hexagon(hexagon.getColumn(), south));
+                }
+            }
         }
 
         for (int move = 1; move <= moves; move++) {
