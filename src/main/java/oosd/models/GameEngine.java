@@ -7,6 +7,8 @@ import oosd.models.player.Player;
 import java.util.Iterator;
 import java.util.List;
 
+import static oosd.helpers.ListHelper.isNotEmpty;
+
 public class GameEngine {
     private Board board;
     private Hexagon selectedHexagon;
@@ -19,7 +21,7 @@ public class GameEngine {
         this.players = players;
 
         // Whoever we add to the players list, the first one takes the turn
-        if (players.size() > 0) {
+        if (isNotEmpty(players)) {
             this.playersIterator = players.listIterator();
             this.turn = playersIterator.next();
         }
