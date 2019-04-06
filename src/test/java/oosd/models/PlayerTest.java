@@ -7,8 +7,7 @@ import oosd.models.units.humans.Soldier;
 import oosd.models.units.zombies.Zombat;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     @Test
@@ -54,5 +53,24 @@ class PlayerTest {
         // Assert
         assertEquals(2, player.getUnits().size());
         assertNotNull(player.getUnits());
+    }
+
+    @Test
+    void testComparePlayers() {
+        // Arrange
+        Player firstPlayer = new Player("John Tester", Team.RED);
+        Player secondPlayer = new Player("Jane Tester", Team.BLUE);
+        Player thirdPlayer = new Player("John Tester", Team.BLUE);
+        Player forthPlayer = new Player("John Tester", Team.RED);
+
+        // Act
+        boolean differentPlayer = firstPlayer.equals(secondPlayer);
+        boolean sameNameDifferentTeam = firstPlayer.equals(thirdPlayer);
+        boolean sameNameAndTeam = firstPlayer.equals(forthPlayer);
+
+        // Assert
+        assertFalse(differentPlayer);
+        assertFalse(sameNameDifferentTeam);
+        assertTrue(sameNameAndTeam);
     }
 }
