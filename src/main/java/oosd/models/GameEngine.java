@@ -12,15 +12,16 @@ public class GameEngine {
     private Hexagon selectedHexagon;
     private Player turn;
     private List<Player> players;
+    private Iterator<Player> playersIterator;
 
     public GameEngine(Board board, List<Player> players) {
         this.board = board;
         this.players = players;
 
         // Whoever we add to the players list, the first one takes the turn
-        Player firstPlayer = players.get(0);
-        if (firstPlayer != null) {
-            this.turn = firstPlayer;
+        if (players.size() > 0) {
+            this.playersIterator = players.listIterator();
+            this.turn = playersIterator.next();
         }
     }
 
@@ -49,5 +50,43 @@ public class GameEngine {
      */
     public void setSelectedHexagon(Hexagon selectedHexagon) {
         this.selectedHexagon = selectedHexagon;
+    }
+
+    /**
+     * Get the players in the game.
+     *
+     * @return list of players in the game
+     */
+    public List<Player> getPlayers() {
+        return this.players;
+    }
+
+    /**
+     * Get the turn of the game.
+     *
+     * @return a player in the turn
+     */
+    public Player getTurn() {
+        return this.turn;
+    }
+
+    /**
+     * Get the next turn by going through the list sequentially.
+     *
+     * @return player in the turn
+     */
+    public Player getNextTurn() {
+        if (playersIterator.hasNext()) {
+            Player nextPlayer = playersIterator.next();
+            turn = nextPlayer;
+
+            return nextPlayer;
+        }
+
+        playersIterator = players.listIterator();
+        Player nextPlayer = playersIterator.next();
+        turn = nextPlayer;
+
+        return nextPlayer;
     }
 }
