@@ -1,12 +1,17 @@
 package oosd.models;
 
-import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
-import oosd.models.units.*;
+import oosd.models.units.Unit;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.allied.GrizzlyTank;
+import oosd.models.units.allied.Harrier;
+import oosd.models.units.soviet.Conscript;
+import oosd.models.units.soviet.KirovAirship;
+import oosd.models.units.soviet.RhinoTank;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,90 +19,78 @@ class UnitTest {
     @Test
     void testCreateZombat() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Zombat(hexagon, player);
+        Unit unit = new KirovAirship(player);
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getLocation());
         assertNotNull(unit.getPlayer());
     }
 
     @Test
     void testCreateTank() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Tank(hexagon, player);
+        Unit unit = new GrizzlyTank(player);
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getLocation());
         assertNotNull(unit.getPlayer());
     }
 
     @Test
     void testCreateScoutZombie() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new ScoutZombie(hexagon, player);
+        Unit unit = new RhinoTank(player);
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getLocation());
         assertNotNull(unit.getPlayer());
     }
 
     @Test
     void testCreatePlane() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Plane(hexagon, player);
+        Unit unit = new Harrier(player);
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getLocation());
         assertNotNull(unit.getPlayer());
     }
 
     @Test
     void testCreateJuggernautZombie() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new JuggernautZombie(hexagon, player);
+        Unit unit = new Conscript(player);
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getLocation());
         assertNotNull(unit.getPlayer());
     }
 
     @Test
     void testCreateSoldier() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Soldier(hexagon, player);
+        Unit unit = new GISoldier(player);
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getLocation());
         assertNotNull(unit.getPlayer());
     }
 
@@ -105,11 +98,10 @@ class UnitTest {
     void testUnitGetPlayer() {
         // Arrange
         final String playerName = "John Tester";
-        Hexagon hexagon = new Hexagon(1, 1);
         Player player = new Player(playerName, Team.RED);
 
         // Act
-        Unit unit = new Soldier(hexagon, player);
+        Unit unit = new GISoldier(player);
 
         // Assert
         assertNotNull(unit.getPlayer());
@@ -118,49 +110,26 @@ class UnitTest {
     }
 
     @Test
-    void testUnitGetLocation() {
-        // Arrange
-        int row = 1;
-        int column = 1;
-        Hexagon hexagon = new Hexagon(row, column);
-        Player player = new Player("Jane Doe", Team.RED);
-
-        // Act
-        Unit unit = new Soldier(hexagon, player);
-
-        // Assert
-        assertNotNull(unit.getLocation());
-        assertEquals(row, unit.getLocation().getRow());
-        assertEquals(column, unit.getLocation().getColumn());
-    }
-
-    @Test
     void testWinnableUnits() {
         // Arrange
-        int row = 1;
-        int column = 1;
         Player player = new Player("Jane Doe", Team.RED);
-        Hexagon hexagon = new Hexagon(row, column);
-        Unit unit = new Soldier(hexagon, player);
+        Unit unit = new GISoldier(player);
 
         // Act
-        ArrayList<Class<? extends Unit>> winnables = unit.getWinnables();
+        List<Class<? extends Unit>> winnables = unit.getWinnables();
 
         // Assert
-        assertTrue(winnables.contains(Zombat.class));
-        assertTrue(winnables.contains(ScoutZombie.class));
-        assertFalse(winnables.contains(Soldier.class));
+        assertTrue(winnables.contains(KirovAirship.class));
+        assertTrue(winnables.contains(RhinoTank.class));
+        assertFalse(winnables.contains(GISoldier.class));
     }
 
     @Test
     void testUnitCaptured() {
         // Arrange
-        int row = 1;
-        int column = 1;
         Player player = new Player("Jane Doe", Team.RED);
-        Hexagon hexagon = new Hexagon(row, column);
-        Unit unit = new Soldier(hexagon, player);
-        Unit otherUnit = new Soldier(hexagon, player);
+        Unit unit = new GISoldier(player);
+        Unit otherUnit = new GISoldier(player);
 
         // Act
         unit.setCaptured(true);
