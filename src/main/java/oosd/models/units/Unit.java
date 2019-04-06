@@ -3,7 +3,7 @@ package oosd.models.units;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SOLID: Open for extension and close for modification
@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public abstract class Unit {
     private Player player;
-    private ArrayList<Class<? extends Unit>> winnables = new ArrayList<>();
     private boolean captured;
 
     protected Unit(Player player) {
@@ -27,9 +26,7 @@ public abstract class Unit {
         this.captured = captured;
     }
 
-    public ArrayList<Class<? extends Unit>> getWinnables() {
-        return winnables;
-    }
+    public abstract List<Class<? extends Unit>> getWinnables();
 
     public Player getPlayer() {
         return this.player;
