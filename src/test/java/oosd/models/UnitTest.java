@@ -3,12 +3,12 @@ package oosd.models;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
-import oosd.models.units.humans.Plane;
-import oosd.models.units.humans.Soldier;
-import oosd.models.units.humans.Tank;
-import oosd.models.units.zombies.JuggernautZombie;
-import oosd.models.units.zombies.ScoutZombie;
-import oosd.models.units.zombies.Zombat;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.allied.GrizzlyTank;
+import oosd.models.units.allied.Harrier;
+import oosd.models.units.soviet.Conscript;
+import oosd.models.units.soviet.KirovAirship;
+import oosd.models.units.soviet.RhinoTank;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -22,7 +22,7 @@ class UnitTest {
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Zombat(player);
+        Unit unit = new KirovAirship(player);
 
         // Assert
         assertNotNull(unit);
@@ -35,7 +35,7 @@ class UnitTest {
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Tank(player);
+        Unit unit = new GrizzlyTank(player);
 
         // Assert
         assertNotNull(unit);
@@ -48,7 +48,7 @@ class UnitTest {
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new ScoutZombie(player);
+        Unit unit = new RhinoTank(player);
 
         // Assert
         assertNotNull(unit);
@@ -61,7 +61,7 @@ class UnitTest {
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Plane(player);
+        Unit unit = new Harrier(player);
 
         // Assert
         assertNotNull(unit);
@@ -74,7 +74,7 @@ class UnitTest {
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new JuggernautZombie(player);
+        Unit unit = new Conscript(player);
 
         // Assert
         assertNotNull(unit);
@@ -87,7 +87,7 @@ class UnitTest {
         Player player = new Player("John Tester", Team.RED);
 
         // Act
-        Unit unit = new Soldier(player);
+        Unit unit = new GISoldier(player);
 
         // Assert
         assertNotNull(unit);
@@ -101,7 +101,7 @@ class UnitTest {
         Player player = new Player(playerName, Team.RED);
 
         // Act
-        Unit unit = new Soldier(player);
+        Unit unit = new GISoldier(player);
 
         // Assert
         assertNotNull(unit.getPlayer());
@@ -113,23 +113,23 @@ class UnitTest {
     void testWinnableUnits() {
         // Arrange
         Player player = new Player("Jane Doe", Team.RED);
-        Unit unit = new Soldier(player);
+        Unit unit = new GISoldier(player);
 
         // Act
         List<Class<? extends Unit>> winnables = unit.getWinnables();
 
         // Assert
-        assertTrue(winnables.contains(Zombat.class));
-        assertTrue(winnables.contains(ScoutZombie.class));
-        assertFalse(winnables.contains(Soldier.class));
+        assertTrue(winnables.contains(KirovAirship.class));
+        assertTrue(winnables.contains(RhinoTank.class));
+        assertFalse(winnables.contains(GISoldier.class));
     }
 
     @Test
     void testUnitCaptured() {
         // Arrange
         Player player = new Player("Jane Doe", Team.RED);
-        Unit unit = new Soldier(player);
-        Unit otherUnit = new Soldier(player);
+        Unit unit = new GISoldier(player);
+        Unit otherUnit = new GISoldier(player);
 
         // Act
         unit.setCaptured(true);

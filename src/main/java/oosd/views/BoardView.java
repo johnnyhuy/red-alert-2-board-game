@@ -3,7 +3,6 @@ package oosd.views;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
@@ -20,11 +19,11 @@ public class BoardView extends View {
     private final Board board;
     private final Pane boardPane;
     private final GameController controller;
+    private final Polygon[][] selectionHexagons;
     private GameEngine gameEngine;
     private Pane sidebar;
-    private final Polygon[][] hexagonPolygons;
-    private final Text[][] unitText;
-    private final Circle[][] unitCircles;
+    private final Polygon[][] backgroundHexagons;
+    private final Polygon[][] unitHexagons;
     private final BoardFactory boardFactory;
     private Text playerTurn;
 
@@ -35,41 +34,43 @@ public class BoardView extends View {
         this.board = gameEngine.getBoard();
         this.sidebar = sidebar;
         this.boardFactory = new BoardFactory(board.getColumns(), board.getRows());
-        this.hexagonPolygons = boardFactory.createHexagon();
-        this.unitText = boardFactory.createUnitText();
-        this.unitCircles = boardFactory.createUnitCircles();
+        this.backgroundHexagons = boardFactory.createHexagons();
+        this.unitHexagons = boardFactory.createHexagons();
+        this.selectionHexagons = boardFactory.createHexagons();
         this.playerTurn = (Text) sidebar.lookup("#playerTurn");
     }
 
     public void moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                hexagonPolygons[xIndex][yIndex].setFill(Paint.valueOf("#ffffff"));
+                selectionHexagons[xIndex][yIndex].setVisible(false);
             }
         }
 
-        hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
-        unitCircles[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
-        unitCircles[clickedHexagon.getColumn()][clickedHexagon.getRow()].setVisible(true);
-        unitText[selectedHexagon.getColumn()][selectedHexagon.getRow()].setText("");
-        unitText[clickedHexagon.getColumn()][clickedHexagon.getRow()].setText(clickedHexagon.getUnit().getName());
+        selectionHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setOpacity(1.0);
+        selectionHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
+        unitHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
+        unitHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setVisible(true);
+        unitHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(boardFactory.createViewImage(clickedHexagon.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         if (selectedHexagon != null) {
-            hexagonPolygons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+            selectionHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
 
             for (Hexagon hexagon : selectedHexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, selectedHexagon)) {
-                hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#ffffff"));
+                selectionHexagons[hexagon.getColumn()][hexagon.getRow()].setVisible(false);
             }
         }
 
         for (Hexagon hexagon : clickedHexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedHexagon)) {
-            hexagonPolygons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("green"));
+            selectionHexagons[hexagon.getColumn()][hexagon.getRow()].setVisible(true);
+            selectionHexagons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#00C400"));
         }
 
-        hexagonPolygons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
+        selectionHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
+        selectionHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setOpacity(0.5);
     }
 
     public void initialize() {
@@ -81,14 +82,23 @@ public class BoardView extends View {
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                Hexagon hexagon = board.getHexagon(new Hexagon(xIndex, yIndex));
+                Hexagon hexagon = board.getHexagon(xIndex, yIndex);
 
-                unitCircles[xIndex][yIndex].setVisible(hexagon.getUnit() != null);
-                unitText[xIndex][yIndex].setText(hexagon.getUnit() != null ? hexagon.getUnit().getName() : "");
+                if (hexagon.getUnit() != null) {
+                    unitHexagons[xIndex][yIndex].setFill(boardFactory.createViewImage(hexagon.getUnit().getImage()));
+                } else {
+                    unitHexagons[xIndex][yIndex].setVisible(false);
+                }
+
+                backgroundHexagons[xIndex][yIndex].setFill(boardFactory.createViewImage("grass"));
+                backgroundHexagons[xIndex][yIndex].setStrokeWidth(2);
+                backgroundHexagons[xIndex][yIndex].setStroke(Paint.valueOf("#706c1c"));
+
+                selectionHexagons[xIndex][yIndex].setVisible(false);
 
                 final StackPane stack = new StackPane();
                 stack.setOnMouseClicked(event -> controller.board(event, hexagon));
-                stack.getChildren().addAll(hexagonPolygons[xIndex][yIndex], unitCircles[xIndex][yIndex], unitText[xIndex][yIndex]);
+                stack.getChildren().addAll(backgroundHexagons[xIndex][yIndex], unitHexagons[xIndex][yIndex], selectionHexagons[xIndex][yIndex]);
                 stack.setLayoutX(x);
                 stack.setLayoutY(y);
 
