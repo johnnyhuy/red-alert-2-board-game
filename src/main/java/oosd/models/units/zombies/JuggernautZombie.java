@@ -20,7 +20,7 @@ public class JuggernautZombie extends Zombie {
     }
 
     public String getName() {
-        return "Jug Zombie";
+        return "JZ";
     }
 
     @Override

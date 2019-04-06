@@ -2,7 +2,7 @@ package oosd.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import oosd.models.GameEngine;
 import oosd.models.board.Hexagon;
 import oosd.views.BoardView;
@@ -17,7 +17,13 @@ public class GameController extends Controller {
     private final GameEngine gameEngine;
 
     @FXML
-    private AnchorPane boardPane;
+    private Pane windowGridPane;
+
+    @FXML
+    private Pane boardPane;
+
+    @FXML
+    private Pane sidebar;
 
     private BoardView boardView;
 
@@ -27,19 +33,24 @@ public class GameController extends Controller {
 
     @Override
     public void initialize() {
-        boardView = new BoardView(this, gameEngine, boardPane);
+        boardView = new BoardView(this, gameEngine, boardPane, sidebar);
         boardView.initialize();
     }
 
     public void board(MouseEvent event, Hexagon clickedHexagon) {
         Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
 
-        // TODO: refactor me!
         if (clickedHexagon.getUnit() != null) {
-            gameEngine.setSelectedHexagon(clickedHexagon);
+            if (!clickedHexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+                return;
+            }
 
+            gameEngine.setSelectedHexagon(clickedHexagon);
             boardView.selectUnit(selectedHexagon, clickedHexagon);
-        } else if (selectedHexagon != null) {
+            return;
+        }
+
+        if (selectedHexagon != null) {
             if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, clickedHexagon)) {
                 return;
             }
@@ -47,7 +58,7 @@ public class GameController extends Controller {
             clickedHexagon.setUnit(selectedHexagon.getUnit());
             selectedHexagon.setUnit(null);
             gameEngine.setSelectedHexagon(null);
-
+            gameEngine.getNextTurn();
             boardView.moveUnit(selectedHexagon, clickedHexagon);
         }
     }
