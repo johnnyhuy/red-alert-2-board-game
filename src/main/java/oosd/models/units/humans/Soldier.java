@@ -22,7 +22,7 @@ public class Soldier extends Humans {
 
     @Override
     public String getName() {
-        return "Solider";
+        return "S";
     }
 
     @Override

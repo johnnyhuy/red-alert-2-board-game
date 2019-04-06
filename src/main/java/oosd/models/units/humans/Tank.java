@@ -23,7 +23,7 @@ public class Tank extends Humans {
 
     @Override
     public String getName() {
-        return "Tank";
+        return "T";
     }
 
     @Override
