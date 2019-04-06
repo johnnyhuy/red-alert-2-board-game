@@ -23,11 +23,6 @@ public class Plane extends Humans {
     }
 
     @Override
-    public int getMove() {
-        return 6;
-    }
-
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(6);
     }

@@ -16,11 +16,6 @@ public class ScoutZombie extends Zombie {
     }
 
     @Override
-    public int getMove() {
-        return 4;
-    }
-
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(3);
     }
