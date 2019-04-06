@@ -1,6 +1,8 @@
 package oosd.models.units.zombies;
 
 import oosd.models.player.Player;
+import oosd.models.units.behaviour.LinearUnitBehaviour;
+import oosd.models.units.behaviour.UnitBehaviour;
 import oosd.models.units.humans.Soldier;
 
 public class JuggernautZombie extends Zombie {
@@ -18,5 +20,10 @@ public class JuggernautZombie extends Zombie {
     @Override
     public int getMove() {
         return 1;
+    }
+
+    @Override
+    public UnitBehaviour getUnitBehaviour() {
+        return new LinearUnitBehaviour(1);
     }
 }
