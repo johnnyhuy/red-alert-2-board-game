@@ -1,9 +1,10 @@
 package oosd.factories;
 
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
+import oosd.views.View;
 
 /**
  * GRASP: The creator
@@ -26,21 +27,12 @@ public class BoardFactory {
         this.rows = rows;
     }
 
-    public Circle[][] createUnitCircles() {
-        Circle[][] unitCircles = new Circle[this.columns][this.rows];
-
-        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
-            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
-                unitCircles[xIndex][yIndex] = new Circle();
-                unitCircles[xIndex][yIndex].setRadius(getSize() / 4);
-                unitCircles[xIndex][yIndex].setFill(Paint.valueOf("#DADADA"));
-            }
-        }
-
-        return unitCircles;
+    public ImagePattern createViewImage(String imageName) {
+        Image image = new Image(View.class.getResource(imageName + ".png").toString());
+        return new ImagePattern(image);
     }
 
-    public Polygon[][] createHexagon() {
+    public Polygon[][] createHexagons() {
         Polygon[][] hexagons = new Polygon[this.columns][this.rows];
         double x = 0;
         double y = 0;
@@ -48,16 +40,13 @@ public class BoardFactory {
         for (int xIndex = 0; xIndex < this.rows; xIndex++) {
             for (int yIndex = 0; yIndex < this.columns; yIndex++) {
                 hexagons[xIndex][yIndex] = new Polygon();
-                hexagons[xIndex][yIndex].setFill(Paint.valueOf("#ffffff"));
-                hexagons[xIndex][yIndex].setStrokeWidth(2);
-                hexagons[xIndex][yIndex].setStroke(Paint.valueOf("#000000"));
                 hexagons[xIndex][yIndex].getPoints().addAll(
                         x, y,
                         x + getSize(), y,
                         x + getGap(), y + getHalfIncrement(),
                         x + getSize(), y + getFullIncrement(),
                         x, y + getFullIncrement(),
-                        x - (getSize() / 2), y + getHalfIncrement()
+                        x - (getSize() / 2.0), y + getHalfIncrement()
                 );
             }
         }
@@ -77,8 +66,8 @@ public class BoardFactory {
         return text;
     }
 
-    public double getSize() {
-        return 30;
+    private double getSize() {
+        return 40;
     }
 
     public double getEqualTriangleHeight() {

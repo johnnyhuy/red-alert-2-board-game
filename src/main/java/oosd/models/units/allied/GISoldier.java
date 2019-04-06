@@ -1,29 +1,33 @@
-package oosd.models.units.humans;
+package oosd.models.units.allied;
 
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
-import oosd.models.units.zombies.JuggernautZombie;
-import oosd.models.units.zombies.ScoutZombie;
-import oosd.models.units.zombies.Zombat;
+import oosd.models.units.soviet.KirovAirship;
+import oosd.models.units.soviet.RhinoTank;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Tank extends Humans {
-    public Tank(Player player) {
+public class GISoldier extends Allied {
+    public GISoldier(Player player) {
         super(player);
     }
 
     @Override
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(Zombat.class, ScoutZombie.class, Soldier.class, JuggernautZombie.class);
+        return Arrays.asList(KirovAirship.class, RhinoTank.class);
     }
 
     @Override
     public String getName() {
-        return "T";
+        return "GI Soldier";
+    }
+
+    @Override
+    public String getImage() {
+        return "gi_soldier";
     }
 
     @Override

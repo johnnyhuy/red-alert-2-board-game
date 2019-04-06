@@ -5,7 +5,7 @@ import oosd.models.board.Hexagon;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
-import oosd.models.units.humans.Soldier;
+import oosd.models.units.allied.GISoldier;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ class GameEngineTest {
     void testIsInvalidMoveWhenUnitExists() {
         // Arrange
         Player player = new Player("John Tester", Team.RED);
-        Unit unit = new Soldier(player);
+        Unit unit = new GISoldier(player);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
         Hexagon unitHexagon = gameEngine.getBoard().getHexagon(0, 0);
@@ -81,7 +81,7 @@ class GameEngineTest {
     void testGetValidMoves() {
         // Arrange
         Player player = new Player("John Tester", Team.RED);
-        Unit unit = new Soldier(player);
+        Unit unit = new GISoldier(player);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
         Hexagon hexagon = gameEngine.getBoard().getHexagon(0, 1);
