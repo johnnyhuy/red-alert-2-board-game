@@ -31,4 +31,15 @@ public class Player {
     public void addUnit(Unit newUnit) {
         this.units.add(newUnit);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Player)) {
+            return false;
+        }
+
+        Player player = (Player) object;
+
+        return player.getTeam() == getTeam() && player.getPlayerName() == getPlayerName();
+    }
 }
