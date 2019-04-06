@@ -20,7 +20,7 @@ public class ScoutZombie extends Zombie {
 
     @Override
     public String getName() {
-        return "Scout Zombie";
+        return "SZ";
     }
 
     @Override

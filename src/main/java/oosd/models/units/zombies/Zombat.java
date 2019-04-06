@@ -22,7 +22,7 @@ public class Zombat extends Zombie {
 
     @Override
     public String getName() {
-        return "Zombat";
+        return "ZB";
     }
 
     @Override
