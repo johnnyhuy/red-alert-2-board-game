@@ -6,7 +6,6 @@ import javafx.scene.layout.Pane;
 import oosd.models.GameEngine;
 import oosd.models.board.Hexagon;
 import oosd.views.BoardView;
-import oosd.views.View;
 
 /**
  * GRASP: The controller
@@ -38,26 +37,29 @@ public class GameController extends Controller {
         boardView.initialize();
     }
 
-    public View board(MouseEvent event, Hexagon clickedHexagon) {
+    public void board(MouseEvent event, Hexagon clickedHexagon) {
         Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
 
         if (clickedHexagon.getUnit() != null) {
+            if (!clickedHexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+                return;
+            }
+
             gameEngine.setSelectedHexagon(clickedHexagon);
-            return boardView.selectUnit(selectedHexagon, clickedHexagon);
+            boardView.selectUnit(selectedHexagon, clickedHexagon);
+            return;
         }
 
         if (selectedHexagon != null) {
             if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, clickedHexagon)) {
-                return null;
+                return;
             }
 
             clickedHexagon.setUnit(selectedHexagon.getUnit());
             selectedHexagon.setUnit(null);
             gameEngine.setSelectedHexagon(null);
-
-            return boardView.moveUnit(selectedHexagon, clickedHexagon);
+            gameEngine.getNextTurn();
+            boardView.moveUnit(selectedHexagon, clickedHexagon);
         }
-
-        return null;
     }
 }
