@@ -1,5 +1,13 @@
 package oosd.models.player;
 
-public enum Team {
-    RED, BLUE;
+public class Team {
+    private String name;
+
+    public Team(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
