@@ -1,5 +1,7 @@
 package oosd.models.units;
 
+import com.google.java.contract.Ensures;
+import com.google.java.contract.Requires;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 
@@ -23,6 +25,7 @@ public abstract class Unit {
         return this.captured;
     }
 
+    @Requires("captured != null")
     public void setCaptured(boolean captured) {
         this.captured = captured;
     }
@@ -33,6 +36,7 @@ public abstract class Unit {
         return this.player;
     }
 
+    @Ensures("name.size() > 0")
     public abstract String getName();
 
     public abstract String getImage();
