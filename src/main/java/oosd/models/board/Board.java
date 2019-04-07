@@ -2,6 +2,7 @@ package oosd.models.board;
 
 import com.google.java.contract.Ensures;
 import com.google.java.contract.Invariant;
+import com.google.java.contract.Requires;
 
 @Invariant({"columns > 0", "rows > 0"})
 public class Board {
@@ -9,6 +10,7 @@ public class Board {
     private int rows;
     private int columns;
 
+    @Requires({"columns > 0", "rows > 0"})
     @Ensures("hexagons[columns][rows] != null")
     public Board(int columns, int rows) {
         this.rows = rows;
