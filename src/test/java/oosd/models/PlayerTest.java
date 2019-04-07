@@ -7,6 +7,8 @@ import oosd.models.units.allied.GISoldier;
 import oosd.models.units.soviet.KirovAirship;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
@@ -40,19 +42,18 @@ class PlayerTest {
     }
 
     @Test
-    void testPlayerAddUnit() {
+    void testPlayerGetUnits() {
         // Arrange
         Player player = new Player("John Tester", Team.RED);
-        Unit soldier = new GISoldier(player);
-        Unit zombat = new KirovAirship(player);
+        new GISoldier(player);
+        new KirovAirship(player);
 
         // Act
-        player.addUnit(zombat);
-        player.addUnit(soldier);
+        List<Unit> units = player.getUnits();
 
         // Assert
-        assertEquals(2, player.getUnits().size());
-        assertNotNull(player.getUnits());
+        assertEquals(2, units.size());
+        assertNotNull(units);
     }
 
     @Test

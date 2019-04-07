@@ -33,7 +33,7 @@ class GameEngineTest {
         final int columns = 100;
 
         // Act
-        Board board = new Board(2, 2);
+        Board board = new Board(columns, rows);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Assert
