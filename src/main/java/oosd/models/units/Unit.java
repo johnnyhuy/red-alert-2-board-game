@@ -16,6 +16,7 @@ public abstract class Unit {
     protected Unit(Player player) {
         this.player = player;
         this.captured = false;
+        player.addUnit(this);
     }
 
     public boolean getCaptured() {
