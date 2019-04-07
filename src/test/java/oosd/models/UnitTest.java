@@ -19,7 +19,7 @@ class UnitTest {
     @Test
     void testCreateZombat() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
 
         // Act
         Unit unit = new KirovAirship(player);
@@ -32,7 +32,7 @@ class UnitTest {
     @Test
     void testCreateTank() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
 
         // Act
         Unit unit = new GrizzlyTank(player);
@@ -45,7 +45,7 @@ class UnitTest {
     @Test
     void testCreateScoutZombie() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
 
         // Act
         Unit unit = new RhinoTank(player);
@@ -58,7 +58,7 @@ class UnitTest {
     @Test
     void testCreatePlane() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
 
         // Act
         Unit unit = new Harrier(player);
@@ -71,7 +71,7 @@ class UnitTest {
     @Test
     void testCreateJuggernautZombie() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
 
         // Act
         Unit unit = new Conscript(player);
@@ -84,7 +84,7 @@ class UnitTest {
     @Test
     void testCreateSoldier() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
 
         // Act
         Unit unit = new GISoldier(player);
@@ -98,7 +98,7 @@ class UnitTest {
     void testUnitGetPlayer() {
         // Arrange
         final String playerName = "John Tester";
-        Player player = new Player(playerName, Team.RED);
+        Player player = new Player(playerName, new Team("Red"));
 
         // Act
         Unit unit = new GISoldier(player);
@@ -112,7 +112,7 @@ class UnitTest {
     @Test
     void testWinnableUnits() {
         // Arrange
-        Player player = new Player("Jane Doe", Team.RED);
+        Player player = new Player("Jane Doe", new Team("Red"));
         Unit unit = new GISoldier(player);
 
         // Act
@@ -127,7 +127,7 @@ class UnitTest {
     @Test
     void testUnitCaptured() {
         // Arrange
-        Player player = new Player("Jane Doe", Team.RED);
+        Player player = new Player("Jane Doe", new Team("Red"));
         Unit unit = new GISoldier(player);
         Unit otherUnit = new GISoldier(player);
 

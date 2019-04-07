@@ -44,7 +44,7 @@ class HexagonTest {
     void testGetHexagonPlayer() {
         // Arrange
         Hexagon hexagon = new Hexagon(1, 1);
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
 
         // Act
