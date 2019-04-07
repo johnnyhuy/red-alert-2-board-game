@@ -1,10 +1,15 @@
 package oosd.models.board;
 
+import com.google.java.contract.Ensures;
+import com.google.java.contract.Invariant;
+
+@Invariant({"columns > 0", "rows > 0"})
 public class Board {
     private Hexagon[][] hexagons;
     private int rows;
     private int columns;
 
+    @Ensures("hexagons[columns][rows] != null")
     public Board(int columns, int rows) {
         this.rows = rows;
         this.columns = columns;
@@ -23,6 +28,7 @@ public class Board {
      * @param hexagon object
      * @return hexagon object
      */
+    @Ensures({"result.getColumns() == hexagon.getColumns()", "result.getRows() == hexagon.getRows()"})
     public Hexagon getHexagon(Hexagon hexagon) {
         return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
@@ -34,6 +40,7 @@ public class Board {
      * @param row    y coordinate
      * @return hexagon object
      */
+    @Ensures({"result.getColumns() == column", "result.getRows() == row"})
     public Hexagon getHexagon(int column, int row) {
         return hexagons[column][row];
     }

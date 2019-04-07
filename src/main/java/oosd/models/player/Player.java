@@ -1,11 +1,13 @@
 package oosd.models.player;
 
 import com.google.java.contract.Ensures;
+import com.google.java.contract.Invariant;
 import oosd.models.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Invariant({"playerName != null", "team != null", "units.size() >= 0"})
 public class Player {
     private String playerName;
     private Team team;
@@ -17,6 +19,7 @@ public class Player {
         this.units = new ArrayList<>();
     }
 
+    @Ensures("playerName.size() > 0")
     public String getPlayerName() {
         return this.playerName;
     }
