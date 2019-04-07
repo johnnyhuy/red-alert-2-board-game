@@ -1,7 +1,7 @@
-module board.javafx {
+module redalertboardgame {
     requires javafx.controls;
     requires javafx.fxml;
-	requires cofoja;
+    requires cofoja;
 
     opens oosd.controllers to javafx.fxml;
     opens oosd to javafx.fxml;
