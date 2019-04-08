@@ -3,7 +3,6 @@ package oosd.factories;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 import oosd.views.View;
 
 /**
@@ -52,18 +51,6 @@ public class UIFactory {
         }
 
         return hexagons;
-    }
-
-    public Text[][] createUnitText() {
-        Text[][] text = new Text[this.columns][this.rows];
-
-        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
-            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
-                text[xIndex][yIndex] = new Text();
-            }
-        }
-
-        return text;
     }
 
     private double getSize() {
