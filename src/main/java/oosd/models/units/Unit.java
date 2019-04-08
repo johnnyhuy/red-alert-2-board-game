@@ -1,7 +1,5 @@
 package oosd.models.units;
 
-import com.google.java.contract.Ensures;
-import com.google.java.contract.Requires;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 
@@ -25,18 +23,19 @@ public abstract class Unit {
         return this.captured;
     }
 
-    @Requires("captured != null")
+    // @pre.condition captured != null
     public void setCaptured(boolean captured) {
         this.captured = captured;
     }
 
+    // @pre.condition result.size() > 0
     public abstract List<Class<? extends Unit>> getWinnables();
 
     public Player getPlayer() {
         return this.player;
     }
 
-    @Ensures("name.size() > 0")
+    // @post.condition name.size() > 0
     public abstract String getName();
 
     public abstract String getImage();
