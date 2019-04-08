@@ -1,6 +1,5 @@
 package oosd.controllers;
 
-import com.google.java.contract.Requires;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -38,7 +37,6 @@ public class GameController extends Controller {
         boardView.initialize();
     }
 
-    @Requires("clickedHexagon == null")
     public void board(MouseEvent event, Hexagon clickedHexagon) {
         Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
 

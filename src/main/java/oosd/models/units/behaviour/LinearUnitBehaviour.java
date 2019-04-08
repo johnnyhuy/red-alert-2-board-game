@@ -10,6 +10,7 @@ import java.util.List;
 import static oosd.helpers.NumberHelper.isEven;
 import static oosd.helpers.NumberHelper.isOdd;
 
+// @invariant moves > 0
 public class LinearUnitBehaviour extends UnitBehaviour {
     private final int moves;
     private List<Hexagon> validMoves;
