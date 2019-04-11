@@ -33,7 +33,7 @@ class GameEngineTest {
         final int columns = 100;
 
         // Act
-        Board board = new Board(2, 2);
+        Board board = new Board(columns, rows);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Assert
@@ -60,7 +60,7 @@ class GameEngineTest {
     @Test
     void testIsInvalidMoveWhenUnitExists() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
@@ -80,7 +80,7 @@ class GameEngineTest {
     @Test
     void testGetValidMoves() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
@@ -99,7 +99,7 @@ class GameEngineTest {
         // Arrange
         Board board = new Board(2, 2);
         List<Player> players = new ArrayList<>();
-        players.add(new Player("John Tester", Team.RED));
+        players.add(new Player("John Tester", new Team("Red")));
         GameEngine gameEngine = new GameEngine(board, players);
 
         // Act
@@ -112,8 +112,8 @@ class GameEngineTest {
     @Test
     void testGetNextTurn() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", Team.RED);
-        Player playerTwo = new Player("Jane Doe", Team.BLUE);
+        Player playerOne = new Player("Johnny Dave", new Team("Red"));
+        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, players);
@@ -134,8 +134,8 @@ class GameEngineTest {
     @Test
     void testGetPlayers() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", Team.RED);
-        Player playerTwo = new Player("Jane Doe", Team.BLUE);
+        Player playerOne = new Player("Johnny Dave", new Team("Red"));
+        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
         List<Player> expectedPlayers = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, expectedPlayers);
