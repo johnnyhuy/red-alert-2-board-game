@@ -67,7 +67,7 @@ class BoardTest {
     @Test
     void testGetHexagonAndSetUnit() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
+        Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         Board board = new Board(6, 6);
         Hexagon hexagon = new Hexagon(1, 1);

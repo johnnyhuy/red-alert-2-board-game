@@ -3,7 +3,6 @@ package oosd.factories;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 import oosd.views.View;
 
 /**
@@ -14,7 +13,7 @@ import oosd.views.View;
  * This factory should know the dimensions of the hexagons on the board.
  * No one else should alter or make different sized polygons other than this class.
  */
-public class BoardFactory {
+public class UIFactory {
     private final double equalTriangleHeight = Math.sqrt(3);
     private final double halfIncrement = getSize() * (getEqualTriangleHeight() / 2.0);
     private final double fullIncrement = getSize() * getEqualTriangleHeight();
@@ -22,7 +21,7 @@ public class BoardFactory {
     private int rows;
     private double gap = getSize() * 1.5;
 
-    public BoardFactory(int columns, int rows) {
+    public UIFactory(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
     }
@@ -52,18 +51,6 @@ public class BoardFactory {
         }
 
         return hexagons;
-    }
-
-    public Text[][] createUnitText() {
-        Text[][] text = new Text[this.columns][this.rows];
-
-        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
-            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
-                text[xIndex][yIndex] = new Text();
-            }
-        }
-
-        return text;
     }
 
     private double getSize() {

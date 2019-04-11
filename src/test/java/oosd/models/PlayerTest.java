@@ -7,6 +7,8 @@ import oosd.models.units.allied.GISoldier;
 import oosd.models.units.soviet.KirovAirship;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
@@ -14,7 +16,7 @@ class PlayerTest {
     void testCreatePlayer() {
         // Arrange
         String playerName = "John Tester";
-        Team team = Team.RED;
+        Team team = new Team("Red");
 
         // Act
         Player player = new Player(playerName, team);
@@ -29,7 +31,7 @@ class PlayerTest {
     void testGetPlayerTeam() {
         // Arrange
         String playerName = "John Tester";
-        Team team = Team.RED;
+        Team team = new Team("Red");
 
         // Act
         Player player = new Player(playerName, team);
@@ -40,28 +42,30 @@ class PlayerTest {
     }
 
     @Test
-    void testPlayerAddUnit() {
+    void testPlayerGetUnits() {
         // Arrange
-        Player player = new Player("John Tester", Team.RED);
-        Unit soldier = new GISoldier(player);
-        Unit zombat = new KirovAirship(player);
+        Player player = new Player("John Tester", new Team("Red"));
+        new GISoldier(player);
+        new KirovAirship(player);
 
         // Act
-        player.addUnit(zombat);
-        player.addUnit(soldier);
+        List<Unit> units = player.getUnits();
 
         // Assert
-        assertEquals(2, player.getUnits().size());
-        assertNotNull(player.getUnits());
+        assertEquals(2, units.size());
+        assertNotNull(units);
     }
 
     @Test
     void testComparePlayers() {
         // Arrange
-        Player firstPlayer = new Player("John Tester", Team.RED);
-        Player secondPlayer = new Player("Jane Tester", Team.BLUE);
-        Player thirdPlayer = new Player("John Tester", Team.BLUE);
-        Player forthPlayer = new Player("John Tester", Team.RED);
+        Team redTeam = new Team("Red");
+        Team blueTeam = new Team("Blue");
+        Team cyanTeam = new Team("Cyan");
+        Player firstPlayer = new Player("John Tester", redTeam);
+        Player secondPlayer = new Player("Jane Tester", blueTeam);
+        Player thirdPlayer = new Player("John Tester", cyanTeam);
+        Player forthPlayer = new Player("John Tester", redTeam);
 
         // Act
         boolean differentPlayer = firstPlayer.equals(secondPlayer);

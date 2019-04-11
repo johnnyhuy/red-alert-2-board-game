@@ -5,6 +5,7 @@ import oosd.models.units.Unit;
 import java.util.ArrayList;
 import java.util.List;
 
+// @invariant units.size() > 0 && playerName.size() >= 0
 public class Player {
     private String playerName;
     private Team team;
@@ -16,22 +17,51 @@ public class Player {
         this.units = new ArrayList<>();
     }
 
+    /**
+     * Get the player name
+     *
+     * @return string of the player name
+     */
+    // @post.condition playerName.size() > 0
     public String getPlayerName() {
         return this.playerName;
     }
 
+    /**
+     * Get the team of the player
+     *
+     * @return team of player
+     */
     public Team getTeam() {
         return this.team;
     }
 
+    /**
+     * Get a list of units.
+     *
+     * @return list of units
+     */
     public List<Unit> getUnits() {
         return this.units;
     }
 
+    /**
+     * Add units to the player.
+     *
+     * @param newUnit to be added to the list of units
+     */
+    // @pre.condition units.size() < 20
+    // @post.condition units.size() == old(units).size() + 1
     public void addUnit(Unit newUnit) {
         this.units.add(newUnit);
     }
 
+    /**
+     * Compare players by their team and name
+     *
+     * @param object to compare to the player
+     * @return whether the player is equal
+     */
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Player)) {
@@ -40,6 +70,6 @@ public class Player {
 
         Player player = (Player) object;
 
-        return player.getTeam() == getTeam() && player.getPlayerName() == getPlayerName();
+        return player.getTeam() == getTeam() && player.getPlayerName().equals(getPlayerName());
     }
 }

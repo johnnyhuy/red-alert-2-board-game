@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
-import oosd.factories.BoardFactory;
+import oosd.factories.UIFactory;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
@@ -20,11 +20,11 @@ public class BoardView extends View {
     private final Pane boardPane;
     private final GameController controller;
     private final Polygon[][] selectionHexagons;
-    private GameEngine gameEngine;
-    private Pane sidebar;
     private final Polygon[][] backgroundHexagons;
     private final Polygon[][] unitHexagons;
-    private final BoardFactory boardFactory;
+    private final UIFactory boardFactory;
+    private GameEngine gameEngine;
+    private Pane sidebar;
     private Text playerTurn;
 
     public BoardView(GameController controller, GameEngine gameEngine, Pane boardPane, Pane sidebar) {
@@ -33,7 +33,7 @@ public class BoardView extends View {
         this.boardPane = boardPane;
         this.board = gameEngine.getBoard();
         this.sidebar = sidebar;
-        this.boardFactory = new BoardFactory(board.getColumns(), board.getRows());
+        this.boardFactory = new UIFactory(board.getColumns(), board.getRows());
         this.backgroundHexagons = boardFactory.createHexagons();
         this.unitHexagons = boardFactory.createHexagons();
         this.selectionHexagons = boardFactory.createHexagons();
