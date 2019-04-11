@@ -1,5 +1,6 @@
 package oosd.views;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
@@ -97,27 +98,7 @@ public class BoardView extends View {
                 selectionHexagons[xIndex][yIndex].setVisible(false);
 
                 final StackPane stack = new StackPane();
-                stack.setOnMouseClicked(event -> {
-                    Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
-
-                    if (hexagon.getUnit() != null) {
-                        if (!hexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
-                            return;
-                        }
-
-                        controller.selectUnit(event, selectedHexagon, hexagon);
-
-                        return;
-                    }
-
-                    if (selectedHexagon != null) {
-                        if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, hexagon)) {
-                            return;
-                        }
-
-                        controller.moveUnit(event, selectedHexagon, hexagon);
-                    }
-                });
+                stack.setOnMouseClicked(event -> handleHexagonClick(event, hexagon));
                 stack.getChildren().addAll(backgroundHexagons[xIndex][yIndex], unitHexagons[xIndex][yIndex], selectionHexagons[xIndex][yIndex]);
                 stack.setLayoutX(x);
                 stack.setLayoutY(y);
@@ -136,6 +117,28 @@ public class BoardView extends View {
             }
 
             y = yIndex == board.getRows() - 1 ? 0 : y + boardFactory.getFullIncrement();
+        }
+    }
+
+    private void handleHexagonClick(MouseEvent event, Hexagon hexagon) {
+        Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
+
+        if (hexagon.getUnit() != null) {
+            if (!hexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+                return;
+            }
+
+            controller.selectUnit(event, selectedHexagon, hexagon);
+
+            return;
+        }
+
+        if (selectedHexagon != null) {
+            if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, hexagon)) {
+                return;
+            }
+
+            controller.moveUnit(event, selectedHexagon, hexagon);
         }
     }
 }
