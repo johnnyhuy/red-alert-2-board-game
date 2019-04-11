@@ -79,8 +79,11 @@ public class Main extends Application {
     private GameEngine initializeGameEngine() {
         Board board = new Board(boardColumns, boardRows);
 
-        Player playerOne = new Player("Johnny Dave", Team.RED);
-        Player playerTwo = new Player("Jane Doe", Team.BLUE);
+        Team redTeam = new Team("Red");
+        Team blueTeam = new Team("Blue");
+
+        Player playerOne = new Player("Johnny Dave", redTeam);
+        Player playerTwo = new Player("Jane Doe", blueTeam);
 
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
 
