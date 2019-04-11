@@ -97,7 +97,27 @@ public class BoardView extends View {
                 selectionHexagons[xIndex][yIndex].setVisible(false);
 
                 final StackPane stack = new StackPane();
-                stack.setOnMouseClicked(event -> controller.board(event, hexagon));
+                stack.setOnMouseClicked(event -> {
+                    Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
+
+                    if (hexagon.getUnit() != null) {
+                        if (!hexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+                            return;
+                        }
+
+                        controller.selectUnit(event, selectedHexagon, hexagon);
+
+                        return;
+                    }
+
+                    if (selectedHexagon != null) {
+                        if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, hexagon)) {
+                            return;
+                        }
+
+                        controller.moveUnit(event, selectedHexagon, hexagon);
+                    }
+                });
                 stack.getChildren().addAll(backgroundHexagons[xIndex][yIndex], unitHexagons[xIndex][yIndex], selectionHexagons[xIndex][yIndex]);
                 stack.setLayoutX(x);
                 stack.setLayoutY(y);
