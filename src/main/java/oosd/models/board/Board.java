@@ -1,6 +1,7 @@
 package oosd.models.board;
 
-// invariant columns > 0 && rows > 0
+import static org.valid4j.Assertive.*;
+
 public class Board {
     private Hexagon[][] hexagons;
     private int rows;
@@ -16,6 +17,10 @@ public class Board {
                 this.hexagons[columnIndex][rowIndex] = new Hexagon(columnIndex, rowIndex);
             }
         }
+        
+    	// assert() keyword used for invariance since valid4j only handles pre and post-conditions.
+    	assert columns >= 0 : "Column number cannot be negative.";
+    	assert rows >= 0 : "Row number cannot be negative.";
     }
 
     /**
@@ -24,8 +29,16 @@ public class Board {
      * @param hexagon object
      * @return hexagon object
      */
-    // @post.condition result.getColumns() == hexagon.getColumns() && result.getRows() == hexagon.getRows()
     public Hexagon getHexagon(Hexagon hexagon) {
+        int colResult;
+        int rowResult;
+        
+        colResult = hexagon.getColumn();
+        rowResult = hexagon.getRow();
+        
+        // @post-condition: returned hexagon is correct column + row
+    	require(hexagons[hexagon.getColumn()][hexagon.getRow()] == hexagons[colResult][rowResult]);
+    	
         return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
 
@@ -36,8 +49,16 @@ public class Board {
      * @param row    y coordinate
      * @return hexagon object
      */
-    // @post.condition result.getColumns() == column && result.getRows() == row
     public Hexagon getHexagon(int column, int row) {
+    	int colInt;
+    	int rowInt;
+    	
+    	colInt = column;
+    	rowInt = row;
+    	
+        // @post-condition: returned hexagon is correct column + row
+    	require(hexagons[column][row] == hexagons[colInt][rowInt]);
+    	
         return hexagons[column][row];
     }
 

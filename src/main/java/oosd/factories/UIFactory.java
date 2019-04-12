@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import oosd.views.View;
-
+import static org.valid4j.Assertive.*;
 /**
  * GRASP: The creator
  * This class is responsible for creating UI components in a board layout.
@@ -22,6 +22,10 @@ public class UIFactory {
     private double gap = getSize() * 1.5;
 
     public UIFactory(int columns, int rows) {
+    	// assert() keyword used for invariance since valid4j only handles pre and post-conditions.
+    	assert columns >= 0 : "Column number cannot be negative.";
+    	assert rows >= 0 : "Row number cannot be negative.";
+    	
         this.columns = columns;
         this.rows = rows;
     }
