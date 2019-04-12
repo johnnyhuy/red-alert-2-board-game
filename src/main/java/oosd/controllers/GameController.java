@@ -37,29 +37,16 @@ public class GameController extends Controller {
         boardView.initialize();
     }
 
-    public void board(MouseEvent event, Hexagon clickedHexagon) {
-        Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
+    public void selectUnit(MouseEvent event, Hexagon selectedHexagon, Hexagon hexagon) {
+        gameEngine.setSelectedHexagon(hexagon);
+        boardView.selectUnit(selectedHexagon, hexagon);
+    }
 
-        if (clickedHexagon.getUnit() != null) {
-            if (!clickedHexagon.getUnit().getPlayer().equals(gameEngine.getTurn())) {
-                return;
-            }
-
-            gameEngine.setSelectedHexagon(clickedHexagon);
-            boardView.selectUnit(selectedHexagon, clickedHexagon);
-            return;
-        }
-
-        if (selectedHexagon != null) {
-            if (!selectedHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, clickedHexagon)) {
-                return;
-            }
-
-            clickedHexagon.setUnit(selectedHexagon.getUnit());
-            selectedHexagon.setUnit(null);
-            gameEngine.setSelectedHexagon(null);
-            gameEngine.getNextTurn();
-            boardView.moveUnit(selectedHexagon, clickedHexagon);
-        }
+    public void moveUnit(MouseEvent event, Hexagon selectedHexagon, Hexagon hexagon) {
+        hexagon.setUnit(selectedHexagon.getUnit());
+        selectedHexagon.setUnit(null);
+        gameEngine.setSelectedHexagon(null);
+        gameEngine.getNextTurn();
+        boardView.moveUnit(selectedHexagon, hexagon);
     }
 }
