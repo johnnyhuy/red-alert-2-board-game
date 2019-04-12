@@ -3,12 +3,10 @@ package oosd.models.units.behaviour;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
+import oosd.models.units.behaviour.enums.LinearDirections;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static oosd.helpers.NumberHelper.isEven;
-import static oosd.helpers.NumberHelper.isOdd;
 
 // @invariant moves > 0
 public class LinearUnitBehaviour extends UnitBehaviour {
@@ -24,31 +22,15 @@ public class LinearUnitBehaviour extends UnitBehaviour {
     public List<Hexagon> getValidMoves(GameEngine gameEngine, Hexagon hexagon) {
         Board board = gameEngine.getBoard();
 
-        for (int index = 0; index < 6; index++) {
+        for (LinearDirections direction : LinearDirections.values()) {
             int columns = hexagon.getColumn();
             int rows = hexagon.getRow();
             int move = 1;
             boolean isInBoard;
 
             while (move <= moves) {
-                if (index == 0) {
-                    rows -= 1;
-                } else if (index == 1) {
-                    columns += 1;
-                    rows -= isOdd(columns) ? 1 : 0;
-                } else if (index == 2) {
-                    columns += 1;
-                    rows += isEven(columns) ? 1 : 0;
-                } else if (index == 3) {
-                    rows += 1;
-                } else if (index == 4) {
-                    columns -= 1;
-                    rows += isEven(columns) ? 1 : 0;
-                } else {
-                    columns -= 1;
-                    rows -= isOdd(columns) ? 1 : 0;
-                }
-
+                rows = direction.getRows(columns, rows);
+                columns = direction.getColumns(columns, rows);
                 isInBoard = columns < board.getColumns() && columns >= 0 && rows < board.getRows() && rows >= 0;
 
                 if (!isInBoard) {
