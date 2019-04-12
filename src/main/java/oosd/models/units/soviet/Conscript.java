@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Conscript extends Soviet {
     private String name = "Conscript";
-	private String image = "Conscript";
+    private String image = "Conscript";
     
     
     public Conscript(Player player) {
