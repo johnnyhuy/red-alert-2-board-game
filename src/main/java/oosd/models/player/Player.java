@@ -4,8 +4,9 @@ import oosd.models.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
+import static org.valid4j.Assertive.*;
 
-// @invariant units.size() > 0 && playerName.size() >= 0
+// Invariant: units.size() > 0 && playerName.length() >= 0
 public class Player {
     private String playerName;
     private Team team;
@@ -22,8 +23,10 @@ public class Player {
      *
      * @return string of the player name
      */
-    // @post.condition playerName.size() > 0
     public String getPlayerName() {
+        // Post-condition
+    	require(playerName.length() > 0);
+    	
         return this.playerName;
     }
 
@@ -50,10 +53,16 @@ public class Player {
      *
      * @param newUnit to be added to the list of units
      */
-    // @pre.condition units.size() < 20
-    // @post.condition units.size() == old(units).size() + 1
     public void addUnit(Unit newUnit) {
-        this.units.add(newUnit);
+        // Pre-condition
+    	require(units.size() < 20);
+    	
+    	int oldSize = units.size();
+    	
+        this.units.add(newUnit);       
+        
+        // Post-condition
+        ensure(units.size() == oldSize + 1);
     }
 
     /**

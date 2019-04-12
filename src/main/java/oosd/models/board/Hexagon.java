@@ -2,7 +2,7 @@ package oosd.models.board;
 
 import oosd.models.units.Unit;
 
-// @invariant row > 0 && column > 0
+// Invariant: column >= 0 && row >= 0
 public class Hexagon {
     private int row;
     private int column;
