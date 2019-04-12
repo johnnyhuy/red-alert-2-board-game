@@ -4,8 +4,8 @@ import oosd.models.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
+import static org.valid4j.Assertive.*;
 
-// @invariant units.size() > 0 && playerName.size() >= 0
 public class Player {
     private String playerName;
     private Team team;
@@ -15,6 +15,10 @@ public class Player {
         this.playerName = playerName;
         this.team = team;
         this.units = new ArrayList<>();
+        
+     // @Invariant
+        assert units.size() > 0 : "Cannot have less than 1 unit.";
+        assert playerName.length() >= 0 : "Player name doesn't exist.";
     }
 
     /**
@@ -22,8 +26,10 @@ public class Player {
      *
      * @return string of the player name
      */
-    // @post.condition playerName.size() > 0
     public String getPlayerName() {
+        // @post.condition
+    	require(playerName.length() > 0);
+    	
         return this.playerName;
     }
 
@@ -50,10 +56,16 @@ public class Player {
      *
      * @param newUnit to be added to the list of units
      */
-    // @pre.condition units.size() < 20
-    // @post.condition units.size() == old(units).size() + 1
     public void addUnit(Unit newUnit) {
-        this.units.add(newUnit);
+        // @Pre-condition
+    	ensure(units.size() < 20);
+    	
+    	int oldSize = units.size();
+    	
+        this.units.add(newUnit);       
+        
+        // @Post-condition
+        require(units.size() == oldSize + 1);
     }
 
     /**

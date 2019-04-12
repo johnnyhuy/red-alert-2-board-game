@@ -2,7 +2,6 @@ package oosd.models.board;
 
 import oosd.models.units.Unit;
 
-// @invariant row > 0 && column > 0
 public class Hexagon {
     private int row;
     private int column;
@@ -11,6 +10,10 @@ public class Hexagon {
     public Hexagon(int column, int row) {
         this.column = column;
         this.row = row;
+        
+        // @invariant: column and row cannot be negative
+        assert column >= 0 : "Column number cannot be negative.";
+        assert row >= 0 : "Row number cannot be negative.";
     }
 
     /**
