@@ -16,6 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>oosd.Main</mainClass>
+        <c4j.jarLocation>lib/de/vksi/c4j/c4j/6.0.0/c4j-6.0.0.jar</c4j.jarLocation>
     </properties>
     <build>
         <plugins>
@@ -40,7 +41,7 @@
                 <version>3.0.0-M3</version>
                 <configuration>
                     <enableAssertions>true</enableAssertions>
-                    <argLine>-javaagent:lib/c4j-6.0.0.jar</argLine>
+                    <argLine>-javaagent:${c4j.jarLocation}</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -59,7 +60,7 @@
                     <executable>java</executable>
                     <arguments>
                         <argument>-ea</argument>
-                        <argument>-javaagent:lib/c4j-6.0.0.jar</argument>
+                        <argument>-javaagent:${c4j.jarLocation}</argument>
                     </arguments>
                 </configuration>
             </plugin>
