@@ -8,12 +8,12 @@ public class Team {
     public Team(String name) {
         this.name = name;
         
-        // @Invariant
+        // Invariant
         assert name.length() > 0 : "Name cannot be empty.";
     }
 
     public String getName() {
-    	// @Post-condition
+    	// Post-condition
     	require(name.length() > 0);
     	
         return name;

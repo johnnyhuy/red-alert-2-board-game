@@ -36,8 +36,8 @@ public class Board {
         colResult = hexagon.getColumn();
         rowResult = hexagon.getRow();
         
-        // @post-condition: returned hexagon is correct column + row
-    	require(hexagons[hexagon.getColumn()][hexagon.getRow()] == hexagons[colResult][rowResult]);
+        // Post-condition: returned hexagon is correct column + row
+    	ensure(hexagons[hexagon.getColumn()][hexagon.getRow()] == hexagons[colResult][rowResult]);
     	
         return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
@@ -50,14 +50,15 @@ public class Board {
      * @return hexagon object
      */
     public Hexagon getHexagon(int column, int row) {
+   	
     	int colInt;
     	int rowInt;
     	
     	colInt = column;
     	rowInt = row;
     	
-        // @post-condition: returned hexagon is correct column + row
-    	require(hexagons[column][row] == hexagons[colInt][rowInt]);
+        // Post-condition: returned hexagon is correct column + row
+    	ensure(hexagons[column][row] == hexagons[colInt][rowInt]);
     	
         return hexagons[column][row];
     }

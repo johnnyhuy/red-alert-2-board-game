@@ -11,7 +11,7 @@ public class Hexagon {
         this.column = column;
         this.row = row;
         
-        // @invariant: column and row cannot be negative
+        // Invariant: column and row cannot be negative
         assert column >= 0 : "Column number cannot be negative.";
         assert row >= 0 : "Row number cannot be negative.";
     }
