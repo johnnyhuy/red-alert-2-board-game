@@ -4,7 +4,7 @@
     <groupId>org.oosd</groupId>
     <artifactId>redalertboardgame</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>OOSD Board Game</name>
     <url>http://maven.apache.org</url>
     <repositories>
@@ -39,6 +39,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M3</version>
                 <configuration>
+                    <enableAssertions>true</enableAssertions>
                     <argLine>-javaagent:lib/c4j-6.0.0.jar</argLine>
                 </configuration>
             </plugin>
@@ -46,9 +47,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
                 <version>3.0.0-M1</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>clean</phase>
@@ -81,7 +79,23 @@
                 <configuration>
                     <mainClass>${mainClass}</mainClass>
                     <executable>java</executable>
+                    <arguments>
+                        <argument>-ea</argument>
+                        <argument>-javaagent:lib/c4j-6.0.0.jar</argument>
+                    </arguments>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>getClasspathFilenames</id>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -111,6 +125,12 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.5.0-M1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M3</version>
+            <type>maven-plugin</type>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
@@ -151,6 +171,12 @@
             <groupId>de.vksi.c4j</groupId>
             <artifactId>c4j</artifactId>
             <version>6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+            <type>maven-plugin</type>
         </dependency>
     </dependencies>
 </project>
