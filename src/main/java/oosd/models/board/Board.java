@@ -2,6 +2,7 @@ package oosd.models.board;
 
 import static org.valid4j.Assertive.*;
 
+// Invariant: columns >= 0 && rows >= 0
 public class Board {
     private Hexagon[][] hexagons;
     private int rows;
@@ -17,10 +18,6 @@ public class Board {
                 this.hexagons[columnIndex][rowIndex] = new Hexagon(columnIndex, rowIndex);
             }
         }
-        
-    	// assert() keyword used for invariance since valid4j only handles pre and post-conditions.
-    	assert columns >= 0 : "Column number cannot be negative.";
-    	assert rows >= 0 : "Row number cannot be negative.";
     }
 
     /**

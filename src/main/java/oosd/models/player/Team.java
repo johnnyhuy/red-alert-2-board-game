@@ -2,14 +2,12 @@ package oosd.models.player;
 
 import static org.valid4j.Assertive.*;
 
+// Invariant name.length > 0
 public class Team {
     private String name;
 
     public Team(String name) {
         this.name = name;
-        
-        // Invariant
-        assert name.length() > 0 : "Name cannot be empty.";
     }
 
     public String getName() {

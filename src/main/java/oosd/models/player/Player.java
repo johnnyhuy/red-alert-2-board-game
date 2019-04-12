@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.valid4j.Assertive.*;
 
+// Invariant: units.size() > 0 && playerName.length() >= 0
 public class Player {
     private String playerName;
     private Team team;
@@ -15,10 +16,6 @@ public class Player {
         this.playerName = playerName;
         this.team = team;
         this.units = new ArrayList<>();
-        
-     // Invariant
-        assert units.size() > 0 : "Cannot have less than 1 unit.";
-        assert playerName.length() >= 0 : "Player name doesn't exist.";
     }
 
     /**

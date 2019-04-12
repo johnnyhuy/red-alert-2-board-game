@@ -13,6 +13,7 @@ import static org.valid4j.Assertive.*;
  * This factory should know the dimensions of the hexagons on the board.
  * No one else should alter or make different sized polygons other than this class.
  */
+// Invariant: columns >= 0 && rows >= 0
 public class UIFactory {
     private final double equalTriangleHeight = Math.sqrt(3);
     private final double halfIncrement = getSize() * (getEqualTriangleHeight() / 2.0);
@@ -22,10 +23,6 @@ public class UIFactory {
     private double gap = getSize() * 1.5;
 
     public UIFactory(int columns, int rows) {
-    	// assert() keyword used for invariance since valid4j only handles pre and post-conditions.
-    	assert columns >= 0 : "Column number cannot be negative.";
-    	assert rows >= 0 : "Row number cannot be negative.";
-    	
         this.columns = columns;
         this.rows = rows;
     }
