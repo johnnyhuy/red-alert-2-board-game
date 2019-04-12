@@ -16,7 +16,7 @@ public class Player {
         this.team = team;
         this.units = new ArrayList<>();
         
-     // @Invariant
+     // Invariant
         assert units.size() > 0 : "Cannot have less than 1 unit.";
         assert playerName.length() >= 0 : "Player name doesn't exist.";
     }
@@ -27,7 +27,7 @@ public class Player {
      * @return string of the player name
      */
     public String getPlayerName() {
-        // @post.condition
+        // Post-condition
     	require(playerName.length() > 0);
     	
         return this.playerName;
@@ -57,15 +57,15 @@ public class Player {
      * @param newUnit to be added to the list of units
      */
     public void addUnit(Unit newUnit) {
-        // @Pre-condition
-    	ensure(units.size() < 20);
+        // Pre-condition
+    	require(units.size() < 20);
     	
     	int oldSize = units.size();
     	
         this.units.add(newUnit);       
         
-        // @Post-condition
-        require(units.size() == oldSize + 1);
+        // Post-condition
+        ensure(units.size() == oldSize + 1);
     }
 
     /**
