@@ -1,6 +1,8 @@
 package oosd.models.player;
 
-// @invariant name.size() > 0
+import static org.valid4j.Assertive.*;
+
+// Invariant name.length > 0
 public class Team {
     private String name;
 
@@ -8,8 +10,10 @@ public class Team {
         this.name = name;
     }
 
-    // @post.condition name.size() > 0
     public String getName() {
+    	// Post-condition
+    	require(name.length() > 0);
+    	
         return name;
     }
 }

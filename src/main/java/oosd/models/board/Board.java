@@ -1,6 +1,8 @@
 package oosd.models.board;
 
-// invariant columns > 0 && rows > 0
+import static org.valid4j.Assertive.*;
+
+// Invariant: columns >= 0 && rows >= 0
 public class Board {
     private Hexagon[][] hexagons;
     private int rows;
@@ -24,8 +26,16 @@ public class Board {
      * @param hexagon object
      * @return hexagon object
      */
-    // @post.condition result.getColumns() == hexagon.getColumns() && result.getRows() == hexagon.getRows()
     public Hexagon getHexagon(Hexagon hexagon) {
+        int colResult;
+        int rowResult;
+        
+        colResult = hexagon.getColumn();
+        rowResult = hexagon.getRow();
+        
+        // Post-condition: returned hexagon is correct column + row
+    	ensure(hexagons[hexagon.getColumn()][hexagon.getRow()] == hexagons[colResult][rowResult]);
+    	
         return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
 
@@ -36,8 +46,17 @@ public class Board {
      * @param row    y coordinate
      * @return hexagon object
      */
-    // @post.condition result.getColumns() == column && result.getRows() == row
     public Hexagon getHexagon(int column, int row) {
+   	
+    	int colInt;
+    	int rowInt;
+    	
+    	colInt = column;
+    	rowInt = row;
+    	
+        // Post-condition: returned hexagon is correct column + row
+    	ensure(hexagons[column][row] == hexagons[colInt][rowInt]);
+    	
         return hexagons[column][row];
     }
 
