@@ -1,8 +1,10 @@
 package oosd.models.board;
 
+import de.vksi.c4j.ContractReference;
+import oosd.contracts.models.HexagonContract;
 import oosd.models.units.Unit;
 
-// Invariant: column >= 0 && row >= 0
+@ContractReference(HexagonContract.class)
 public class Hexagon {
     private int row;
     private int column;

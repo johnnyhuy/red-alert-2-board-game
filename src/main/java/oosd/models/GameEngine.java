@@ -9,6 +9,7 @@ import java.util.List;
 
 import static oosd.helpers.ListHelper.isNotEmpty;
 
+// TODO: Convert this to C4J
 public class GameEngine {
     private Board board;
     private Hexagon selectedHexagon;
