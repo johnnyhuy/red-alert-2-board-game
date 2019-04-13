@@ -37,11 +37,25 @@ public class GameController extends Controller {
         boardView.initialize();
     }
 
+    /**
+     * Used to select a unit.
+     *
+     * @param event mouse event
+     * @param selectedHexagon object
+     * @param hexagon object
+     */
     public void selectUnit(MouseEvent event, Hexagon selectedHexagon, Hexagon hexagon) {
         gameEngine.setSelectedHexagon(hexagon);
         boardView.selectUnit(selectedHexagon, hexagon);
     }
 
+    /**
+     * Tasked to move the unit.
+     *
+     * @param event mouse event
+     * @param selectedHexagon object
+     * @param hexagon object
+     */
     public void moveUnit(MouseEvent event, Hexagon selectedHexagon, Hexagon hexagon) {
         hexagon.setUnit(selectedHexagon.getUnit());
         selectedHexagon.setUnit(null);
