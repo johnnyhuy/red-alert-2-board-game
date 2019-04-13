@@ -1,8 +1,7 @@
 package oosd.models.player;
 
-import static org.valid4j.Assertive.*;
-
-// Invariant name.length > 0
+// TODO: Convert this to C4J
+// @invariant name.size() > 0
 public class Team {
     private String name;
 
@@ -10,10 +9,8 @@ public class Team {
         this.name = name;
     }
 
+    // @post.condition name.size() > 0
     public String getName() {
-    	// Post-condition
-    	require(name.length() > 0);
-    	
         return name;
     }
 }

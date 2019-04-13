@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import oosd.views.View;
-import static org.valid4j.Assertive.*;
+
 /**
  * GRASP: The creator
  * This class is responsible for creating UI components in a board layout.
@@ -13,7 +13,6 @@ import static org.valid4j.Assertive.*;
  * This factory should know the dimensions of the hexagons on the board.
  * No one else should alter or make different sized polygons other than this class.
  */
-// Invariant: columns >= 0 && rows >= 0
 public class UIFactory {
     private final double equalTriangleHeight = Math.sqrt(3);
     private final double halfIncrement = getSize() * (getEqualTriangleHeight() / 2.0);
