@@ -1,22 +1,22 @@
 package oosd.models.board;
 
 import de.vksi.c4j.ContractReference;
-import oosd.contracts.models.HexagonContract;
+import oosd.contracts.models.PieceContract;
 import oosd.models.units.Unit;
 
-@ContractReference(HexagonContract.class)
-public class Hexagon {
+@ContractReference(PieceContract.class)
+public class Piece {
     private int row;
     private int column;
     private Unit unit;
 
-    public Hexagon(int column, int row) {
+    public Piece(int column, int row) {
         this.column = column;
         this.row = row;
     }
 
     /**
-     * Get the row of the hexagon.
+     * Get the row of the piece.
      *
      * @return location of row on the board
      */
@@ -25,7 +25,7 @@ public class Hexagon {
     }
 
     /**
-     * Get the column of the hexagon.
+     * Get the column of the piece.
      *
      * @return location of column on the board
      */
@@ -34,26 +34,26 @@ public class Hexagon {
     }
 
     /**
-     * Compare hexagons based on their location.
+     * Compare pieces based on their location.
      *
      * @param object any given object
-     * @return whether the hexagon is equal by coordinates
+     * @return whether the piece is equal by coordinates
      */
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Hexagon)) {
+        if (!(object instanceof Piece)) {
             return false;
         }
 
-        Hexagon hexagon = (Hexagon) object;
+        Piece piece = (Piece) object;
 
-        return hexagon.getRow() == getRow() && hexagon.getColumn() == getColumn();
+        return piece.getRow() == getRow() && piece.getColumn() == getColumn();
     }
 
     /**
      * Get the unit.
      *
-     * @return unit of the hexagon
+     * @return unit of the piece
      */
     public Unit getUnit() {
         return unit;
@@ -62,7 +62,7 @@ public class Hexagon {
     /**
      * Set the unit.
      *
-     * @param unit used to set to the hexagon
+     * @param unit used to set to the piece
      */
     public void setUnit(Unit unit) {
         this.unit = unit;
