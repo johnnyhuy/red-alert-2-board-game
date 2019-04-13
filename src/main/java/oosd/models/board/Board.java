@@ -1,6 +1,9 @@
 package oosd.models.board;
 
-// invariant columns > 0 && rows > 0
+import de.vksi.c4j.ContractReference;
+import oosd.contracts.models.BoardContract;
+
+@ContractReference(BoardContract.class)
 public class Board {
     private Hexagon[][] hexagons;
     private int rows;
@@ -24,7 +27,6 @@ public class Board {
      * @param hexagon object
      * @return hexagon object
      */
-    // @post.condition result.getColumns() == hexagon.getColumns() && result.getRows() == hexagon.getRows()
     public Hexagon getHexagon(Hexagon hexagon) {
         return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
@@ -36,7 +38,6 @@ public class Board {
      * @param row    y coordinate
      * @return hexagon object
      */
-    // @post.condition result.getColumns() == column && result.getRows() == row
     public Hexagon getHexagon(int column, int row) {
         return hexagons[column][row];
     }

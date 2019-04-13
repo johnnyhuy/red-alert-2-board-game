@@ -1,11 +1,13 @@
 package oosd.models.player;
 
+import de.vksi.c4j.ContractReference;
+import oosd.contracts.models.PlayerContract;
 import oosd.models.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// @invariant units.size() > 0 && playerName.size() >= 0
+@ContractReference(PlayerContract.class)
 public class Player {
     private String playerName;
     private Team team;
@@ -22,7 +24,6 @@ public class Player {
      *
      * @return string of the player name
      */
-    // @post.condition playerName.size() > 0
     public String getPlayerName() {
         return this.playerName;
     }
@@ -50,8 +51,6 @@ public class Player {
      *
      * @param newUnit to be added to the list of units
      */
-    // @pre.condition units.size() < 20
-    // @post.condition units.size() == old(units).size() + 1
     public void addUnit(Unit newUnit) {
         this.units.add(newUnit);
     }
