@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Conscript extends Soviet {
-    private String name = "Conscript";
-    private String image = "Conscript";
-    
-    
+
+	
     public Conscript(Player player) {
         super(player);
+        super.setImage("Conscript");
+        super.setName("Conscript");             
     }
 
     @Override
@@ -23,14 +23,6 @@ public class Conscript extends Soviet {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getImage() {
-        return image;
-    }
 
     @Override
     public UnitBehaviour getUnitBehaviour() {
