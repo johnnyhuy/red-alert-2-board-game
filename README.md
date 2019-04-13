@@ -6,9 +6,9 @@ A Command & Conquer themed board game for RMIT course Object Orientated Software
 
 ## Participants & Contribution
 
-- Johnny Huynh - 65%
+- Johnny Huynh - 70%
 - Chee Wei Low - 25%
-- Udahakapugedara Madhusanka Senadhi - 10%
+- Udahakapugedara Madhusanka Senadhi - 5%
 - Stanley Elliott - 0%
 
 ## How it works
