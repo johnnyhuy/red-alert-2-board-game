@@ -3,7 +3,7 @@ package oosd.contracts.models;
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 import oosd.models.board.Board;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 
 import static de.vksi.c4j.Condition.*;
 
@@ -27,34 +27,34 @@ public class BoardContract extends Board {
     }
 
     @Override
-    public Hexagon getHexagon(Hexagon hexagon) {
+    public Piece getPiece(Piece piece) {
         if (preCondition()) {
-            assert hexagon.getColumn() < target.getColumns();
-            assert hexagon.getRow() < target.getRows();
+            assert piece.getColumn() < target.getColumns();
+            assert piece.getRow() < target.getRows();
         }
 
         if (postCondition()) {
-            Hexagon targetHexagon = target.getHexagon(new Hexagon(hexagon.getColumn(), hexagon.getRow()));
+            Piece targetPiece = target.getPiece(new Piece(piece.getColumn(), piece.getRow()));
 
-            assert targetHexagon.getColumn() == hexagon.getColumn();
-            assert targetHexagon.getRow() == hexagon.getRow();
+            assert targetPiece.getColumn() == piece.getColumn();
+            assert targetPiece.getRow() == piece.getRow();
         }
 
         return ignored();
     }
 
     @Override
-    public Hexagon getHexagon(int column, int row) {
+    public Piece getPiece(int column, int row) {
         if (preCondition()) {
             assert column < target.getColumns();
             assert row < target.getRows();
         }
 
         if (postCondition()) {
-            Hexagon targetHexagon = target.getHexagon(column, row);
+            Piece targetPiece = target.getPiece(column, row);
 
-            assert targetHexagon.getColumn() == column;
-            assert targetHexagon.getRow() == row;
+            assert targetPiece.getColumn() == column;
+            assert targetPiece.getRow() == row;
         }
 
         return ignored();

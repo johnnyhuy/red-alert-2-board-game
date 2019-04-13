@@ -1,7 +1,7 @@
 package oosd.models;
 
 import oosd.models.board.Board;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 
 import java.util.Iterator;
@@ -12,7 +12,7 @@ import static oosd.helpers.ListHelper.isNotEmpty;
 // TODO: Convert this to C4J
 public class GameEngine {
     private Board board;
-    private Hexagon selectedHexagon;
+    private Piece selectedPiece;
     private Player turn;
     private List<Player> players;
     private Iterator<Player> playersIterator;
@@ -38,21 +38,21 @@ public class GameEngine {
     }
 
     /**
-     * Get the selected hexagon user clicks.
+     * Get the selected piece user clicks.
      *
-     * @return selected hexagon
+     * @return selected piece
      */
-    public Hexagon getSelectedHexagon() {
-        return selectedHexagon;
+    public Piece getSelectedPiece() {
+        return selectedPiece;
     }
 
     /**
-     * Set the selected hexagon on in the game.
+     * Set the selected piece on in the game.
      *
-     * @param selectedHexagon selected hexagon
+     * @param selectedPiece selected piece
      */
-    public void setSelectedHexagon(Hexagon selectedHexagon) {
-        this.selectedHexagon = selectedHexagon;
+    public void setSelectedPiece(Piece selectedPiece) {
+        this.selectedPiece = selectedPiece;
     }
 
     /**
