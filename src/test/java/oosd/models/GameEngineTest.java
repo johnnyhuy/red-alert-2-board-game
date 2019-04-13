@@ -120,15 +120,23 @@ class GameEngineTest {
 
         // Act
         Player firstTurn = gameEngine.getTurn();
+        Player getFirstTurn = gameEngine.getTurn();
         Player secondTurn = gameEngine.getNextTurn();
+        Player getSecondTurn = gameEngine.getTurn();
         Player thirdTurn = gameEngine.getNextTurn();
+        Player getThirdTurn = gameEngine.getTurn();
         Player forthTurn = gameEngine.getNextTurn();
+        Player getForthTurn = gameEngine.getTurn();
 
         // Assert
         assertEquals(playerOne, firstTurn);
+        assertEquals(playerOne, getFirstTurn);
+        assertEquals(playerTwo, getSecondTurn);
         assertEquals(playerTwo, secondTurn);
         assertEquals(playerOne, thirdTurn);
+        assertEquals(playerOne, getThirdTurn);
         assertEquals(playerTwo, forthTurn);
+        assertEquals(playerTwo, getForthTurn);
     }
 
     @Test
