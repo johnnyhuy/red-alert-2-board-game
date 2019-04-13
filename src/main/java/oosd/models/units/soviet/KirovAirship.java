@@ -13,21 +13,13 @@ import java.util.List;
 public class KirovAirship extends Soviet {
     public KirovAirship(Player player) {
         super(player);
+        super.setImage("Kirov Airship");
+        super.setName("Kirov Airship");  
     }
 
     @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(GISoldier.class, GrizzlyTank.class);
-    }
-
-    @Override
-    public String getName() {
-        return "Kirov Airship";
-    }
-
-    @Override
-    public String getImage() {
-        return "kirov_airship";
     }
 
     @Override
