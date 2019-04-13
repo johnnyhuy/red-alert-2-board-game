@@ -5,8 +5,7 @@ import de.vksi.c4j.Target;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
 
-import static de.vksi.c4j.Condition.postCondition;
-import static de.vksi.c4j.Condition.preCondition;
+import static de.vksi.c4j.Condition.*;
 
 public class BoardContract extends Board {
     @Target
@@ -41,7 +40,7 @@ public class BoardContract extends Board {
             assert targetHexagon.getRow() == hexagon.getRow();
         }
 
-        return null;
+        return ignored();
     }
 
     @Override
@@ -58,6 +57,6 @@ public class BoardContract extends Board {
             assert targetHexagon.getRow() == row;
         }
 
-        return null;
+        return ignored();
     }
 }
