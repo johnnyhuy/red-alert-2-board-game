@@ -11,21 +11,13 @@ import java.util.List;
 public class RhinoTank extends Soviet {
     public RhinoTank(Player player) {
         super(player);
+        super.setImage("Rhino Tank");
+        super.setName("Rhino Tank");  
     }
 
     @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Collections.singletonList(KirovAirship.class);
-    }
-
-    @Override
-    public String getName() {
-        return "Rhino Tank";
-    }
-
-    @Override
-    public String getImage() {
-        return "rhino_tank";
     }
 
     @Override
