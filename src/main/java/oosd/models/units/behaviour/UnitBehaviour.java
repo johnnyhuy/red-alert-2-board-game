@@ -1,7 +1,7 @@
 package oosd.models.units.behaviour;
 
 import oosd.models.GameEngine;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 
 import java.util.List;
 
@@ -11,18 +11,18 @@ import java.util.List;
  */
 public abstract class UnitBehaviour {
     /**
-     * Get valid moves from a given hexagon.
+     * Get valid moves from a given piece.
      *
-     * @param hexagon used to validate against
-     * @return list of valid hexagons
+     * @param piece used to validate against
+     * @return list of valid pieces
      */
-    public abstract List<Hexagon> getValidMoves(GameEngine gameEngine, Hexagon hexagon);
+    public abstract List<Piece> getValidMoves(GameEngine gameEngine, Piece piece);
 
     /**
-     * Check whether the given hexagon is valid based on the selected hexagon.
+     * Check whether the given piece is valid based on the selected piece.
      *
-     * @param checkHexagon used to check against the selected hexagon valid moves
-     * @return whether the hexagon location is a valid move
+     * @param checkPiece used to check against the selected piece valid moves
+     * @return whether the piece location is a valid move
      */
-    public abstract boolean isValidMove(GameEngine gameEngine, Hexagon checkHexagon);
+    public abstract boolean isValidMove(GameEngine gameEngine, Piece checkPiece);
 }
