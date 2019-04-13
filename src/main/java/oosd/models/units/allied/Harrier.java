@@ -14,6 +14,8 @@ import java.util.List;
 public class Harrier extends Allied {
     public Harrier(Player player) {
         super(player);
+        super.setImage("Harrier");
+        super.setName("Harrier");  
     }
 
     @Override
@@ -21,15 +23,6 @@ public class Harrier extends Allied {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class, GrizzlyTank.class);
     }
 
-    @Override
-    public String getName() {
-        return "Harrier";
-    }
-
-    @Override
-    public String getImage() {
-        return "harrier";
-    }
 
     @Override
     public UnitBehaviour getUnitBehaviour() {
