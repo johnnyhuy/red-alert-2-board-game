@@ -45,6 +45,14 @@ public abstract class Unit {
     public String getImage() {
 		return image;
 	}
+    
+    public void setImage(String image) {
+		this.image = image;
+	}
+    
+    public void setName(String name) {
+		this.name = name;
+	}
 
     public abstract UnitBehaviour getUnitBehaviour();
 }
