@@ -154,6 +154,7 @@ class UnitTest {
         // Assert
         assertThrows(AssertionError.class, run);
     }
+
     @Test
     void testGetUnitNameShouldNotBeEmpty() {
         // Arrange
