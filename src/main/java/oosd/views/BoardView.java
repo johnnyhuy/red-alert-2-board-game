@@ -4,13 +4,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
-import oosd.factories.UIFactory;
+import oosd.factories.ViewComponentFactory;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Hexagon;
+import oosd.views.components.HexagonViewComponent;
 
 /**
  * SOLID:  Single Responsibility Principle
@@ -20,10 +20,10 @@ public class BoardView extends View {
     private final Board board;
     private final Pane boardPane;
     private final GameController controller;
-    private final Polygon[][] selectionHexagons;
-    private final Polygon[][] backgroundHexagons;
-    private final Polygon[][] unitHexagons;
-    private final UIFactory boardFactory;
+    private final HexagonViewComponent selectionHexagons;
+    private final HexagonViewComponent backgroundHexagons;
+    private final HexagonViewComponent unitHexagons;
+    private final ViewComponentFactory boardFactory;
     private GameEngine gameEngine;
     private Pane sidebar;
     private Text playerTurn;
@@ -34,7 +34,7 @@ public class BoardView extends View {
         this.boardPane = boardPane;
         this.board = gameEngine.getBoard();
         this.sidebar = sidebar;
-        this.boardFactory = new UIFactory(board.getColumns(), board.getRows());
+        this.boardFactory = new ViewComponentFactory(board.getColumns(), board.getRows());
         this.backgroundHexagons = boardFactory.createHexagons();
         this.unitHexagons = boardFactory.createHexagons();
         this.selectionHexagons = boardFactory.createHexagons();
@@ -44,34 +44,34 @@ public class BoardView extends View {
     public void moveUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                selectionHexagons[xIndex][yIndex].setVisible(false);
+                selectionHexagons.getHexagon(xIndex, yIndex).setVisible(false);
             }
         }
 
-        selectionHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setOpacity(1.0);
-        selectionHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
-        unitHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
-        unitHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setVisible(true);
-        unitHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(boardFactory.createViewImage(clickedHexagon.getUnit().getImage()));
+        selectionHexagons.getHexagon(selectedHexagon).setOpacity(1.0);
+        selectionHexagons.getHexagon(selectedHexagon).setVisible(false);
+        unitHexagons.getHexagon(selectedHexagon).setVisible(false);
+        unitHexagons.getHexagon(clickedHexagon).setVisible(true);
+        unitHexagons.getHexagon(clickedHexagon).setFill(boardFactory.createViewImage(clickedHexagon.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void selectUnit(Hexagon selectedHexagon, Hexagon clickedHexagon) {
         if (selectedHexagon != null) {
-            selectionHexagons[selectedHexagon.getColumn()][selectedHexagon.getRow()].setVisible(false);
+            selectionHexagons.getHexagon(selectedHexagon).setVisible(false);
 
             for (Hexagon hexagon : selectedHexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, selectedHexagon)) {
-                selectionHexagons[hexagon.getColumn()][hexagon.getRow()].setVisible(false);
+                selectionHexagons.getHexagon(hexagon).setVisible(false);
             }
         }
 
         for (Hexagon hexagon : clickedHexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedHexagon)) {
-            selectionHexagons[hexagon.getColumn()][hexagon.getRow()].setVisible(true);
-            selectionHexagons[hexagon.getColumn()][hexagon.getRow()].setFill(Paint.valueOf("#00C400"));
+            selectionHexagons.getHexagon(hexagon).setVisible(true);
+            selectionHexagons.getHexagon(hexagon).setFill(Paint.valueOf("#00C400"));
         }
 
-        selectionHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setFill(Paint.valueOf("#dadada"));
-        selectionHexagons[clickedHexagon.getColumn()][clickedHexagon.getRow()].setOpacity(0.5);
+        selectionHexagons.getHexagon(clickedHexagon).setFill(Paint.valueOf("#dadada"));
+        selectionHexagons.getHexagon(clickedHexagon).setOpacity(0.5);
     }
 
     public void initialize() {
@@ -86,20 +86,20 @@ public class BoardView extends View {
                 Hexagon hexagon = board.getHexagon(xIndex, yIndex);
 
                 if (hexagon.getUnit() != null) {
-                    unitHexagons[xIndex][yIndex].setFill(boardFactory.createViewImage(hexagon.getUnit().getImage()));
+                    unitHexagons.getHexagon(xIndex, yIndex).setFill(boardFactory.createViewImage(hexagon.getUnit().getImage()));
                 } else {
-                    unitHexagons[xIndex][yIndex].setVisible(false);
+                    unitHexagons.getHexagon(xIndex, yIndex).setVisible(false);
                 }
 
-                backgroundHexagons[xIndex][yIndex].setFill(boardFactory.createViewImage("grass"));
-                backgroundHexagons[xIndex][yIndex].setStrokeWidth(2);
-                backgroundHexagons[xIndex][yIndex].setStroke(Paint.valueOf("#706c1c"));
+                backgroundHexagons.getHexagon(xIndex, yIndex).setFill(boardFactory.createViewImage("grass"));
+                backgroundHexagons.getHexagon(xIndex, yIndex).setStrokeWidth(2);
+                backgroundHexagons.getHexagon(xIndex, yIndex).setStroke(Paint.valueOf("#706c1c"));
 
-                selectionHexagons[xIndex][yIndex].setVisible(false);
+                selectionHexagons.getHexagon(xIndex, yIndex).setVisible(false);
 
                 final StackPane stack = new StackPane();
                 stack.setOnMouseClicked(event -> handleHexagonClick(event, hexagon));
-                stack.getChildren().addAll(backgroundHexagons[xIndex][yIndex], unitHexagons[xIndex][yIndex], selectionHexagons[xIndex][yIndex]);
+                stack.getChildren().addAll(backgroundHexagons.getHexagon(xIndex, yIndex), unitHexagons.getHexagon(xIndex, yIndex), selectionHexagons.getHexagon(xIndex, yIndex));
                 stack.setLayoutX(x);
                 stack.setLayoutY(y);
 
