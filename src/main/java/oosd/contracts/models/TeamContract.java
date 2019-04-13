@@ -1,21 +1,13 @@
 package oosd.contracts.models;
 
 import de.vksi.c4j.Target;
-import de.vksi.c4j.ClassInvariant;
 import oosd.models.player.Team;
 
-import static de.vksi.c4j.Condition.*;
+import static de.vksi.c4j.Condition.preCondition;
 
-public class TeamContract extends Team
-{
-	@Target
-	private Team target;
-	
-    @ClassInvariant
-    public void classInvariant()
-    {
-    	assert target.getName().length() > MINIMUM_NAME_SIZE : "name > NAME_SIZE";
-    }
+public class TeamContract extends Team {
+    @Target
+    private Team target;
 	
 	public TeamContract(String name)
 	{
@@ -26,16 +18,4 @@ public class TeamContract extends Team
 			assert !name.isEmpty();
 		}
 	}
-	
-	@Override
-	public String getName()
-	{
-		if (preCondition())
-		{
-			assert target.getName().length() > MINIMUM_NAME_SIZE : "name > NAME_SIZE";
-		}
-		return ignored();
-	}
-	
-
 }
