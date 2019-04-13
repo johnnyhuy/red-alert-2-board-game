@@ -67,7 +67,7 @@ We've produced a few class diagrams to show our iterative process in developing 
 
 ### Current class diagram
 
-![Class diagram V8](./diagrams/ClassDiagrams-V9.png)
+![Current class diagram](./diagrams/ClassDiagrams-V9.png)
 
 ### Mouse click handling on board sequence diagram
 
