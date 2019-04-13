@@ -1,7 +1,9 @@
 package oosd.models.units;
 
+import oosd.contracts.models.UnitContract;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
+import de.vksi.c4j.ContractReference;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
  * SOLID: Open for extension and close for modification
  * Units can be extended with more sub-classes allowing different unit behaviour.
  */
-// TODO: Convert this to C4J
+@ContractReference(UnitContract.class)
 public abstract class Unit {
     private Player player;
     private boolean captured;
