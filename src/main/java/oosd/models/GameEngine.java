@@ -79,17 +79,12 @@ public class GameEngine {
      * @return player in the turn
      */
     public Player getNextTurn() {
-        if (playersIterator.hasNext()) {
-            Player nextPlayer = playersIterator.next();
-            turn = nextPlayer;
-
-            return nextPlayer;
+        if (!playersIterator.hasNext()) {
+            playersIterator = players.listIterator();
         }
 
-        playersIterator = players.listIterator();
-        Player nextPlayer = playersIterator.next();
-        turn = nextPlayer;
+        turn = playersIterator.next();
 
-        return nextPlayer;
+        return turn;
     }
 }
