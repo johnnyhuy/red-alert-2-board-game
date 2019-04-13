@@ -6,6 +6,7 @@ import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,5 +53,14 @@ class HexagonTest {
 
         // Assert
         assertEquals(unit, hexagon.getUnit());
+    }
+
+    @Test
+    void testShouldNotBeNegativeCreateHexagonRowsAndColumns() {
+        // Act
+        Executable run = () -> new Hexagon(-100, -100);
+
+        // Assert
+        assertThrows(AssertionError.class, run);
     }
 }

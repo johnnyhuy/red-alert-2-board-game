@@ -1,8 +1,9 @@
 package oosd.models.board;
 
-import static org.valid4j.Assertive.*;
+import de.vksi.c4j.ContractReference;
+import oosd.contracts.models.BoardContract;
 
-// Invariant: columns >= 0 && rows >= 0
+@ContractReference(BoardContract.class)
 public class Board {
     private Hexagon[][] hexagons;
     private int rows;
@@ -27,15 +28,6 @@ public class Board {
      * @return hexagon object
      */
     public Hexagon getHexagon(Hexagon hexagon) {
-        int colResult;
-        int rowResult;
-        
-        colResult = hexagon.getColumn();
-        rowResult = hexagon.getRow();
-        
-        // Post-condition: returned hexagon is correct column + row
-    	ensure(hexagons[hexagon.getColumn()][hexagon.getRow()] == hexagons[colResult][rowResult]);
-    	
         return hexagons[hexagon.getColumn()][hexagon.getRow()];
     }
 
@@ -47,16 +39,6 @@ public class Board {
      * @return hexagon object
      */
     public Hexagon getHexagon(int column, int row) {
-   	
-    	int colInt;
-    	int rowInt;
-    	
-    	colInt = column;
-    	rowInt = row;
-    	
-        // Post-condition: returned hexagon is correct column + row
-    	ensure(hexagons[column][row] == hexagons[colInt][rowInt]);
-    	
         return hexagons[column][row];
     }
 
