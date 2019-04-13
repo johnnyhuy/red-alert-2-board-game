@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import oosd.views.View;
+import oosd.views.components.HexagonViewComponent;
 
 /**
  * GRASP: The creator
@@ -13,7 +14,7 @@ import oosd.views.View;
  * This factory should know the dimensions of the hexagons on the board.
  * No one else should alter or make different sized polygons other than this class.
  */
-public class UIFactory {
+public class ViewComponentFactory {
     private final double equalTriangleHeight = Math.sqrt(3);
     private final double halfIncrement = getSize() * (getEqualTriangleHeight() / 2.0);
     private final double fullIncrement = getSize() * getEqualTriangleHeight();
@@ -21,7 +22,7 @@ public class UIFactory {
     private int rows;
     private double gap = getSize() * 1.5;
 
-    public UIFactory(int columns, int rows) {
+    public ViewComponentFactory(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
     }
@@ -31,7 +32,7 @@ public class UIFactory {
         return new ImagePattern(image);
     }
 
-    public Polygon[][] createHexagons() {
+    public HexagonViewComponent createHexagons() {
         Polygon[][] hexagons = new Polygon[this.columns][this.rows];
         double x = 0;
         double y = 0;
@@ -50,7 +51,7 @@ public class UIFactory {
             }
         }
 
-        return hexagons;
+        return new HexagonViewComponent(hexagons);
     }
 
     private double getSize() {
