@@ -20,7 +20,7 @@ class TeamTest {
         // Assert
         assertEquals(expectedTeamName, actualTeamName);
     }
-    
+
     @Test
     void testGetNameShouldNotBeEmpty() {
         // Arrange
