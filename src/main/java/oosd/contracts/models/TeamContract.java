@@ -8,14 +8,12 @@ import static de.vksi.c4j.Condition.preCondition;
 public class TeamContract extends Team {
     @Target
     private Team target;
-	
-	public TeamContract(String name)
-	{
-		super(name);
-		
-		if(preCondition())
-		{
-			assert !name.isEmpty();
-		}
-	}
+
+    public TeamContract(String name) {
+        super(name);
+
+        if (preCondition()) {
+            assert !name.isEmpty();
+        }
+    }
 }
