@@ -12,6 +12,8 @@ import java.util.List;
 public abstract class Unit {
     private Player player;
     private boolean captured;
+    private String name;
+	private String image;
 
     protected Unit(Player player) {
         this.player = player;
@@ -36,9 +38,13 @@ public abstract class Unit {
     }
 
     // @post.condition name.size() > 0
-    public abstract String getName();
+    public String getName() {
+		return name;
+	}
 
-    public abstract String getImage();
+    public String getImage() {
+		return image;
+	}
 
     public abstract UnitBehaviour getUnitBehaviour();
 }
