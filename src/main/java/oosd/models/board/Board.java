@@ -5,41 +5,41 @@ import oosd.contracts.models.BoardContract;
 
 @ContractReference(BoardContract.class)
 public class Board {
-    private Hexagon[][] hexagons;
+    private Piece[][] pieces;
     private int rows;
     private int columns;
 
     public Board(int columns, int rows) {
         this.rows = rows;
         this.columns = columns;
-        this.hexagons = new Hexagon[columns][rows];
+        this.pieces = new Piece[columns][rows];
 
         for (int rowIndex = 0; rowIndex < this.getRows(); rowIndex++) {
             for (int columnIndex = 0; columnIndex < this.getColumns(); columnIndex++) {
-                this.hexagons[columnIndex][rowIndex] = new Hexagon(columnIndex, rowIndex);
+                this.pieces[columnIndex][rowIndex] = new Piece(columnIndex, rowIndex);
             }
         }
     }
 
     /**
-     * Get the hexagon given the object
+     * Get the piece given the object
      *
-     * @param hexagon object
-     * @return hexagon object
+     * @param piece object
+     * @return piece object
      */
-    public Hexagon getHexagon(Hexagon hexagon) {
-        return hexagons[hexagon.getColumn()][hexagon.getRow()];
+    public Piece getPiece(Piece piece) {
+        return pieces[piece.getColumn()][piece.getRow()];
     }
 
     /**
-     * Get hexagon by int coordinates.
+     * Get piece by int coordinates.
      *
      * @param column x coordinate
      * @param row    y coordinate
-     * @return hexagon object
+     * @return piece object
      */
-    public Hexagon getHexagon(int column, int row) {
-        return hexagons[column][row];
+    public Piece getPiece(int column, int row) {
+        return pieces[column][row];
     }
 
     /**
