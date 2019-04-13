@@ -14,7 +14,7 @@ public class TeamContract extends Team
     @ClassInvariant
     public void classInvariant()
     {
-    	assert target.getName().length() > NAME_SIZE : "name > NAME_SIZE";
+    	assert target.getName().length() > MINIMUM_NAME_SIZE : "name > NAME_SIZE";
     }
 	
 	public TeamContract(String name)
@@ -32,7 +32,7 @@ public class TeamContract extends Team
 	{
 		if (preCondition())
 		{
-			assert target.getName().length() > NAME_SIZE : "name > NAME_SIZE";
+			assert target.getName().length() > MINIMUM_NAME_SIZE : "name > NAME_SIZE";
 		}
 		return ignored();
 	}
