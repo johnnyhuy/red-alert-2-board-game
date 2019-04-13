@@ -11,7 +11,11 @@ public class Team {
         this.name = name;
     }
 
-    // @post.condition name.size() > 0
+    /**
+     * Get the team name.
+     *
+     * @return string
+     */
     public String getName() {
         return name;
     }
