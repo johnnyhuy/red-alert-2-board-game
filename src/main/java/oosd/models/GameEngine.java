@@ -83,6 +83,8 @@ public class GameEngine {
             playersIterator = players.listIterator();
         }
 
-        return playersIterator.next();
+        turn = playersIterator.next();
+
+        return turn;
     }
 }
