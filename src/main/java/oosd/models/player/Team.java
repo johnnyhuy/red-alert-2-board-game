@@ -6,7 +6,7 @@ import oosd.contracts.models.TeamContract;
 @ContractReference(TeamContract.class)
 public class Team {
     private String name;
-    public int NAME_SIZE = 0;
+    public int MINIMUM_NAME_SIZE = 0;
 
     public Team(String name) {
         this.name = name;
