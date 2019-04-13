@@ -17,6 +17,9 @@ public class GameEngine {
     private List<Player> players;
     private Iterator<Player> playersIterator;
 
+    // TODO: implement moves
+//    private List<Move> moves;
+
     public GameEngine(Board board, List<Player> players) {
         this.board = board;
         this.players = players;

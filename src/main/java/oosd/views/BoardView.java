@@ -52,7 +52,7 @@ public class BoardView extends View {
         selectionPieces.getPiece(selectedPiece).setVisible(false);
         unitPieces.getPiece(selectedPiece).setVisible(false);
         unitPieces.getPiece(clickedPiece).setVisible(true);
-        unitPieces.getPiece(clickedPiece).setFill(boardFactory.createViewImage(clickedPiece.getUnit().getImage()));
+        unitPieces.getPiece(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
@@ -86,12 +86,12 @@ public class BoardView extends View {
                 Piece piece = board.getPiece(xIndex, yIndex);
 
                 if (piece.getUnit() != null) {
-                    unitPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createViewImage(piece.getUnit().getImage()));
+                    unitPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createImage(piece.getUnit().getImage()));
                 } else {
                     unitPieces.getPiece(xIndex, yIndex).setVisible(false);
                 }
 
-                backgroundPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createViewImage("grass"));
+                backgroundPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createImage("grass"));
                 backgroundPieces.getPiece(xIndex, yIndex).setStrokeWidth(2);
                 backgroundPieces.getPiece(xIndex, yIndex).setStroke(Paint.valueOf("#706c1c"));
 
