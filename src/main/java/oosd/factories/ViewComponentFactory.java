@@ -4,14 +4,14 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import oosd.views.View;
-import oosd.views.components.HexagonViewComponent;
+import oosd.views.components.PieceViewComponent;
 
 /**
  * GRASP: The creator
  * This class is responsible for creating UI components in a board layout.
  * <p>
  * GRASP: Information expert
- * This factory should know the dimensions of the hexagons on the board.
+ * This factory should know the dimensions of the pieces on the board.
  * No one else should alter or make different sized polygons other than this class.
  */
 public class ViewComponentFactory {
@@ -32,15 +32,15 @@ public class ViewComponentFactory {
         return new ImagePattern(image);
     }
 
-    public HexagonViewComponent createHexagons() {
-        Polygon[][] hexagons = new Polygon[this.columns][this.rows];
+    public PieceViewComponent createPieces() {
+        Polygon[][] pieces = new Polygon[this.columns][this.rows];
         double x = 0;
         double y = 0;
 
         for (int xIndex = 0; xIndex < this.rows; xIndex++) {
             for (int yIndex = 0; yIndex < this.columns; yIndex++) {
-                hexagons[xIndex][yIndex] = new Polygon();
-                hexagons[xIndex][yIndex].getPoints().addAll(
+                pieces[xIndex][yIndex] = new Polygon();
+                pieces[xIndex][yIndex].getPoints().addAll(
                         x, y,
                         x + getSize(), y,
                         x + getGap(), y + getHalfIncrement(),
@@ -51,7 +51,7 @@ public class ViewComponentFactory {
             }
         }
 
-        return new HexagonViewComponent(hexagons);
+        return new PieceViewComponent(pieces);
     }
 
     private double getSize() {

@@ -87,26 +87,26 @@ public class Main extends Application {
 
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
 
-        board.getHexagon(0, 0).setUnit(new GISoldier(playerOne));
-        board.getHexagon(1, 0).setUnit(new GISoldier(playerOne));
-        board.getHexagon(2, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getHexagon(3, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getHexagon(4, 0).setUnit(new Harrier(playerOne));
-        board.getHexagon(5, 0).setUnit(new Harrier(playerOne));
-        board.getHexagon(6, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getHexagon(7, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getHexagon(8, 0).setUnit(new GISoldier(playerOne));
-        board.getHexagon(9, 0).setUnit(new GISoldier(playerOne));
-        board.getHexagon(0, 9).setUnit(new RhinoTank(playerTwo));
-        board.getHexagon(1, 9).setUnit(new RhinoTank(playerTwo));
-        board.getHexagon(2, 9).setUnit(new KirovAirship(playerTwo));
-        board.getHexagon(3, 9).setUnit(new KirovAirship(playerTwo));
-        board.getHexagon(4, 9).setUnit(new Conscript(playerTwo));
-        board.getHexagon(5, 9).setUnit(new Conscript(playerTwo));
-        board.getHexagon(6, 9).setUnit(new KirovAirship(playerTwo));
-        board.getHexagon(7, 9).setUnit(new KirovAirship(playerTwo));
-        board.getHexagon(8, 9).setUnit(new RhinoTank(playerTwo));
-        board.getHexagon(9, 9).setUnit(new RhinoTank(playerTwo));
+        board.getPiece(0, 0).setUnit(new GISoldier(playerOne));
+        board.getPiece(1, 0).setUnit(new GISoldier(playerOne));
+        board.getPiece(2, 0).setUnit(new GrizzlyTank(playerOne));
+        board.getPiece(3, 0).setUnit(new GrizzlyTank(playerOne));
+        board.getPiece(4, 0).setUnit(new Harrier(playerOne));
+        board.getPiece(5, 0).setUnit(new Harrier(playerOne));
+        board.getPiece(6, 0).setUnit(new GrizzlyTank(playerOne));
+        board.getPiece(7, 0).setUnit(new GrizzlyTank(playerOne));
+        board.getPiece(8, 0).setUnit(new GISoldier(playerOne));
+        board.getPiece(9, 0).setUnit(new GISoldier(playerOne));
+        board.getPiece(0, 9).setUnit(new RhinoTank(playerTwo));
+        board.getPiece(1, 9).setUnit(new RhinoTank(playerTwo));
+        board.getPiece(2, 9).setUnit(new KirovAirship(playerTwo));
+        board.getPiece(3, 9).setUnit(new KirovAirship(playerTwo));
+        board.getPiece(4, 9).setUnit(new Conscript(playerTwo));
+        board.getPiece(5, 9).setUnit(new Conscript(playerTwo));
+        board.getPiece(6, 9).setUnit(new KirovAirship(playerTwo));
+        board.getPiece(7, 9).setUnit(new KirovAirship(playerTwo));
+        board.getPiece(8, 9).setUnit(new RhinoTank(playerTwo));
+        board.getPiece(9, 9).setUnit(new RhinoTank(playerTwo));
 
         return new GameEngine(board, players);
     }

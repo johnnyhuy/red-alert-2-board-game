@@ -1,7 +1,7 @@
 package oosd.models;
 
 import oosd.models.board.Board;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
@@ -39,22 +39,22 @@ class GameEngineTest {
         // Assert
         assertEquals(gameEngine.getBoard().getRows(), rows);
         assertEquals(gameEngine.getBoard().getColumns(), columns);
-        assertNotNull(gameEngine.getBoard().getHexagon(columns - 1, rows - 1));
+        assertNotNull(gameEngine.getBoard().getPiece(columns - 1, rows - 1));
     }
 
     @Test
-    void testSetAndGetSelectedHexagon() {
+    void testSetAndGetSelectedPiece() {
         // Arrange
-        Hexagon expectedHexagon = new Hexagon(1, 1);
+        Piece expectedPiece = new Piece(1, 1);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Act
-        gameEngine.setSelectedHexagon(expectedHexagon);
-        Hexagon selectedHexagon = gameEngine.getSelectedHexagon();
+        gameEngine.setSelectedPiece(expectedPiece);
+        Piece selectedPiece = gameEngine.getSelectedPiece();
 
         // Assert
-        assertEquals(expectedHexagon, selectedHexagon);
+        assertEquals(expectedPiece, selectedPiece);
     }
 
     @Test
@@ -64,14 +64,14 @@ class GameEngineTest {
         Unit unit = new GISoldier(player);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
-        Hexagon unitHexagon = gameEngine.getBoard().getHexagon(0, 0);
-        Hexagon selectedHexagon = gameEngine.getBoard().getHexagon(0, 1);
-        unitHexagon.setUnit(unit);
-        selectedHexagon.setUnit(unit);
-        gameEngine.setSelectedHexagon(selectedHexagon);
+        Piece unitPiece = gameEngine.getBoard().getPiece(0, 0);
+        Piece selectedPiece = gameEngine.getBoard().getPiece(0, 1);
+        unitPiece.setUnit(unit);
+        selectedPiece.setUnit(unit);
+        gameEngine.setSelectedPiece(selectedPiece);
 
         // Act
-        boolean isValidMove = unitHexagon.getUnit().getUnitBehaviour().isValidMove(gameEngine, unitHexagon);
+        boolean isValidMove = unitPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, unitPiece);
 
         // Assert
         assertFalse(isValidMove);
@@ -84,11 +84,11 @@ class GameEngineTest {
         Unit unit = new GISoldier(player);
         Board board = new Board(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
-        Hexagon hexagon = gameEngine.getBoard().getHexagon(0, 1);
-        hexagon.setUnit(unit);
+        Piece piece = gameEngine.getBoard().getPiece(0, 1);
+        piece.setUnit(unit);
 
         // Act
-        List<Hexagon> validMove = hexagon.getUnit().getUnitBehaviour().getValidMoves(gameEngine, hexagon);
+        List<Piece> validMove = piece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, piece);
 
         // Assert
         assertTrue(validMove.size() > 0);

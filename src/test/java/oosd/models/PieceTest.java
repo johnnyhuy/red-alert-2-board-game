@@ -1,6 +1,6 @@
 package oosd.models;
 
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
@@ -10,17 +10,17 @@ import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HexagonTest {
+class PieceTest {
     @Test
-    void testCompareLocationsHexagon() {
+    void testCompareLocationsPiece() {
         // Arrange
-        Hexagon hexagonOne = new Hexagon(1, 1);
-        Hexagon hexagonTwo = new Hexagon(1, 1);
-        Hexagon hexagonThree = new Hexagon(2, 5);
+        Piece pieceOne = new Piece(1, 1);
+        Piece pieceTwo = new Piece(1, 1);
+        Piece pieceThree = new Piece(2, 5);
 
         // Act
-        boolean shouldEqual = hexagonOne.equals(hexagonTwo);
-        boolean shouldNotEqual = hexagonOne.equals(hexagonThree);
+        boolean shouldEqual = pieceOne.equals(pieceTwo);
+        boolean shouldNotEqual = pieceOne.equals(pieceThree);
 
         // Assert
         assertTrue(shouldEqual);
@@ -28,13 +28,13 @@ class HexagonTest {
     }
 
     @Test
-    void testGetHexagonLocation() {
+    void testGetPieceLocation() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
+        Piece piece = new Piece(1, 1);
 
         // Act
-        int row = hexagon.getRow();
-        int column = hexagon.getColumn();
+        int row = piece.getRow();
+        int column = piece.getColumn();
 
         // Assert
         assertEquals(1, row);
@@ -42,23 +42,23 @@ class HexagonTest {
     }
 
     @Test
-    void testGetHexagonPlayer() {
+    void testGetPiecePlayer() {
         // Arrange
-        Hexagon hexagon = new Hexagon(1, 1);
+        Piece piece = new Piece(1, 1);
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
 
         // Act
-        hexagon.setUnit(unit);
+        piece.setUnit(unit);
 
         // Assert
-        assertEquals(unit, hexagon.getUnit());
+        assertEquals(unit, piece.getUnit());
     }
 
     @Test
-    void testShouldNotBeNegativeCreateHexagonRowsAndColumns() {
+    void testShouldNotBeNegativeCreatePieceRowsAndColumns() {
         // Act
-        Executable run = () -> new Hexagon(-100, -100);
+        Executable run = () -> new Piece(-100, -100);
 
         // Assert
         assertThrows(AssertionError.class, run);

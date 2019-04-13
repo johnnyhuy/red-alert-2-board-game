@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import oosd.models.GameEngine;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 import oosd.views.BoardView;
 
 /**
@@ -41,26 +41,26 @@ public class GameController extends Controller {
      * Used to select a unit.
      *
      * @param event mouse event
-     * @param selectedHexagon object
-     * @param hexagon object
+     * @param selectedPiece object
+     * @param piece object
      */
-    public void selectUnit(MouseEvent event, Hexagon selectedHexagon, Hexagon hexagon) {
-        gameEngine.setSelectedHexagon(hexagon);
-        boardView.selectUnit(selectedHexagon, hexagon);
+    public void selectUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
+        gameEngine.setSelectedPiece(piece);
+        boardView.selectUnit(selectedPiece, piece);
     }
 
     /**
      * Tasked to move the unit.
      *
      * @param event mouse event
-     * @param selectedHexagon object
-     * @param hexagon object
+     * @param selectedPiece object
+     * @param piece object
      */
-    public void moveUnit(MouseEvent event, Hexagon selectedHexagon, Hexagon hexagon) {
-        hexagon.setUnit(selectedHexagon.getUnit());
-        selectedHexagon.setUnit(null);
-        gameEngine.setSelectedHexagon(null);
+    public void moveUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
+        piece.setUnit(selectedPiece.getUnit());
+        selectedPiece.setUnit(null);
+        gameEngine.setSelectedPiece(null);
         gameEngine.getNextTurn();
-        boardView.moveUnit(selectedHexagon, hexagon);
+        boardView.moveUnit(selectedPiece, piece);
     }
 }
