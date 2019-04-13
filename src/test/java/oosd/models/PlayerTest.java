@@ -6,6 +6,7 @@ import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import oosd.models.units.soviet.KirovAirship;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
 
@@ -76,5 +77,31 @@ class PlayerTest {
         assertFalse(differentPlayer);
         assertFalse(sameNameDifferentTeam);
         assertTrue(sameNameAndTeam);
+    }
+
+    @Test
+    void testPlayerNameShouldNotBeEmpty() {
+        // Act
+        Executable run = () -> new Player("", new Team("Team"));
+
+        // Assert
+        assertThrows(AssertionError.class, run);
+    }
+
+    @Test
+    void testPlayersShouldNotHaveMoreThan20Units() {
+        // Arrange
+        Player player = new Player("John Doe", new Team("Team"));
+
+        for (int i = 0; i < 20; i++) {
+            // Kirov reporting!
+            new KirovAirship(player);
+        }
+
+        // Act
+        Executable run = () -> new KirovAirship(player);
+
+        // Assert
+        assertThrows(AssertionError.class, run);
     }
 }

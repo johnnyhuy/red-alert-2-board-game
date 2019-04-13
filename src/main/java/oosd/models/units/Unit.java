@@ -9,6 +9,7 @@ import java.util.List;
  * SOLID: Open for extension and close for modification
  * Units can be extended with more sub-classes allowing different unit behaviour.
  */
+// TODO: Convert this to C4J
 public abstract class Unit {
     private Player player;
     private boolean captured;

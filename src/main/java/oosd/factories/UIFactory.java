@@ -13,7 +13,7 @@ import oosd.views.View;
  * This factory should know the dimensions of the hexagons on the board.
  * No one else should alter or make different sized polygons other than this class.
  */
-public class UIFactory {
+public class   UIFactory {
     private final double equalTriangleHeight = Math.sqrt(3);
     private final double halfIncrement = getSize() * (getEqualTriangleHeight() / 2.0);
     private final double fullIncrement = getSize() * getEqualTriangleHeight();
