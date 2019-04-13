@@ -14,6 +14,8 @@ import java.util.List;
 public class GrizzlyTank extends Allied {
     public GrizzlyTank(Player player) {
         super(player);
+        super.setImage("Grizzly Tank");
+        super.setName("Grizzly Tank");  
     }
 
     @Override
@@ -21,15 +23,6 @@ public class GrizzlyTank extends Allied {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class);
     }
 
-    @Override
-    public String getName() {
-        return "Grizzly Tank";
-    }
-
-    @Override
-    public String getImage() {
-        return "grizzly_tank";
-    }
 
     @Override
     public UnitBehaviour getUnitBehaviour() {
