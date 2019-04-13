@@ -63,8 +63,15 @@ We've produced a few class diagrams to show our iterative process in developing 
 
 ### Class diagram V1
 
-![Logo](./diagrams/ClassDiagrams-V1.png)
+![Class diagram V1](./diagrams/ClassDiagrams-V1.png)
 
-### Our current class diagram
+### Current class diagram
 
-![Logo](./diagrams/ClassDiagrams-V8.png)
+![Class diagram V8](./diagrams/ClassDiagrams-V8.png)
+
+### Mouse click handling on board sequence diagram
+
+We've created a sequence diagram describing the game piece handling a mouse click.
+
+![Sequence diagram](./diagrams/SequenceDiagrams.png)
+
