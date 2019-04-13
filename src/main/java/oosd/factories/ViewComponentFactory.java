@@ -27,7 +27,7 @@ public class ViewComponentFactory {
         this.rows = rows;
     }
 
-    public ImagePattern createViewImage(String imageName) {
+    public ImagePattern createImage(String imageName) {
         Image image = new Image(View.class.getResource(imageName + ".png").toString());
         return new ImagePattern(image);
     }
