@@ -1,7 +1,7 @@
 package oosd.models;
 
 import oosd.models.board.Board;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
@@ -40,48 +40,48 @@ class BoardTest {
     }
 
     @Test
-    void testShouldGetHexagonWithObject() {
+    void testShouldGetPieceWithObject() {
         // Arrange
         Board board = new Board(6, 6);
-        Hexagon hexagon = new Hexagon(1, 1);
+        Piece piece = new Piece(1, 1);
 
         // Act
-        Hexagon selectedHexagon = board.getHexagon(hexagon);
+        Piece selectedPiece = board.getPiece(piece);
 
         // Assert
-        assertEquals(selectedHexagon.getColumn(), 1);
-        assertEquals(selectedHexagon.getRow(), 1);
+        assertEquals(selectedPiece.getColumn(), 1);
+        assertEquals(selectedPiece.getRow(), 1);
     }
 
     @Test
-    void testShouldGetHexagonWithInt() {
+    void testShouldGetPieceWithInt() {
         // Arrange
         Board board = new Board(6, 6);
 
         // Act
-        Hexagon selectedHexagon = board.getHexagon(1, 1);
+        Piece selectedPiece = board.getPiece(1, 1);
 
         // Assert
-        assertEquals(selectedHexagon.getColumn(), 1);
-        assertEquals(selectedHexagon.getRow(), 1);
+        assertEquals(selectedPiece.getColumn(), 1);
+        assertEquals(selectedPiece.getRow(), 1);
     }
 
     @Test
-    void testShouldGetHexagonAndSetUnit() {
+    void testShouldGetPieceAndSetUnit() {
         // Arrange
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         Board board = new Board(6, 6);
-        Hexagon hexagon = new Hexagon(1, 1);
+        Piece piece = new Piece(1, 1);
 
         // Act
-        board.getHexagon(hexagon).setUnit(unit);
-        Hexagon selectedHexagon = board.getHexagon(hexagon);
+        board.getPiece(piece).setUnit(unit);
+        Piece selectedPiece = board.getPiece(piece);
 
         // Assert
-        assertEquals(selectedHexagon.getColumn(), 1);
-        assertEquals(selectedHexagon.getRow(), 1);
-        assertEquals(selectedHexagon.getUnit(), unit);
+        assertEquals(selectedPiece.getColumn(), 1);
+        assertEquals(selectedPiece.getRow(), 1);
+        assertEquals(selectedPiece.getUnit(), unit);
     }
 
     @Test
@@ -94,24 +94,24 @@ class BoardTest {
     }
 
     @Test
-    void testShouldNotGetHexagonWithObjectGreaterThanBoardSize() {
+    void testShouldNotGetPieceWithObjectGreaterThanBoardSize() {
         // Arrange
         Board board = new Board(42, 42);
 
         // Act
-        Executable run = () -> board.getHexagon(new Hexagon(100, 100));
+        Executable run = () -> board.getPiece(new Piece(100, 100));
 
         // Assert
         assertThrows(AssertionError.class, run);
     }
 
     @Test
-    void testShouldNotGetHexagonWithIntegersGreaterThanBoardSize() {
+    void testShouldNotGetPieceWithIntegersGreaterThanBoardSize() {
         // Arrange
         Board board = new Board(42, 42);
 
         // Act
-        Executable run = () -> board.getHexagon(100, 100);
+        Executable run = () -> board.getPiece(100, 100);
 
         // Assert
         assertThrows(AssertionError.class, run);

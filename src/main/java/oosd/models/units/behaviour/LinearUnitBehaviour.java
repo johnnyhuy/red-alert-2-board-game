@@ -2,7 +2,7 @@ package oosd.models.units.behaviour;
 
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
-import oosd.models.board.Hexagon;
+import oosd.models.board.Piece;
 import oosd.models.units.behaviour.enums.LinearDirections;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 // @invariant moves > 0
 public class LinearUnitBehaviour extends UnitBehaviour {
     private final int moves;
-    private List<Hexagon> validMoves;
+    private List<Piece> validMoves;
 
     public LinearUnitBehaviour(int moves) {
         this.moves = moves;
@@ -19,12 +19,12 @@ public class LinearUnitBehaviour extends UnitBehaviour {
     }
 
     @Override
-    public List<Hexagon> getValidMoves(GameEngine gameEngine, Hexagon hexagon) {
+    public List<Piece> getValidMoves(GameEngine gameEngine, Piece piece) {
         Board board = gameEngine.getBoard();
 
         for (LinearDirections direction : LinearDirections.values()) {
-            int columns = hexagon.getColumn();
-            int rows = hexagon.getRow();
+            int columns = piece.getColumn();
+            int rows = piece.getRow();
             int move = 1;
             boolean isInBoard;
 
@@ -37,11 +37,11 @@ public class LinearUnitBehaviour extends UnitBehaviour {
                     break;
                 }
 
-                if (board.getHexagon(columns, rows).getUnit() != null) {
+                if (board.getPiece(columns, rows).getUnit() != null) {
                     break;
                 }
 
-                validMoves.add(new Hexagon(columns, rows));
+                validMoves.add(new Piece(columns, rows));
                 move++;
             }
         }
@@ -50,9 +50,9 @@ public class LinearUnitBehaviour extends UnitBehaviour {
     }
 
     @Override
-    public boolean isValidMove(GameEngine gameEngine, Hexagon checkHexagon) {
-        for (Hexagon hexagon : getValidMoves(gameEngine, gameEngine.getSelectedHexagon())) {
-            if (hexagon.equals(checkHexagon)) {
+    public boolean isValidMove(GameEngine gameEngine, Piece checkPiece) {
+        for (Piece piece : getValidMoves(gameEngine, gameEngine.getSelectedPiece())) {
+            if (piece.equals(checkPiece)) {
                 return true;
             }
         }
