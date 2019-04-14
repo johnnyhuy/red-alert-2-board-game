@@ -1,5 +1,6 @@
 package oosd.models;
 
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
@@ -46,8 +47,8 @@ class PlayerTest {
     void testPlayerGetUnits() {
         // Arrange
         Player player = new Player("John Tester", new Team("Red"));
-        new GISoldier(player);
-        new KirovAirship(player);
+        player.addUnit(new GISoldier(new Piece(1, 1)));
+        player.addUnit(new KirovAirship(new Piece(1, 1)));
 
         // Act
         List<Unit> units = player.getUnits();
@@ -95,11 +96,11 @@ class PlayerTest {
 
         for (int i = 0; i < 20; i++) {
             // Kirov reporting!
-            new KirovAirship(player);
+            player.addUnit(new KirovAirship(new Piece(1, 1)));
         }
 
         // Act
-        Executable run = () -> new KirovAirship(player);
+        Executable run = () -> new KirovAirship(new Piece(1, 2));
 
         // Assert
         assertThrows(AssertionError.class, run);

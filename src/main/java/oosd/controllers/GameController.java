@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
+import oosd.models.units.Unit;
 import oosd.views.BoardView;
 
 /**
@@ -53,10 +54,10 @@ public class GameController extends Controller {
      * Tasked to move the unit.
      *
      * @param event mouse event
-     * @param selectedPiece object
-     * @param piece object
+     * @param selectedUnit unit object
+     * @param piece piece object
      */
-    public void moveUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
+    public void moveUnit(MouseEvent event, Unit selectedUnit, Piece piece) {
         piece.setUnit(selectedPiece.getUnit());
         selectedPiece.setUnit(null);
         gameEngine.setSelectedPiece(null);

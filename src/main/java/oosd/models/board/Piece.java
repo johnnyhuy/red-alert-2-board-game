@@ -8,7 +8,6 @@ import oosd.models.units.Unit;
 public class Piece {
     private int row;
     private int column;
-    private Unit unit;
 
     public Piece(int column, int row) {
         this.column = column;
@@ -48,23 +47,5 @@ public class Piece {
         Piece piece = (Piece) object;
 
         return piece.getRow() == getRow() && piece.getColumn() == getColumn();
-    }
-
-    /**
-     * Get the unit.
-     *
-     * @return unit of the piece
-     */
-    public Unit getUnit() {
-        return unit;
-    }
-
-    /**
-     * Set the unit.
-     *
-     * @param unit used to set to the piece
-     */
-    public void setUnit(Unit unit) {
-        this.unit = unit;
     }
 }

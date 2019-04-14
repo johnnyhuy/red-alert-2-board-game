@@ -1,5 +1,6 @@
 package oosd.models.units.soviet;
 
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
@@ -10,8 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Conscript extends Soviet {
-    public Conscript(Player player) {
-        super(player);
+    public Conscript(Piece location) {
+        super(location);
     }
 
     @Override

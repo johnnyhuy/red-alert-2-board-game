@@ -1,5 +1,6 @@
 package oosd.models.units.allied;
 
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
@@ -12,8 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Harrier extends Allied {
-    public Harrier(Player player) {
-        super(player);
+    public Harrier(Piece location) {
+        super(location);
     }
 
     @Override

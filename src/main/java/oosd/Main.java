@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.allied.GISoldier;
@@ -87,26 +88,26 @@ public class Main extends Application {
 
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
 
-        board.getPiece(0, 0).setUnit(new GISoldier(playerOne));
-        board.getPiece(1, 0).setUnit(new GISoldier(playerOne));
-        board.getPiece(2, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getPiece(3, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getPiece(4, 0).setUnit(new Harrier(playerOne));
-        board.getPiece(5, 0).setUnit(new Harrier(playerOne));
-        board.getPiece(6, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getPiece(7, 0).setUnit(new GrizzlyTank(playerOne));
-        board.getPiece(8, 0).setUnit(new GISoldier(playerOne));
-        board.getPiece(9, 0).setUnit(new GISoldier(playerOne));
-        board.getPiece(0, 9).setUnit(new RhinoTank(playerTwo));
-        board.getPiece(1, 9).setUnit(new RhinoTank(playerTwo));
-        board.getPiece(2, 9).setUnit(new KirovAirship(playerTwo));
-        board.getPiece(3, 9).setUnit(new KirovAirship(playerTwo));
-        board.getPiece(4, 9).setUnit(new Conscript(playerTwo));
-        board.getPiece(5, 9).setUnit(new Conscript(playerTwo));
-        board.getPiece(6, 9).setUnit(new KirovAirship(playerTwo));
-        board.getPiece(7, 9).setUnit(new KirovAirship(playerTwo));
-        board.getPiece(8, 9).setUnit(new RhinoTank(playerTwo));
-        board.getPiece(9, 9).setUnit(new RhinoTank(playerTwo));
+        new GISoldier(playerOne, new Piece(0, 0));
+        new GISoldier(playerOne, new Piece(1, 0));
+        new GrizzlyTank(playerOne, new Piece(2, 0));
+        new GrizzlyTank(playerOne, new Piece(3, 0));
+        new Harrier(playerOne, new Piece(4, 0));
+        new Harrier(playerOne, new Piece(5, 0));
+        new GrizzlyTank(playerOne, new Piece(6, 0));
+        new GrizzlyTank(playerOne, new Piece(7, 0));
+        new GISoldier(playerOne, new Piece(8, 0));
+        new GISoldier(playerOne, new Piece(9, 0));
+        new RhinoTank(playerTwo, new Piece(0, 9));
+        new RhinoTank(playerTwo, new Piece(1, 9));
+        new KirovAirship(playerTwo, new Piece(2, 9));
+        new KirovAirship(playerTwo, new Piece(3, 9));
+        new Conscript(playerTwo, new Piece(4, 9));
+        new Conscript(playerTwo, new Piece(5, 9));
+        new KirovAirship(playerTwo, new Piece(6, 9));
+        new KirovAirship(playerTwo, new Piece(7, 9));
+        new RhinoTank(playerTwo, new Piece(8, 9));
+        new RhinoTank(playerTwo, new Piece(9, 9));
 
         return new GameEngine(board, players);
     }

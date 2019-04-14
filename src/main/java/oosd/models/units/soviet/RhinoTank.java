@@ -1,5 +1,6 @@
 package oosd.models.units.soviet;
 
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
@@ -9,8 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class RhinoTank extends Soviet {
-    public RhinoTank(Player player) {
-        super(player);
+    public RhinoTank(Piece location) {
+        super(location);
     }
 
     @Override

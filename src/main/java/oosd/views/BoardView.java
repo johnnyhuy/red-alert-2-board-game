@@ -10,6 +10,7 @@ import oosd.factories.ViewComponentFactory;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.player.Player;
 import oosd.views.components.PieceViewComponent;
 
 /**
@@ -26,7 +27,7 @@ public class BoardView extends View {
     private final ViewComponentFactory boardFactory;
     private GameEngine gameEngine;
     private Pane sidebar;
-    private Text playerTurn;
+    private Text playerTurnText;
 
     public BoardView(GameController controller, GameEngine gameEngine, Pane boardPane, Pane sidebar) {
         this.controller = controller;
@@ -38,7 +39,7 @@ public class BoardView extends View {
         this.backgroundPieces = boardFactory.createPieces();
         this.unitPieces = boardFactory.createPieces();
         this.selectionPieces = boardFactory.createPieces();
-        this.playerTurn = (Text) sidebar.lookup("#playerTurn");
+        this.playerTurnText = (Text) sidebar.lookup("#playerTurnText");
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
@@ -53,7 +54,7 @@ public class BoardView extends View {
         unitPieces.getPiece(selectedPiece).setVisible(false);
         unitPieces.getPiece(clickedPiece).setVisible(true);
         unitPieces.getPiece(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
-        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+        playerTurnText.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
@@ -78,8 +79,9 @@ public class BoardView extends View {
         double x = 0;
         double y = 0;
         int pieceCount = 0;
+        Player playerTurn = gameEngine.getTurn();
 
-        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+        playerTurnText.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {

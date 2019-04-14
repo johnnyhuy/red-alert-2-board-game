@@ -2,6 +2,7 @@ package oosd.models.units;
 
 import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.UnitContract;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 
@@ -13,13 +14,12 @@ import java.util.List;
  */
 @ContractReference(UnitContract.class)
 public abstract class Unit {
-    private Player player;
+    private final Piece location;
     private boolean captured;
 
-    protected Unit(Player player) {
-        this.player = player;
+    protected Unit(Piece location) {
+        this.location = location;
         this.captured = false;
-        player.addUnit(this);
     }
 
     /**
@@ -48,15 +48,6 @@ public abstract class Unit {
     public abstract List<Class<? extends Unit>> getWinnables();
 
     /**
-     * Get the player that owns this unit.
-     *
-     * @return player object
-     */
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    /**
      * Get the name of this unit.
      *
      * @return string
@@ -76,4 +67,13 @@ public abstract class Unit {
      * @return unit behaviour object
      */
     public abstract UnitBehaviour getUnitBehaviour();
+
+    /**
+     * Get the location of a piece.
+     *
+     * @return piece object
+     */
+    public Piece getLocation() {
+        return location;
+    }
 }

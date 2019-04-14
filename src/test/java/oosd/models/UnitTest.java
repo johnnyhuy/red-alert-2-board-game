@@ -1,5 +1,7 @@
 package oosd.models;
 
+import oosd.models.board.Board;
+import oosd.models.board.Piece;
 import oosd.models.mocks.MockUnitEmptyName;
 import oosd.models.mocks.MockUnitNotWinnables;
 import oosd.models.player.Player;
@@ -20,103 +22,63 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UnitTest {
     @Test
-    void testCreateZombat() {
-        // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
-
+    void testCreateKirovAirship() {
         // Act
-        Unit unit = new KirovAirship(player);
+        Unit unit = new KirovAirship(new Piece(1, 1));
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getPlayer());
     }
 
     @Test
-    void testCreateTank() {
-        // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
-
+    void testCreateGrizzlyTank() {
         // Act
-        Unit unit = new GrizzlyTank(player);
+        Unit unit = new GrizzlyTank(new Piece(1, 1));
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getPlayer());
     }
 
     @Test
-    void testCreateScoutZombie() {
-        // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
-
+    void testCreateRhinoTank() {
         // Act
-        Unit unit = new RhinoTank(player);
+        Unit unit = new RhinoTank(new Piece(1, 1));
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getPlayer());
     }
 
     @Test
-    void testCreatePlane() {
-        // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
-
+    void testCreateHarrier() {
         // Act
-        Unit unit = new Harrier(player);
+        Unit unit = new Harrier(new Piece(1, 1));
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getPlayer());
     }
 
     @Test
-    void testCreateJuggernautZombie() {
-        // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
-
+    void testCreateConscript() {
         // Act
-        Unit unit = new Conscript(player);
+        Unit unit = new Conscript(new Piece(1, 1));
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getPlayer());
     }
 
     @Test
-    void testCreateSoldier() {
-        // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
-
+    void testCreateGISoldier() {
         // Act
-        Unit unit = new GISoldier(player);
+        Unit unit = new GISoldier(new Piece(1, 1));
 
         // Assert
         assertNotNull(unit);
-        assertNotNull(unit.getPlayer());
-    }
-
-    @Test
-    void testUnitGetPlayer() {
-        // Arrange
-        final String playerName = "John Tester";
-        Player player = new Player(playerName, new Team("Red"));
-
-        // Act
-        Unit unit = new GISoldier(player);
-
-        // Assert
-        assertNotNull(unit.getPlayer());
-        assertEquals(player, unit.getPlayer());
-        assertEquals(playerName, unit.getPlayer().getPlayerName());
     }
 
     @Test
     void testWinnableUnits() {
         // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
-        Unit unit = new GISoldier(player);
+        Unit unit = new GISoldier(new Piece(1, 1));
 
         // Act
         List<Class<? extends Unit>> winnables = unit.getWinnables();
@@ -130,9 +92,8 @@ class UnitTest {
     @Test
     void testUnitCaptured() {
         // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
-        Unit unit = new GISoldier(player);
-        Unit otherUnit = new GISoldier(player);
+        Unit unit = new GISoldier(new Piece(1, 1));
+        Unit otherUnit = new GISoldier(new Piece(1, 1));
 
         // Act
         unit.setCaptured(true);
@@ -145,8 +106,7 @@ class UnitTest {
     @Test
     void testGetWinnablesShouldNotBeZero() {
         // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
-        Unit unit = new MockUnitNotWinnables(player);
+        Unit unit = new MockUnitNotWinnables(new Piece(1, 1));
 
         // Act
         Executable run = unit::getWinnables;
@@ -158,13 +118,27 @@ class UnitTest {
     @Test
     void testGetUnitNameShouldNotBeEmpty() {
         // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
-        Unit unit = new MockUnitEmptyName(player);
+        Unit unit = new MockUnitEmptyName(new Piece(1, 1));
 
         // Act
         Executable run = unit::getName;
 
         // Assert
         assertThrows(AssertionError.class, run);
+    }
+
+    @Test
+    void testGetUnitLocation() {
+        // Arrange
+        Piece piece = new Piece(0, 0);
+        Unit unit = new KirovAirship(piece);
+
+        // Act
+        Piece location = unit.getLocation();
+
+        // Assert
+        assertEquals(piece, location);
+        assertEquals(piece.getColumn(), location.getColumn());
+        assertEquals(piece.getRow(), location.getRow());
     }
 }

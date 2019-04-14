@@ -1,6 +1,7 @@
 package oosd.contracts.models;
 
 import de.vksi.c4j.Target;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.UnitBehaviour;
@@ -14,8 +15,8 @@ public class UnitContract extends Unit {
     @Target
     private Unit target;
 
-    public UnitContract(Player player) {
-        super(player);
+    public UnitContract(Piece location) {
+        super(location);
     }
 
     @Override

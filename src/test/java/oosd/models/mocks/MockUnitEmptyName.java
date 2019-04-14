@@ -1,5 +1,6 @@
 package oosd.models.mocks;
 
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.UnitBehaviour;
@@ -8,8 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class MockUnitEmptyName extends Unit {
-    public MockUnitEmptyName(Player player) {
-        super(player);
+    public MockUnitEmptyName(Piece location) {
+        super(location);
     }
 
     @Override
