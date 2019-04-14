@@ -50,8 +50,8 @@ class GameEngineTest {
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Act
-        gameEngine.setSelectedPiece(expectedPiece);
-        Piece selectedPiece = gameEngine.getSelectedPiece();
+        gameEngine.setSelectedUnit(expectedPiece);
+        Piece selectedPiece = gameEngine.getSelectedUnit();
 
         // Assert
         assertEquals(expectedPiece, selectedPiece);
@@ -68,7 +68,7 @@ class GameEngineTest {
         Piece selectedPiece = gameEngine.getBoard().getPiece(0, 1);
         unitPiece.setUnit(unit);
         selectedPiece.setUnit(unit);
-        gameEngine.setSelectedPiece(selectedPiece);
+        gameEngine.setSelectedUnit(selectedPiece);
 
         // Act
         boolean isValidMove = unitPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, unitPiece);

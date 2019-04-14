@@ -11,6 +11,7 @@ import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.player.Player;
+import oosd.models.units.Unit;
 import oosd.views.components.PieceViewComponent;
 
 /**
@@ -57,11 +58,11 @@ public class BoardView extends View {
         playerTurnText.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
-    public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
-        if (selectedPiece != null) {
-            selectionPieces.getPiece(selectedPiece).setVisible(false);
+    public void selectUnit(Unit selectedUnit, Piece clickedPiece) {
+        if (selectedUnit != null) {
+            selectionPieces.getPiece(selectedUnit.getLocation()).setVisible(false);
 
-            for (Piece piece : selectedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
+            for (Piece piece : selectedUnit.getUnitBehaviour().getValidMoves(gameEngine, selectedUnit.getLocation())) {
                 selectionPieces.getPiece(piece).setVisible(false);
             }
         }
@@ -85,13 +86,10 @@ public class BoardView extends View {
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                Piece piece = board.getPiece(xIndex, yIndex);
+                Unit unit = playerTurn.getUnit(xIndex, yIndex);
+                Piece piece = unit.getLocation();
 
-                if (piece.getUnit() != null) {
-                    unitPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createImage(piece.getUnit().getImage()));
-                } else {
-                    unitPieces.getPiece(xIndex, yIndex).setVisible(false);
-                }
+                unitPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createImage(unit.getImage()));
 
                 backgroundPieces.getPiece(xIndex, yIndex).setFill(boardFactory.createImage("grass"));
                 backgroundPieces.getPiece(xIndex, yIndex).setStrokeWidth(2);
@@ -100,7 +98,7 @@ public class BoardView extends View {
                 selectionPieces.getPiece(xIndex, yIndex).setVisible(false);
 
                 final StackPane stack = new StackPane();
-                stack.setOnMouseClicked(event -> handlePieceClick(event, piece));
+                stack.setOnMouseClicked(event -> handlePieceClick(event, unit, piece));
                 stack.getChildren().addAll(backgroundPieces.getPiece(xIndex, yIndex), unitPieces.getPiece(xIndex, yIndex), selectionPieces.getPiece(xIndex, yIndex));
                 stack.setLayoutX(x);
                 stack.setLayoutY(y);
@@ -122,25 +120,25 @@ public class BoardView extends View {
         }
     }
 
-    private void handlePieceClick(MouseEvent event, Piece piece) {
-        Piece selectedPiece = gameEngine.getSelectedPiece();
+    private void handlePieceClick(MouseEvent event, Unit unit, Piece piece) {
+        Unit selectedUnit = gameEngine.getSelectedUnit();
 
-        if (piece.getUnit() != null) {
-            if (!piece.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+        if (unit != null) {
+            if (!unit.getPlayer().equals(gameEngine.getTurn())) {
                 return;
             }
 
-            controller.selectUnit(event, selectedPiece, piece);
+            controller.selectUnit(event, selectedUnit, piece);
 
             return;
         }
 
-        if (selectedPiece != null) {
-            if (!selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece)) {
+        if (selectedUnit != null) {
+            if (!selectedUnit.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece)) {
                 return;
             }
 
-            controller.moveUnit(event, selectedPiece, piece);
+            controller.moveUnit(event, selectedUnit, piece);
         }
     }
 }

@@ -3,6 +3,7 @@ package oosd.models;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.player.Player;
+import oosd.models.units.Unit;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,7 @@ import static oosd.helpers.ListHelper.isNotEmpty;
 // TODO: Convert this to C4J
 public class GameEngine {
     private Board board;
-    private Piece selectedPiece;
+    private Unit selectedUnit;
     private Player turn;
     private List<Player> players;
     private Iterator<Player> playersIterator;
@@ -45,17 +46,17 @@ public class GameEngine {
      *
      * @return selected piece
      */
-    public Piece getSelectedPiece() {
-        return selectedPiece;
+    public Unit getSelectedUnit() {
+        return selectedUnit;
     }
 
     /**
      * Set the selected piece on in the game.
      *
-     * @param selectedPiece selected piece
+     * @param selectedUnit selected piece
      */
-    public void setSelectedPiece(Piece selectedPiece) {
-        this.selectedPiece = selectedPiece;
+    public void setSelectedUnit(Unit selectedUnit) {
+        this.selectedUnit = selectedUnit;
     }
 
     /**

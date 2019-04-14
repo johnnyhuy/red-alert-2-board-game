@@ -51,7 +51,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
 
     @Override
     public boolean isValidMove(GameEngine gameEngine, Piece checkPiece) {
-        for (Piece piece : getValidMoves(gameEngine, gameEngine.getSelectedPiece())) {
+        for (Piece piece : getValidMoves(gameEngine, gameEngine.getSelectedUnit())) {
             if (piece.equals(checkPiece)) {
                 return true;
             }

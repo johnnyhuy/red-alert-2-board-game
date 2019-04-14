@@ -96,13 +96,46 @@ class PlayerTest {
 
         for (int i = 0; i < 20; i++) {
             // Kirov reporting!
-            player.addUnit(new KirovAirship(new Piece(1, 1)));
+            player.addUnit(new KirovAirship(new Piece(i, i)));
         }
 
         // Act
-        Executable run = () -> new KirovAirship(new Piece(1, 2));
+        Executable run = () -> new KirovAirship(new Piece(50, 50));
 
         // Assert
         assertThrows(AssertionError.class, run);
+    }
+
+    @Test
+    void testPlayerGetUnitByPiece() {
+        // Arrange
+        Player player = new Player("John Doe", new Team("Team"));
+        Piece location = new Piece(1, 1);
+        KirovAirship newUnit = new KirovAirship(location);
+        player.addUnit(newUnit);
+
+        // Act
+        Unit unit = player.getUnit(location);
+
+        // Assert
+        assertEquals(newUnit, unit);
+        assertEquals(location, unit.getLocation());
+    }
+
+    @Test
+    void testPlayerGetUnitByIntegers() {
+        // Arrange
+        Player player = new Player("John Doe", new Team("Team"));
+        int column = 0;
+        int row = 0;
+        KirovAirship newUnit = new KirovAirship(new Piece(column, row));
+        player.addUnit(newUnit);
+
+        // Act
+        Unit unit = player.getUnit(column, row);
+
+        // Assert
+        assertEquals(newUnit, unit);
+        assertEquals(new Piece(column, row), unit.getLocation());
     }
 }

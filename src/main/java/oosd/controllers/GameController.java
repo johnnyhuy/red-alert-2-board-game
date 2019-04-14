@@ -42,12 +42,12 @@ public class GameController extends Controller {
      * Used to select a unit.
      *
      * @param event mouse event
-     * @param selectedPiece object
+     * @param selectedUnit object
      * @param piece object
      */
-    public void selectUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
-        gameEngine.setSelectedPiece(piece);
-        boardView.selectUnit(selectedPiece, piece);
+    public void selectUnit(MouseEvent event, Unit selectedUnit, Piece piece) {
+        gameEngine.setSelectedUnit(selectedUnit);
+        boardView.selectUnit(selectedUnit, piece);
     }
 
     /**
@@ -60,7 +60,7 @@ public class GameController extends Controller {
     public void moveUnit(MouseEvent event, Unit selectedUnit, Piece piece) {
         piece.setUnit(selectedPiece.getUnit());
         selectedPiece.setUnit(null);
-        gameEngine.setSelectedPiece(null);
+        gameEngine.setSelectedUnit(null);
         gameEngine.getNextTurn();
         boardView.moveUnit(selectedPiece, piece);
     }
