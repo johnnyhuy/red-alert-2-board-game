@@ -3,6 +3,7 @@ package oosd.models.units.behaviour;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.units.Unit;
 import oosd.models.units.behaviour.enums.LinearDirections;
 
 import java.util.ArrayList;
@@ -19,12 +20,12 @@ public class LinearUnitBehaviour extends UnitBehaviour {
     }
 
     @Override
-    public List<Piece> getValidMoves(GameEngine gameEngine, Piece piece) {
+    public List<Piece> getValidMoves(GameEngine gameEngine, Unit unit) {
         Board board = gameEngine.getBoard();
 
         for (LinearDirections direction : LinearDirections.values()) {
-            int columns = piece.getColumn();
-            int rows = piece.getRow();
+            int columns = unit.getLocation().getColumn();
+            int rows = unit.getLocation().getRow();
             int move = 1;
             boolean isInBoard;
 
@@ -37,7 +38,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
                     break;
                 }
 
-                if (board.getPiece(columns, rows).getUnit() != null) {
+                if (gameEngine.getUnit(new Piece(columns, rows)) != null) {
                     break;
                 }
 

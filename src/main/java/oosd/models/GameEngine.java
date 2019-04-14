@@ -47,7 +47,7 @@ public class GameEngine {
      * @return selected piece
      */
     public Unit getSelectedUnit() {
-        return selectedUnit;
+        return this.selectedUnit;
     }
 
     /**
@@ -57,6 +57,18 @@ public class GameEngine {
      */
     public void setSelectedUnit(Unit selectedUnit) {
         this.selectedUnit = selectedUnit;
+    }
+
+    public Unit getUnit(Piece piece) {
+        for (Player player : players) {
+            Unit unit = player.getUnit(piece);
+
+            if (unit != null) {
+                return unit;
+            }
+        }
+
+        return null;
     }
 
     /**

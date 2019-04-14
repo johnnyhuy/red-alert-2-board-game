@@ -3,7 +3,6 @@ package oosd.models.units;
 import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.UnitContract;
 import oosd.models.board.Piece;
-import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @ContractReference(UnitContract.class)
 public abstract class Unit {
-    private final Piece location;
+    private Piece location;
     private boolean captured;
 
     protected Unit(Piece location) {
@@ -75,5 +74,14 @@ public abstract class Unit {
      */
     public Piece getLocation() {
         return location;
+    }
+
+    /**
+     * Set location to the unit.
+     *
+     * @param piece object
+     */
+    public void setLocation(Piece piece) {
+        this.location = piece;
     }
 }
