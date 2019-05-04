@@ -1,5 +1,6 @@
 package oosd.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -25,15 +26,21 @@ public class GameController extends Controller {
     @FXML
     private Pane sidebar;
 
+    @FXML
+    private Pane toolbar;
+
     private BoardView boardView;
 
     public GameController(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
+    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
+    }
+
     @Override
     public void initialize() {
-        boardView = new BoardView(this, gameEngine, boardPane, sidebar);
+        boardView = new BoardView(this, gameEngine, windowGridPane, boardPane, sidebar, toolbar);
         boardView.initialize();
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class Unit {
     private Player player;
     private boolean captured;
-    private boolean defend;
+    private boolean defendStatus;
 
     protected Unit(Player player) {
         this.player = player;
@@ -79,4 +79,22 @@ public abstract class Unit {
      * @return unit behaviour object
      */
     public abstract UnitBehaviour getUnitBehaviour();
+
+    /**
+     * Get the unit defend status.
+     *
+     * @return boolean
+     */
+    public boolean getDefendStatus() {
+        return defendStatus;
+    }
+
+    /**
+     * Set the unit defend status.
+     *
+     * @param defendStatus boolean
+     */
+    public void setDefendStatus(boolean defendStatus) {
+        this.defendStatus = defendStatus;
+    }
 }
