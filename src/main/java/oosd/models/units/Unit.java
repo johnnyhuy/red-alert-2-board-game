@@ -17,6 +17,7 @@ import java.util.List;
 public abstract class Unit {
     private Player player;
     private boolean captured;
+    private boolean defend;
 
     protected Unit(Player player) {
         this.player = player;
