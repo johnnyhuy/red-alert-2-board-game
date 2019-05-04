@@ -1,8 +1,10 @@
 package oosd.views;
 
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
@@ -18,6 +20,7 @@ import oosd.views.components.PieceViewComponent;
  */
 public class BoardView extends View {
     private final Board board;
+    private Pane windowGridPane;
     private final Pane boardPane;
     private final GameController controller;
     private final PieceViewComponent selectionPieces;
@@ -28,9 +31,10 @@ public class BoardView extends View {
     private Pane sidebar;
     private Text playerTurn;
 
-    public BoardView(GameController controller, GameEngine gameEngine, Pane boardPane, Pane sidebar) {
+    public BoardView(GameController controller, GameEngine gameEngine, Pane windowGridPane, Pane boardPane, Pane sidebar, Pane toolbar) {
         this.controller = controller;
         this.gameEngine = gameEngine;
+        this.windowGridPane = windowGridPane;
         this.boardPane = boardPane;
         this.board = gameEngine.getBoard();
         this.sidebar = sidebar;
@@ -79,6 +83,10 @@ public class BoardView extends View {
         double y = 0;
         int pieceCount = 0;
 
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(View.class.getResource("menu.png").toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(windowGridPane.getWidth(), windowGridPane.getHeight(), true, true, true, false));
+        Background background = new Background(backgroundImage);
+        windowGridPane.setBackground(background);
+
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
@@ -101,6 +109,7 @@ public class BoardView extends View {
                 stack.setOnMouseClicked(event -> handlePieceClick(event, piece));
                 stack.getChildren().addAll(backgroundPieces.getPiece(xIndex, yIndex), unitPieces.getPiece(xIndex, yIndex), selectionPieces.getPiece(xIndex, yIndex));
                 stack.setLayoutX(x);
+
                 stack.setLayoutY(y);
 
                 boardPane.getChildren().add(stack);

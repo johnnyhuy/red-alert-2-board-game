@@ -34,8 +34,8 @@ public class Main extends Application {
     private final int boardRows = 10;
     private final String boardFileName = "board.fxml";
     private final String windowTitle = "OOSD Game Board";
-    private final int sceneWidth = 1024;
-    private final int sceneHeight = 856;
+    private final int sceneWidth = 1200;
+    private final int sceneHeight = 900;
 
     /**
      * Boilerplate code for JavaFX.
@@ -62,7 +62,6 @@ public class Main extends Application {
 
         Pane pane = loader.load();
         Scene content = new Scene(pane, sceneWidth, sceneHeight);
-        content.setFill(new ImagePattern(new Image(View.class.getResource("menu.png").toString())));
 
         primaryStage.setScene(content);
         primaryStage.setTitle(windowTitle);
