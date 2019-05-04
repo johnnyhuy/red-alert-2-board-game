@@ -9,10 +9,12 @@ import oosd.views.components.PieceViewComponent;
 /**
  * GRASP: The creator
  * This class is responsible for creating UI components in a board layout.
- * <p>
+ *
  * GRASP: Information expert
  * This factory should know the dimensions of the pieces on the board.
  * No one else should alter or make different sized polygons other than this class.
+ *
+ * Design pattern: factory pattern used to produce custom view components for the UI.
  */
 public class ViewComponentFactory {
     private final double equalTriangleHeight = Math.sqrt(3);
