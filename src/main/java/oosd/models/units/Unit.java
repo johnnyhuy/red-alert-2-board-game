@@ -10,6 +10,8 @@ import java.util.List;
 /**
  * SOLID: Open for extension and close for modification
  * Units can be extended with more sub-classes allowing different unit behaviour.
+ *
+ * Design pattern: template behavioural pattern is used to produce multiple types of units.
  */
 @ContractReference(UnitContract.class)
 public abstract class Unit {
