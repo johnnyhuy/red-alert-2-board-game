@@ -1,5 +1,6 @@
 package oosd.views;
 
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +22,7 @@ import oosd.views.components.PieceViewComponent;
 public class BoardView extends View {
     private final Board board;
     private Pane windowGridPane;
-    private final Pane boardPane;
+    private final StackPane boardPane;
     private final GameController controller;
     private final PieceViewComponent selectionPieces;
     private final PieceViewComponent backgroundPieces;
@@ -29,15 +30,17 @@ public class BoardView extends View {
     private final ViewComponentFactory boardFactory;
     private GameEngine gameEngine;
     private Pane sidebar;
+    private HBox toolbar;
     private Text playerTurn;
 
-    public BoardView(GameController controller, GameEngine gameEngine, Pane windowGridPane, Pane boardPane, Pane sidebar, Pane toolbar) {
+    public BoardView(GameController controller, GameEngine gameEngine, Pane windowGridPane, StackPane boardPane, Pane sidebar, HBox toolbar) {
         this.controller = controller;
         this.gameEngine = gameEngine;
         this.windowGridPane = windowGridPane;
         this.boardPane = boardPane;
         this.board = gameEngine.getBoard();
         this.sidebar = sidebar;
+        this.toolbar = toolbar;
         this.boardFactory = new ViewComponentFactory(board.getColumns(), board.getRows());
         this.backgroundPieces = boardFactory.createPieces();
         this.unitPieces = boardFactory.createPieces();
@@ -82,6 +85,7 @@ public class BoardView extends View {
         double x = 0;
         double y = 0;
         int pieceCount = 0;
+        Group group = new Group();
 
         BackgroundImage backgroundImage = new BackgroundImage(new Image(View.class.getResource("menu.png").toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(windowGridPane.getWidth(), windowGridPane.getHeight(), true, true, true, false));
         Background background = new Background(backgroundImage);
@@ -112,7 +116,7 @@ public class BoardView extends View {
 
                 stack.setLayoutY(y);
 
-                boardPane.getChildren().add(stack);
+                group.getChildren().add(stack);
 
                 if (pieceCount % 2 == 0) {
                     y = y + boardFactory.getHalfIncrement();
@@ -127,6 +131,8 @@ public class BoardView extends View {
 
             y = yIndex == board.getRows() - 1 ? 0 : y + boardFactory.getFullIncrement();
         }
+
+        boardPane.getChildren().add(group);
     }
 
     private void handlePieceClick(MouseEvent event, Piece piece) {
