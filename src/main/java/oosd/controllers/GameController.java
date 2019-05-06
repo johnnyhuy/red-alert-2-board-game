@@ -2,8 +2,10 @@ package oosd.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
 import oosd.views.BoardView;
@@ -21,13 +23,13 @@ public class GameController extends Controller {
     private Pane windowGridPane;
 
     @FXML
-    private Pane boardPane;
+    private StackPane boardPane;
 
     @FXML
     private Pane sidebar;
 
     @FXML
-    private Pane toolbar;
+    private HBox toolbar;
 
     private BoardView boardView;
 
@@ -36,6 +38,7 @@ public class GameController extends Controller {
     }
 
     @FXML protected void handleSubmitButtonAction(ActionEvent event) {
+        System.out.println("poop");
     }
 
     @Override

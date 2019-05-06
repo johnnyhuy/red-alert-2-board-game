@@ -3,26 +3,27 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.geometry.Insets?>
-
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
-<Pane xmlns:fx="http://javafx.com/fxml" fx:id="windowGridPane">
-    <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardContainer">
-        <center>
-            <Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane">
-                <BorderPane.margin>
-                     <Insets left="180.0" top="60.0" />
-                </BorderPane.margin>
-            </Pane>
-        </center>
-        <bottom>
-            <HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="toolbar">
-                <Button text="Defend" />
-            </HBox>
-        </bottom>
-    </BorderPane>
-    <Pane fx:id="sidebar" layoutX="1000" layoutY="337">
-        <Text fx:id="playerTurn" fill="#FAFB32" style="-fx-font-weight: bold" textAlignment="CENTER"/>
-    </Pane>
-</Pane>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="windowGridPane">
+    <center>
+        <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" minHeight="850">
+        </StackPane>
+    </center>
+    <right>
+        <Pane fx:id="sidebar" minWidth="255">
+            <Text fx:id="playerTurn" fill="#FAFB32" style="-fx-font-weight: bold" textAlignment="CENTER" layoutX="50" layoutY="338"/>
+        </Pane>
+    </right>
+    <bottom>
+        <HBox xmlns:fx="http://javafx.com/fxml/1" fx:id="toolbar" minHeight="50">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Button text="Defend" onAction="# 1133"/>
+        </HBox>
+    </bottom>
+</BorderPane>
