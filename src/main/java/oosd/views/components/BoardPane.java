@@ -23,6 +23,8 @@ public class BoardPane extends StackPane {
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 Piece piece = board.getPiece(xIndex, yIndex);
+
+                // TODO: remove this and use a stack pane to build piece polygons
                 backgroundPieces.put(piece, new BackgroundPiecePolygon());
                 unitPieces.put(piece, new UnitPiecePolygon());
                 selectionPieces.put(piece, new SelectionPiecePolygon());
@@ -40,7 +42,6 @@ public class BoardPane extends StackPane {
                 anchor.setOnMouseClicked(event -> handlePieceClick(event, gameEngine, gameController, piece));
                 anchor.getChildren().addAll(backgroundPieces.get(piece), unitPieces.get(piece), selectionPieces.get(piece), defendPieces.get(piece));
                 anchor.setLayoutX(x);
-
                 anchor.setLayoutY(y);
 
                 group.getChildren().add(anchor);

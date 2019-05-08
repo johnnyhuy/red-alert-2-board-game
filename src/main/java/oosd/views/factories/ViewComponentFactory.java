@@ -30,6 +30,7 @@ public class ViewComponentFactory {
         return new ImagePattern(image);
     }
 
+    // TODO: piece positions aren't getting saved properly with this
     public <T> HashMap<Piece, T> createPiecePolygons(T polygon) {
         HashMap<Piece, T> pieces = new HashMap<>();
 
