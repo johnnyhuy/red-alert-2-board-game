@@ -1,6 +1,7 @@
 package oosd.factories;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import oosd.views.View;
@@ -34,7 +35,7 @@ public class ViewComponentFactory {
         return new ImagePattern(image);
     }
 
-    public PieceViewComponent createPieces() {
+    public PieceViewComponent<Polygon> createPieces() {
         Polygon[][] pieces = new Polygon[this.columns][this.rows];
         double x = 0;
         double y = 0;
@@ -53,7 +54,24 @@ public class ViewComponentFactory {
             }
         }
 
-        return new PieceViewComponent(pieces);
+        return new PieceViewComponent<>(pieces);
+    }
+
+    public PieceViewComponent<ImageView> createPieceImages(String imageName) {
+        ImageView[][] pieces = new ImageView[this.columns][this.rows];
+        double x = 0;
+        double y = 0;
+
+        for (int xIndex = 0; xIndex < this.rows; xIndex++) {
+            for (int yIndex = 0; yIndex < this.columns; yIndex++) {
+                pieces[xIndex][yIndex] = new ImageView(new Image(View.class.getResource(imageName + ".png").toString()));
+                pieces[xIndex][yIndex].setFitHeight(10);
+                pieces[xIndex][yIndex].setFitWidth(10);
+                pieces[xIndex][yIndex].setVisible(false);
+            }
+        }
+
+        return new PieceViewComponent<>(pieces);
     }
 
     private double getSize() {
