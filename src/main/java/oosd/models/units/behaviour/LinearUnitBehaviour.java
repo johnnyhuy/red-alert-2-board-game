@@ -41,7 +41,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
                     break;
                 }
 
-                validMoves.add(new Piece(columns, rows));
+                validMoves.add(board.getPiece(columns, rows));
                 move++;
             }
         }

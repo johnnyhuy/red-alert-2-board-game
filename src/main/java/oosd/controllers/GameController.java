@@ -3,13 +3,14 @@ package oosd.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
 import oosd.models.units.Unit;
 import oosd.views.BoardView;
+import oosd.views.components.BoardPane;
+import oosd.views.components.SidebarPane;
+import oosd.views.components.ToolbarPane;
+import oosd.views.components.WindowGridPane;
 
 /**
  * GRASP: The controller
@@ -21,16 +22,16 @@ public class GameController extends Controller {
     private final GameEngine gameEngine;
 
     @FXML
-    private Pane windowGridPane;
+    private WindowGridPane windowGridPane;
 
     @FXML
-    private StackPane boardPane;
+    private BoardPane boardPane;
 
     @FXML
-    private Pane sidebar;
+    private SidebarPane sidebar;
 
     @FXML
-    private HBox toolbar;
+    private ToolbarPane toolbar;
 
     private BoardView boardView;
 
@@ -45,7 +46,7 @@ public class GameController extends Controller {
     @Override
     public void initialize() {
         boardView = new BoardView(this, gameEngine, windowGridPane, boardPane, sidebar, toolbar);
-        boardView.initialize();
+        boardView.render();
     }
 
     /**
