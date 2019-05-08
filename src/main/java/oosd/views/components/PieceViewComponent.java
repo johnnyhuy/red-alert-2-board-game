@@ -1,20 +1,23 @@
 package oosd.views.components;
 
-import javafx.scene.shape.Polygon;
 import oosd.models.board.Piece;
 
-public class PieceViewComponent {
-    private final Polygon[][] pieces;
+public class PieceViewComponent<T> {
+    private final T[][] pieces;
 
-    public PieceViewComponent(Polygon[][] pieces) {
+    public PieceViewComponent(T[][] pieces) {
         this.pieces = pieces;
     }
 
-    public Polygon getPiece(Piece piece) {
+    public T getPiece(Piece piece) {
         return pieces[piece.getColumn()][piece.getRow()];
     }
 
-    public Polygon getPiece(int column, int row) {
+    public T getPiece(int column, int row) {
         return pieces[column][row];
+    }
+
+    public T[][] getComponent() {
+        return this.pieces;
     }
 }

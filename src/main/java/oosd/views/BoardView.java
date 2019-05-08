@@ -1,12 +1,12 @@
 package oosd.views;
 
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
 import oosd.factories.ViewComponentFactory;
@@ -24,9 +24,10 @@ public class BoardView extends View {
     private Pane windowGridPane;
     private final StackPane boardPane;
     private final GameController controller;
-    private final PieceViewComponent selectionPieces;
-    private final PieceViewComponent backgroundPieces;
-    private final PieceViewComponent unitPieces;
+    private final PieceViewComponent<Polygon> selectionPieces;
+    private final PieceViewComponent<Polygon> backgroundPieces;
+    private final PieceViewComponent<Polygon> unitPieces;
+    private final PieceViewComponent<ImageView> defendPieceImages;
     private final ViewComponentFactory boardFactory;
     private GameEngine gameEngine;
     private Pane sidebar;
@@ -45,6 +46,7 @@ public class BoardView extends View {
         this.backgroundPieces = boardFactory.createPieces();
         this.unitPieces = boardFactory.createPieces();
         this.selectionPieces = boardFactory.createPieces();
+        this.defendPieceImages = boardFactory.createPieceImages("shield");
         this.playerTurn = (Text) sidebar.lookup("#playerTurn");
     }
 
@@ -111,7 +113,7 @@ public class BoardView extends View {
 
                 final StackPane stack = new StackPane();
                 stack.setOnMouseClicked(event -> handlePieceClick(event, piece));
-                stack.getChildren().addAll(backgroundPieces.getPiece(xIndex, yIndex), unitPieces.getPiece(xIndex, yIndex), selectionPieces.getPiece(xIndex, yIndex));
+                stack.getChildren().addAll(backgroundPieces.getPiece(xIndex, yIndex), unitPieces.getPiece(xIndex, yIndex), selectionPieces.getPiece(xIndex, yIndex), defendPieceImages.getPiece(xIndex, yIndex));
                 stack.setLayoutX(x);
 
                 stack.setLayoutY(y);
@@ -135,6 +137,10 @@ public class BoardView extends View {
         boardPane.getChildren().add(group);
     }
 
+    public void defendUnit(Piece piece) {
+        defendPieceImages.getPiece(piece).setVisible(true);
+    }
+
     private void handlePieceClick(MouseEvent event, Piece piece) {
         Piece selectedPiece = gameEngine.getSelectedPiece();
 
@@ -149,6 +155,10 @@ public class BoardView extends View {
         }
 
         if (selectedPiece != null) {
+            if (piece.equals(selectedPiece)) {
+                controller.defendUnit(event, piece);
+            }
+
             if (!selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece)) {
                 return;
             }
