@@ -14,7 +14,8 @@
     </center>
     <right>
         <Pane fx:id="sidebar" minWidth="255">
-            <Text fx:id="playerTurn" fill="#FAFB32" style="-fx-font-weight: bold" textAlignment="CENTER" layoutX="50" layoutY="338"/>
+            <Text fx:id="playerTurn" fill="#FAFB32" style="-fx-font-weight: bold" textAlignment="CENTER" layoutX="50"
+                  layoutY="20"/>
         </Pane>
     </right>
     <bottom>
