@@ -15,23 +15,23 @@ public class KirovAirship extends Soviet {
         super(player);
     }
 
-    @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(GISoldier.class, GrizzlyTank.class);
     }
 
-    @Override
     public String getName() {
         return "Kirov Airship";
     }
 
-    @Override
     public String getImage() {
         return "kirov_airship";
     }
 
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(5);
+    }
+
+    public int getDefaultDefendCount() {
+        return 1;
     }
 }

@@ -5,6 +5,10 @@ import javafx.scene.paint.ImagePattern;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.views.View;
+import oosd.views.components.BackgroundPiecePolygon;
+import oosd.views.components.DefendPieceImage;
+import oosd.views.components.SelectionPiecePolygon;
+import oosd.views.components.UnitPiecePolygon;
 
 import java.util.HashMap;
 
@@ -30,13 +34,48 @@ public class ViewComponentFactory {
         return new ImagePattern(image);
     }
 
-    // TODO: piece positions aren't getting saved properly with this
-    public <T> HashMap<Piece, T> createPiecePolygons(T polygon) {
-        HashMap<Piece, T> pieces = new HashMap<>();
+    public HashMap<Piece, UnitPiecePolygon> createUnitPiecePolygons() {
+        HashMap<Piece, UnitPiecePolygon> pieces = new HashMap<>();
 
         for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                pieces.put(board.getPiece(xIndex, yIndex), polygon);
+                pieces.put(board.getPiece(xIndex, yIndex), new UnitPiecePolygon());
+            }
+        }
+
+        return pieces;
+    }
+
+    public HashMap<Piece, SelectionPiecePolygon> createSelectionPiecePolygons() {
+        HashMap<Piece, SelectionPiecePolygon> pieces = new HashMap<>();
+
+        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
+                pieces.put(board.getPiece(xIndex, yIndex), new SelectionPiecePolygon());
+            }
+        }
+
+        return pieces;
+    }
+
+    public HashMap<Piece, DefendPieceImage> createDefendPieceImage() {
+        HashMap<Piece, DefendPieceImage> pieces = new HashMap<>();
+
+        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
+                pieces.put(board.getPiece(xIndex, yIndex), new DefendPieceImage());
+            }
+        }
+
+        return pieces;
+    }
+
+    public HashMap<Piece, BackgroundPiecePolygon> createBackgroundPiecePolygons() {
+        HashMap<Piece, BackgroundPiecePolygon> pieces = new HashMap<>();
+
+        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
+            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
+                pieces.put(board.getPiece(xIndex, yIndex), new BackgroundPiecePolygon());
             }
         }
 

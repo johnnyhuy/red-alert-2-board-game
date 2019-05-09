@@ -24,12 +24,6 @@ public class BoardPane extends StackPane {
             for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
                 Piece piece = board.getPiece(xIndex, yIndex);
 
-                // TODO: remove this and use a stack pane to build piece polygons
-                backgroundPieces.put(piece, new BackgroundPiecePolygon());
-                unitPieces.put(piece, new UnitPiecePolygon());
-                selectionPieces.put(piece, new SelectionPiecePolygon());
-                defendPieces.put(piece, new DefendPieceImage());
-
                 if (piece.getUnit() != null) {
                     unitPieces.get(piece).setUnitImage(piece.getUnit());
                 } else {
@@ -67,15 +61,15 @@ public class BoardPane extends StackPane {
         Piece selectedPiece = gameEngine.getSelectedPiece();
 
         if (piece.getUnit() != null) {
-            if (piece.equals(selectedPiece)) {
-                gameController.defendUnit(event, piece);
-            }
-
-            if (!piece.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+            if (piece.getUnit().getDefendStatus() || !piece.getUnit().getPlayer().equals(gameEngine.getTurn())) {
                 return;
             }
 
-            gameController.selectUnit(event, selectedPiece, piece);
+            if (piece.equals(selectedPiece)) {
+                gameController.defendUnit(event, piece);
+            } else {
+                gameController.selectUnit(event, selectedPiece, piece);
+            }
 
             return;
         }
