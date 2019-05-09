@@ -3,6 +3,7 @@ package oosd.models;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.player.Player;
+import oosd.models.units.Unit;
 
 import java.util.Iterator;
 import java.util.List;
@@ -86,5 +87,17 @@ public class GameEngine {
         turn = playersIterator.next();
 
         return turn;
+    }
+
+    public void updateDefendPieces() {
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int column = 0; column < board.getColumns(); column++) {
+                Unit unit = board.getPiece(column, row).getUnit();
+
+                if (unit != null && unit.getDefendStatus()) {
+                    unit.decrementDefendCount();
+                }
+            }
+        }
     }
 }
