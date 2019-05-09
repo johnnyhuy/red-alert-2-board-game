@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
-import oosd.models.units.Unit;
 import oosd.views.BoardView;
 import oosd.views.components.BoardPane;
 import oosd.views.components.SidebarPane;
@@ -73,12 +72,12 @@ public class GameController extends Controller {
         selectedPiece.setUnit(null);
         gameEngine.setSelectedPiece(null);
         gameEngine.getNextTurn();
+        gameEngine.updateDefendPieces();
         boardView.moveUnit(selectedPiece, piece);
     }
 
     public void defendUnit(MouseEvent event, Piece piece) {
-        Unit unit = piece.getUnit();
-        unit.setDefendStatus(true);
+        piece.getUnit().startDefendCount();
         gameEngine.setSelectedPiece(null);
         gameEngine.getNextTurn();
         boardView.defendUnit(piece);

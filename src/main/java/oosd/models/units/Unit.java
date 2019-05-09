@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class Unit {
     private Player player;
     private boolean captured;
-    private boolean defendStatus;
+    private int defendCount = 0;
 
     protected Unit(Player player) {
         this.player = player;
@@ -80,21 +80,19 @@ public abstract class Unit {
      */
     public abstract UnitBehaviour getUnitBehaviour();
 
-    /**
-     * Get the unit defend status.
-     *
-     * @return boolean
-     */
-    public boolean getDefendStatus() {
-        return defendStatus;
+    public int getDefaultDefendCount() {
+        return 2;
     }
 
-    /**
-     * Set the unit defend status.
-     *
-     * @param defendStatus boolean
-     */
-    public void setDefendStatus(boolean defendStatus) {
-        this.defendStatus = defendStatus;
+    public void startDefendCount() {
+        defendCount = getDefaultDefendCount();
+    }
+
+    public void decrementDefendCount() {
+        defendCount--;
+    }
+
+    public boolean getDefendStatus() {
+        return defendCount != 0;
     }
 }

@@ -16,22 +16,18 @@ public class Harrier extends Allied {
         super(player);
     }
 
-    @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class, GrizzlyTank.class);
     }
 
-    @Override
     public String getName() {
         return "Harrier";
     }
 
-    @Override
     public String getImage() {
         return "harrier";
     }
 
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(6);
     }

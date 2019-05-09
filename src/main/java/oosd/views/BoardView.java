@@ -7,6 +7,7 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.units.Unit;
 import oosd.views.components.*;
 import oosd.views.factories.ViewComponentFactory;
 
@@ -40,21 +41,26 @@ public class BoardView implements View {
         this.toolbar = toolbar;
         this.board = gameEngine.getBoard();
         this.boardFactory = new ViewComponentFactory(board);
-        this.unitPieces = boardFactory.createPiecePolygons(new UnitPiecePolygon());
-        this.selectionPieces = boardFactory.createPiecePolygons(new SelectionPiecePolygon());
-        this.defendPieces = boardFactory.createPiecePolygons(new DefendPieceImage());
-        this.backgroundPieces = boardFactory.createPiecePolygons(new BackgroundPiecePolygon());
+        this.unitPieces = boardFactory.createUnitPiecePolygons();
+        this.selectionPieces = boardFactory.createSelectionPiecePolygons();
+        this.defendPieces = boardFactory.createDefendPieceImage();
+        this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
         this.playerTurn = sidebar.getPlayerTurnText();
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                selectionPieces.get(board.getPiece(xIndex, yIndex)).setVisible(false);
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int column = 0; column < board.getColumns(); column++) {
+                defendPieces.get(board.getPiece(column, row)).setVisible(false);
+                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
+
+                Unit unit = board.getPiece(column, row).getUnit();
+                if (unit != null && unit.getDefendStatus()) {
+                    defendPieces.get(board.getPiece(column, row)).setVisible(true);
+                }
             }
         }
 
-        selectionPieces.get(selectedPiece).setOpacity(1.0);
         selectionPieces.get(selectedPiece).setVisible(false);
         unitPieces.get(selectedPiece).setVisible(false);
         unitPieces.get(clickedPiece).setVisible(true);
@@ -77,7 +83,6 @@ public class BoardView implements View {
         }
 
         selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
-        selectionPieces.get(clickedPiece).setOpacity(0.5);
     }
 
     public void render() {
@@ -86,12 +91,13 @@ public class BoardView implements View {
     }
 
     public void defendUnit(Piece piece) {
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                selectionPieces.get(board.getPiece(xIndex, yIndex)).setVisible(false);
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int column = 0; column < board.getColumns(); column++) {
+                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
             }
         }
 
         defendPieces.get(piece).setVisible(true);
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 }
