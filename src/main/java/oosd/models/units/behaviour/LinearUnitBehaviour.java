@@ -40,12 +40,12 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             rows = direction.nextRow(columns, rows);
             columns = direction.nextColumn(columns, rows);
             isInBoard = columns < board.getColumns() && columns >= 0 && rows < board.getRows() && rows >= 0;
-            Unit unit = board.getPiece(columns, rows).getUnit();
 
             if (!isInBoard || enemyFound) {
                 return;
             }
 
+            Unit unit = board.getPiece(columns, rows).getUnit();
             if (unit != null) {
                 if (unit.getPlayer().equals(gameEngine.getTurn())) {
                     return;
