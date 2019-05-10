@@ -79,7 +79,13 @@ public class BoardView implements View {
 
         for (Piece piece : clickedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedPiece)) {
             selectionPieces.get(piece).setVisible(true);
-            selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
+
+            Unit unit = piece.getUnit();
+            if (unit != null && !unit.getPlayer().equals(gameEngine.getTurn())) {
+                selectionPieces.get(piece).setFill(Paint.valueOf("#FF0000"));
+            } else {
+                selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
+            }
         }
 
         selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
