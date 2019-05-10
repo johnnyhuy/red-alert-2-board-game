@@ -10,67 +10,67 @@ import static oosd.helpers.NumberHelper.isOdd;
 public enum LinearDirections {
     NORTH {
         @Override
-        public int getRows(int columns, int rows) {
+        public int nextRow(int columns, int rows) {
             return rows - 1;
         }
 
         @Override
-        public int getColumns(int columns, int rows) {
+        public int nextColumn(int columns, int rows) {
             return columns;
         }
     },
     NORTH_EAST {
         @Override
-        public int getColumns(int columns, int rows) {
+        public int nextColumn(int columns, int rows) {
             return columns + 1;
         }
 
         @Override
-        public int getRows(int columns, int rows) {
+        public int nextRow(int columns, int rows) {
             return rows - (isEven(columns) ? 1 : 0);
         }
     },
     SOUTH_EAST {
         @Override
-        public int getColumns(int columns, int rows) {
+        public int nextColumn(int columns, int rows) {
             return columns + 1;
         }
 
         @Override
-        public int getRows(int columns, int rows) {
+        public int nextRow(int columns, int rows) {
             return rows + (isOdd(columns) ? 1 : 0);
         }
     },
     SOUTH {
         @Override
-        public int getRows(int columns, int rows) {
+        public int nextRow(int columns, int rows) {
             return rows + 1;
         }
 
         @Override
-        public int getColumns(int columns, int rows) {
+        public int nextColumn(int columns, int rows) {
             return columns;
         }
     },
     SOUTH_WEST {
         @Override
-        public int getColumns(int columns, int rows) {
+        public int nextColumn(int columns, int rows) {
             return columns - 1;
         }
 
         @Override
-        public int getRows(int columns, int rows) {
+        public int nextRow(int columns, int rows) {
             return rows + (isOdd(columns) ? 1 : 0);
         }
     },
     NORTH_WEST {
         @Override
-        public int getColumns(int columns, int rows) {
+        public int nextColumn(int columns, int rows) {
             return columns - 1;
         }
 
         @Override
-        public int getRows(int columns, int rows) {
+        public int nextRow(int columns, int rows) {
             return rows - (isEven(columns) ? 1 : 0);
         }
     };
@@ -82,7 +82,7 @@ public enum LinearDirections {
      * @param rows    integer
      * @return integer
      */
-    public abstract int getRows(int columns, int rows);
+    public abstract int nextRow(int columns, int rows);
 
     /**
      * Get columns with added calculation.
@@ -91,5 +91,5 @@ public enum LinearDirections {
      * @param rows    integer
      * @return integer
      */
-    public abstract int getColumns(int columns, int rows);
+    public abstract int nextColumn(int columns, int rows);
 }
