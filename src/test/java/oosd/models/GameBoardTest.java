@@ -1,6 +1,7 @@
 package oosd.models;
 
 import oosd.models.board.Board;
+import oosd.models.board.GameBoard;
 import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
@@ -12,12 +13,12 @@ import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class BoardTest {
+class GameBoardTest {
     @Test
     void testShouldGetBoardColumns() {
         // Arrange
         final int expectedColumns = 6;
-        Board board = new Board(expectedColumns, 6);
+        Board board = new GameBoard(expectedColumns, 6);
 
         // Act
         int columns = board.getColumns();
@@ -30,7 +31,7 @@ class BoardTest {
     void testShouldGetBoardRow() {
         // Arrange
         final int expectedRows = 6;
-        Board board = new Board(expectedRows, 6);
+        Board board = new GameBoard(expectedRows, 6);
 
         // Act
         int rows = board.getRows();
@@ -42,7 +43,7 @@ class BoardTest {
     @Test
     void testShouldGetPieceWithObject() {
         // Arrange
-        Board board = new Board(6, 6);
+        Board board = new GameBoard(6, 6);
         Piece piece = new Piece(1, 1);
 
         // Act
@@ -56,7 +57,7 @@ class BoardTest {
     @Test
     void testShouldGetPieceWithInt() {
         // Arrange
-        Board board = new Board(6, 6);
+        Board board = new GameBoard(6, 6);
 
         // Act
         Piece selectedPiece = board.getPiece(1, 1);
@@ -71,7 +72,7 @@ class BoardTest {
         // Arrange
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
-        Board board = new Board(6, 6);
+        Board board = new GameBoard(6, 6);
         Piece piece = new Piece(1, 1);
 
         // Act
@@ -87,7 +88,7 @@ class BoardTest {
     @Test
     void testShouldNotBeNegativeCreateBoardRowsAndColumns() {
         // Act
-        Executable run = () -> new Board(-209, -209);
+        Executable run = () -> new GameBoard(-209, -209);
 
         // Assert
         assertThrows(AssertionError.class, run);
@@ -96,7 +97,7 @@ class BoardTest {
     @Test
     void testShouldNotGetPieceWithObjectGreaterThanBoardSize() {
         // Arrange
-        Board board = new Board(42, 42);
+        Board board = new GameBoard(42, 42);
 
         // Act
         Executable run = () -> board.getPiece(new Piece(100, 100));
@@ -108,7 +109,7 @@ class BoardTest {
     @Test
     void testShouldNotGetPieceWithIntegersGreaterThanBoardSize() {
         // Arrange
-        Board board = new Board(42, 42);
+        Board board = new GameBoard(42, 42);
 
         // Act
         Executable run = () -> board.getPiece(100, 100);

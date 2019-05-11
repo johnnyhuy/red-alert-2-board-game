@@ -54,19 +54,17 @@ public class BoardView implements View {
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
-        for (int row = 0; row < board.getRows(); row++) {
-            for (int column = 0; column < board.getColumns(); column++) {
-                Piece piece = board.getPiece(column, row);
-                Unit unit = piece.getUnit();
+        board.apply((column, row) -> {
+            Piece piece = board.getPiece(column, row);
+            Unit unit = piece.getUnit();
 
-                defendPieces.get(piece).setVisible(false);
-                selectionPieces.get(piece).setVisible(false);
+            defendPieces.get(piece).setVisible(false);
+            selectionPieces.get(piece).setVisible(false);
 
-                if (unit != null && unit.getDefendStatus()) {
-                    defendPieces.get(piece).setVisible(true);
-                }
+            if (unit != null && unit.getDefendStatus()) {
+                defendPieces.get(piece).setVisible(true);
             }
-        }
+        });
 
         selectionPieces.get(selectedPiece).setVisible(false);
         unitPieces.get(selectedPiece).setVisible(false);
@@ -100,23 +98,17 @@ public class BoardView implements View {
     }
 
     public void defendUnit(Piece piece) {
-        for (int row = 0; row < board.getRows(); row++) {
-            for (int column = 0; column < board.getColumns(); column++) {
-                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
-            }
-        }
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).setVisible(false));
 
         defendPieces.get(piece).setVisible(true);
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void attackUnit(Piece selectedPiece, Piece piece) {
-        for (int row = 0; row < board.getRows(); row++) {
-            for (int column = 0; column < board.getColumns(); column++) {
-                selectionPieces.get(board.getPiece(column, row)).setFill(null);
-                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
-            }
-        }
+        board.apply((column, row) -> {
+            selectionPieces.get(board.getPiece(column, row)).setFill(null);
+            selectionPieces.get(board.getPiece(column, row)).setVisible(false);
+        });
 
         unitPieces.get(selectedPiece).setFill(null);
         unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
