@@ -47,7 +47,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
 
             Unit unit = board.getPiece(columns, rows).getUnit();
             if (unit != null) {
-                if (unit.getPlayer().equals(gameEngine.getTurn())) {
+                if (unit.getPlayer().equals(gameEngine.getTurn()) || unit.getDefendStatus()) {
                     return;
                 } else {
                     enemyFound = true;

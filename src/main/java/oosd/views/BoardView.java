@@ -48,21 +48,29 @@ public class BoardView implements View {
         this.playerTurn = sidebar.getPlayerTurnText();
     }
 
+    public void render() {
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+        boardPane.createBoard(gameEngine, controller, unitPieces, selectionPieces, defendPieces, backgroundPieces);
+    }
+
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
         for (int row = 0; row < board.getRows(); row++) {
             for (int column = 0; column < board.getColumns(); column++) {
-                defendPieces.get(board.getPiece(column, row)).setVisible(false);
-                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
+                Piece piece = board.getPiece(column, row);
+                Unit unit = piece.getUnit();
 
-                Unit unit = board.getPiece(column, row).getUnit();
+                defendPieces.get(piece).setVisible(false);
+                selectionPieces.get(piece).setVisible(false);
+
                 if (unit != null && unit.getDefendStatus()) {
-                    defendPieces.get(board.getPiece(column, row)).setVisible(true);
+                    defendPieces.get(piece).setVisible(true);
                 }
             }
         }
 
         selectionPieces.get(selectedPiece).setVisible(false);
         unitPieces.get(selectedPiece).setVisible(false);
+        unitPieces.get(selectedPiece).setFill(null);
         unitPieces.get(clickedPiece).setVisible(true);
         unitPieces.get(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
@@ -91,11 +99,6 @@ public class BoardView implements View {
         selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
     }
 
-    public void render() {
-        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
-        boardPane.createBoard(gameEngine, controller, unitPieces, selectionPieces, defendPieces, backgroundPieces);
-    }
-
     public void defendUnit(Piece piece) {
         for (int row = 0; row < board.getRows(); row++) {
             for (int column = 0; column < board.getColumns(); column++) {
@@ -104,6 +107,19 @@ public class BoardView implements View {
         }
 
         defendPieces.get(piece).setVisible(true);
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+    }
+
+    public void attackUnit(Piece selectedPiece, Piece piece) {
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int column = 0; column < board.getColumns(); column++) {
+                selectionPieces.get(board.getPiece(column, row)).setFill(null);
+                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
+            }
+        }
+
+        unitPieces.get(selectedPiece).setFill(null);
+        unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 }
