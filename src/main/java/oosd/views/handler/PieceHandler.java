@@ -22,13 +22,14 @@ public class PieceHandler implements EventHandler<MouseEvent> {
         Piece selectedPiece = gameEngine.getSelectedPiece();
 
         if (piece.getUnit() != null) {
-            if (piece.getUnit().getDefendStatus() || !piece.getUnit().getPlayer().equals(gameEngine.getTurn())) {
-                return;
-            }
+            boolean isEnemyUnit = !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
+            boolean isDefensive = piece.getUnit().getDefendStatus();
 
-            if (piece.equals(selectedPiece)) {
+            if (selectedPiece != null && isEnemyUnit && !isDefensive) {
+                gameController.attackUnit(mouseEvent, selectedPiece, piece);
+            } else if (piece.equals(selectedPiece)) {
                 gameController.defendUnit(mouseEvent, piece);
-            } else {
+            } else if (!isDefensive && !isEnemyUnit) {
                 gameController.selectUnit(mouseEvent, selectedPiece, piece);
             }
 
