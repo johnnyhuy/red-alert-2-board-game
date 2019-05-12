@@ -8,12 +8,12 @@ import oosd.models.board.Piece;
 
 import static oosd.helpers.ObjectHelper.exists;
 
-public class PieceHandler implements EventHandler<MouseEvent> {
+public class PieceClickHandler implements EventHandler<MouseEvent> {
     private GameEngine gameEngine;
     private GameController gameController;
     private Piece piece;
 
-    public PieceHandler(GameEngine gameEngine, GameController gameController, Piece piece) {
+    public PieceClickHandler(GameEngine gameEngine, GameController gameController, Piece piece) {
         this.gameEngine = gameEngine;
         this.gameController = gameController;
         this.piece = piece;
