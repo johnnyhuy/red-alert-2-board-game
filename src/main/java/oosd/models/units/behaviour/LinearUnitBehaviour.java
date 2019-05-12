@@ -9,6 +9,8 @@ import oosd.models.units.behaviour.enums.LinearDirections;
 import java.util.ArrayList;
 import java.util.List;
 
+import static oosd.helpers.ObjectHelper.exists;
+
 public class LinearUnitBehaviour extends UnitBehaviour {
     private final int moves;
     private List<Piece> validMoves;
@@ -46,7 +48,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             }
 
             Unit unit = board.getPiece(columns, rows).getUnit();
-            if (unit != null) {
+            if (exists(unit)) {
                 if (unit.getPlayer().equals(gameEngine.getTurn()) || unit.getDefendStatus()) {
                     return;
                 } else {
