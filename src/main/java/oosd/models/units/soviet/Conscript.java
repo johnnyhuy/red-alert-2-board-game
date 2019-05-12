@@ -14,7 +14,6 @@ public class Conscript extends Soviet {
         super(player);
     }
 
-    @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class);
     }
@@ -23,12 +22,10 @@ public class Conscript extends Soviet {
         return "Conscript";
     }
 
-    @Override
     public String getImage() {
         return "conscript";
     }
 
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(1);
     }

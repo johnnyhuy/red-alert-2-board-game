@@ -1,6 +1,7 @@
 package oosd.models;
 
 import oosd.models.board.Board;
+import oosd.models.board.GameBoard;
 import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
@@ -18,7 +19,7 @@ class GameEngineTest {
     @Test
     void testCheckBoardExistsOnGameEngine() {
         // Act
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Assert
@@ -33,7 +34,7 @@ class GameEngineTest {
         final int columns = 100;
 
         // Act
-        Board board = new Board(columns, rows);
+        Board board = new GameBoard(columns, rows);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Assert
@@ -46,7 +47,7 @@ class GameEngineTest {
     void testSetAndGetSelectedPiece() {
         // Arrange
         Piece expectedPiece = new Piece(1, 1);
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
 
         // Act
@@ -62,7 +63,7 @@ class GameEngineTest {
         // Arrange
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
         Piece unitPiece = gameEngine.getBoard().getPiece(0, 0);
         Piece selectedPiece = gameEngine.getBoard().getPiece(0, 1);
@@ -82,7 +83,7 @@ class GameEngineTest {
         // Arrange
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         GameEngine gameEngine = new GameEngine(board, new ArrayList<>());
         Piece piece = gameEngine.getBoard().getPiece(0, 1);
         piece.setUnit(unit);
@@ -97,7 +98,7 @@ class GameEngineTest {
     @Test
     void testGetFirstTurnOnFirstPlayer() {
         // Arrange
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         List<Player> players = new ArrayList<>();
         players.add(new Player("John Tester", new Team("Red")));
         GameEngine gameEngine = new GameEngine(board, players);
@@ -115,7 +116,7 @@ class GameEngineTest {
         Player playerOne = new Player("Johnny Dave", new Team("Red"));
         Player playerTwo = new Player("Jane Doe", new Team("Blue"));
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         GameEngine gameEngine = new GameEngine(board, players);
 
         // Act
@@ -145,7 +146,7 @@ class GameEngineTest {
         Player playerOne = new Player("Johnny Dave", new Team("Red"));
         Player playerTwo = new Player("Jane Doe", new Team("Blue"));
         List<Player> expectedPlayers = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
-        Board board = new Board(2, 2);
+        Board board = new GameBoard(2, 2);
         GameEngine gameEngine = new GameEngine(board, expectedPlayers);
 
         // Act

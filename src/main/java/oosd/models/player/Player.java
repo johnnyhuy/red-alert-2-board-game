@@ -49,6 +49,8 @@ public class Player {
     /**
      * Add units to the player.
      *
+     * Design pattern: composite pattern used to add multiple implementations of a unit.
+     *
      * @param newUnit to be added to the list of units
      */
     public void addUnit(Unit newUnit) {

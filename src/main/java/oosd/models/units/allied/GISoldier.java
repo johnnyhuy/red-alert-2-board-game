@@ -15,22 +15,18 @@ public class GISoldier extends Allied {
         super(player);
     }
 
-    @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(KirovAirship.class, RhinoTank.class);
     }
 
-    @Override
     public String getName() {
         return "GI Soldier";
     }
 
-    @Override
     public String getImage() {
         return "gi_soldier";
     }
 
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(2);
     }

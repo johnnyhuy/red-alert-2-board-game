@@ -3,15 +3,16 @@ package oosd.contracts.models;
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 import oosd.models.board.Board;
+import oosd.models.board.GameBoard;
 import oosd.models.board.Piece;
 
 import static de.vksi.c4j.Condition.*;
 
-public class BoardContract extends Board {
+public class GameBoardContract extends GameBoard {
     @Target
     private Board target;
 
-    public BoardContract(int columns, int rows) {
+    public GameBoardContract(int columns, int rows) {
         super(columns, rows);
 
         if (preCondition()) {
