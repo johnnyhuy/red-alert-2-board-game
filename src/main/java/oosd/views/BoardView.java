@@ -13,6 +13,8 @@ import oosd.views.factories.ViewComponentFactory;
 
 import java.util.HashMap;
 
+import static oosd.helpers.ObjectHelper.exists;
+
 /**
  * SOLID:  Single Responsibility Principle
  * The view should only be responsible for managing the user interface (e.g. interacting with the JavaFX library)
@@ -48,56 +50,73 @@ public class BoardView implements View {
         this.playerTurn = sidebar.getPlayerTurnText();
     }
 
-    public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
-        for (int row = 0; row < board.getRows(); row++) {
-            for (int column = 0; column < board.getColumns(); column++) {
-                defendPieces.get(board.getPiece(column, row)).setVisible(false);
-                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
+    public void render() {
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+        boardPane.createBoard(gameEngine, controller, unitPieces, selectionPieces, defendPieces, backgroundPieces);
+    }
 
-                Unit unit = board.getPiece(column, row).getUnit();
-                if (unit != null && unit.getDefendStatus()) {
-                    defendPieces.get(board.getPiece(column, row)).setVisible(true);
-                }
+    public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
+        board.apply((column, row) -> {
+            Piece piece = board.getPiece(column, row);
+            Unit unit = piece.getUnit();
+
+            defendPieces.get(piece).setVisible(false);
+            selectionPieces.get(piece).setVisible(false);
+
+            if (exists(unit) && unit.getDefendStatus()) {
+                defendPieces.get(piece).setVisible(true);
             }
-        }
+        });
 
         selectionPieces.get(selectedPiece).setVisible(false);
         unitPieces.get(selectedPiece).setVisible(false);
+        unitPieces.get(selectedPiece).setFill(null);
         unitPieces.get(clickedPiece).setVisible(true);
         unitPieces.get(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
-        if (selectedPiece != null) {
+        if (exists(selectedPiece)) {
             selectionPieces.get(selectedPiece).setVisible(false);
 
-            for (Piece piece : selectedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
-                selectionPieces.get(piece).setVisible(false);
+            Unit unit = selectedPiece.getUnit();
+            if (exists(unit)) {
+                for (Piece piece : unit.getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
+                    selectionPieces.get(piece).setVisible(false);
+                }
             }
         }
 
         for (Piece piece : clickedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedPiece)) {
             selectionPieces.get(piece).setVisible(true);
-            selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
+
+            Unit unit = piece.getUnit();
+            if (exists(unit) && !unit.getPlayer().equals(gameEngine.getTurn())) {
+                selectionPieces.get(piece).setFill(Paint.valueOf("#FF0000"));
+            } else {
+                selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
+            }
         }
 
         selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
     }
 
-    public void render() {
-        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
-        boardPane.createBoard(gameEngine, controller, unitPieces, selectionPieces, defendPieces, backgroundPieces);
-    }
-
     public void defendUnit(Piece piece) {
-        for (int row = 0; row < board.getRows(); row++) {
-            for (int column = 0; column < board.getColumns(); column++) {
-                selectionPieces.get(board.getPiece(column, row)).setVisible(false);
-            }
-        }
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).setVisible(false));
 
         defendPieces.get(piece).setVisible(true);
+        playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+    }
+
+    public void attackUnit(Piece selectedPiece, Piece piece) {
+        board.apply((column, row) -> {
+            selectionPieces.get(board.getPiece(column, row)).setFill(null);
+            selectionPieces.get(board.getPiece(column, row)).setVisible(false);
+        });
+
+        unitPieces.get(selectedPiece).setFill(null);
+        unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 }
