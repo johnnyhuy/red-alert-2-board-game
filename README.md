@@ -7,17 +7,27 @@ A Command & Conquer themed board game for RMIT course Object Orientated Software
 ## Participants & Contribution
 
 - Johnny Huynh - 70%
-- Chee Wei Low - 25%
-- Udahakapugedara Madhusanka Senadhi - 5%
+- Chee Wei Low - 20%
+- Udahakapugedara Madhusanka Senadhi - 10%
 - Stanley Elliott - 0%
 
 ## How it works
 
-The project is a 2D board game using different shapes from standard squares on the board.
+The project is a 2D gameBoard game using different shapes from standard squares on the board.
 
 We have units that can move depending on their unit behaviour by clicking and moving units on the board. This is similar to a traditional chess game but with a few twists!
 
 ![Game view](./.repository/game_view.png)
+
+### Gameplay
+
+The game is predetermined by configs at runtime to layout players and pieces on the board.
+
+Game can only start with a **minimum of 2 players**. Players can select and move units once on a rotating turn.
+
+Combat in units is similar to a chess game where units can conquer other pieces on the gameBoard, however this is **limited by specified winnable units**. Units can be set to a defensive status which disallows other units to attack them at the cost of **one move**. 
+
+To win a game, the player with the **most amount of units** wins after a certain amount of turns or if the **player is the last one standing**.
 
 ## Development Environment
 
@@ -34,7 +44,7 @@ There are specific ways to start up this game depend on which IDE you use.
 
 #### Eclipse
 
-Make sure you do not have any other board game copies on your system.
+Make sure you do not have any other gameBoard game copies on your system.
 
 - Pull the project from **GitHub desktop**
 - Import an existing **Maven** project `Maven > Existing Maven Projects`
@@ -67,9 +77,9 @@ We've produced a few class diagrams to show our iterative process in developing 
 
 ### Current class diagram
 
-![Class diagram V8](./diagrams/ClassDiagrams-V9.png)
+![Class diagram V10](./diagrams/ClassDiagrams-V10.png)
 
-### Mouse click handling on board sequence diagram
+### Mouse click handling on gameBoard sequence diagram
 
 We've created a sequence diagram describing the game piece handling a mouse click.
 
