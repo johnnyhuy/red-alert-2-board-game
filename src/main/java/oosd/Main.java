@@ -3,13 +3,12 @@ package oosd;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
+import oosd.models.board.GameBoard;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.allied.GISoldier;
@@ -18,7 +17,6 @@ import oosd.models.units.allied.Harrier;
 import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
-import oosd.views.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,9 +31,9 @@ public class Main extends Application {
     private final int boardColumns = 10;
     private final int boardRows = 10;
     private final String boardFileName = "board.fxml";
-    private final String windowTitle = "OOSD Game Board";
-    private final int sceneWidth = 1024;
-    private final int sceneHeight = 856;
+    private final String windowTitle = "OOSD Game GameBoard";
+    private final int sceneWidth = 1200;
+    private final int sceneHeight = 900;
 
     /**
      * Boilerplate code for JavaFX.
@@ -62,12 +60,10 @@ public class Main extends Application {
 
         Pane pane = loader.load();
         Scene content = new Scene(pane, sceneWidth, sceneHeight);
-        content.setFill(new ImagePattern(new Image(View.class.getResource("menu.png").toString())));
 
         primaryStage.setScene(content);
         primaryStage.setTitle(windowTitle);
         primaryStage.setResizable(false);
-        primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }
 
@@ -77,7 +73,7 @@ public class Main extends Application {
      * @return the game engine
      */
     private GameEngine initializeGameEngine() {
-        Board board = new Board(boardColumns, boardRows);
+        Board board = new GameBoard(boardColumns, boardRows);
 
         Team redTeam = new Team("Red");
         Team blueTeam = new Team("Blue");

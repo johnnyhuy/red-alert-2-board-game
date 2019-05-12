@@ -13,23 +13,23 @@ public class RhinoTank extends Soviet {
         super(player);
     }
 
-    @Override
     public List<Class<? extends Unit>> getWinnables() {
         return Collections.singletonList(KirovAirship.class);
     }
 
-    @Override
     public String getName() {
         return "Rhino Tank";
     }
 
-    @Override
     public String getImage() {
         return "rhino_tank";
     }
 
-    @Override
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(3);
+    }
+
+    public int getDefaultDefendCount() {
+        return 3;
     }
 }
