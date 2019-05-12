@@ -7,7 +7,8 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
-import oosd.views.handler.PieceHandler;
+import oosd.views.handler.PieceClickHandler;
+import oosd.views.handler.PieceDragEnteredHandler;
 
 import java.util.HashMap;
 
@@ -37,11 +38,17 @@ public class BoardPane extends StackPane {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                PieceHandler eventHandler = new PieceHandler(gameEngine, gameController, piece);
-                backgroundPieces.get(piece).setOnMouseClicked(eventHandler);
-                unitPieces.get(piece).setOnMouseClicked(eventHandler);
-                selectionPieces.get(piece).setOnMouseClicked(eventHandler);
-                defendPieces.get(piece).setOnMouseClicked(eventHandler);
+                PieceClickHandler mouseClickHandler = new PieceClickHandler(gameEngine, gameController, piece);
+                backgroundPieces.get(piece).setOnMouseClicked(mouseClickHandler);
+                unitPieces.get(piece).setOnMouseClicked(mouseClickHandler);
+                selectionPieces.get(piece).setOnMouseClicked(mouseClickHandler);
+                defendPieces.get(piece).setOnMouseClicked(mouseClickHandler);
+
+                PieceDragEnteredHandler mouseDragEnteredHandler = new PieceDragEnteredHandler(gameEngine, gameController, piece);
+                backgroundPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+                unitPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+                selectionPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+                defendPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
 
                 group.getChildren().add(anchor);
 
