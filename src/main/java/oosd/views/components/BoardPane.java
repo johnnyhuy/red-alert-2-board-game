@@ -7,8 +7,7 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
-import oosd.views.handler.PieceClickHandler;
-import oosd.views.handler.PieceDragEnteredHandler;
+import oosd.views.handlers.PieceClickHandler;
 
 import java.util.HashMap;
 
@@ -44,11 +43,33 @@ public class BoardPane extends StackPane {
                 selectionPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 defendPieces.get(piece).setOnMouseClicked(mouseClickHandler);
 
-                PieceDragEnteredHandler mouseDragEnteredHandler = new PieceDragEnteredHandler(gameEngine, gameController, piece);
-                backgroundPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-                unitPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-                selectionPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-                defendPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+//                PieceDragEnteredHandler mouseDragEnteredHandler = new PieceDragEnteredHandler(gameEngine, gameController, piece);
+//                backgroundPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+//                unitPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+//                selectionPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+//                defendPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
+
+//                PieceDraggedHandler mouseDraggedHandler = new PieceDraggedHandler(gameEngine, gameController, piece);
+//                unitPieces.get(piece).setOnMouseDragged(mouseDraggedHandler);
+
+//                PieceDragExitedHandler mouseDragExitedHandler = new PieceDragExitedHandler(gameEngine, gameController, piece);
+//                backgroundPieces.get(piece).setOnMouseDragExited(mouseDragExitedHandler);
+//                unitPieces.get(piece).setOnMouseDragExited(mouseDragExitedHandler);
+
+                unitPieces.get(piece).setOnDragDetected(event -> {
+                    gameController.selectUnit(event, gameEngine.getSelectedPiece(), piece);
+                    event.consume();
+                });
+                unitPieces.get(piece).setOnDragDropped(event -> {
+                    gameController.moveUnit(event, gameEngine.getSelectedPiece(), piece);
+                    event.consume();
+                });
+                unitPieces.get(piece).setOnDragOver(event -> {
+                    event.consume();
+                });
+                unitPieces.get(piece).setOnDragDone(event -> {
+                    event.consume();
+                });
 
                 group.getChildren().add(anchor);
 
