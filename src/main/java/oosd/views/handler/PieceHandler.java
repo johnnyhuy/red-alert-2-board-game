@@ -22,28 +22,19 @@ public class PieceHandler implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
         Piece selectedPiece = gameEngine.getSelectedPiece();
+        boolean unitExists = exists(piece.getUnit());
+        boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
+        boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
+        boolean isValidMove = exists(selectedPiece) && selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
 
-        if (exists(piece.getUnit())) {
-            boolean isEnemyUnit = !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
-            boolean isDefensive = piece.getUnit().getDefendStatus();
-
-            if (exists(selectedPiece) && isEnemyUnit && !isDefensive && selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece)) {
-                gameController.attackUnit(mouseEvent, selectedPiece, piece);
-            } else if (piece.equals(selectedPiece)) {
-                gameController.defendUnit(mouseEvent, piece);
-            } else if (!isDefensive && !isEnemyUnit) {
-                gameController.selectUnit(mouseEvent, selectedPiece, piece);
-            }
-
-            return;
-        }
-
-        if (exists(selectedPiece)) {
-            if (!selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece)) {
-                return;
-            }
-
+        if (!unitExists && isValidMove) {
             gameController.moveUnit(mouseEvent, selectedPiece, piece);
+        } else if (isEnemyUnit && !isDefensive && isValidMove) {
+            gameController.attackUnit(mouseEvent, selectedPiece, piece);
+        } else if (piece.equals(selectedPiece)) {
+            gameController.defendUnit(mouseEvent, piece);
+        } else if (!isDefensive && !isEnemyUnit && unitExists) {
+            gameController.selectUnit(mouseEvent, selectedPiece, piece);
         }
     }
 }

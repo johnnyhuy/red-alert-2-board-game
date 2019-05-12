@@ -13,7 +13,7 @@ public class ObjectHelper {
      * @return boolean
      */
     public static <T> boolean isNull(T object) {
-        return object != null;
+        return object == null;
     }
 
     /**
