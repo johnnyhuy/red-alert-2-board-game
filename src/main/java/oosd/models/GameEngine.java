@@ -90,14 +90,12 @@ public class GameEngine {
     }
 
     public void updateDefendPieces() {
-        for (int row = 0; row < board.getRows(); row++) {
-            for (int column = 0; column < board.getColumns(); column++) {
-                Unit unit = board.getPiece(column, row).getUnit();
+        board.apply((column, row) -> {
+            Unit unit = board.getPiece(column, row).getUnit();
 
-                if (unit != null && unit.getDefendStatus()) {
-                    unit.decrementDefendCount();
-                }
+            if (unit != null && unit.getDefendStatus()) {
+                unit.decrementDefendCount();
             }
-        }
+        });
     }
 }
