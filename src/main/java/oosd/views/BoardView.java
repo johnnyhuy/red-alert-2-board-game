@@ -78,8 +78,11 @@ public class BoardView implements View {
         if (selectedPiece != null) {
             selectionPieces.get(selectedPiece).setVisible(false);
 
-            for (Piece piece : selectedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
-                selectionPieces.get(piece).setVisible(false);
+            Unit unit = selectedPiece.getUnit();
+            if (unit != null) {
+                for (Piece piece : unit.getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
+                    selectionPieces.get(piece).setVisible(false);
+                }
             }
         }
 
