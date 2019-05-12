@@ -13,12 +13,7 @@ public class GameBoard implements Board {
         this.rows = rows;
         this.columns = columns;
         this.pieces = new Piece[columns][rows];
-
-        for (int rowIndex = 0; rowIndex < this.getRows(); rowIndex++) {
-            for (int columnIndex = 0; columnIndex < this.getColumns(); columnIndex++) {
-                this.pieces[columnIndex][rowIndex] = new Piece(columnIndex, rowIndex);
-            }
-        }
+        this.apply((column, row) -> this.pieces[column][row] = new Piece(column, row));
     }
 
     @Override

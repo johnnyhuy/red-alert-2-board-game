@@ -20,9 +20,9 @@ public class BoardPane extends StackPane {
 
         Group group = new Group();
 
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                Piece piece = board.getPiece(xIndex, yIndex);
+        for (int row = 0; row < board.getRows(); row++) {
+            for (int column = 0; column < board.getColumns(); column++) {
+                Piece piece = board.getPiece(column, row);
 
                 if (piece.getUnit() != null) {
                     unitPieces.get(piece).setUnitImage(piece.getUnit());
@@ -48,10 +48,10 @@ public class BoardPane extends StackPane {
 
                 pieceCount++;
 
-                x = xIndex == board.getColumns() - 1 ? 0 : x + Hexagon.GAP;
+                x = column == board.getColumns() - 1 ? 0 : x + Hexagon.GAP;
             }
 
-            y = yIndex == board.getRows() - 1 ? 0 : y + Hexagon.FULL_INCREMENT;
+            y = row == board.getRows() - 1 ? 0 : y + Hexagon.FULL_INCREMENT;
         }
 
         getChildren().add(group);
