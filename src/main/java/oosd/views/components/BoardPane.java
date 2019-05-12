@@ -33,10 +33,15 @@ public class BoardPane extends StackPane {
                 selectionPieces.get(piece).setVisible(false);
 
                 final AnchorPane anchor = new AnchorPane();
-                anchor.setOnMouseClicked(new PieceHandler(gameEngine, gameController, piece));
                 anchor.getChildren().addAll(backgroundPieces.get(piece), unitPieces.get(piece), selectionPieces.get(piece), defendPieces.get(piece));
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
+
+                PieceHandler eventHandler = new PieceHandler(gameEngine, gameController, piece);
+                backgroundPieces.get(piece).setOnMouseClicked(eventHandler);
+                unitPieces.get(piece).setOnMouseClicked(eventHandler);
+                selectionPieces.get(piece).setOnMouseClicked(eventHandler);
+                defendPieces.get(piece).setOnMouseClicked(eventHandler);
 
                 group.getChildren().add(anchor);
 
