@@ -36,48 +36,28 @@ public class ViewComponentFactory {
 
     public HashMap<Piece, UnitPiecePolygon> createUnitPiecePolygons() {
         HashMap<Piece, UnitPiecePolygon> pieces = new HashMap<>();
-
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                pieces.put(board.getPiece(xIndex, yIndex), new UnitPiecePolygon());
-            }
-        }
+        board.apply((column, row) -> pieces.put(board.getPiece(column, row), new UnitPiecePolygon()));
 
         return pieces;
     }
 
     public HashMap<Piece, SelectionPiecePolygon> createSelectionPiecePolygons() {
         HashMap<Piece, SelectionPiecePolygon> pieces = new HashMap<>();
-
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                pieces.put(board.getPiece(xIndex, yIndex), new SelectionPiecePolygon());
-            }
-        }
+        board.apply((column, row) -> pieces.put(board.getPiece(column, row), new SelectionPiecePolygon()));
 
         return pieces;
     }
 
     public HashMap<Piece, DefendPieceImage> createDefendPieceImage() {
         HashMap<Piece, DefendPieceImage> pieces = new HashMap<>();
-
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                pieces.put(board.getPiece(xIndex, yIndex), new DefendPieceImage());
-            }
-        }
+        board.apply((column, row) -> pieces.put(board.getPiece(column, row), new DefendPieceImage()));
 
         return pieces;
     }
 
     public HashMap<Piece, BackgroundPiecePolygon> createBackgroundPiecePolygons() {
         HashMap<Piece, BackgroundPiecePolygon> pieces = new HashMap<>();
-
-        for (int yIndex = 0; yIndex < board.getRows(); yIndex++) {
-            for (int xIndex = 0; xIndex < board.getColumns(); xIndex++) {
-                pieces.put(board.getPiece(xIndex, yIndex), new BackgroundPiecePolygon());
-            }
-        }
+        board.apply((column, row) -> pieces.put(board.getPiece(column, row), new BackgroundPiecePolygon()));
 
         return pieces;
     }
