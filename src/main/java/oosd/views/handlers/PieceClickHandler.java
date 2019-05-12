@@ -1,4 +1,4 @@
-package oosd.views.handler;
+package oosd.views.handlers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
