@@ -13,6 +13,8 @@ import oosd.views.factories.ViewComponentFactory;
 
 import java.util.HashMap;
 
+import static oosd.helpers.ObjectHelper.exists;
+
 /**
  * SOLID:  Single Responsibility Principle
  * The view should only be responsible for managing the user interface (e.g. interacting with the JavaFX library)
@@ -61,7 +63,7 @@ public class BoardView implements View {
             defendPieces.get(piece).setVisible(false);
             selectionPieces.get(piece).setVisible(false);
 
-            if (unit != null && unit.getDefendStatus()) {
+            if (exists(unit) && unit.getDefendStatus()) {
                 defendPieces.get(piece).setVisible(true);
             }
         });
@@ -75,11 +77,11 @@ public class BoardView implements View {
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
-        if (selectedPiece != null) {
+        if (exists(selectedPiece)) {
             selectionPieces.get(selectedPiece).setVisible(false);
 
             Unit unit = selectedPiece.getUnit();
-            if (unit != null) {
+            if (exists(unit)) {
                 for (Piece piece : unit.getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
                     selectionPieces.get(piece).setVisible(false);
                 }
@@ -90,7 +92,7 @@ public class BoardView implements View {
             selectionPieces.get(piece).setVisible(true);
 
             Unit unit = piece.getUnit();
-            if (unit != null && !unit.getPlayer().equals(gameEngine.getTurn())) {
+            if (exists(unit) && !unit.getPlayer().equals(gameEngine.getTurn())) {
                 selectionPieces.get(piece).setFill(Paint.valueOf("#FF0000"));
             } else {
                 selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
