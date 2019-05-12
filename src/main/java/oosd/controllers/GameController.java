@@ -86,6 +86,7 @@ public class GameController extends Controller {
     public void attackUnit(MouseEvent mouseEvent, Piece selectedPiece, Piece piece) {
         piece.setUnit(selectedPiece.getUnit());
         selectedPiece.setUnit(null);
+        gameEngine.setSelectedPiece(null);
         gameEngine.getNextTurn();
         boardView.attackUnit(selectedPiece, piece);
     }
