@@ -41,7 +41,7 @@ public class BoardPane extends StackPane {
                 UnitPieceClickHandler mouseClickHandler = new UnitPieceClickHandler(gameEngine, gameController, piece);
                 backgroundPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 unitPieces.get(piece).setOnMouseClicked(mouseClickHandler);
-                selectionPieces.get(piece).setOnMouseClicked(mouseClickHandler);
+                selectionPieces.get(piece).setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
                 defendPieces.get(piece).setOnMouseClicked(mouseClickHandler);
 
                 unitPieces.get(piece).setOnMousePressed(event -> {
