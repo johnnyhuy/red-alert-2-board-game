@@ -8,12 +8,12 @@ import oosd.models.board.Piece;
 
 import static oosd.helpers.ObjectHelper.exists;
 
-public class PieceClickHandler implements EventHandler<MouseEvent> {
+public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
     private GameEngine gameEngine;
     private GameController gameController;
     private Piece piece;
 
-    public PieceClickHandler(GameEngine gameEngine, GameController gameController, Piece piece) {
+    public UnitPieceClickHandler(GameEngine gameEngine, GameController gameController, Piece piece) {
         this.gameEngine = gameEngine;
         this.gameController = gameController;
         this.piece = piece;
@@ -27,9 +27,7 @@ public class PieceClickHandler implements EventHandler<MouseEvent> {
         boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
         boolean isValidMove = exists(selectedPiece) && selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
 
-        if (!unitExists && isValidMove) {
-            gameController.moveUnit(mouseEvent, selectedPiece, piece);
-        } else if (isEnemyUnit && !isDefensive && isValidMove) {
+        if (isEnemyUnit && !isDefensive && isValidMove) {
             gameController.attackUnit(mouseEvent, selectedPiece, piece);
         } else if (piece.equals(selectedPiece)) {
             gameController.defendUnit(mouseEvent, piece);
