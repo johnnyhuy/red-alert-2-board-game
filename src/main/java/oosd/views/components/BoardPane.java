@@ -56,21 +56,27 @@ public class BoardPane extends StackPane {
 //                backgroundPieces.get(piece).setOnMouseDragExited(mouseDragExitedHandler);
 //                unitPieces.get(piece).setOnMouseDragExited(mouseDragExitedHandler);
 
-                unitPieces.get(piece).setOnDragDetected(event -> {
+//                unitPieces.get(piece).setOnDragDetected(event -> {
+//                    gameController.selectUnit(event, gameEngine.getSelectedPiece(), piece);
+//                    event.consume();
+//                });
+                unitPieces.get(piece).setOnMousePressed(event -> {
+                    unitPieces.get(piece).setMouseTransparent(true);
                     gameController.selectUnit(event, gameEngine.getSelectedPiece(), piece);
-                    event.consume();
+                    event.setDragDetect(true);
                 });
-                unitPieces.get(piece).setOnDragDropped(event -> {
-                    gameController.moveUnit(event, gameEngine.getSelectedPiece(), piece);
-                    event.consume();
+                unitPieces.get(piece).setOnMouseDragged(event -> {
+                    event.setDragDetect(false);
+                    System.out.println("dragged");
                 });
-                unitPieces.get(piece).setOnDragOver(event -> {
-                    event.consume();
+                unitPieces.get(piece).setOnDragDetected(event -> {
+                    unitPieces.get(piece).startFullDrag();
                 });
-                unitPieces.get(piece).setOnDragDone(event -> {
-                    event.consume();
-                });
-
+//                backgroundPieces.get(piece).setOnMouseDragReleased(event -> {
+//                    gameController.moveUnit(event, gameEngine.getSelectedPiece(), piece);
+//                });
+                backgroundPieces.get(piece).setOnMouseDragExited(event -> System.out.println("Event on Target: mouse drag exited"));
+//                backgroundPieces.get(piece).setOnMouseDragOver(event -> System.out.println("Event on Target: mouse drag over"));
                 group.getChildren().add(anchor);
 
                 if (pieceCount % 2 == 0) {
