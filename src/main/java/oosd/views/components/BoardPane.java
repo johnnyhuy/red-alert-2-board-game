@@ -7,7 +7,8 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
-import oosd.views.handlers.PieceClickHandler;
+import oosd.views.handlers.SelectionPieceClickHandler;
+import oosd.views.handlers.UnitPieceClickHandler;
 
 import java.util.HashMap;
 
@@ -37,46 +38,31 @@ public class BoardPane extends StackPane {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                PieceClickHandler mouseClickHandler = new PieceClickHandler(gameEngine, gameController, piece);
+                UnitPieceClickHandler mouseClickHandler = new UnitPieceClickHandler(gameEngine, gameController, piece);
                 backgroundPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 unitPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 selectionPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 defendPieces.get(piece).setOnMouseClicked(mouseClickHandler);
 
-//                PieceDragEnteredHandler mouseDragEnteredHandler = new PieceDragEnteredHandler(gameEngine, gameController, piece);
-//                backgroundPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-//                unitPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-//                selectionPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-//                defendPieces.get(piece).setOnMouseDragEntered(mouseDragEnteredHandler);
-
-//                PieceDraggedHandler mouseDraggedHandler = new PieceDraggedHandler(gameEngine, gameController, piece);
-//                unitPieces.get(piece).setOnMouseDragged(mouseDraggedHandler);
-
-//                PieceDragExitedHandler mouseDragExitedHandler = new PieceDragExitedHandler(gameEngine, gameController, piece);
-//                backgroundPieces.get(piece).setOnMouseDragExited(mouseDragExitedHandler);
-//                unitPieces.get(piece).setOnMouseDragExited(mouseDragExitedHandler);
-
-//                unitPieces.get(piece).setOnDragDetected(event -> {
-//                    gameController.selectUnit(event, gameEngine.getSelectedPiece(), piece);
-//                    event.consume();
-//                });
                 unitPieces.get(piece).setOnMousePressed(event -> {
-                    unitPieces.get(piece).setMouseTransparent(true);
+                    if (!piece.getUnit().getPlayer().equals(gameEngine.getTurn())) {
+                        return;
+                    }
+
                     gameController.selectUnit(event, gameEngine.getSelectedPiece(), piece);
+                    unitPieces.get(piece).setMouseTransparent(true);
                     event.setDragDetect(true);
                 });
                 unitPieces.get(piece).setOnMouseDragged(event -> {
                     event.setDragDetect(false);
-                    System.out.println("dragged");
                 });
                 unitPieces.get(piece).setOnDragDetected(event -> {
                     unitPieces.get(piece).startFullDrag();
                 });
-//                backgroundPieces.get(piece).setOnMouseDragReleased(event -> {
-//                    gameController.moveUnit(event, gameEngine.getSelectedPiece(), piece);
-//                });
-                backgroundPieces.get(piece).setOnMouseDragExited(event -> System.out.println("Event on Target: mouse drag exited"));
-//                backgroundPieces.get(piece).setOnMouseDragOver(event -> System.out.println("Event on Target: mouse drag over"));
+                selectionPieces.get(piece).setOnMouseDragReleased(event -> {
+                    gameController.moveUnit(event, gameEngine.getSelectedPiece(), piece);
+                    System.out.println("piece released!");
+                });
                 group.getChildren().add(anchor);
 
                 if (pieceCount % 2 == 0) {
