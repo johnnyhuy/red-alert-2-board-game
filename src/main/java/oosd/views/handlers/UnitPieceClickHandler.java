@@ -20,7 +20,7 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
     }
 
     @Override
-    public void handle(MouseEvent mouseEvent) {
+    public void handle(MouseEvent event) {
         Piece selectedPiece = gameEngine.getSelectedPiece();
         boolean unitExists = exists(piece.getUnit());
         boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
@@ -28,11 +28,11 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
         boolean isValidMove = exists(selectedPiece) && selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
 
         if (isEnemyUnit && !isDefensive && isValidMove) {
-            gameController.attackUnit(mouseEvent, selectedPiece, piece);
+            gameController.attackUnit(event, selectedPiece, piece);
         } else if (piece.equals(selectedPiece)) {
-            gameController.defendUnit(mouseEvent, piece);
+            gameController.defendUnit(event, piece);
         } else if (!isDefensive && !isEnemyUnit && unitExists) {
-            gameController.selectUnit(mouseEvent, selectedPiece, piece);
+            gameController.selectUnit(event, selectedPiece, piece);
         }
     }
 }
