@@ -7,8 +7,7 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
-import oosd.views.handlers.SelectionPieceClickHandler;
-import oosd.views.handlers.UnitPieceClickHandler;
+import oosd.views.handlers.*;
 
 import java.util.HashMap;
 
@@ -38,31 +37,16 @@ public class BoardPane extends StackPane {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                UnitPieceClickHandler mouseClickHandler = new UnitPieceClickHandler(gameEngine, gameController, piece);
+                final UnitPieceClickHandler mouseClickHandler = new UnitPieceClickHandler(gameEngine, gameController, piece);
                 backgroundPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 unitPieces.get(piece).setOnMouseClicked(mouseClickHandler);
                 selectionPieces.get(piece).setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
                 defendPieces.get(piece).setOnMouseClicked(mouseClickHandler);
+                unitPieces.get(piece).setOnMousePressed(new UnitPiecePressedHandler(gameEngine, gameController, piece));
+                unitPieces.get(piece).setOnDragDetected(new UnitPieceDragDetectedHandler(unitPieces.get(piece)));
+                selectionPieces.get(piece).setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(gameEngine, gameController, piece));
+                unitPieces.get(piece).setOnMouseDragReleased(new UnitPieceDragReleasedHandler(gameEngine, gameController, piece));
 
-                unitPieces.get(piece).setOnMousePressed(event -> {
-                    if (!piece.getUnit().getPlayer().equals(gameEngine.getTurn())) {
-                        return;
-                    }
-
-                    gameController.selectUnit(event, gameEngine.getSelectedPiece(), piece);
-                    unitPieces.get(piece).setMouseTransparent(true);
-                    event.setDragDetect(true);
-                });
-                unitPieces.get(piece).setOnMouseDragged(event -> {
-                    event.setDragDetect(false);
-                });
-                unitPieces.get(piece).setOnDragDetected(event -> {
-                    unitPieces.get(piece).startFullDrag();
-                });
-                selectionPieces.get(piece).setOnMouseDragReleased(event -> {
-                    gameController.moveUnit(event, gameEngine.getSelectedPiece(), piece);
-                    System.out.println("piece released!");
-                });
                 group.getChildren().add(anchor);
 
                 if (pieceCount % 2 == 0) {

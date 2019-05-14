@@ -20,13 +20,13 @@ public class SelectionPieceClickHandler implements EventHandler<MouseEvent> {
     }
 
     @Override
-    public void handle(MouseEvent mouseEvent) {
+    public void handle(MouseEvent event) {
         Piece selectedPiece = gameEngine.getSelectedPiece();
         boolean unitExists = exists(piece.getUnit());
         boolean isValidMove = selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
 
         if (!unitExists && isValidMove) {
-            gameController.moveUnit(mouseEvent, selectedPiece, piece);
+            gameController.moveUnit(event, selectedPiece, piece);
         }
     }
 }
