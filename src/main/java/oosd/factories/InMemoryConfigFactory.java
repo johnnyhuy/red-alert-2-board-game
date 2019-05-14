@@ -16,11 +16,6 @@ import oosd.models.units.soviet.RhinoTank;
 
 public class InMemoryConfigFactory implements ConfigFactory
 {	
-	public InMemoryConfigFactory()
-	{
-
-	}
-
 	@Override
 	public Board createBoard(int boardColumns, int boardRows)
 	{

@@ -1,0 +1,60 @@
+{
+  "boardColumns": 10,
+  "boardRows": 10,
+  "players": [
+    {
+      "playerNo": "playerOne",
+      "Team": "Red",
+      "Name": "Johnny Dave",
+	  "GISoldier": [
+      	{
+      		"Position 1": "0, 0",
+      		"Position 2": "1, 0",
+      		"Position 3": "8, 0",
+      		"Position 4": "9, 0"
+      	}
+      ],
+      "GrizzlyTank": [
+      	{
+      		"Position 1": "2, 0",
+      		"Position 2": "3, 0",
+      		"Position 3": "6, 0",
+      		"Position 4": "7, 0"
+      	}
+      ],
+      "Harrier": [
+      	{
+      		"Position 1": "4, 0",
+      		"Position 2": "5, 0"
+      	}
+      ]
+    },
+    {
+      "playerNo": "playerTwo",
+      "Team": "Blue",
+      "Name": "Jane Doe",
+   	  "RhinoTank": [
+      	{
+      		"Position 1": "0, 9",
+      		"Position 2": "1, 9",
+      		"Position 3": "8, 9",
+      		"Position 4": "9, 9"
+      	}
+       ],
+      "KirovAirship": [
+      	{
+      		"Position 1": "2, 9",
+      		"Position 2": "3, 9",
+      		"Position 3": "6, 9",
+      		"Position 4": "7, 9"
+      	}
+      ],
+      "Conscript": [
+      	{
+      		"Position 1": "4, 9",
+      		"Position 2": "5, 9"
+      	}
+      ]
+    }
+  ]
+}

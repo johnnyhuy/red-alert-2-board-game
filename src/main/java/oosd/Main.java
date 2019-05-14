@@ -7,12 +7,18 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import org.json.simple.parser.*;
+
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 import oosd.factories.InMemoryConfigFactory;
+import oosd.factories.JsonConfigFactory;
 import oosd.views.View;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,6 +33,7 @@ public class Main extends Application {
     private final String windowTitle = "OOSD Game Board";
     private final int sceneWidth = 1024;
     private final int sceneHeight = 856;
+    private boolean useJSONConfig = false;
 
     /**
      * Boilerplate code for JavaFX.
@@ -66,13 +73,25 @@ public class Main extends Application {
      * Initialize game configuration data, which can be easily modified.
      *
      * @return the game engine
+     * @throws IOException 
+     * @throws FileNotFoundException 
      */
-    private GameEngine initializeGameEngine() {
-
-    	InMemoryConfigFactory factory = new InMemoryConfigFactory();
-    	Board board = factory.createBoard(boardColumns, boardRows);
-    	List<Player> players = factory.createPlayers(board);
-
-        return new GameEngine(board, players);
+    private GameEngine initializeGameEngine() throws FileNotFoundException, IOException, ParseException {
+    	
+    	if (useJSONConfig == false)
+    	{
+        	InMemoryConfigFactory factory = new InMemoryConfigFactory();
+        	Board board = factory.createBoard(boardColumns, boardRows);
+        	List<Player> players = factory.createPlayers(board);
+            return new GameEngine(board, players);
+    	}
+    	else
+    	{    		
+    		JsonConfigFactory factoryJSON = new JsonConfigFactory();
+        	Board board = factoryJSON.createBoard(boardColumns, boardRows);
+        	List<Player> players = factoryJSON.createPlayers(board);
+            return new GameEngine(board, players);
+    	}
     }
+   
 }
