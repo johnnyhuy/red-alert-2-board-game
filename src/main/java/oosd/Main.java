@@ -2,12 +2,15 @@ package oosd;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.json.simple.parser.*;
+
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
 import oosd.models.player.Player;
 import oosd.factories.InMemoryConfigFactory;
+import oosd.factories.JsonConfigFactory;
 import oosd.views.View;
 import oosd.models.player.Team;
 import oosd.models.units.allied.GISoldier;
@@ -20,6 +23,9 @@ import oosd.views.components.windows.GameWindow;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,6 +34,7 @@ import java.util.List;
  * If a user were to change specific units on the board, they can change it here in the main class.
  */
 public class Main extends Application {
+    private boolean useJSONConfig = false;
 
     /**
      * Boilerplate code for JavaFX.
@@ -61,10 +68,19 @@ public class Main extends Application {
         int boardRows = 10;
         int boardColumns = 10;
 
-    	InMemoryConfigFactory factory = new InMemoryConfigFactory();
-    	Board board = factory.createBoard(boardColumns, boardRows);
-    	List<Player> players = factory.createPlayers(board);
-
-        return new GameEngine(board, players);
+    	if (useJSONConfig == false)
+    	{
+        	InMemoryConfigFactory factory = new InMemoryConfigFactory();
+        	Board board = factory.createBoard(boardColumns, boardRows);
+        	List<Player> players = factory.createPlayers(board);
+            return new GameEngine(board, players);
+    	}
+    	else
+    	{
+    		JsonConfigFactory factoryJSON = new JsonConfigFactory();
+        	Board board = factoryJSON.createBoard(boardColumns, boardRows);
+        	List<Player> players = factoryJSON.createPlayers(board);
+            return new GameEngine(board, players);
+    	}
     }
 }
