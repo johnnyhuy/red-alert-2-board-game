@@ -1,6 +1,7 @@
 package oosd.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import oosd.models.GameEngine;
@@ -67,7 +68,7 @@ public class GameController extends Controller {
      * @param selectedPiece object
      * @param piece object
      */
-    public void moveUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
+    public void moveUnit(Event event, Piece selectedPiece, Piece piece) {
         piece.setUnit(selectedPiece.getUnit());
         selectedPiece.setUnit(null);
         gameEngine.setSelectedPiece(null);

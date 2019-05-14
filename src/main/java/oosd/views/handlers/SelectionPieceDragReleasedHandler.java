@@ -1,4 +1,4 @@
-package oosd.views.handler;
+package oosd.views.handlers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -8,33 +8,29 @@ import oosd.models.board.Piece;
 
 import static oosd.helpers.ObjectHelper.exists;
 
-public class PieceHandler implements EventHandler<MouseEvent> {
+public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEvent> {
     private GameEngine gameEngine;
     private GameController gameController;
     private Piece piece;
 
-    public PieceHandler(GameEngine gameEngine, GameController gameController, Piece piece) {
+    public SelectionPieceDragReleasedHandler(GameEngine gameEngine, GameController gameController, Piece piece) {
         this.gameEngine = gameEngine;
         this.gameController = gameController;
         this.piece = piece;
     }
 
     @Override
-    public void handle(MouseEvent mouseEvent) {
+    public void handle(MouseEvent event) {
         Piece selectedPiece = gameEngine.getSelectedPiece();
         boolean unitExists = exists(piece.getUnit());
+        boolean isValidMove = selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
         boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
         boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
-        boolean isValidMove = exists(selectedPiece) && selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
 
         if (!unitExists && isValidMove) {
-            gameController.moveUnit(mouseEvent, selectedPiece, piece);
+            gameController.moveUnit(event, selectedPiece, piece);
         } else if (isEnemyUnit && !isDefensive && isValidMove) {
-            gameController.attackUnit(mouseEvent, selectedPiece, piece);
-        } else if (piece.equals(selectedPiece)) {
-            gameController.defendUnit(mouseEvent, piece);
-        } else if (!isDefensive && !isEnemyUnit && unitExists) {
-            gameController.selectUnit(mouseEvent, selectedPiece, piece);
+            gameController.attackUnit(event, selectedPiece, piece);
         }
     }
 }
