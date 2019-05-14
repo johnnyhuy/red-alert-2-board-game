@@ -24,9 +24,13 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
         Piece selectedPiece = gameEngine.getSelectedPiece();
         boolean unitExists = exists(piece.getUnit());
         boolean isValidMove = selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
+        boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
+        boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
 
         if (!unitExists && isValidMove) {
             gameController.moveUnit(event, selectedPiece, piece);
+        } else if (isEnemyUnit && !isDefensive && isValidMove) {
+            gameController.attackUnit(event, selectedPiece, piece);
         }
     }
 }
