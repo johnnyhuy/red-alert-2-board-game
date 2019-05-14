@@ -1,13 +1,23 @@
 package oosd.factories;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+import org.json.simple.parser.ParseException;
 
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 
-interface ConfigFactory
+public abstract class ConfigFactory
 {
-	public Board createBoard(int boardColumns, int boardRows);
+	public Board createBoard(int boardColumns, int boardRows)
+	{
+		return null;
+	}
 	
-	public List<Player> createPlayers(Board board);
+	public List<Player> createPlayers(Board board)
+	{
+		return null;
+	}
 }

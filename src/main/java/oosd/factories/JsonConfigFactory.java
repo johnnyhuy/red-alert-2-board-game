@@ -14,28 +14,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class JsonConfigFactory implements ConfigFactory
+public class JsonConfigFactory extends ConfigFactory
 {			
-	public Board createBoard() throws FileNotFoundException, IOException, ParseException
+	public Board createBoard()
 	{
-		Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
-		
-		JSONObject jo = (JSONObject) obj;
-		
-		int boardColumns = (int) jo.get("boardColumns");
-		int boardRows = (int) jo.get("boardRows");
-		
-		Board board = new Board(boardColumns, boardRows);
-        return board;
+		return null;
 	}
 
 	@Override
 	public List<Player> createPlayers(Board board)
 	{
-Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
-		
-		JSONObject jo = (JSONObject) obj;
-		
 		return null;
 	}
 }

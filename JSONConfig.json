@@ -1,59 +1,49 @@
 {
-  "boardColumns": 10,
-  "boardRows": 10,
+  "board_columns": 10,
+  "board_rows": 10,
   "players": [
     {
-      "playerNo": "playerOne",
-      "Team": "Red",
-      "Name": "Johnny Dave",
-	  "GISoldier": [
-      	{
-      		"Position 1": "0, 0",
-      		"Position 2": "1, 0",
-      		"Position 3": "8, 0",
-      		"Position 4": "9, 0"
-      	}
-      ],
-      "GrizzlyTank": [
-      	{
-      		"Position 1": "2, 0",
-      		"Position 2": "3, 0",
-      		"Position 3": "6, 0",
-      		"Position 4": "7, 0"
-      	}
-      ],
-      "Harrier": [
-      	{
-      		"Position 1": "4, 0",
-      		"Position 2": "5, 0"
-      	}
+      "team": "Red",
+      "name": "Johnny Dave",
+      "units": [
+      	"gi_soldier", [
+      		{"column": "0", "row": "0"},
+      		{"column": "1", "row": "0"},
+      		{"column": "8", "row": "0"},
+      		{"column": "9", "row": "0"}
+      	],
+      	"grizzly_tank", [
+      		{"column": "2", "row": "0"},
+      		{"column": "3", "row": "0"},
+      		{"column": "6", "row": "0"},
+      		{"column": "7", "row": "0"}
+      	],
+      	"harrier", [
+      		{"column": "4", "row": "0"},
+      		{"column": "5", "row": "0"}
+      	]
       ]
     },
     {
-      "playerNo": "playerTwo",
-      "Team": "Blue",
-      "Name": "Jane Doe",
-   	  "RhinoTank": [
-      	{
-      		"Position 1": "0, 9",
-      		"Position 2": "1, 9",
-      		"Position 3": "8, 9",
-      		"Position 4": "9, 9"
-      	}
-       ],
-      "KirovAirship": [
-      	{
-      		"Position 1": "2, 9",
-      		"Position 2": "3, 9",
-      		"Position 3": "6, 9",
-      		"Position 4": "7, 9"
-      	}
-      ],
-      "Conscript": [
-      	{
-      		"Position 1": "4, 9",
-      		"Position 2": "5, 9"
-      	}
+      "team": "Blue",
+      "name": "Jane Doe",
+      "units": [
+      	"rhino_tank", [
+      		{"column": "0", "row": "9"},
+			{"column": "1", "row": "9"},
+			{"column": "8", "row": "9"},
+      		{"column": "9", "row": "9"}
+       	],
+      	"kirov_airship", [
+      		{"column": "2", "row": "9"},
+			{"column": "3", "row": "9"},
+      		{"column": "6", "row": "9"},
+      		{"column": "7", "row": "9"}
+      	],
+      	"conscript", [
+      		{"column": "4", "row": "9"},
+      		{"column": "5", "row": "9"}
+      	]	
       ]
     }
   ]
