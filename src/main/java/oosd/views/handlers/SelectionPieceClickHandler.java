@@ -24,8 +24,12 @@ public class SelectionPieceClickHandler implements EventHandler<MouseEvent> {
         Piece selectedPiece = gameEngine.getSelectedPiece();
         boolean unitExists = exists(piece.getUnit());
         boolean isValidMove = selectedPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, piece);
+        boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(gameEngine.getTurn());
+        boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
 
-        if (!unitExists && isValidMove) {
+        if (unitExists && isEnemyUnit && !isDefensive && isValidMove) {
+            gameController.attackUnit(event, selectedPiece, piece);
+        } else if (!unitExists && isValidMove) {
             gameController.moveUnit(event, selectedPiece, piece);
         }
     }

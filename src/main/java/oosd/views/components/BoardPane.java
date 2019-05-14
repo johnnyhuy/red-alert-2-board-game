@@ -23,29 +23,29 @@ public class BoardPane extends StackPane {
         for (int row = 0; row < board.getRows(); row++) {
             for (int column = 0; column < board.getColumns(); column++) {
                 Piece piece = board.getPiece(column, row);
+                UnitPiecePolygon unitPiecePolygon = unitPieces.get(piece);
+                BackgroundPiecePolygon backgroundPiecePolygon = backgroundPieces.get(piece);
+                SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
+                DefendPieceImage defendPieceImage = defendPieces.get(piece);
 
                 if (piece.getUnit() != null) {
-                    unitPieces.get(piece).setUnitImage(piece.getUnit());
+                    unitPiecePolygon.setUnitImage(piece.getUnit());
                 } else {
-                    unitPieces.get(piece).resetUnitImage();
+                    unitPiecePolygon.resetUnitImage();
                 }
 
-                selectionPieces.get(piece).setVisible(false);
+                selectionPiecePolygon.setVisible(false);
 
                 final AnchorPane anchor = new AnchorPane();
-                anchor.getChildren().addAll(backgroundPieces.get(piece), unitPieces.get(piece), selectionPieces.get(piece), defendPieces.get(piece));
+                anchor.getChildren().addAll(backgroundPiecePolygon, unitPiecePolygon, selectionPiecePolygon, defendPieceImage);
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                final UnitPieceClickHandler mouseClickHandler = new UnitPieceClickHandler(gameEngine, gameController, piece);
-                backgroundPieces.get(piece).setOnMouseClicked(mouseClickHandler);
-                unitPieces.get(piece).setOnMouseClicked(mouseClickHandler);
-                selectionPieces.get(piece).setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
-                defendPieces.get(piece).setOnMouseClicked(mouseClickHandler);
-                unitPieces.get(piece).setOnMousePressed(new UnitPiecePressedHandler(gameEngine, gameController, piece));
-                unitPieces.get(piece).setOnDragDetected(new UnitPieceDragDetectedHandler(unitPieces.get(piece)));
-                selectionPieces.get(piece).setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(gameEngine, gameController, piece));
-                unitPieces.get(piece).setOnMouseDragReleased(new UnitPieceDragReleasedHandler(gameEngine, gameController, piece));
+                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
+                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(gameEngine, gameController, piece));
+                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(gameEngine, gameController, piece));
+                unitPiecePolygon.setOnMousePressed(new UnitPiecePressedHandler(gameEngine, gameController, piece));
+                unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(unitPiecePolygon));
 
                 group.getChildren().add(anchor);
 
