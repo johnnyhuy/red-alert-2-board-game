@@ -1,14 +1,15 @@
 package oosd.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import org.json.*;
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 
-public abstract class JsonConfigFactory implements ConfigFactory
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class JsonConfigFactory implements ConfigFactory
 {	
 	public JsonConfigFactory()
 	{
@@ -22,9 +23,8 @@ public abstract class JsonConfigFactory implements ConfigFactory
 	}
 
 	@Override
-	public List<Player> createPlayers()
+	public List<Player> createPlayers(Board board)
 	{
 		return null;
 	}
-
 }

@@ -142,5 +142,10 @@
             <version>1.6.0</version>
             <type>maven-plugin</type>
         </dependency>
+        <dependency>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    		<version>20180813</version>
+		</dependency>
     </dependencies>
 </project>

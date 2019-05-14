@@ -9,6 +9,5 @@ interface ConfigFactory
 {
 	public Board createBoard(int boardColumns, int boardRows);
 	
-	public List<Player> createPlayers();
-
+	public List<Player> createPlayers(Board board);
 }
