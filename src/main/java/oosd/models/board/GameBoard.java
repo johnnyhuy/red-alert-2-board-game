@@ -2,6 +2,8 @@ package oosd.models.board;
 
 import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.GameBoardContract;
+import oosd.models.board.history.BoardSnapshot;
+import oosd.models.board.history.Snapshot;
 
 @ContractReference(GameBoardContract.class)
 public class GameBoard implements Board {
@@ -14,6 +16,12 @@ public class GameBoard implements Board {
         this.columns = columns;
         this.pieces = new Piece[columns][rows];
         this.apply((column, row) -> this.pieces[column][row] = new Piece(column, row));
+    }
+
+    public GameBoard(int columns, int rows, Piece[][] pieces) {
+        this.rows = rows;
+        this.columns = columns;
+        this.pieces = pieces;
     }
 
     @Override
@@ -37,11 +45,27 @@ public class GameBoard implements Board {
     }
 
     @Override
+    public Piece[][] getPieces() {
+        return this.pieces;
+    }
+
+    @Override
     public void apply(BoardActionable action) {
         for (int row = 0; row < this.getRows(); row++) {
             for (int column = 0; column < this.getColumns(); column++) {
                 action.apply(column, row);
             }
         }
+    }
+
+    @Override
+    public Snapshot<Board> save() {
+        return new BoardSnapshot(new GameBoard(columns, rows, pieces));
+    }
+
+    @Override
+    public void restore(Snapshot snapshot) {
+        Board board = (Board) snapshot.getState();
+        this.pieces = board.getPieces();
     }
 }
