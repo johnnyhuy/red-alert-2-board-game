@@ -1,6 +1,7 @@
 package oosd.contracts.models;
 
 import de.vksi.c4j.ClassInvariant;
+import de.vksi.c4j.Contract;
 import de.vksi.c4j.Target;
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
@@ -8,6 +9,7 @@ import oosd.models.board.Piece;
 
 import static de.vksi.c4j.Condition.*;
 
+@Contract
 public class GameBoardContract extends GameBoard {
     @Target
     private Board target;

@@ -72,7 +72,7 @@ class GameEngineTest {
         gameEngine.setSelectedPiece(selectedPiece);
 
         // Act
-        boolean isValidMove = unitPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, unitPiece);
+        boolean isValidMove = unitPiece.getUnit().getUnitBehaviour().isValidMove(gameEngine, new Piece(100, 100));
 
         // Assert
         assertFalse(isValidMove);

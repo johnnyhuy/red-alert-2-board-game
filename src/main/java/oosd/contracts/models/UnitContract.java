@@ -1,5 +1,6 @@
 package oosd.contracts.models;
 
+import de.vksi.c4j.Contract;
 import de.vksi.c4j.Target;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
@@ -10,6 +11,7 @@ import java.util.List;
 import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.preCondition;
 
+@Contract
 public class UnitContract extends Unit {
     @Target
     private Unit target;
