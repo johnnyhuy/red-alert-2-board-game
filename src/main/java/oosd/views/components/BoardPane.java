@@ -7,7 +7,10 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
-import oosd.views.handlers.*;
+import oosd.views.handlers.SelectionPieceClickHandler;
+import oosd.views.handlers.SelectionPieceDragReleasedHandler;
+import oosd.views.handlers.UnitPieceClickHandler;
+import oosd.views.handlers.UnitPieceDragDetectedHandler;
 
 import java.util.HashMap;
 
@@ -44,8 +47,7 @@ public class BoardPane extends StackPane {
                 selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
                 selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(gameEngine, gameController, piece));
                 unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(gameEngine, gameController, piece));
-                unitPiecePolygon.setOnMousePressed(new UnitPiecePressedHandler(gameEngine, gameController, piece));
-                unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(unitPiecePolygon));
+                unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(gameEngine, gameController, piece, unitPiecePolygon));
 
                 group.getChildren().add(anchor);
 
