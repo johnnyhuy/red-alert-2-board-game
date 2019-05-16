@@ -3,10 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Text?>
-<?import oosd.views.components.BoardPane?>
-<?import oosd.views.components.SidebarPane?>
-<?import oosd.views.components.ToolbarPane?>
-<?import oosd.views.components.WindowGridPane?>
+<?import oosd.views.components.panes.BoardPane?>
+<?import oosd.views.components.panes.SidebarPane?>
+<?import oosd.views.components.panes.ToolbarPane?>
+<?import oosd.views.components.panes.WindowGridPane?>
 <WindowGridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="windowGridPane">
     <center>
         <BoardPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" minHeight="850">

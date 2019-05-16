@@ -9,10 +9,10 @@ import oosd.models.board.Piece;
 import oosd.views.BoardView;
 import oosd.views.UndoView;
 import oosd.views.View;
-import oosd.views.components.BoardPane;
-import oosd.views.components.SidebarPane;
-import oosd.views.components.ToolbarPane;
-import oosd.views.components.WindowGridPane;
+import oosd.views.components.panes.BoardPane;
+import oosd.views.components.panes.SidebarPane;
+import oosd.views.components.panes.ToolbarPane;
+import oosd.views.components.panes.WindowGridPane;
 
 /**
  * GRASP: The controller

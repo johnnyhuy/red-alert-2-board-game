@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.polygons;
 
 import javafx.scene.paint.Paint;
 

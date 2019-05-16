@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.images;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.panes;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;

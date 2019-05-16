@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.polygons;
 
 public interface Hexagon {
     double SIZE = 40;
