@@ -5,7 +5,7 @@ import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
-import oosd.views.components.UnitPiecePolygon;
+import oosd.views.components.polygons.UnitPiecePolygon;
 
 public class UnitPieceDragDetectedHandler implements EventHandler<MouseEvent> {
     private final GameController gameController;

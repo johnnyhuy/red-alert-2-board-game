@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.windows;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
