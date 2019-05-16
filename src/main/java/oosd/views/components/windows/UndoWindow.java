@@ -13,20 +13,22 @@ import java.io.IOException;
  * The window needs a stage and controller to populate itself.
  * Frame specific details are stored in private final fields to make it immutable.
  */
-public class GameWindow {
+public class UndoWindow {
     private final int sceneWidth;
     private final int sceneHeight;
     private final String windowTitle;
     private final String boardFileName;
+    private final Stage stage;
 
-    public GameWindow() {
-        this.sceneWidth = 1200;
-        this.sceneHeight = 900;
-        this.windowTitle = "Red Alert 2 Board Game";
-        this.boardFileName = "board.fxml";
+    public UndoWindow() {
+        this.sceneWidth = 400;
+        this.sceneHeight = 300;
+        this.windowTitle = "Undo moves";
+        this.boardFileName = "undo.fxml";
+        this.stage = new Stage();
     }
 
-    public void render(Stage primaryStage, Controller controller) {
+    public void render(Controller controller) {
         FXMLLoader loader = new FXMLLoader(Controller.class.getResource(boardFileName));
         loader.setController(controller);
 
@@ -34,10 +36,10 @@ public class GameWindow {
             Pane pane = loader.load();
             Scene content = new Scene(pane, sceneWidth, sceneHeight);
 
-            primaryStage.setScene(content);
-            primaryStage.setTitle(windowTitle);
-            primaryStage.setResizable(false);
-            primaryStage.show();
+            stage.setScene(content);
+            stage.setTitle(windowTitle);
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
