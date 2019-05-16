@@ -7,6 +7,8 @@ import javafx.scene.input.MouseEvent;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
 import oosd.views.BoardView;
+import oosd.views.UndoView;
+import oosd.views.View;
 import oosd.views.components.BoardPane;
 import oosd.views.components.SidebarPane;
 import oosd.views.components.ToolbarPane;
@@ -39,8 +41,15 @@ public class GameController extends Controller {
         this.gameEngine = gameEngine;
     }
 
-    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
+    @FXML
+    protected void handleDefendButton(ActionEvent event) {
         System.out.println("poop");
+    }
+
+    @FXML
+    protected void handleUndoButton(ActionEvent event) {
+        View view = new UndoView(this, gameEngine);
+        view.render();
     }
 
     @Override
