@@ -14,7 +14,7 @@ import oosd.models.units.allied.Harrier;
 import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
-import oosd.views.components.GameWindow;
+import oosd.views.components.windows.GameWindow;
 
 import java.util.ArrayList;
 import java.util.Arrays;

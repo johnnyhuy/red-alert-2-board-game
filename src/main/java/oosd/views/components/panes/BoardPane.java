@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.panes;
 
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
@@ -7,6 +7,11 @@ import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.views.components.images.DefendPieceImage;
+import oosd.views.components.polygons.BackgroundPiecePolygon;
+import oosd.views.components.polygons.Hexagon;
+import oosd.views.components.polygons.SelectionPiecePolygon;
+import oosd.views.components.polygons.UnitPiecePolygon;
 import oosd.views.handlers.SelectionPieceClickHandler;
 import oosd.views.handlers.SelectionPieceDragReleasedHandler;
 import oosd.views.handlers.UnitPieceClickHandler;
