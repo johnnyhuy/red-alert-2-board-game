@@ -23,7 +23,8 @@
             <padding>
                 <Insets top="15" right="15" bottom="15" left="15"/>
             </padding>
-            <Button text="Defend" onAction="#handleSubmitButtonAction"/>
+            <Button text="Defend" onAction="#handleDefendButton"/>
+            <Button text="Undo" onAction="#handleUndoButton"/>
         </ToolbarPane>
     </bottom>
 </WindowGridPane>
