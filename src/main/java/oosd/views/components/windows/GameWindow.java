@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import oosd.controllers.Controller;
-import oosd.controllers.GameController;
 
 import java.io.IOException;
 
@@ -27,16 +26,20 @@ public class GameWindow {
         this.boardFileName = "board.fxml";
     }
 
-    public void render(Stage primaryStage, Controller controller) throws IOException {
-        FXMLLoader loader = new FXMLLoader(GameController.class.getResource(boardFileName));
+    public void render(Stage primaryStage, Controller controller) {
+        FXMLLoader loader = new FXMLLoader(Controller.class.getResource(boardFileName));
         loader.setController(controller);
 
-        Pane pane = loader.load();
-        Scene content = new Scene(pane, sceneWidth, sceneHeight);
+        try {
+            Pane pane = loader.load();
+            Scene content = new Scene(pane, sceneWidth, sceneHeight);
 
-        primaryStage.setScene(content);
-        primaryStage.setTitle(windowTitle);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+            primaryStage.setScene(content);
+            primaryStage.setTitle(windowTitle);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
