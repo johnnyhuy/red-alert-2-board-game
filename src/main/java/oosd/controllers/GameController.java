@@ -1,14 +1,11 @@
 package oosd.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
 import oosd.views.BoardView;
-import oosd.views.UndoView;
-import oosd.views.View;
 import oosd.views.components.panes.BoardPane;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
@@ -39,17 +36,6 @@ public class GameController extends Controller {
 
     public GameController(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-    }
-
-    @FXML
-    protected void handleDefendButton(ActionEvent event) {
-        System.out.println("poop");
-    }
-
-    @FXML
-    protected void handleUndoButton(ActionEvent event) {
-        View view = new UndoView(this, gameEngine);
-        view.render();
     }
 
     @Override
@@ -99,5 +85,9 @@ public class GameController extends Controller {
         gameEngine.setSelectedPiece(null);
         gameEngine.getNextTurn();
         boardView.attackUnit(selectedPiece, piece);
+    }
+
+    public void undoMove(MouseEvent mouseEvent) {
+
     }
 }
