@@ -18,10 +18,14 @@ public class GameBoard implements Board {
         this.apply((column, row) -> this.pieces[column][row] = new Piece(column, row));
     }
 
-    public GameBoard(int columns, int rows, Piece[][] pieces) {
+    public GameBoard(int columns, int rows, Board board) {
         this.rows = rows;
         this.columns = columns;
-        this.pieces = pieces;
+        this.pieces = new Piece[columns][rows];
+        this.apply((column, row) -> {
+            this.pieces[column][row] = new Piece(column, row);
+            this.getPiece(column, row).setUnit(board.getPiece(column, row).getUnit());
+        });
     }
 
     @Override
@@ -60,7 +64,7 @@ public class GameBoard implements Board {
 
     @Override
     public Snapshot<Board> save() {
-        return new GameBoardSnapshot(new GameBoard(columns, rows, pieces));
+        return new GameBoardSnapshot(new GameBoard(columns, rows, this));
     }
 
     @Override
