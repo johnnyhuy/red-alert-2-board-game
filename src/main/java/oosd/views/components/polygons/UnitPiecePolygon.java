@@ -11,7 +11,7 @@ public class UnitPiecePolygon extends HexagonPiecePolygon {
         this.setVisible(true);
     }
 
-    public void resetUnitImage() {
+    public void reset() {
         this.setFill(null);
         this.setVisible(false);
     }
