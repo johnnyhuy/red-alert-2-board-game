@@ -85,7 +85,7 @@ public abstract class Unit {
      *
      * @return number of turns
      */
-    public int getDefendTurns() {
+    public int getDefaultDefendTurns() {
         return 2;
     }
 
@@ -93,7 +93,7 @@ public abstract class Unit {
      * Start defending the unit.
      */
     public void startDefending() {
-        defendCount = getDefendTurns();
+        defendCount = getDefaultDefendTurns();
     }
 
     /**
@@ -110,5 +110,13 @@ public abstract class Unit {
      */
     public boolean getDefendStatus() {
         return defendCount != 0;
+    }
+
+    public int getDefendTurns() {
+        return this.defendCount;
+    }
+
+    public void setDefendTurns(int defendTurns) {
+        defendCount = defendTurns;
     }
 }

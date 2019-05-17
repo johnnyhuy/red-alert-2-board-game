@@ -29,7 +29,7 @@ public class RhinoTank extends Soviet {
         return new LinearUnitBehaviour(3);
     }
 
-    public int getDefendTurns() {
+    public int getDefaultDefendTurns() {
         return 3;
     }
 }
