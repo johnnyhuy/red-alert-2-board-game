@@ -13,4 +13,8 @@ public class DefendPieceImage extends ImageView {
         this.setImage(new Image(View.class.getResource("shield_2.png").toString()));
         this.setVisible(false);
     }
+
+    public void reset() {
+        this.setVisible(false);
+    }
 }

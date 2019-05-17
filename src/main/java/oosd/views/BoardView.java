@@ -68,17 +68,16 @@ public class BoardView implements View {
             Piece piece = board.getPiece(column, row);
             Unit unit = piece.getUnit();
 
-            defendPieces.get(piece).setVisible(false);
-            selectionPieces.get(piece).setVisible(false);
+            defendPieces.get(piece).reset();
+            selectionPieces.get(piece).reset();
 
             if (exists(unit) && unit.getDefendStatus()) {
                 defendPieces.get(piece).setVisible(true);
             }
         });
 
-        selectionPieces.get(selectedPiece).setVisible(false);
-        unitPieces.get(selectedPiece).setVisible(false);
-        unitPieces.get(selectedPiece).setFill(null);
+        selectionPieces.get(selectedPiece).reset();
+        unitPieces.get(selectedPiece).reset();
         unitPieces.get(clickedPiece).setVisible(true);
         unitPieces.get(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
@@ -91,7 +90,7 @@ public class BoardView implements View {
             Unit unit = selectedPiece.getUnit();
             if (exists(unit)) {
                 for (Piece piece : unit.getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
-                    selectionPieces.get(piece).setVisible(false);
+                    selectionPieces.get(piece).reset();
                 }
             }
         }
@@ -111,19 +110,16 @@ public class BoardView implements View {
     }
 
     public void defendUnit(Piece piece) {
-        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).setVisible(false));
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).reset());
 
         defendPieces.get(piece).setVisible(true);
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void attackUnit(Piece selectedPiece, Piece piece) {
-        board.apply((column, row) -> {
-            selectionPieces.get(board.getPiece(column, row)).setFill(null);
-            selectionPieces.get(board.getPiece(column, row)).setVisible(false);
-        });
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).reset());
 
-        unitPieces.get(selectedPiece).setFill(null);
+        unitPieces.get(selectedPiece).reset();
         unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
