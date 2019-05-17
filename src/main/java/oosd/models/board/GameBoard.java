@@ -4,6 +4,9 @@ import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.GameBoardContract;
 import oosd.models.board.history.GameBoardSnapshot;
 import oosd.models.board.history.Snapshot;
+import oosd.models.units.Unit;
+
+import static oosd.helpers.ObjectHelper.exists;
 
 @ContractReference(GameBoardContract.class)
 public class GameBoard implements Board {
@@ -25,6 +28,13 @@ public class GameBoard implements Board {
         this.apply((column, row) -> {
             this.pieces[column][row] = new Piece(column, row);
             this.getPiece(column, row).setUnit(board.getPiece(column, row).getUnit());
+
+            // TODO: undo defends
+            Unit unit = this.getPiece(column, row).getUnit();
+
+            if (exists(unit)) {
+                unit.setDefendTurns(board.getPiece(column, row).getUnit().getDefendTurns());
+            }
         });
     }
 
