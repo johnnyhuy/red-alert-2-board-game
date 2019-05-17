@@ -114,6 +114,12 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Move the unit in the game.
+     *
+     * @param selectedPiece that wants to move
+     * @param targetPiece   to move to
+     */
     public void moveUnit(Piece selectedPiece, Piece targetPiece) {
         history.backup();
         targetPiece.setUnit(selectedPiece.getUnit());
@@ -123,6 +129,11 @@ public class GameEngine {
         updateDefendPieces();
     }
 
+    /**
+     * Defend a unit in the game.
+     *
+     * @param piece to be defended
+     */
     public void defendUnit(Piece piece) {
         history.backup();
         piece.getUnit().startDefending();
@@ -130,6 +141,12 @@ public class GameEngine {
         getNextTurn();
     }
 
+    /**
+     * Attack a given unit in the game.
+     *
+     * @param attackingPiece that want to attack the target piece
+     * @param targetPiece that will be attacked
+     */
     public void attackUnit(Piece attackingPiece, Piece targetPiece) {
         history.backup();
         targetPiece.setUnit(attackingPiece.getUnit());
@@ -138,6 +155,11 @@ public class GameEngine {
         getNextTurn();
     }
 
+    /**
+     * Select a unit on the board.
+     *
+     * @param piece to be selected
+     */
     public void selectUnit(Piece piece) {
         setSelectedPiece(piece);
     }

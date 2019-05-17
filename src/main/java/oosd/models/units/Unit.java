@@ -80,18 +80,34 @@ public abstract class Unit {
      */
     public abstract UnitBehaviour getUnitBehaviour();
 
+    /**
+     * Get the amount of turns to defend the unit.
+     *
+     * @return number of turns
+     */
     public int getDefendTurns() {
         return 2;
     }
 
+    /**
+     * Start defending the unit.
+     */
     public void startDefending() {
         defendCount = getDefendTurns();
     }
 
+    /**
+     * Decrement the amount of turns.
+     */
     public void decrementDefendTurns() {
         defendCount--;
     }
 
+    /**
+     * Get the defend status of the unit.
+     *
+     * @return boolean
+     */
     public boolean getDefendStatus() {
         return defendCount != 0;
     }
