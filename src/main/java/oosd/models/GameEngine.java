@@ -2,6 +2,7 @@ package oosd.models;
 
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.board.history.BoardHistory;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 
@@ -9,9 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import static oosd.helpers.ListHelper.isNotEmpty;
+import static oosd.helpers.ObjectHelper.exists;
 
-// TODO: Convert this to C4J
 public class GameEngine {
+    private final BoardHistory history;
     private Board board;
     private Piece selectedPiece;
     private Player turn;
@@ -21,6 +23,7 @@ public class GameEngine {
     public GameEngine(Board board, List<Player> players) {
         this.board = board;
         this.players = players;
+        this.history = new BoardHistory(board);
 
         // Whoever we add to the players list, the first one takes the turn
         if (isNotEmpty(players)) {
@@ -52,7 +55,7 @@ public class GameEngine {
      *
      * @param selectedPiece selected piece
      */
-    public void setSelectedPiece(Piece selectedPiece) {
+    void setSelectedPiece(Piece selectedPiece) {
         this.selectedPiece = selectedPiece;
     }
 
@@ -61,7 +64,7 @@ public class GameEngine {
      *
      * @return list of players in the game
      */
-    public List<Player> getPlayers() {
+    List<Player> getPlayers() {
         return this.players;
     }
 
@@ -79,7 +82,7 @@ public class GameEngine {
      *
      * @return player in the turn
      */
-    public Player getNextTurn() {
+    Player getNextTurn() {
         if (!playersIterator.hasNext()) {
             playersIterator = players.listIterator();
         }
@@ -89,13 +92,53 @@ public class GameEngine {
         return turn;
     }
 
-    public void updateDefendPieces() {
+    /**
+     * Update defend statue pieces.
+     */
+    private void updateDefendPieces() {
         board.apply((column, row) -> {
             Unit unit = board.getPiece(column, row).getUnit();
 
-            if (unit != null && unit.getDefendStatus()) {
-                unit.decrementDefendCount();
+            if (exists(unit) && unit.getDefendStatus()) {
+                unit.decrementDefendTurns();
             }
         });
+    }
+
+    /**
+     * Undo player turns.
+     */
+    public void undoTurn() {
+        for (Player player : getPlayers()) {
+            history.undo();
+        }
+    }
+
+    public void moveUnit(Piece selectedPiece, Piece targetPiece) {
+        history.backup();
+        targetPiece.setUnit(selectedPiece.getUnit());
+        selectedPiece.setUnit(null);
+        setSelectedPiece(null);
+        getNextTurn();
+        updateDefendPieces();
+    }
+
+    public void defendUnit(Piece piece) {
+        history.backup();
+        piece.getUnit().startDefending();
+        setSelectedPiece(null);
+        getNextTurn();
+    }
+
+    public void attackUnit(Piece attackingPiece, Piece targetPiece) {
+        history.backup();
+        targetPiece.setUnit(attackingPiece.getUnit());
+        attackingPiece.setUnit(null);
+        setSelectedPiece(null);
+        getNextTurn();
+    }
+
+    public void selectUnit(Piece piece) {
+        setSelectedPiece(piece);
     }
 }
