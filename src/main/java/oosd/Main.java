@@ -2,15 +2,13 @@ package oosd;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.json.simple.parser.*;
-
 import oosd.controllers.GameController;
+import oosd.factories.InMemoryConfigFactory;
+import oosd.factories.JsonConfigFactory;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
 import oosd.models.player.Player;
-import oosd.factories.InMemoryConfigFactory;
-import oosd.factories.JsonConfigFactory;
 import oosd.views.View;
 import oosd.models.player.Team;
 import oosd.models.units.allied.GISoldier;
@@ -24,8 +22,6 @@ import oosd.views.components.windows.GameWindow;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 /**

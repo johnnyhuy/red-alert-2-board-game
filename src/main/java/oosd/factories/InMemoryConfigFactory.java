@@ -3,7 +3,6 @@ package oosd.factories;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
 import oosd.models.player.Player;
@@ -23,10 +22,9 @@ public class InMemoryConfigFactory implements ConfigFactory
         return new GameBoard(boardColumns, boardRows);
 	}
 
-	@Override
-	public List<Player> createPlayers(Board board)
-	{
-		Team redTeam = new Team("Red");
+    @Override
+    public List<Player> createPlayers(Board board) {
+        Team redTeam = new Team("Red");
         Team blueTeam = new Team("Blue");
 
         Player playerOne = new Player("Johnny Dave", redTeam);

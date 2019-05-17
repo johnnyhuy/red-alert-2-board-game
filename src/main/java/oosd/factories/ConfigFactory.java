@@ -9,16 +9,8 @@ import org.json.simple.parser.ParseException;
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 
-public abstract class ConfigFactory
+public interface ConfigFactory
 {
-	public Board createBoard(int boardColumns, int boardRows)
-	{
-		// to be implemented
-		return null;
-	}
-	
-	public List<Player> createPlayers(Board board)
-	{
-		return null;
-	}
+	Board createBoard(int boardColumns, int boardRows);
+	List<Player> createPlayers(Board board);
 }
