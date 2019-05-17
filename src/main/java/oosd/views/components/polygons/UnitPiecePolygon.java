@@ -10,9 +10,4 @@ public class UnitPiecePolygon extends HexagonPiecePolygon {
         this.setFill(new ImagePattern(new Image(View.class.getResource(unit.getImage() + ".png").toString())));
         this.setVisible(true);
     }
-
-    public void reset() {
-        this.setFill(null);
-        this.setVisible(false);
-    }
 }

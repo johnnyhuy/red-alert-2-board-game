@@ -39,7 +39,7 @@ public class BoardPane extends StackPane {
                 if (piece.getUnit() != null) {
                     unitPiecePolygon.setUnitImage(piece.getUnit());
                 } else {
-                    unitPiecePolygon.reset();
+                    unitPiecePolygon.hide();
                 }
 
                 selectionPiecePolygon.setVisible(false);
