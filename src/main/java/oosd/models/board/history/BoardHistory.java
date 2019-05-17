@@ -25,7 +25,7 @@ public class BoardHistory {
      * Backup board history.
      */
     public void backup() {
-        this.history.push(new GameBoardSnapshot(board));
+        this.history.push(board.save());
     }
 
     /**

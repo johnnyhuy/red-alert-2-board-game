@@ -109,7 +109,7 @@ public class GameEngine {
      * Undo player turns.
      */
     public void undoTurn() {
-        for (Player player : getPlayers()) {
+        for (Player ignored : getPlayers()) {
             history.undo();
         }
     }

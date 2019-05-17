@@ -221,6 +221,34 @@ class GameEngineTest {
     }
 
     @Test
+    void testUndoTurnFromAllPlayers() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave", new Team("Red"));
+        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit playerOneUnit = new GISoldier(playerOne);
+        Unit playerTwoUnit = new Conscript(playerTwo);
+        Piece playerOnePiece = board.getPiece(0, 0);
+        Piece playerTwoPiece = board.getPiece(1, 1);
+        playerOnePiece.setUnit(playerOneUnit);
+        playerTwoPiece.setUnit(playerTwoUnit);
+        GameEngine gameEngine = new GameEngine(board, players);
+        gameEngine.moveUnit(playerOnePiece, board.getPiece(1, 0));
+        gameEngine.moveUnit(playerTwoPiece, board.getPiece(0, 1));
+
+        // Act
+        gameEngine.undoTurn();
+
+        // Assert
+        assertNotNull(board.getPiece(0, 0).getUnit());
+        assertNotNull(board.getPiece(1, 1).getUnit());
+        assertNull(board.getPiece(1, 0).getUnit());
+        assertNull(board.getPiece(0, 1).getUnit());
+        assertEquals(playerOne, gameEngine.getTurn());
+    }
+
+    @Test
     void testMoveUnitDefendStatusShouldGoAway() {
         // Arrange
         Player playerOne = new Player("Johnny Dave", new Team("Red"));

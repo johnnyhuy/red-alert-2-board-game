@@ -15,7 +15,7 @@ class BoardHistoryTest {
     @Test
     void testUndoBoardHistoryCommand() {
         // Arrange
-        Board board = new GameBoard(6, 6);
+        Board board = new GameBoard(2, 2);
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
@@ -34,7 +34,7 @@ class BoardHistoryTest {
     @Test
     void testUndoMoreThanBackup() {
         // Arrange
-        Board board = new GameBoard(6, 6);
+        Board board = new GameBoard(2, 2);
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
