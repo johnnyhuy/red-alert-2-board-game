@@ -31,7 +31,7 @@ public class KirovAirship extends Soviet {
         return new LinearUnitBehaviour(5);
     }
 
-    public int getDefaultDefendCount() {
+    public int getDefendTurns() {
         return 1;
     }
 }

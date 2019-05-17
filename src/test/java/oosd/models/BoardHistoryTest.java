@@ -2,7 +2,7 @@ package oosd.models;
 
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
-import oosd.models.board.history.BoardHistoryCommand;
+import oosd.models.board.history.BoardHistory;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
@@ -19,7 +19,7 @@ class BoardHistoryTest {
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
-        BoardHistoryCommand command = new BoardHistoryCommand(board);
+        BoardHistory command = new BoardHistory(board);
 
         // Act
         command.backup();
@@ -38,7 +38,7 @@ class BoardHistoryTest {
         Player player = new Player("John Tester", new Team("Red"));
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
-        BoardHistoryCommand command = new BoardHistoryCommand(board);
+        BoardHistory command = new BoardHistory(board);
 
         // Act
         command.backup();

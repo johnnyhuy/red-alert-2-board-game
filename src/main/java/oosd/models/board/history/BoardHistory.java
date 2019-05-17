@@ -13,11 +13,11 @@ import static oosd.helpers.ListHelper.isEmpty;
  * Similar to a facade, the user of this command object does not need to know how to manage
  * the history snapshot stack.
  */
-public class BoardHistoryCommand {
+public class BoardHistory {
     private final Board board;
     private Stack<Snapshot> history = new Stack<>();
 
-    public BoardHistoryCommand(Board board) {
+    public BoardHistory(Board board) {
         this.board = board;
     }
 

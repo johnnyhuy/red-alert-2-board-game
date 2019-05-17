@@ -80,15 +80,15 @@ public abstract class Unit {
      */
     public abstract UnitBehaviour getUnitBehaviour();
 
-    public int getDefaultDefendCount() {
+    public int getDefendTurns() {
         return 2;
     }
 
-    public void startDefendCount() {
-        defendCount = getDefaultDefendCount();
+    public void startDefending() {
+        defendCount = getDefendTurns();
     }
 
-    public void decrementDefendCount() {
+    public void decrementDefendTurns() {
         defendCount--;
     }
 
