@@ -19,4 +19,19 @@ public class HexagonPiecePolygon extends Polygon {
                 x - (Hexagon.SIZE / 2.0), y + Hexagon.HALF_INCREMENT
         );
     }
+
+    /**
+     * Peek a' boo!
+     */
+    public void show() {
+        setVisible(true);
+    }
+
+    /**
+     * Hide the polygon.
+     */
+    public void hide() {
+        setFill(null);
+        setVisible(false);
+    }
 }

@@ -68,35 +68,35 @@ public class BoardView implements View {
             Piece piece = board.getPiece(column, row);
             Unit unit = piece.getUnit();
 
-            defendPieces.get(piece).reset();
-            selectionPieces.get(piece).reset();
+            defendPieces.get(piece).hide();
+            selectionPieces.get(piece).hide();
 
             if (exists(unit) && unit.getDefendStatus()) {
-                defendPieces.get(piece).setVisible(true);
+                defendPieces.get(piece).show();
             }
         });
 
-        selectionPieces.get(selectedPiece).reset();
-        unitPieces.get(selectedPiece).reset();
-        unitPieces.get(clickedPiece).setVisible(true);
+        selectionPieces.get(selectedPiece).hide();
+        unitPieces.get(selectedPiece).hide();
+        unitPieces.get(clickedPiece).show();
         unitPieces.get(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
         if (exists(selectedPiece)) {
-            selectionPieces.get(selectedPiece).setVisible(false);
+            selectionPieces.get(selectedPiece).hide();
 
             Unit unit = selectedPiece.getUnit();
             if (exists(unit)) {
                 for (Piece piece : unit.getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
-                    selectionPieces.get(piece).reset();
+                    selectionPieces.get(piece).hide();
                 }
             }
         }
 
         for (Piece piece : clickedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedPiece)) {
-            selectionPieces.get(piece).setVisible(true);
+            selectionPieces.get(piece).show();
 
             Unit unit = piece.getUnit();
             if (exists(unit) && !unit.getPlayer().equals(gameEngine.getTurn())) {
@@ -110,16 +110,16 @@ public class BoardView implements View {
     }
 
     public void defendUnit(Piece piece) {
-        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).reset());
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
 
-        defendPieces.get(piece).setVisible(true);
+        defendPieces.get(piece).show();
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void attackUnit(Piece selectedPiece, Piece piece) {
-        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).reset());
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
 
-        unitPieces.get(selectedPiece).reset();
+        unitPieces.get(selectedPiece).hide();
         unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
