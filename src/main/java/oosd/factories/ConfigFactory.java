@@ -13,6 +13,7 @@ public abstract class ConfigFactory
 {
 	public Board createBoard(int boardColumns, int boardRows)
 	{
+		// to be implemented
 		return null;
 	}
 	

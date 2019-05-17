@@ -10,25 +10,29 @@ import java.io.IOException;
 
 public class JSONHelper
 {
-	
-	public int getJSONCol() throws FileNotFoundException, IOException, ParseException
-	{
-		Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));		
-		JSONObject jo = (JSONObject) obj; 
+	private int getNumber(String field) {
+		Object obj;
+		try
+		{
+			obj = new JSONParser().parse(new FileReader("JSONExample.json"));
+			JSONObject jo = (JSONObject) obj; 
+			
+			return (int) jo.get(field);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
-		int target = (int) jo.get("boardColumns");
-		
-		return target;
+		return 0;
 	}
 	
-	public int getJSONRow() throws FileNotFoundException, IOException, ParseException
+	public int getJSONCol()
 	{
-		Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));		
-		JSONObject jo = (JSONObject) obj; 
-		
-		int target = (int) jo.get("boardRows");
-		
-		return target;
+		return getNumber("boardColumns");
 	}
 	
+	public int getJSONRow()
+	{
+		return getNumber("boardRows");
+	}	
 }
