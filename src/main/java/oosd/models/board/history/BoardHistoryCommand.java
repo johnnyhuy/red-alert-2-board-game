@@ -4,6 +4,8 @@ import oosd.models.board.Board;
 
 import java.util.Stack;
 
+import static oosd.helpers.ListHelper.isEmpty;
+
 /**
  * Design pattern: used the command pattern here to encapsulate specific functions
  * called from the object to manage history.
@@ -19,11 +21,21 @@ public class BoardHistoryCommand {
         this.board = board;
     }
 
-    public void backup(Snapshot snapshot) {
-        this.history.push(snapshot);
+    /**
+     * Backup board history.
+     */
+    public void backup() {
+        this.history.push(new GameBoardSnapshot(board));
     }
 
+    /**
+     * Undo board history.
+     */
     public void undo() {
+        if (isEmpty(this.history)) {
+            return;
+        }
+
         Snapshot snapshot = this.history.pop();
         board.restore(snapshot);
     }
