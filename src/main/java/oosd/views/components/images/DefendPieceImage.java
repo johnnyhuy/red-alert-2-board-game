@@ -14,7 +14,17 @@ public class DefendPieceImage extends ImageView {
         this.setVisible(false);
     }
 
-    public void reset() {
-        this.setVisible(false);
+    /**
+     * Peek a' boo!
+     */
+    public void show() {
+        setVisible(true);
+    }
+
+    /**
+     * Hide the polygon.
+     */
+    public void hide() {
+        setVisible(false);
     }
 }
