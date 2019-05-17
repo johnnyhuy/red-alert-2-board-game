@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InMemoryGameSetupFactory extends GameSetupFactory {
-    public Board createBoard(int boardColumns, int boardRows) {
-        return new GameBoard(boardColumns, boardRows);
+public class InMemoryGameSetupFactory implements GameSetupFactory {
+    @Override
+    public Board createBoard() {
+        return new GameBoard(10, 10);
     }
 
     @Override

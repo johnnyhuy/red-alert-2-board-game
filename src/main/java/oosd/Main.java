@@ -20,13 +20,11 @@ import java.util.List;
  * If a user were to change specific units on the board, they can change it here in the main class.
  */
 public class Main extends Application {
-    private final int boardColumns = 10;
-    private final int boardRows = 10;
     private final String boardFileName = "board.fxml";
     private final String windowTitle = "OOSD Game GameBoard";
     private final int sceneWidth = 1200;
     private final int sceneHeight = 900;
-    private boolean useJSONConfig = false;
+    private boolean useJSONConfig = true;
 
     /**
      * Boilerplate code for JavaFX.
@@ -67,18 +65,16 @@ public class Main extends Application {
      */
     private GameEngine initializeGameEngine() {
 
-        if (useJSONConfig == false)
-    	{
-            InMemoryGameSetupFactory factory = new InMemoryGameSetupFactory();
-        	Board board = factory.createBoard(boardColumns, boardRows);
-        	List<Player> players = factory.createPlayers(board);
-            return new GameEngine(board, players);
-    	}
-    	else {
+        if (useJSONConfig) {
             JsonGameSetupFactory factoryJSON = new JsonGameSetupFactory();
-        	Board board = factoryJSON.createBoard(boardColumns, boardRows);
-        	List<Player> players = factoryJSON.createPlayers(board);
+            Board board = factoryJSON.createBoard();
+            List<Player> players = factoryJSON.createPlayers(board);
             return new GameEngine(board, players);
-    	}
+        } else {
+            InMemoryGameSetupFactory factory = new InMemoryGameSetupFactory();
+            Board board = factory.createBoard();
+            List<Player> players = factory.createPlayers(board);
+            return new GameEngine(board, players);
+        }
     }
 }

@@ -5,16 +5,18 @@ import oosd.models.player.Player;
 
 import java.util.List;
 
-public abstract class GameSetupFactory
-{
-	public Board createBoard(int boardColumns, int boardRows)
-	{
-        // TODO: create board.
-		return null;
-	}
-	
-	public List<Player> createPlayers(Board board)
-	{
-		return null;
-	}
+interface GameSetupFactory {
+    /**
+     * Create the game board.
+     *
+     * @return board
+     */
+    Board createBoard();
+
+    /**
+     * Create a list of players for the game.
+     *
+     * @return list of players
+     */
+    List<Player> createPlayers(Board board);
 }

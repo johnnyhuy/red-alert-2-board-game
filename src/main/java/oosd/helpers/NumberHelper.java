@@ -24,4 +24,14 @@ public class NumberHelper {
     public static boolean isOdd(int number) {
         return number % 2 != 0;
     }
+
+    /**
+     * Convert long to int.
+     *
+     * @param number to convert
+     * @return integer of the number converted
+     */
+    public static int toInt(long number) {
+        return Math.toIntExact(number);
+    }
 }
