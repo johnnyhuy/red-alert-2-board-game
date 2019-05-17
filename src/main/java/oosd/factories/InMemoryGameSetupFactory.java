@@ -14,11 +14,8 @@ import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
 
-public class InMemoryConfigFactory implements ConfigFactory
-{
-	@Override
-	public Board createBoard(int boardColumns, int boardRows)
-	{
+public class InMemoryGameSetupFactory implements GameSetupFactory {
+    public Board createBoard(int boardColumns, int boardRows) {
         return new GameBoard(boardColumns, boardRows);
 	}
 
