@@ -5,7 +5,7 @@ import oosd.models.player.Player;
 
 import java.util.List;
 
-public class JsonConfigFactory extends ConfigFactory {
+public class JsonGameSetupFactory extends GameSetupFactory {
     public Board createBoard() {
         return null;
     }

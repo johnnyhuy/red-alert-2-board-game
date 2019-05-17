@@ -6,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import oosd.controllers.GameController;
-import oosd.factories.InMemoryConfigFactory;
-import oosd.factories.JsonConfigFactory;
+import oosd.factories.InMemoryGameSetupFactory;
+import oosd.factories.JsonGameSetupFactory;
 import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.player.Player;
@@ -69,13 +69,13 @@ public class Main extends Application {
 
         if (useJSONConfig == false)
     	{
-        	InMemoryConfigFactory factory = new InMemoryConfigFactory();
+            InMemoryGameSetupFactory factory = new InMemoryGameSetupFactory();
         	Board board = factory.createBoard(boardColumns, boardRows);
         	List<Player> players = factory.createPlayers(board);
             return new GameEngine(board, players);
     	}
     	else {
-    		JsonConfigFactory factoryJSON = new JsonConfigFactory();
+            JsonGameSetupFactory factoryJSON = new JsonGameSetupFactory();
         	Board board = factoryJSON.createBoard(boardColumns, boardRows);
         	List<Player> players = factoryJSON.createPlayers(board);
             return new GameEngine(board, players);

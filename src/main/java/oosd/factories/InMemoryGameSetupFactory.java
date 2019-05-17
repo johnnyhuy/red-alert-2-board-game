@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InMemoryConfigFactory extends ConfigFactory {
+public class InMemoryGameSetupFactory extends GameSetupFactory {
     public Board createBoard(int boardColumns, int boardRows) {
         return new GameBoard(boardColumns, boardRows);
     }
