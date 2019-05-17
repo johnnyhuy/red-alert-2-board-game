@@ -2,7 +2,7 @@ package oosd.models.board;
 
 import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.GameBoardContract;
-import oosd.models.board.history.BoardSnapshot;
+import oosd.models.board.history.GameBoardSnapshot;
 import oosd.models.board.history.Snapshot;
 
 @ContractReference(GameBoardContract.class)
@@ -60,7 +60,7 @@ public class GameBoard implements Board {
 
     @Override
     public Snapshot<Board> save() {
-        return new BoardSnapshot(new GameBoard(columns, rows, pieces));
+        return new GameBoardSnapshot(new GameBoard(columns, rows, pieces));
     }
 
     @Override
