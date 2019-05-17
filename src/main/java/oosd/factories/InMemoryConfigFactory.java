@@ -1,9 +1,5 @@
 package oosd.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
@@ -14,26 +10,26 @@ import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
 
-public class InMemoryConfigFactory extends ConfigFactory
-{	
-	public Board createBoard(int boardColumns, int boardRows)
-	{
-		Board board = new Board(boardColumns, boardRows);
-        return board;
-	}
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-	@Override
-	public List<Player> createPlayers(Board board)
-	{
-		Team redTeam = new Team("Red");
+public class InMemoryConfigFactory extends ConfigFactory {
+    public Board createBoard(int boardColumns, int boardRows) {
+        return new Board(boardColumns, boardRows);
+    }
+
+    @Override
+    public List<Player> createPlayers(Board board) {
+        Team redTeam = new Team("Red");
         Team blueTeam = new Team("Blue");
 
         Player playerOne = new Player("Johnny Dave", redTeam);
         Player playerTwo = new Player("Jane Doe", blueTeam);
 
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
-        
-		board.getPiece(0, 0).setUnit(new GISoldier(playerOne));
+
+        board.getPiece(0, 0).setUnit(new GISoldier(playerOne));
         board.getPiece(1, 0).setUnit(new GISoldier(playerOne));
         board.getPiece(2, 0).setUnit(new GrizzlyTank(playerOne));
         board.getPiece(3, 0).setUnit(new GrizzlyTank(playerOne));
@@ -53,7 +49,7 @@ public class InMemoryConfigFactory extends ConfigFactory
         board.getPiece(7, 9).setUnit(new KirovAirship(playerTwo));
         board.getPiece(8, 9).setUnit(new RhinoTank(playerTwo));
         board.getPiece(9, 9).setUnit(new RhinoTank(playerTwo));
-        
-		return players;
-	}
+
+        return players;
+    }
 }
