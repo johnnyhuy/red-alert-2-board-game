@@ -1,6 +1,7 @@
 package oosd.factories;
 
 import oosd.models.board.Board;
+import oosd.models.board.GameBoard;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.allied.GISoldier;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class InMemoryConfigFactory extends ConfigFactory {
     public Board createBoard(int boardColumns, int boardRows) {
-        return new Board(boardColumns, boardRows);
+        return new GameBoard(boardColumns, boardRows);
     }
 
     @Override

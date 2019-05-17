@@ -10,11 +10,14 @@ import java.util.List;
 /**
  * SOLID: Open for extension and close for modification
  * Units can be extended with more sub-classes allowing different unit behaviour.
+ *
+ * Design pattern: template behavioural pattern is used to produce multiple types of units.
  */
 @ContractReference(UnitContract.class)
 public abstract class Unit {
     private Player player;
     private boolean captured;
+    private int defendCount = 0;
 
     protected Unit(Player player) {
         this.player = player;
@@ -76,4 +79,20 @@ public abstract class Unit {
      * @return unit behaviour object
      */
     public abstract UnitBehaviour getUnitBehaviour();
+
+    public int getDefaultDefendCount() {
+        return 2;
+    }
+
+    public void startDefendCount() {
+        defendCount = getDefaultDefendCount();
+    }
+
+    public void decrementDefendCount() {
+        defendCount--;
+    }
+
+    public boolean getDefendStatus() {
+        return defendCount != 0;
+    }
 }
