@@ -2,9 +2,11 @@ package oosd.views.components.windows;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import oosd.controllers.Controller;
+import oosd.views.View;
 
 import java.io.IOException;
 
@@ -37,6 +39,7 @@ public class GameWindow {
             primaryStage.setScene(content);
             primaryStage.setTitle(windowTitle);
             primaryStage.setResizable(false);
+            primaryStage.getIcons().add(new Image(View.class.getResource("allied.png").toString()));
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
