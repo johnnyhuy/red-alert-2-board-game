@@ -20,7 +20,7 @@ import oosd.views.handlers.UnitPieceDragDetectedHandler;
 import java.util.HashMap;
 
 public class BoardPane extends StackPane {
-    public void createBoard(GameEngine gameEngine, GameController gameController, HashMap<Piece, UnitPiecePolygon> unitPieces, HashMap<Piece, SelectionPiecePolygon> selectionPieces, HashMap<Piece, DefendPieceImage> defendPieces, HashMap<Piece, BackgroundPiecePolygon> backgroundPieces) {
+    public void initialise(GameEngine gameEngine, GameController gameController, HashMap<Piece, UnitPiecePolygon> unitPieces, HashMap<Piece, SelectionPiecePolygon> selectionPieces, HashMap<Piece, DefendPieceImage> defendPieces, HashMap<Piece, BackgroundPiecePolygon> backgroundPieces) {
         Board board = gameEngine.getBoard();
         double x = 0;
         double y = 0;
