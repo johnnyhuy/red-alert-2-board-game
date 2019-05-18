@@ -64,7 +64,7 @@ public class BoardView implements View {
     public void render() {
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
         boardPane.initialise(gameEngine, gameController, unitPieces, selectionPieces, defendPieces, backgroundPieces);
-        toolbar.initialise(gameController);
+        toolbar.initialise(gameEngine, gameController);
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {

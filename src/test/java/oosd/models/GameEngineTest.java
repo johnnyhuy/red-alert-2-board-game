@@ -274,6 +274,70 @@ class GameEngineTest {
     }
 
     @Test
+    void testUndoMoreThanThreeTimesInARow() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave", new Team("Red"));
+        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit playerOneUnit = new GISoldier(playerOne);
+        Unit playerTwoUnit = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(playerOneUnit);
+        board.getPiece(1, 1).setUnit(playerTwoUnit);
+        GameEngine gameEngine = new GameEngine(board, players);
+        gameEngine.defendUnit(board.getPiece(0, 0));
+        gameEngine.defendUnit(board.getPiece(1, 1));
+        gameEngine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        gameEngine.moveUnit(board.getPiece(1, 1), board.getPiece(0, 1));
+        gameEngine.defendUnit(board.getPiece(1, 0));
+        gameEngine.defendUnit(board.getPiece(0, 1));
+        boolean initialUndoStatus = playerOne.getUndoStatus();
+
+        // Act
+        gameEngine.undoTurn();
+        gameEngine.undoTurn();
+        gameEngine.undoTurn();
+        boolean lastUndo = gameEngine.undoTurn();
+
+        // Assert
+        Player afterUndoPlayerOne = board.getPiece(0, 0).getUnit().getPlayer();
+        Player afterUndoPlayerTwo = board.getPiece(1, 1).getUnit().getPlayer();
+
+        assertEquals(3, afterUndoPlayerOne.getUndoMoves());
+        assertEquals(0, afterUndoPlayerTwo.getUndoMoves());
+        assertFalse(lastUndo);
+        assertTrue(initialUndoStatus);
+        assertFalse(afterUndoPlayerOne.getUndoStatus());
+        assertTrue(afterUndoPlayerTwo.getUndoStatus());
+    }
+
+    @Test
+    void testUndoStatusCannotBeTrueAfterSecondUndo() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave", new Team("Red"));
+        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit playerOneUnit = new GISoldier(playerOne);
+        Unit playerTwoUnit = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(playerOneUnit);
+        board.getPiece(1, 1).setUnit(playerTwoUnit);
+        GameEngine gameEngine = new GameEngine(board, players);
+        gameEngine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        gameEngine.moveUnit(board.getPiece(1, 1), board.getPiece(0, 1));
+
+        // Act
+        boolean firstUndo = gameEngine.undoTurn();
+        gameEngine.moveUnit(board.getPiece(1, 0), board.getPiece(0, 0));
+        gameEngine.moveUnit(board.getPiece(0, 1), board.getPiece(1, 1));
+        boolean lastUndo = gameEngine.undoTurn();
+
+        // Assert
+        assertTrue(firstUndo);
+        assertFalse(lastUndo);
+    }
+
+    @Test
     void testMoveUnitDefendStatusShouldGoAway() {
         // Arrange
         Player playerOne = new Player("Johnny Dave", new Team("Red"));
