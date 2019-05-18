@@ -12,6 +12,8 @@ public class Player {
     private String playerName;
     private Team team;
     private List<Unit> units;
+    private int undoMoves = 0;
+    private boolean canUndo = true;
 
     public Player(String playerName, Team team) {
         this.playerName = playerName;
@@ -72,5 +74,23 @@ public class Player {
         Player player = (Player) object;
 
         return player.getTeam() == getTeam() && player.getPlayerName().equals(getPlayerName());
+    }
+
+    public int getUndoMoves() {
+        return undoMoves;
+    }
+
+    public void incrementUndoMoves() {
+        undoMoves++;
+    }
+
+    public boolean getUndoStatus() {
+        return undoMoves < 3 && canUndo;
+    }
+
+    public void updateUndoStatus() {
+        if (undoMoves > 0) {
+            canUndo = false;
+        }
     }
 }
