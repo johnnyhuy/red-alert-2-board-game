@@ -71,6 +71,11 @@ public class Piece {
                 .isEquals();
     }
 
+    /**
+     * Produce a hash code for the object.
+     *
+     * @return hash code integer
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 31)
