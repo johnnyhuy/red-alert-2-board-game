@@ -10,7 +10,7 @@ public class DefendPieceImage extends ImageView {
         this.setY(38);
         this.setFitWidth(20);
         this.setFitHeight(20);
-        this.setImage(new Image(View.class.getResource("shield_2.png").toString()));
+        this.setImage(new Image(View.class.getResource("shield.png").toString()));
         this.setVisible(false);
     }
 

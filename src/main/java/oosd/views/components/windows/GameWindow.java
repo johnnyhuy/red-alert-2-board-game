@@ -9,6 +9,7 @@ import oosd.controllers.Controller;
 import oosd.views.View;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Design pattern: facade used to abstract window UI build logic.
@@ -35,6 +36,7 @@ public class GameWindow {
         try {
             Pane pane = loader.load();
             Scene content = new Scene(pane, sceneWidth, sceneHeight);
+            content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource("style/main.css")).toString());
 
             primaryStage.setScene(content);
             primaryStage.setTitle(windowTitle);
