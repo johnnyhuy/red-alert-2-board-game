@@ -27,13 +27,11 @@ public class GameBoard implements Board {
         this.pieces = new Piece[columns][rows];
         this.apply((column, row) -> {
             this.pieces[column][row] = new Piece(column, row);
-            this.getPiece(column, row).setUnit(board.getPiece(column, row).getUnit());
-
-            // TODO: undo defends
-            Unit unit = this.getPiece(column, row).getUnit();
+            Piece piece = board.getPiece(column, row);
+            Unit unit = piece.getUnit();
 
             if (exists(unit)) {
-                unit.setDefendTurns(board.getPiece(column, row).getUnit().getDefendTurns());
+                getPiece(column, row).setUnit(unit.clone());
             }
         });
     }

@@ -1,7 +1,5 @@
 package oosd.models;
 
-import oosd.models.mocks.MockUnitEmptyName;
-import oosd.models.mocks.MockUnitNotWinnables;
 import oosd.models.player.Player;
 import oosd.models.player.Team;
 import oosd.models.units.Unit;
@@ -12,7 +10,6 @@ import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
 
@@ -140,31 +137,5 @@ class UnitTest {
         // Assert
         assertTrue(unit.getCaptured());
         assertFalse(otherUnit.getCaptured());
-    }
-
-    @Test
-    void testGetWinnablesShouldNotBeZero() {
-        // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
-        Unit unit = new MockUnitNotWinnables(player);
-
-        // Act
-        Executable run = unit::getWinnables;
-
-        // Assert
-        assertThrows(AssertionError.class, run);
-    }
-
-    @Test
-    void testGetUnitNameShouldNotBeEmpty() {
-        // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
-        Unit unit = new MockUnitEmptyName(player);
-
-        // Act
-        Executable run = unit::getName;
-
-        // Assert
-        assertThrows(AssertionError.class, run);
     }
 }

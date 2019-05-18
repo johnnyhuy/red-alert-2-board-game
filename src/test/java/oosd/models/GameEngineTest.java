@@ -269,8 +269,8 @@ class GameEngineTest {
         gameEngine.undoTurn();
 
         // Assert
-        assertFalse(playerOnePiece.getUnit().getDefendStatus());
-        assertFalse(playerTwoPiece.getUnit().getDefendStatus());
+        assertFalse(board.getPiece(0, 0).getUnit().getDefendStatus());
+        assertFalse(board.getPiece(1, 1).getUnit().getDefendStatus());
     }
 
     @Test

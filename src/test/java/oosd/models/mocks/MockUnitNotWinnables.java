@@ -31,4 +31,8 @@ public class MockUnitNotWinnables extends Unit {
     public UnitBehaviour getUnitBehaviour() {
         return null;
     }
+
+    public Unit clone() {
+        return null;
+    }
 }

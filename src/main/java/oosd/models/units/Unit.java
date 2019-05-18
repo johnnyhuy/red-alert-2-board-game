@@ -1,11 +1,13 @@
 package oosd.models.units;
 
-import de.vksi.c4j.ContractReference;
-import oosd.contracts.models.UnitContract;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
+
+import static oosd.helpers.ObjectHelper.isNull;
 
 /**
  * SOLID: Open for extension and close for modification
@@ -13,16 +15,22 @@ import java.util.List;
  *
  * Design pattern: template behavioural pattern is used to produce multiple types of units.
  */
-@ContractReference(UnitContract.class)
 public abstract class Unit {
     private Player player;
     private boolean captured;
     private int defendCount = 0;
 
-    protected Unit(Player player) {
+    public Unit(Player player) {
         this.player = player;
         this.captured = false;
         player.addUnit(this);
+    }
+
+    public Unit(Player player, int defendTurns) {
+        this.player = player;
+        this.captured = false;
+        player.addUnit(this);
+        setDefendTurns(defendTurns);
     }
 
     /**
@@ -81,6 +89,13 @@ public abstract class Unit {
     public abstract UnitBehaviour getUnitBehaviour();
 
     /**
+     * Clone the unit.
+     *
+     * @return unit behaviour object
+     */
+    public abstract Unit clone();
+
+    /**
      * Get the amount of turns to defend the unit.
      *
      * @return number of turns
@@ -112,11 +127,68 @@ public abstract class Unit {
         return defendCount != 0;
     }
 
-    public int getDefendTurns() {
+    /**
+     * Get the number of defend turns.
+     *
+     * @return number of defend turns
+     */
+    protected int getDefendTurns() {
         return this.defendCount;
     }
 
-    public void setDefendTurns(int defendTurns) {
+    /**
+     * Set the number of defend turns.
+     *
+     * @param defendTurns number of turns to set
+     */
+    private void setDefendTurns(int defendTurns) {
         defendCount = defendTurns;
+    }
+
+    /**
+     * Compare units based on their location.
+     *
+     * @param object any given object
+     * @return whether the unit is equal by coordinates
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Unit))
+            return false;
+        if (object == this)
+            return true;
+
+        Unit unit = (Unit) object;
+        return equals(unit);
+    }
+
+    /**
+     * Compare units.
+     *
+     * @param unit object
+     * @return whether the unit is truly equal
+     */
+    public boolean equals(Unit unit) {
+        if (isNull(unit)) {
+            return false;
+        }
+
+        return new EqualsBuilder()
+                .append(getImage(), unit.getImage())
+                .append(getName(), unit.getName())
+                .isEquals();
+    }
+
+    /**
+     * Produce a hash code for the object.
+     *
+     * @return hash code integer
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(getImage())
+                .append(getName())
+                .toHashCode();
     }
 }

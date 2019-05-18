@@ -15,6 +15,10 @@ public class GISoldier extends Allied {
         super(player);
     }
 
+    private GISoldier(Player player, int defendTurns) {
+        super(player, defendTurns);
+    }
+
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(KirovAirship.class, RhinoTank.class);
     }
@@ -29,5 +33,9 @@ public class GISoldier extends Allied {
 
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(2);
+    }
+
+    public Unit clone() {
+        return new GISoldier(getPlayer(), getDefendTurns());
     }
 }
