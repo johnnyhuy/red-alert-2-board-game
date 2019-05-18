@@ -108,10 +108,20 @@ public class GameEngine {
     /**
      * Undo player turns.
      */
-    public void undoTurn() {
+    public boolean undoTurn() {
+        Player player = getTurn();
+
+        if (!player.getUndoStatus()) {
+            return false;
+        }
+
+        player.incrementUndoMoves();
+
         for (Player ignored : getPlayers()) {
             history.undo();
         }
+
+        return true;
     }
 
     /**
@@ -122,6 +132,7 @@ public class GameEngine {
      */
     public void moveUnit(Piece selectedPiece, Piece targetPiece) {
         history.backup();
+        getTurn().updateUndoStatus();
         targetPiece.setUnit(selectedPiece.getUnit());
         selectedPiece.setUnit(null);
         setSelectedPiece(null);
@@ -136,6 +147,7 @@ public class GameEngine {
      */
     public void defendUnit(Piece piece) {
         history.backup();
+        getTurn().updateUndoStatus();
         piece.getUnit().startDefending();
         setSelectedPiece(null);
         getNextTurn();
@@ -149,6 +161,7 @@ public class GameEngine {
      */
     public void attackUnit(Piece attackingPiece, Piece targetPiece) {
         history.backup();
+        getTurn().updateUndoStatus();
         targetPiece.setUnit(attackingPiece.getUnit());
         attackingPiece.setUnit(null);
         setSelectedPiece(null);
