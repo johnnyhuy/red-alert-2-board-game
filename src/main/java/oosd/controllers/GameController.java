@@ -1,16 +1,15 @@
 package oosd.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import oosd.models.GameEngine;
 import oosd.models.board.Piece;
 import oosd.views.BoardView;
-import oosd.views.components.BoardPane;
-import oosd.views.components.SidebarPane;
-import oosd.views.components.ToolbarPane;
-import oosd.views.components.WindowGridPane;
+import oosd.views.components.panes.BoardPane;
+import oosd.views.components.panes.SidebarPane;
+import oosd.views.components.panes.ToolbarPane;
+import oosd.views.components.panes.WindowGridPane;
 
 /**
  * GRASP: The controller
@@ -39,10 +38,6 @@ public class GameController extends Controller {
         this.gameEngine = gameEngine;
     }
 
-    @FXML protected void handleSubmitButtonAction(ActionEvent event) {
-        System.out.println("poop");
-    }
-
     @Override
     public void initialize() {
         boardView = new BoardView(this, gameEngine, windowGridPane, boardPane, sidebar, toolbar);
@@ -57,7 +52,7 @@ public class GameController extends Controller {
      * @param piece object
      */
     public void selectUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
-        gameEngine.setSelectedPiece(piece);
+        gameEngine.selectUnit(piece);
         boardView.selectUnit(selectedPiece, piece);
     }
 
@@ -69,26 +64,40 @@ public class GameController extends Controller {
      * @param piece object
      */
     public void moveUnit(Event event, Piece selectedPiece, Piece piece) {
-        piece.setUnit(selectedPiece.getUnit());
-        selectedPiece.setUnit(null);
-        gameEngine.setSelectedPiece(null);
-        gameEngine.getNextTurn();
-        gameEngine.updateDefendPieces();
+        gameEngine.moveUnit(selectedPiece, piece);
         boardView.moveUnit(selectedPiece, piece);
     }
 
+    /**
+     * Defend a given piece.
+     *
+     * @param event mouse event
+     * @param piece object
+     */
     public void defendUnit(MouseEvent event, Piece piece) {
-        piece.getUnit().startDefendCount();
-        gameEngine.setSelectedPiece(null);
-        gameEngine.getNextTurn();
+        gameEngine.defendUnit(piece);
         boardView.defendUnit(piece);
     }
 
+    /**
+     * Attack a given piece.
+     *
+     * @param mouseEvent    mouse event
+     * @param selectedPiece object
+     * @param piece         object
+     */
     public void attackUnit(MouseEvent mouseEvent, Piece selectedPiece, Piece piece) {
-        piece.setUnit(selectedPiece.getUnit());
-        selectedPiece.setUnit(null);
-        gameEngine.setSelectedPiece(null);
-        gameEngine.getNextTurn();
+        gameEngine.attackUnit(selectedPiece, piece);
         boardView.attackUnit(selectedPiece, piece);
+    }
+
+    /**
+     * Undo a move in the game.
+     *
+     * @param mouseEvent mouse event
+     */
+    public void undoMove(MouseEvent mouseEvent) {
+        gameEngine.undoTurn();
+        boardView.undoMove();
     }
 }

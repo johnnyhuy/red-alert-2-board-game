@@ -8,8 +8,19 @@ import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.units.Unit;
-import oosd.views.components.*;
+import oosd.views.components.images.DefendPieceImage;
+import oosd.views.components.panes.BoardPane;
+import oosd.views.components.panes.SidebarPane;
+import oosd.views.components.panes.ToolbarPane;
+import oosd.views.components.panes.WindowGridPane;
+import oosd.views.components.polygons.BackgroundPiecePolygon;
+import oosd.views.components.polygons.SelectionPiecePolygon;
+import oosd.views.components.polygons.UnitPiecePolygon;
 import oosd.views.factories.ViewComponentFactory;
+import oosd.views.handlers.SelectionPieceClickHandler;
+import oosd.views.handlers.SelectionPieceDragReleasedHandler;
+import oosd.views.handlers.UnitPieceClickHandler;
+import oosd.views.handlers.UnitPieceDragDetectedHandler;
 
 import java.util.HashMap;
 
@@ -27,15 +38,15 @@ public class BoardView implements View {
     private final HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
     private Pane windowGridPane;
     private final BoardPane boardPane;
-    private final GameController controller;
+    private final GameController gameController;
     private final ViewComponentFactory boardFactory;
     private GameEngine gameEngine;
     private SidebarPane sidebar;
     private ToolbarPane toolbar;
     private Text playerTurn;
 
-    public BoardView(GameController controller, GameEngine gameEngine, WindowGridPane windowGridPane, BoardPane boardPane, SidebarPane sidebar, ToolbarPane toolbar) {
-        this.controller = controller;
+    public BoardView(GameController gameController, GameEngine gameEngine, WindowGridPane windowGridPane, BoardPane boardPane, SidebarPane sidebar, ToolbarPane toolbar) {
+        this.gameController = gameController;
         this.gameEngine = gameEngine;
         this.windowGridPane = windowGridPane;
         this.boardPane = boardPane;
@@ -52,7 +63,8 @@ public class BoardView implements View {
 
     public void render() {
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
-        boardPane.createBoard(gameEngine, controller, unitPieces, selectionPieces, defendPieces, backgroundPieces);
+        boardPane.initialise(gameEngine, gameController, unitPieces, selectionPieces, defendPieces, backgroundPieces);
+        toolbar.initialise(gameEngine, gameController);
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
@@ -60,36 +72,35 @@ public class BoardView implements View {
             Piece piece = board.getPiece(column, row);
             Unit unit = piece.getUnit();
 
-            defendPieces.get(piece).setVisible(false);
-            selectionPieces.get(piece).setVisible(false);
+            defendPieces.get(piece).hide();
+            selectionPieces.get(piece).hide();
 
             if (exists(unit) && unit.getDefendStatus()) {
-                defendPieces.get(piece).setVisible(true);
+                defendPieces.get(piece).show();
             }
         });
 
-        selectionPieces.get(selectedPiece).setVisible(false);
-        unitPieces.get(selectedPiece).setVisible(false);
-        unitPieces.get(selectedPiece).setFill(null);
-        unitPieces.get(clickedPiece).setVisible(true);
+        selectionPieces.get(selectedPiece).hide();
+        unitPieces.get(selectedPiece).hide();
+        unitPieces.get(clickedPiece).show();
         unitPieces.get(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
         if (exists(selectedPiece)) {
-            selectionPieces.get(selectedPiece).setVisible(false);
+            selectionPieces.get(selectedPiece).hide();
 
             Unit unit = selectedPiece.getUnit();
             if (exists(unit)) {
                 for (Piece piece : unit.getUnitBehaviour().getValidMoves(gameEngine, selectedPiece)) {
-                    selectionPieces.get(piece).setVisible(false);
+                    selectionPieces.get(piece).hide();
                 }
             }
         }
 
         for (Piece piece : clickedPiece.getUnit().getUnitBehaviour().getValidMoves(gameEngine, clickedPiece)) {
-            selectionPieces.get(piece).setVisible(true);
+            selectionPieces.get(piece).show();
 
             Unit unit = piece.getUnit();
             if (exists(unit) && !unit.getPlayer().equals(gameEngine.getTurn())) {
@@ -103,20 +114,45 @@ public class BoardView implements View {
     }
 
     public void defendUnit(Piece piece) {
-        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).setVisible(false));
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
 
-        defendPieces.get(piece).setVisible(true);
+        defendPieces.get(piece).show();
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
     }
 
     public void attackUnit(Piece selectedPiece, Piece piece) {
-        board.apply((column, row) -> {
-            selectionPieces.get(board.getPiece(column, row)).setFill(null);
-            selectionPieces.get(board.getPiece(column, row)).setVisible(false);
-        });
+        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
 
-        unitPieces.get(selectedPiece).setFill(null);
+        unitPieces.get(selectedPiece).hide();
         unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
         playerTurn.setText("Player turn: " + gameEngine.getTurn().getPlayerName());
+    }
+
+    public void undoMove() {
+        board.apply((column, row) -> {
+            Piece piece = board.getPiece(column, row);
+            UnitPiecePolygon unitPiecePolygon = unitPieces.get(piece);
+            SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
+            Unit unit = piece.getUnit();
+
+            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
+            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(gameEngine, gameController, piece));
+            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(gameEngine, gameController, piece));
+            unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(gameEngine, gameController, piece, unitPiecePolygon));
+
+            if (exists(unit)) {
+                unitPiecePolygon.setUnitImage(unit);
+
+                if (unit.getDefendStatus()) {
+                    defendPieces.get(piece).show();
+                } else {
+                    defendPieces.get(piece).hide();
+                }
+            } else {
+                unitPiecePolygon.hide();
+            }
+
+            selectionPieces.get(piece).hide();
+        });
     }
 }

@@ -1,5 +1,5 @@
 package oosd.controllers;
 
-abstract class Controller {
+public abstract class Controller {
     abstract void initialize();
 }

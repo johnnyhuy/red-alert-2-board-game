@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.polygons;
 
 import javafx.scene.shape.Polygon;
 
@@ -18,5 +18,20 @@ public class HexagonPiecePolygon extends Polygon {
                 x, y + Hexagon.FULL_INCREMENT,
                 x - (Hexagon.SIZE / 2.0), y + Hexagon.HALF_INCREMENT
         );
+    }
+
+    /**
+     * Peek a' boo!
+     */
+    public void show() {
+        setVisible(true);
+    }
+
+    /**
+     * Hide the polygon.
+     */
+    public void hide() {
+        setFill(null);
+        setVisible(false);
     }
 }

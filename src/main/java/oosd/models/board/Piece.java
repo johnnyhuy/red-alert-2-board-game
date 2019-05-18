@@ -3,6 +3,10 @@ package oosd.models.board;
 import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.PieceContract;
 import oosd.models.units.Unit;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import static oosd.helpers.ObjectHelper.isNull;
 
 @ContractReference(PieceContract.class)
 public class Piece {
@@ -41,13 +45,43 @@ public class Piece {
      */
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Piece)) {
+        if (!(object instanceof Piece))
+            return false;
+        if (object == this)
+            return true;
+
+        Piece piece = (Piece) object;
+        return equals(piece);
+    }
+
+    /**
+     * Compare pieces.
+     *
+     * @param piece object
+     * @return whether the piece is truly equal
+     */
+    public boolean equals(Piece piece) {
+        if (isNull(piece)) {
             return false;
         }
 
-        Piece piece = (Piece) object;
+        return new EqualsBuilder()
+                .append(row, piece.getRow())
+                .append(column, piece.getColumn())
+                .isEquals();
+    }
 
-        return piece.getRow() == getRow() && piece.getColumn() == getColumn();
+    /**
+     * Produce a hash code for the object.
+     *
+     * @return hash code integer
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(row)
+                .append(column)
+                .toHashCode();
     }
 
     /**

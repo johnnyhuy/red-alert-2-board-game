@@ -16,6 +16,10 @@ public class GrizzlyTank extends Allied {
         super(player);
     }
 
+    private GrizzlyTank(Player player, int defendTurns) {
+        super(player, defendTurns);
+    }
+
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class);
     }
@@ -30,5 +34,9 @@ public class GrizzlyTank extends Allied {
 
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(2);
+    }
+
+    public Unit clone() {
+        return new GrizzlyTank(getPlayer(), getDefendTurns());
     }
 }

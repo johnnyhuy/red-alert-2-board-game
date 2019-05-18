@@ -5,10 +5,10 @@ import javafx.scene.paint.ImagePattern;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.views.View;
-import oosd.views.components.BackgroundPiecePolygon;
-import oosd.views.components.DefendPieceImage;
-import oosd.views.components.SelectionPiecePolygon;
-import oosd.views.components.UnitPiecePolygon;
+import oosd.views.components.images.DefendPieceImage;
+import oosd.views.components.polygons.BackgroundPiecePolygon;
+import oosd.views.components.polygons.SelectionPiecePolygon;
+import oosd.views.components.polygons.UnitPiecePolygon;
 
 import java.util.HashMap;
 

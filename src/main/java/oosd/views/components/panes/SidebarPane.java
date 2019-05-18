@@ -1,4 +1,4 @@
-package oosd.views.components;
+package oosd.views.components.panes;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;

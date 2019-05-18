@@ -2,11 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.text.Text?>
-<?import oosd.views.components.BoardPane?>
-<?import oosd.views.components.SidebarPane?>
-<?import oosd.views.components.ToolbarPane?>
-<?import oosd.views.components.WindowGridPane?>
+<?import oosd.views.components.panes.BoardPane?>
+<?import oosd.views.components.panes.SidebarPane?>
+<?import oosd.views.components.panes.ToolbarPane?>
+<?import oosd.views.components.panes.WindowGridPane?>
 <WindowGridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="windowGridPane">
     <center>
         <BoardPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" minHeight="850">
@@ -21,9 +22,18 @@
     <bottom>
         <ToolbarPane xmlns:fx="http://javafx.com/fxml/1" fx:id="toolbar" minHeight="50">
             <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
+                <Insets top="13" right="30" bottom="15" left="60"/>
             </padding>
-            <Button text="Defend" onAction="#handleSubmitButtonAction"/>
+            <Button fx:id="defendButton">
+                <tooltip>
+                    <Tooltip text="Defend piece"/>
+                </tooltip>
+            </Button>
+            <Button fx:id="undoButton">
+                <tooltip>
+                    <Tooltip text="Undo move"/>
+                </tooltip>
+            </Button>
         </ToolbarPane>
     </bottom>
 </WindowGridPane>
