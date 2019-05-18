@@ -14,6 +14,10 @@ public class Conscript extends Soviet {
         super(player);
     }
 
+    private Conscript(Player player, int defendTurns) {
+        super(player, defendTurns);
+    }
+
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class);
     }
@@ -28,5 +32,9 @@ public class Conscript extends Soviet {
 
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(1);
+    }
+
+    public Unit clone() {
+        return new Conscript(getPlayer(), getDefendTurns());
     }
 }

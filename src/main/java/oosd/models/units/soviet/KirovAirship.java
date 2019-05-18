@@ -15,6 +15,10 @@ public class KirovAirship extends Soviet {
         super(player);
     }
 
+    private KirovAirship(Player player, int defendTurns) {
+        super(player, defendTurns);
+    }
+
     public List<Class<? extends Unit>> getWinnables() {
         return Arrays.asList(GISoldier.class, GrizzlyTank.class);
     }
@@ -29,6 +33,10 @@ public class KirovAirship extends Soviet {
 
     public UnitBehaviour getUnitBehaviour() {
         return new LinearUnitBehaviour(5);
+    }
+
+    public Unit clone() {
+        return new KirovAirship(getPlayer(), getDefendTurns());
     }
 
     public int getDefaultDefendTurns() {
