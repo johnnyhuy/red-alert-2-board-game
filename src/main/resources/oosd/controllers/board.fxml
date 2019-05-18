@@ -21,10 +21,10 @@
     <bottom>
         <ToolbarPane xmlns:fx="http://javafx.com/fxml/1" fx:id="toolbar" minHeight="50">
             <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
+                <Insets top="13" right="30" bottom="15" left="60"/>
             </padding>
-            <Button text="Defend" fx:id="defendButton"/>
-            <Button text="Undo" fx:id="undoButton"/>
+            <Button fx:id="defendButton"/>
+            <Button fx:id="undoButton"/>
         </ToolbarPane>
     </bottom>
 </WindowGridPane>
