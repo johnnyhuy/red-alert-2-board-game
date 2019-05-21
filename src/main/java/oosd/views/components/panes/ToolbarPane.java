@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import oosd.controllers.GameController;
 import oosd.models.GameEngine;
 import oosd.views.components.images.ToolbarIcon;
+import oosd.views.handlers.DefendClickHandler;
 import oosd.views.handlers.UndoClickHandler;
 
 public class ToolbarPane extends HBox {
@@ -17,7 +18,7 @@ public class ToolbarPane extends HBox {
         undoButton.setOnMouseExited(event -> undoButton.setGraphic(new ToolbarIcon("undo")));
 
         Button defendButton = (Button) this.lookup("#defendButton");
-        defendButton.setOnMouseClicked(new UndoClickHandler(gameEngine, gameController));
+        defendButton.setOnMouseClicked(new DefendClickHandler(gameEngine, gameController));
         defendButton.setGraphic(new ToolbarIcon("shield"));
         defendButton.setOnMousePressed(event -> defendButton.setGraphic(new ToolbarIcon("shield_active")));
         defendButton.setOnMouseEntered(event -> defendButton.setGraphic(new ToolbarIcon("shield_hover")));
