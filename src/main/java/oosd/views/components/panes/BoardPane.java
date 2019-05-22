@@ -4,9 +4,9 @@ import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import oosd.controllers.GameController;
-import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.game.Engine;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.Hexagon;
@@ -20,8 +20,8 @@ import oosd.views.handlers.UnitPieceDragDetectedHandler;
 import java.util.HashMap;
 
 public class BoardPane extends StackPane {
-    public void initialise(GameEngine gameEngine, GameController gameController, HashMap<Piece, UnitPiecePolygon> unitPieces, HashMap<Piece, SelectionPiecePolygon> selectionPieces, HashMap<Piece, DefendPieceImage> defendPieces, HashMap<Piece, BackgroundPiecePolygon> backgroundPieces) {
-        Board board = gameEngine.getBoard();
+    public void initialise(Engine engine, GameController gameController, HashMap<Piece, UnitPiecePolygon> unitPieces, HashMap<Piece, SelectionPiecePolygon> selectionPieces, HashMap<Piece, DefendPieceImage> defendPieces, HashMap<Piece, BackgroundPiecePolygon> backgroundPieces) {
+        Board board = engine.getBoard();
         double x = 0;
         double y = 0;
         int pieceCount = 0;
@@ -49,10 +49,10 @@ public class BoardPane extends StackPane {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(gameEngine, gameController, piece));
-                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(gameEngine, gameController, piece));
-                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(gameEngine, gameController, piece));
-                unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(gameEngine, gameController, piece, unitPiecePolygon));
+                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece));
+                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece));
+                unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
                 group.getChildren().add(anchor);
 
