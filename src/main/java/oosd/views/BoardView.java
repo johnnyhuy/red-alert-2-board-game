@@ -58,11 +58,11 @@ public class BoardView implements View {
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
-        this.playerTurn = sidebar.getPlayerTurnText();
+
     }
 
     public void render() {
-        playerTurn.setText("Player turn: " + engine.getTurn().getPlayerName());
+        sidebar.initialise(engine);
         boardPane.initialise(engine, gameController, unitPieces, selectionPieces, defendPieces, backgroundPieces);
         toolbar.initialise(engine, gameController);
     }

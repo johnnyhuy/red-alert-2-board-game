@@ -2,6 +2,8 @@ package oosd.helpers;
 
 import java.util.List;
 
+import static oosd.helpers.ObjectHelper.isNull;
+
 /**
  * GRASP: pure fabrication
  * Static helper methods to manage lists.
@@ -26,6 +28,10 @@ public class ListHelper {
      * @return boolean
      */
     public static <T> boolean isNotEmpty(List<T> list) {
+        if (isNull(list)) {
+            return false;
+        }
+
         return list.size() > 0;
     }
 }
