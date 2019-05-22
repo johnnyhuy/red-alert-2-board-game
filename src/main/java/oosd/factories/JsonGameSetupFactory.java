@@ -5,9 +5,10 @@ import oosd.models.player.Player;
 
 import java.util.List;
 
-public class JsonGameSetupFactory extends GameSetupFactory {
-    public Board createBoard() {
-        return null;
+public class JsonGameSetupFactory implements GameSetupFactory {
+    @Override
+    public Board createBoard(int boardColumns, int boardRows) {return null;
+
     }
 
     @Override
