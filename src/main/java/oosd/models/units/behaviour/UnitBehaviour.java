@@ -1,7 +1,7 @@
 package oosd.models.units.behaviour;
 
-import oosd.models.GameEngine;
 import oosd.models.board.Piece;
+import oosd.models.game.Engine;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public abstract class UnitBehaviour {
      * @param piece used to validate against
      * @return list of valid pieces
      */
-    public abstract List<Piece> getValidMoves(GameEngine gameEngine, Piece piece);
+    public abstract List<Piece> getValidMoves(Engine engine, Piece piece);
 
     /**
      * Check whether the given piece is valid based on the selected piece.
@@ -24,5 +24,5 @@ public abstract class UnitBehaviour {
      * @param checkPiece used to check against the selected piece valid moves
      * @return whether the piece location is a valid move
      */
-    public abstract boolean isValidMove(GameEngine gameEngine, Piece checkPiece);
+    public abstract boolean isValidMove(Engine engine, Piece checkPiece);
 }

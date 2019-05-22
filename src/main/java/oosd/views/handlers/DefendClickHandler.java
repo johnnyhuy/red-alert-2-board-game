@@ -3,23 +3,23 @@ package oosd.views.handlers;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
-import oosd.models.GameEngine;
 import oosd.models.board.Piece;
+import oosd.models.game.Engine;
 
 import static oosd.helpers.ObjectHelper.isNull;
 
 public class DefendClickHandler implements EventHandler<MouseEvent> {
-    private GameEngine gameEngine;
+    private Engine engine;
     private GameController gameController;
 
-    public DefendClickHandler(GameEngine gameEngine, GameController gameController) {
-        this.gameEngine = gameEngine;
+    public DefendClickHandler(Engine engine, GameController gameController) {
+        this.engine = engine;
         this.gameController = gameController;
     }
 
     @Override
     public void handle(MouseEvent event) {
-        Piece selectedPiece = gameEngine.getSelectedPiece();
+        Piece selectedPiece = engine.getSelectedPiece();
 
         if (isNull(selectedPiece)) {
             return;
