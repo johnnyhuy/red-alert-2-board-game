@@ -4,7 +4,6 @@ import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
 import oosd.models.board.history.BoardHistory;
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ class BoardHistoryTest {
     void testUndoBoardHistoryCommand() {
         // Arrange
         Board board = new GameBoard(2, 2);
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
         BoardHistory command = new BoardHistory(board);
@@ -35,7 +34,7 @@ class BoardHistoryTest {
     void testUndoMoreThanBackup() {
         // Arrange
         Board board = new GameBoard(2, 2);
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
         BoardHistory command = new BoardHistory(board);

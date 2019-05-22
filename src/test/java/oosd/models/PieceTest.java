@@ -2,7 +2,6 @@ package oosd.models;
 
 import oosd.models.board.Piece;
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import org.junit.jupiter.api.Test;
@@ -45,7 +44,7 @@ class PieceTest {
     void testGetPiecePlayer() {
         // Arrange
         Piece piece = new Piece(1, 1);
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
         Unit unit = new GISoldier(player);
 
         // Act

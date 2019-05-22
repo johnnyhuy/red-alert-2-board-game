@@ -1,18 +1,18 @@
 package oosd.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.allied.GISoldier;
 import oosd.models.units.allied.GrizzlyTank;
 import oosd.models.units.allied.Harrier;
 import oosd.models.units.soviet.Conscript;
 import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class InMemoryGameSetupFactory implements GameSetupFactory {
     public Board createBoard(int boardColumns, int boardRows) {
@@ -21,11 +21,8 @@ public class InMemoryGameSetupFactory implements GameSetupFactory {
 
     @Override
     public List<Player> createPlayers(Board board) {
-        Team redTeam = new Team("Red");
-        Team blueTeam = new Team("Blue");
-
-        Player playerOne = new Player("Johnny Dave", redTeam);
-        Player playerTwo = new Player("Jane Doe", blueTeam);
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
 
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
 

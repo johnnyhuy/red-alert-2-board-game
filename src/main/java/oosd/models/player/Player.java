@@ -10,14 +10,12 @@ import java.util.List;
 @ContractReference(PlayerContract.class)
 public class Player {
     private String playerName;
-    private Team team;
     private List<Unit> units;
     private int undoMoves = 0;
     private boolean canUndo = true;
 
-    public Player(String playerName, Team team) {
+    public Player(String playerName) {
         this.playerName = playerName;
-        this.team = team;
         this.units = new ArrayList<>();
     }
 
@@ -28,15 +26,6 @@ public class Player {
      */
     public String getPlayerName() {
         return this.playerName;
-    }
-
-    /**
-     * Get the team of the player
-     *
-     * @return team of player
-     */
-    public Team getTeam() {
-        return this.team;
     }
 
     /**
@@ -73,7 +62,7 @@ public class Player {
 
         Player player = (Player) object;
 
-        return player.getTeam() == getTeam() && player.getPlayerName().equals(getPlayerName());
+        return player.getPlayerName().equals(getPlayerName());
     }
 
     public int getUndoMoves() {
