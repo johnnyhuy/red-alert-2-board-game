@@ -1,5 +1,6 @@
 package oosd.helpers;
 
+import java.util.Collection;
 import java.util.List;
 
 import static oosd.helpers.ObjectHelper.isNull;
@@ -27,7 +28,7 @@ public class ListHelper {
      * @param <T>  generic type
      * @return boolean
      */
-    public static <T> boolean isNotEmpty(List<T> list) {
+    public static <T> boolean isNotEmpty(Collection<T> list) {
         if (isNull(list)) {
             return false;
         }

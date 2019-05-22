@@ -3,7 +3,6 @@ package oosd.contracts.models;
 import de.vksi.c4j.Contract;
 import de.vksi.c4j.Target;
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.Unit;
 
 import static de.vksi.c4j.Condition.*;
@@ -13,8 +12,8 @@ public class PlayerContract extends Player {
     @Target
     private Player target;
 
-    public PlayerContract(String playerName, Team team) {
-        super(playerName, team);
+    public PlayerContract(String playerName) {
+        super(playerName);
 
         if (preCondition()) {
             assert !playerName.isEmpty();

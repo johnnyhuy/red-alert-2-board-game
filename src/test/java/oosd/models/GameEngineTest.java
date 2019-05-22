@@ -6,7 +6,6 @@ import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.models.game.GameEngine;
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import oosd.models.units.soviet.Conscript;
@@ -49,7 +48,7 @@ class GameEngineTest {
     @Test
     void testGetValidMoves() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
         Unit unit = new GISoldier(player);
         Board board = new GameBoard(2, 2);
         Engine engine = new GameEngine(board, new ArrayList<>());
@@ -68,7 +67,7 @@ class GameEngineTest {
         // Arrange
         Board board = new GameBoard(2, 2);
         List<Player> players = new ArrayList<>();
-        players.add(new Player("John Tester", new Team("Red")));
+        players.add(new Player("John Tester"));
         Engine engine = new GameEngine(board, players);
 
         // Act
@@ -81,8 +80,8 @@ class GameEngineTest {
     @Test
     void testDefendUnit() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
@@ -100,8 +99,8 @@ class GameEngineTest {
     @Test
     void testAttackUnit() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit attackingUnit = new GISoldier(playerOne);
@@ -123,8 +122,8 @@ class GameEngineTest {
     @Test
     void testSelectUnit() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
@@ -143,8 +142,8 @@ class GameEngineTest {
     @Test
     void testUndoTurnFromAllPlayers() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
@@ -171,8 +170,8 @@ class GameEngineTest {
     @Test
     void testUndoTurnWhenPlayersDefend() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
@@ -196,8 +195,8 @@ class GameEngineTest {
     @Test
     void testUndoMoreThanThreeTimesInARow() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
@@ -234,8 +233,8 @@ class GameEngineTest {
     @Test
     void testUndoStatusCannotBeTrueAfterSecondUndo() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
@@ -260,8 +259,8 @@ class GameEngineTest {
     @Test
     void testMoveUnitDefendStatusShouldGoAway() {
         // Arrange
-        Player playerOne = new Player("Johnny Dave", new Team("Red"));
-        Player playerTwo = new Player("Jane Doe", new Team("Blue"));
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);

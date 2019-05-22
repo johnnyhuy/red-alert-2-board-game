@@ -16,13 +16,11 @@ public class JsonGameSetupFactory implements GameSetupFactory {
 
     @Override
     public Board createBoard(int boardColumns, int boardRows) {
-        Board board = new GameBoard(gameSetupReader.getBoardColumns(), gameSetupReader.getBoardRows());
-
-        return board;
+        return new GameBoard(gameSetupReader.getBoardColumns(), gameSetupReader.getBoardRows());
     }
 
     @Override
     public List<Player> createPlayers(Board board) {
-        return null;
+        return gameSetupReader.getPlayers();
     }
 }

@@ -23,7 +23,7 @@ We have units that can move depending on their unit behaviour by clicking and mo
 
 ### Gameplay
 
-The game is predetermined by configs at runtime to layout players and pieces on the board.
+The game is predetermined by configs at runtime to layout players and pieces on the board. This is a free-for-all game where there are no teams.
 
 Game can only start with a **minimum of 2 players**. Players can select and move units once on a rotating turn.
 

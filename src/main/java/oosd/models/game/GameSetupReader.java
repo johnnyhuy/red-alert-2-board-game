@@ -1,9 +1,14 @@
 package oosd.models.game;
 
+import oosd.models.player.Player;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import static oosd.helpers.NumberHelper.toInt;
@@ -27,8 +32,25 @@ public class GameSetupReader {
         return getNumber("board_rows");
     }
 
+    public List<Player> getPlayers() {
+        Iterator iterator = getJsonArray("players").iterator();
+        ArrayList<Player> players = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+            JSONObject playerObject = (JSONObject) iterator.next();
+            String playerName = (String) playerObject.get("name");
+            players.add(new Player(playerName));
+        }
+
+        return players;
+    }
+
     private int getNumber(String field) {
         return toInt((Long) json.get(field));
+    }
+
+    private JSONArray getJsonArray(String field) {
+        return (JSONArray) json.get(field);
     }
 
     private JSONObject getJsonObject() {
