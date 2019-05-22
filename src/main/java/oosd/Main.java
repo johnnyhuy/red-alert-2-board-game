@@ -19,7 +19,7 @@ import java.util.List;
  * If a user were to change specific units on the board, they can change it here in the main class.
  */
 public class Main extends Application {
-    private boolean useJSONConfig = false;
+    private boolean useJSONConfig = true;
 
     /**
      * Boilerplate code for JavaFX.
@@ -35,10 +35,9 @@ public class Main extends Application {
      * Creates the initialized game logic and base UI objects at the start of the program.
      *
      * @param primaryStage JavaFX primary window
-     * @throws Exception if the startup dies
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         GameController gameController = new GameController(initializeGameEngine());
         GameWindow gameWindow = new GameWindow();
         gameWindow.render(primaryStage, gameController);

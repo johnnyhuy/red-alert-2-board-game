@@ -6,6 +6,8 @@ import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
 import java.util.Objects;
 
+import static oosd.helpers.NumberHelper.toInt;
+
 public class GameSetupReader {
     private JSONObject json;
 
@@ -14,11 +16,15 @@ public class GameSetupReader {
     }
 
     public int getBoardColumns() {
-        return (int) json.get("board_columns");
+        return getNumber("board_columns");
     }
 
     public int getBoardRows() {
-        return (int) json.get("board_rows");
+        return getNumber("board_rows");
+    }
+
+    private int getNumber(String field) {
+        return toInt((Long) json.get(field));
     }
 
     private JSONObject getJsonObject() {
@@ -30,5 +36,9 @@ public class GameSetupReader {
         }
 
         return new JSONObject();
+    }
+
+    public JSONObject getJson() {
+        return json;
     }
 }
