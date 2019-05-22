@@ -23,7 +23,7 @@ We have units that can move depending on their unit behaviour by clicking and mo
 
 ### Gameplay
 
-The game is predetermined by configs at runtime to layout players and pieces on the board. This is a free-for-all game where there are no teams.
+The game is predetermined by configs at runtime to layout players and pieces on the board. This is a free-for-all game where there are no teams to reduce game complexity and not needed scope.
 
 Game can only start with a **minimum of 2 players**. Players can select and move units once on a rotating turn.
 
@@ -54,7 +54,7 @@ Make sure you do not have any other gameBoard game copies on your system.
 - Right click on the top status menu `Run > Run Configurations...`
 - Create a `Maven Build` step with the following **goals**
 
-```$xslt
+```bash
 clean install exec:java
 ``` 
 
@@ -65,7 +65,7 @@ clean install exec:java
 - Right click on the top status menu `Run > Edit Configurations...`
 - Create a `Maven` step with the following `command line`
 
-```$xslt
+```bash
 clean install exec:java
 ``` 
 
