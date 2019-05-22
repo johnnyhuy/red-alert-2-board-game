@@ -1,4 +1,4 @@
-package oosd.models;
+package oosd.models.game;
 
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
@@ -12,7 +12,7 @@ import java.util.List;
 import static oosd.helpers.ListHelper.isNotEmpty;
 import static oosd.helpers.ObjectHelper.exists;
 
-public class GameEngine {
+public class GameEngine implements Engine {
     private final BoardHistory history;
     private Board board;
     private Piece selectedPiece;
@@ -32,20 +32,12 @@ public class GameEngine {
         }
     }
 
-    /**
-     * Get the game board.
-     *
-     * @return board that contains the game
-     */
+    @Override
     public Board getBoard() {
         return this.board;
     }
 
-    /**
-     * Get the selected piece user clicks.
-     *
-     * @return selected piece
-     */
+    @Override
     public Piece getSelectedPiece() {
         return selectedPiece;
     }
@@ -55,59 +47,16 @@ public class GameEngine {
      *
      * @param selectedPiece selected piece
      */
-    void setSelectedPiece(Piece selectedPiece) {
+    private void setSelectedPiece(Piece selectedPiece) {
         this.selectedPiece = selectedPiece;
     }
 
-    /**
-     * Get the players in the game.
-     *
-     * @return list of players in the game
-     */
-    List<Player> getPlayers() {
-        return this.players;
-    }
-
-    /**
-     * Get the turn of the game.
-     *
-     * @return a player in the turn
-     */
+    @Override
     public Player getTurn() {
         return this.turn;
     }
 
-    /**
-     * Get the next turn by going through the list sequentially.
-     *
-     * @return player in the turn
-     */
-    Player getNextTurn() {
-        if (!playersIterator.hasNext()) {
-            playersIterator = players.listIterator();
-        }
-
-        turn = playersIterator.next();
-
-        return turn;
-    }
-
-    /**
-     * Update defend statue pieces.
-     */
-    private void updateDefendPieces() {
-        board.apply((column, row) -> {
-            Unit unit = board.getPiece(column, row).getUnit();
-
-            if (exists(unit) && unit.getDefendStatus()) {
-                unit.decrementDefendTurns();
-            }
-        });
-    }
-
-    /**
-     * Undo player turns.
-     */
+    @Override
     public boolean undoTurn() {
         Player player = getTurn();
 
@@ -124,12 +73,7 @@ public class GameEngine {
         return true;
     }
 
-    /**
-     * Move the unit in the game.
-     *
-     * @param selectedPiece that wants to move
-     * @param targetPiece   to move to
-     */
+    @Override
     public void moveUnit(Piece selectedPiece, Piece targetPiece) {
         history.backup();
         getTurn().updateUndoStatus();
@@ -140,11 +84,7 @@ public class GameEngine {
         updateDefendPieces();
     }
 
-    /**
-     * Defend a unit in the game.
-     *
-     * @param piece to be defended
-     */
+    @Override
     public void defendUnit(Piece piece) {
         history.backup();
         getTurn().updateUndoStatus();
@@ -153,12 +93,7 @@ public class GameEngine {
         getNextTurn();
     }
 
-    /**
-     * Attack a given unit in the game.
-     *
-     * @param attackingPiece that want to attack the target piece
-     * @param targetPiece that will be attacked
-     */
+    @Override
     public void attackUnit(Piece attackingPiece, Piece targetPiece) {
         history.backup();
         getTurn().updateUndoStatus();
@@ -168,12 +103,41 @@ public class GameEngine {
         getNextTurn();
     }
 
-    /**
-     * Select a unit on the board.
-     *
-     * @param piece to be selected
-     */
+    @Override
     public void selectUnit(Piece piece) {
         setSelectedPiece(piece);
+    }
+
+    /**
+     * Get the next turn by going through the list sequentially.
+     */
+    private void getNextTurn() {
+        if (!playersIterator.hasNext()) {
+            playersIterator = players.listIterator();
+        }
+
+        turn = playersIterator.next();
+    }
+
+    /**
+     * Update defend statue pieces.
+     */
+    private void updateDefendPieces() {
+        board.apply((column, row) -> {
+            Unit unit = board.getPiece(column, row).getUnit();
+
+            if (exists(unit) && unit.getDefendStatus()) {
+                unit.decrementDefendTurns();
+            }
+        });
+    }
+
+    /**
+     * Get the players in the game.
+     *
+     * @return list of players in the game
+     */
+    private List<Player> getPlayers() {
+        return this.players;
     }
 }

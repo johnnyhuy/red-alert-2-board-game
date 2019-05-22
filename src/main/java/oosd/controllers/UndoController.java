@@ -1,7 +1,7 @@
 package oosd.controllers;
 
 import javafx.fxml.FXML;
-import oosd.models.GameEngine;
+import oosd.models.game.Engine;
 import oosd.views.components.panes.WindowGridPane;
 
 /**
@@ -11,13 +11,13 @@ import oosd.views.components.panes.WindowGridPane;
  * Cleanly separates the user interface (view) from the business objects (model)
  */
 public class UndoController extends Controller {
-    private final GameEngine gameEngine;
+    private final Engine engine;
 
     @FXML
     private WindowGridPane windowGridPane;
 
-    public UndoController(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public UndoController(Engine engine) {
+        this.engine = engine;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package oosd.models.units.behaviour;
 
-import oosd.models.GameEngine;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.game.Engine;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.enums.LinearDirections;
 
@@ -21,17 +21,17 @@ public class LinearUnitBehaviour extends UnitBehaviour {
     }
 
     @Override
-    public List<Piece> getValidMoves(GameEngine gameEngine, Piece piece) {
-        Board board = gameEngine.getBoard();
+    public List<Piece> getValidMoves(Engine engine, Piece piece) {
+        Board board = engine.getBoard();
 
         for (LinearDirections direction : LinearDirections.values()) {
-            validateDirection(gameEngine, piece, board, direction);
+            validateDirection(engine, piece, board, direction);
         }
 
         return validMoves;
     }
 
-    private void validateDirection(GameEngine gameEngine, Piece piece, Board board, LinearDirections direction) {
+    private void validateDirection(Engine engine, Piece piece, Board board, LinearDirections direction) {
         int columns = piece.getColumn();
         int rows = piece.getRow();
         int move = 1;
@@ -49,7 +49,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
 
             Unit unit = board.getPiece(columns, rows).getUnit();
             if (exists(unit)) {
-                if (unit.getPlayer().equals(gameEngine.getTurn()) || unit.getDefendStatus()) {
+                if (unit.getPlayer().equals(engine.getTurn()) || unit.getDefendStatus()) {
                     return;
                 } else {
                     enemyFound = true;
@@ -62,8 +62,8 @@ public class LinearUnitBehaviour extends UnitBehaviour {
     }
 
     @Override
-    public boolean isValidMove(GameEngine gameEngine, Piece checkPiece) {
-        for (Piece piece : getValidMoves(gameEngine, gameEngine.getSelectedPiece())) {
+    public boolean isValidMove(Engine engine, Piece checkPiece) {
+        for (Piece piece : getValidMoves(engine, engine.getSelectedPiece())) {
             if (piece.equals(checkPiece)) {
                 return true;
             }

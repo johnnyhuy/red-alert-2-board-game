@@ -3,24 +3,13 @@ package oosd;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import oosd.controllers.GameController;
-import oosd.models.GameEngine;
 import oosd.factories.InMemoryGameSetupFactory;
 import oosd.factories.JsonGameSetupFactory;
 import oosd.models.board.Board;
-import oosd.models.board.GameBoard;
+import oosd.models.game.Engine;
+import oosd.models.game.GameEngine;
 import oosd.models.player.Player;
-import oosd.views.View;
-import oosd.models.player.Team;
-import oosd.models.units.allied.GISoldier;
-import oosd.models.units.allied.GrizzlyTank;
-import oosd.models.units.allied.Harrier;
-import oosd.models.units.soviet.Conscript;
-import oosd.models.units.soviet.KirovAirship;
-import oosd.models.units.soviet.RhinoTank;
 import oosd.views.components.windows.GameWindow;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import java.util.List;
 
@@ -60,7 +49,7 @@ public class Main extends Application {
      *
      * @return the game engine
      */
-    private GameEngine initializeGameEngine() {
+    private Engine initializeGameEngine() {
         int boardRows = 10;
         int boardColumns = 10;
 

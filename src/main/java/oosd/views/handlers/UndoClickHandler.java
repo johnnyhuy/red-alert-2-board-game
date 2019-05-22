@@ -3,20 +3,20 @@ package oosd.views.handlers;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
-import oosd.models.GameEngine;
+import oosd.models.game.Engine;
 
 public class UndoClickHandler implements EventHandler<MouseEvent> {
-    private GameEngine gameEngine;
+    private Engine engine;
     private GameController gameController;
 
-    public UndoClickHandler(GameEngine gameEngine, GameController gameController) {
-        this.gameEngine = gameEngine;
+    public UndoClickHandler(Engine engine, GameController gameController) {
+        this.engine = engine;
         this.gameController = gameController;
     }
 
     @Override
     public void handle(MouseEvent event) {
-        if (!gameEngine.getTurn().getUndoStatus()) {
+        if (!engine.getTurn().getUndoStatus()) {
             return;
         }
 

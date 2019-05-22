@@ -3,8 +3,8 @@ package oosd.controllers;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import oosd.models.GameEngine;
 import oosd.models.board.Piece;
+import oosd.models.game.Engine;
 import oosd.views.BoardView;
 import oosd.views.components.panes.BoardPane;
 import oosd.views.components.panes.SidebarPane;
@@ -18,7 +18,7 @@ import oosd.views.components.panes.WindowGridPane;
  * Cleanly separates the user interface (view) from the business objects (model)
  */
 public class GameController extends Controller {
-    private final GameEngine gameEngine;
+    private final Engine engine;
 
     @FXML
     private WindowGridPane windowGridPane;
@@ -34,13 +34,13 @@ public class GameController extends Controller {
 
     private BoardView boardView;
 
-    public GameController(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public GameController(Engine engine) {
+        this.engine = engine;
     }
 
     @Override
     public void initialize() {
-        boardView = new BoardView(this, gameEngine, windowGridPane, boardPane, sidebar, toolbar);
+        boardView = new BoardView(this, engine, windowGridPane, boardPane, sidebar, toolbar);
         boardView.render();
     }
 
@@ -52,7 +52,7 @@ public class GameController extends Controller {
      * @param piece object
      */
     public void selectUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
-        gameEngine.selectUnit(piece);
+        engine.selectUnit(piece);
         boardView.selectUnit(selectedPiece, piece);
     }
 
@@ -64,7 +64,7 @@ public class GameController extends Controller {
      * @param piece object
      */
     public void moveUnit(Event event, Piece selectedPiece, Piece piece) {
-        gameEngine.moveUnit(selectedPiece, piece);
+        engine.moveUnit(selectedPiece, piece);
         boardView.moveUnit(selectedPiece, piece);
     }
 
@@ -75,7 +75,7 @@ public class GameController extends Controller {
      * @param piece object
      */
     public void defendUnit(MouseEvent event, Piece piece) {
-        gameEngine.defendUnit(piece);
+        engine.defendUnit(piece);
         boardView.defendUnit(piece);
     }
 
@@ -87,7 +87,7 @@ public class GameController extends Controller {
      * @param piece         object
      */
     public void attackUnit(MouseEvent mouseEvent, Piece selectedPiece, Piece piece) {
-        gameEngine.attackUnit(selectedPiece, piece);
+        engine.attackUnit(selectedPiece, piece);
         boardView.attackUnit(selectedPiece, piece);
     }
 
@@ -97,7 +97,7 @@ public class GameController extends Controller {
      * @param mouseEvent mouse event
      */
     public void undoMove(MouseEvent mouseEvent) {
-        gameEngine.undoTurn();
+        engine.undoTurn();
         boardView.undoMove();
     }
 }
