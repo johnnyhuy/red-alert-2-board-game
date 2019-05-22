@@ -8,6 +8,10 @@ import java.util.Objects;
 
 import static oosd.helpers.NumberHelper.toInt;
 
+/**
+ * Design pattern: facade pattern used here to abstract the JSON logic
+ * to fetch game setup details such as board sizes.
+ */
 public class GameSetupReader {
     private JSONObject json;
 
