@@ -1,7 +1,6 @@
 package oosd.models;
 
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import oosd.models.units.allied.GrizzlyTank;
@@ -19,7 +18,7 @@ class UnitTest {
     @Test
     void testCreateZombat() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
 
         // Act
         Unit unit = new KirovAirship(player);
@@ -32,7 +31,7 @@ class UnitTest {
     @Test
     void testCreateTank() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
 
         // Act
         Unit unit = new GrizzlyTank(player);
@@ -45,7 +44,7 @@ class UnitTest {
     @Test
     void testCreateScoutZombie() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
 
         // Act
         Unit unit = new RhinoTank(player);
@@ -58,7 +57,7 @@ class UnitTest {
     @Test
     void testCreatePlane() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
 
         // Act
         Unit unit = new Harrier(player);
@@ -71,7 +70,7 @@ class UnitTest {
     @Test
     void testCreateJuggernautZombie() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
 
         // Act
         Unit unit = new Conscript(player);
@@ -84,7 +83,7 @@ class UnitTest {
     @Test
     void testCreateSoldier() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
 
         // Act
         Unit unit = new GISoldier(player);
@@ -98,7 +97,7 @@ class UnitTest {
     void testUnitGetPlayer() {
         // Arrange
         final String playerName = "John Tester";
-        Player player = new Player(playerName, new Team("Red"));
+        Player player = new Player(playerName);
 
         // Act
         Unit unit = new GISoldier(player);
@@ -112,7 +111,7 @@ class UnitTest {
     @Test
     void testWinnableUnits() {
         // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
+        Player player = new Player("Jane Doe");
         Unit unit = new GISoldier(player);
 
         // Act
@@ -127,7 +126,7 @@ class UnitTest {
     @Test
     void testUnitCaptured() {
         // Arrange
-        Player player = new Player("Jane Doe", new Team("Red"));
+        Player player = new Player("Jane Doe");
         Unit unit = new GISoldier(player);
         Unit otherUnit = new GISoldier(player);
 

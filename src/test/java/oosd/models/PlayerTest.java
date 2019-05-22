@@ -1,7 +1,6 @@
 package oosd.models;
 
 import oosd.models.player.Player;
-import oosd.models.player.Team;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import oosd.models.units.soviet.KirovAirship;
@@ -17,35 +16,19 @@ class PlayerTest {
     void testCreatePlayer() {
         // Arrange
         String playerName = "John Tester";
-        Team team = new Team("Red");
 
         // Act
-        Player player = new Player(playerName, team);
+        Player player = new Player(playerName);
 
         // Assert
         assertNotNull(player);
         assertEquals(playerName, player.getPlayerName());
-        assertEquals(team, player.getTeam());
-    }
-
-    @Test
-    void testGetPlayerTeam() {
-        // Arrange
-        String playerName = "John Tester";
-        Team team = new Team("Red");
-
-        // Act
-        Player player = new Player(playerName, team);
-
-        // Assert
-        assertNotNull(player.getTeam());
-        assertEquals(team, player.getTeam());
     }
 
     @Test
     void testPlayerGetUnits() {
         // Arrange
-        Player player = new Player("John Tester", new Team("Red"));
+        Player player = new Player("John Tester");
         new GISoldier(player);
         new KirovAirship(player);
 
@@ -60,29 +43,23 @@ class PlayerTest {
     @Test
     void testComparePlayers() {
         // Arrange
-        Team redTeam = new Team("Red");
-        Team blueTeam = new Team("Blue");
-        Team cyanTeam = new Team("Cyan");
-        Player firstPlayer = new Player("John Tester", redTeam);
-        Player secondPlayer = new Player("Jane Tester", blueTeam);
-        Player thirdPlayer = new Player("John Tester", cyanTeam);
-        Player forthPlayer = new Player("John Tester", redTeam);
+        Player firstPlayer = new Player("John Tester");
+        Player secondPlayer = new Player("John Tester");
+        Player thirdPlayer = new Player("Wick John");
 
         // Act
-        boolean differentPlayer = firstPlayer.equals(secondPlayer);
-        boolean sameNameDifferentTeam = firstPlayer.equals(thirdPlayer);
-        boolean sameNameAndTeam = firstPlayer.equals(forthPlayer);
+        boolean samePlayerName = firstPlayer.equals(secondPlayer);
+        boolean differentPlayerName = firstPlayer.equals(thirdPlayer);
 
         // Assert
-        assertFalse(differentPlayer);
-        assertFalse(sameNameDifferentTeam);
-        assertTrue(sameNameAndTeam);
+        assertTrue(samePlayerName);
+        assertFalse(differentPlayerName);
     }
 
     @Test
     void testPlayerNameShouldNotBeEmpty() {
         // Act
-        Executable run = () -> new Player("", new Team("Team"));
+        Executable run = () -> new Player("");
 
         // Assert
         assertThrows(AssertionError.class, run);
@@ -91,7 +68,7 @@ class PlayerTest {
     @Test
     void testPlayersShouldNotHaveMoreThan20Units() {
         // Arrange
-        Player player = new Player("John Doe", new Team("Team"));
+        Player player = new Player("John Doe");
 
         for (int i = 0; i < 20; i++) {
             // Kirov reporting!

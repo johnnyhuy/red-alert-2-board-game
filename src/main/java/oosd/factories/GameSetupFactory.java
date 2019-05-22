@@ -1,11 +1,25 @@
 package oosd.factories;
 
-import java.util.List;
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 
-public interface GameSetupFactory
-{
-	Board createBoard(int boardColumns, int boardRows);
-	List<Player> createPlayers(Board board);
+import java.util.List;
+
+public interface GameSetupFactory {
+    /**
+     * Setup the board.
+     *
+     * @param boardColumns columns
+     * @param boardRows    rows
+     * @return a board
+     */
+    Board createBoard(int boardColumns, int boardRows);
+
+    /**
+     * Create players to the game
+     *
+     * @param board to be applied to
+     * @return list of players
+     */
+    List<Player> createPlayers(Board board);
 }
