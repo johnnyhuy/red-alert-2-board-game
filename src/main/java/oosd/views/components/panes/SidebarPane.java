@@ -8,7 +8,7 @@ import oosd.models.player.Player;
 import static oosd.helpers.ObjectHelper.exists;
 
 public class SidebarPane extends Pane {
-    private Text getPlayerTurnText() {
+    public Text getPlayerTurnText() {
         return (Text) this.lookup("#playerTurn");
     }
 
@@ -17,7 +17,7 @@ public class SidebarPane extends Pane {
         Text playerTurn = getPlayerTurnText();
 
         if (exists(player)) {
-            playerTurn.setText(player.getPlayerName());
+            playerTurn.setText("Player turn: " + player.getPlayerName());
         }
     }
 }
