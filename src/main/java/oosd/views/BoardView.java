@@ -36,7 +36,6 @@ public class BoardView implements View {
     private final HashMap<Piece, UnitPiecePolygon> unitPieces;
     private final HashMap<Piece, DefendPieceImage> defendPieces;
     private final HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
-    private Pane windowGridPane;
     private final BoardPane boardPane;
     private final GameController gameController;
     private final ViewComponentFactory boardFactory;
@@ -45,14 +44,14 @@ public class BoardView implements View {
     private ToolbarPane toolbar;
     private Text playerTurn;
 
-    public BoardView(GameController gameController, Engine engine, WindowGridPane windowGridPane, BoardPane boardPane, SidebarPane sidebar, ToolbarPane toolbar) {
+    public BoardView(GameController gameController, Engine engine, BoardPane boardPane, SidebarPane sidebar, ToolbarPane toolbar) {
         this.gameController = gameController;
         this.engine = engine;
-        this.windowGridPane = windowGridPane;
         this.boardPane = boardPane;
         this.sidebar = sidebar;
         this.toolbar = toolbar;
         this.board = engine.getBoard();
+        this.playerTurn = sidebar.getPlayerTurnText();
         this.boardFactory = new ViewComponentFactory(board);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();

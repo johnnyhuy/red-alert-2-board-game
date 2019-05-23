@@ -14,8 +14,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
-import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.concurrent.Callable;
 
 import static oosd.helpers.NumberHelper.toInt;
 import static oosd.helpers.ObjectHelper.isNull;
@@ -24,21 +24,11 @@ import static oosd.helpers.ObjectHelper.isNull;
  * Design pattern: facade pattern used here to abstract the JSON logic
  * to fetch game setup details such as board sizes.
  */
-public class GameSetupReader {
+public class JsonGameSetupReader {
     private JSONObject root;
 
-    private Map<String, String> unitMap;
-
-    public GameSetupReader() {
+    public JsonGameSetupReader() {
         root = getJsonObject();
-        unitMap = Map.of(
-            "conscript", Conscript.class.getName(),
-            "kirov_airship", KirovAirship.class.getName(),
-            "rhino_tank", RhinoTank.class.getName(),
-            "gi_soldier", GISoldier.class.getName(),
-            "grizzly_tank", GrizzlyTank.class.getName(),
-            "harrier", Harrier.class.getName()
-        );
     }
 
     public int getBoardColumns() {
@@ -58,46 +48,52 @@ public class GameSetupReader {
             String playerName = getString(playerObject, "name");
             Player player = new Player(playerName);
 
-            for (Unit unit : getUnits(playerObject, board, player))
-                players.add(player);
+            players.add(player);
+            setupUnits(playerObject, board, player);
         }
 
         return players;
     }
 
-    private List<Unit> getUnits(JSONObject playerObject, Board board, Player player) {
-        Class<?> className;
-
+    private void setupUnits(JSONObject playerObject, Board board, Player player) {
         for (Object unitObject : getJsonArray(playerObject, "units")) {
-            JSONObject unit = (JSONObject) unitObject;
+            JSONObject playerUnit = (JSONObject) unitObject;
+            Map<String, Callable<Unit>> unitMap = getUnitMap(player);
 
             for (String unitName : unitMap.keySet()) {
-                JSONArray unitLocations = (JSONArray) unit.get(unitName);
+                JSONArray unitLocations = (JSONArray) playerUnit.get(unitName);
 
                 if (isNull(unitLocations)) {
                     continue;
                 }
 
-                for (Object unitLocationObject : unitLocations) {
-                    JSONObject unitLocation = (JSONObject) unitLocationObject;
-                    int column = Integer.parseInt((String) unitLocation.get("column"));
-                    int row = Integer.parseInt((String) unitLocation.get("row"));
+                try {
+                    Unit newUnit = unitMap.get(unitName).call();
 
-                    try {
-                        className = Class.forName(unitMap.get(unitName));
-                        Constructor<?> constructor = className.getConstructor(Player.class);
-                        Object object = constructor.newInstance(player);
-                        board.getPiece(column, row).setUnit(object);
-                    } catch (Exception ignored) {
-                        return new ArrayList<>();
+                    for (Object unitLocationObject : unitLocations) {
+                        JSONObject unitLocation = (JSONObject) unitLocationObject;
+                        int column = Integer.parseInt((String) unitLocation.get("column"));
+                        int row = Integer.parseInt((String) unitLocation.get("row"));
+
+                        board.getPiece(column, row).setUnit(newUnit);
                     }
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
             }
         }
 
-        return new ArrayList<>();
+    }
+
+    private Map<String, Callable<Unit>> getUnitMap(Player player) {
+        return Map.of(
+            "conscript", () -> new Conscript(player),
+            "kirov_airship", () -> new KirovAirship(player),
+            "rhino_tank", () -> new RhinoTank(player),
+            "gi_soldier", () -> new GISoldier(player),
+            "grizzly_tank", () -> new GrizzlyTank(player),
+            "harrier", () -> new Harrier(player)
+        );
     }
 
     private int getNumber(String field) {

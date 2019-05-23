@@ -40,7 +40,7 @@ public class GameController extends Controller {
 
     @Override
     public void initialize() {
-        boardView = new BoardView(this, engine, windowGridPane, boardPane, sidebar, toolbar);
+        boardView = new BoardView(this, engine, boardPane, sidebar, toolbar);
         boardView.render();
     }
 
