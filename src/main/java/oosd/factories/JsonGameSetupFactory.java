@@ -21,6 +21,6 @@ public class JsonGameSetupFactory implements GameSetupFactory {
 
     @Override
     public List<Player> createPlayers(Board board) {
-        return gameSetupReader.getPlayers();
+        return gameSetupReader.getPlayers(board);
     }
 }
