@@ -14,6 +14,7 @@ import oosd.views.WelcomeView;
  */
 public class GameController extends Controller {
     private final Engine engine;
+    private WelcomeView welcomeView;
     private Stage primaryStage;
     private BoardView boardView;
 
@@ -27,8 +28,7 @@ public class GameController extends Controller {
      */
     public void start() {
         boardView = new BoardView(this, engine, primaryStage);
-
-        WelcomeView welcomeView = new WelcomeView();
+        welcomeView = new WelcomeView();
         welcomeView.welcome();
     }
 

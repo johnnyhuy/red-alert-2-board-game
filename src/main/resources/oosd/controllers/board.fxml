@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import oosd.views.components.panes.*?>
@@ -30,12 +29,12 @@
             <padding>
                 <Insets top="13" right="30" bottom="15" left="60"/>
             </padding>
-            <Button fx:id="defendButton">
+            <Button fx:id="defendButton" styleClass="toolbar-button">
                 <tooltip>
                     <Tooltip text="Defend piece"/>
                 </tooltip>
             </Button>
-            <Button fx:id="undoButton">
+            <Button fx:id="undoButton" styleClass="toolbar-button">
                 <tooltip>
                     <Tooltip text="Undo move"/>
                 </tooltip>

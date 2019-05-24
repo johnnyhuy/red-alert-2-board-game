@@ -26,23 +26,23 @@ public class GameWindowPane extends BorderPane {
 
         FXMLLoader loader = new FXMLLoader(Controller.class.getResource("board.fxml"));
         loader.setController(this);
+        loader.setRoot(this);
 
         try {
-            loader.setRoot(this);
             loader.load();
-
-            Scene content = new Scene(this, 1200, 900);
-            content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(styles)).toString());
-
-            primaryStage.setScene(content);
-            primaryStage.setTitle(windowTitle);
-            primaryStage.setResizable(false);
-            primaryStage.getIcons().add(new Image(View.class.getResource(windowIcon).toString()));
-            primaryStage.show();
         } catch (Exception exception) {
             ErrorAlert errorAlert = new ErrorAlert();
             errorAlert.exit();
         }
+
+        Scene content = new Scene(this, 1200, 900);
+        content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(styles)).toString());
+
+        primaryStage.setScene(content);
+        primaryStage.setTitle(windowTitle);
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image(View.class.getResource(windowIcon).toString()));
+        primaryStage.show();
     }
 
     public ToolbarPane getToolbar() {

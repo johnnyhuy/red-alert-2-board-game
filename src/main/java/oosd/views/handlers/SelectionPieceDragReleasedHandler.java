@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
+import oosd.views.components.panes.SidebarPane;
 
 import static oosd.helpers.ObjectHelper.exists;
 
@@ -12,11 +13,13 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
     private Engine engine;
     private GameController gameController;
     private Piece piece;
+    private SidebarPane sidebar;
 
-    public SelectionPieceDragReleasedHandler(Engine engine, GameController gameController, Piece piece) {
+    public SelectionPieceDragReleasedHandler(Engine engine, GameController gameController, Piece piece, SidebarPane sidebar) {
         this.engine = engine;
         this.gameController = gameController;
         this.piece = piece;
+        this.sidebar = sidebar;
     }
 
     @Override
@@ -32,5 +35,7 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
         } else if (isEnemyUnit && !isDefensive && isValidMove) {
             gameController.attackUnit(selectedPiece, piece);
         }
+
+        sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));
     }
 }
