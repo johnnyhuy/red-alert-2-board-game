@@ -1,10 +1,13 @@
 package oosd.models.player;
 
+import de.vksi.c4j.ContractReference;
+import oosd.contracts.models.PlayerContract;
 import oosd.models.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ContractReference(PlayerContract.class)
 public class Player {
     private String playerName;
     private List<Unit> units;
