@@ -2,10 +2,12 @@ package oosd.models.units.soviet;
 
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.allied.GrizzlyTank;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class RhinoTank extends Soviet {
@@ -18,7 +20,7 @@ public class RhinoTank extends Soviet {
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Collections.singletonList(KirovAirship.class);
+        return Arrays.asList(GISoldier.class, GrizzlyTank.class);
     }
 
     public String getName() {

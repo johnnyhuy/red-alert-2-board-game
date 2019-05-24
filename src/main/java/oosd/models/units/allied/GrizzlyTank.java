@@ -5,7 +5,6 @@ import oosd.models.units.Unit;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
 import oosd.models.units.soviet.Conscript;
-import oosd.models.units.soviet.KirovAirship;
 import oosd.models.units.soviet.RhinoTank;
 
 import java.util.Arrays;
@@ -21,7 +20,7 @@ public class GrizzlyTank extends Allied {
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class);
+        return Arrays.asList(RhinoTank.class, Conscript.class);
     }
 
     public String getName() {

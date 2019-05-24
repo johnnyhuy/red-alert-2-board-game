@@ -191,4 +191,20 @@ public abstract class Unit {
                 .append(getName())
                 .toHashCode();
     }
+
+    /**
+     * Compare whether the unit is winnable against another.
+     *
+     * @param otherUnit to compare
+     * @return is winnable
+     */
+    public boolean isWinnable(Unit otherUnit) {
+        for (Class<? extends Unit> winnable : getWinnables()) {
+            if (winnable.equals(otherUnit.getClass())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

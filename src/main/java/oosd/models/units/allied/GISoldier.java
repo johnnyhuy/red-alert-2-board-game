@@ -4,10 +4,9 @@ import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
-import oosd.models.units.soviet.KirovAirship;
-import oosd.models.units.soviet.RhinoTank;
+import oosd.models.units.soviet.Conscript;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GISoldier extends Allied {
@@ -20,7 +19,7 @@ public class GISoldier extends Allied {
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class);
+        return Collections.singletonList(Conscript.class);
     }
 
     public String getName() {
