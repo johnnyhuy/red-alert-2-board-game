@@ -6,7 +6,7 @@ import oosd.models.units.allied.GISoldier;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Conscript extends Soviet {
@@ -19,7 +19,7 @@ public class Conscript extends Soviet {
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class);
+        return Collections.singletonList(GISoldier.class);
     }
 
     public String getName() {

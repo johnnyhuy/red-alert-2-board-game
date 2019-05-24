@@ -118,9 +118,8 @@ class UnitTest {
         List<Class<? extends Unit>> winnables = unit.getWinnables();
 
         // Assert
-        assertTrue(winnables.contains(KirovAirship.class));
-        assertTrue(winnables.contains(RhinoTank.class));
-        assertFalse(winnables.contains(GISoldier.class));
+        assertFalse(winnables.contains(KirovAirship.class));
+        assertTrue(winnables.contains(Conscript.class));
     }
 
     @Test
@@ -136,5 +135,33 @@ class UnitTest {
         // Assert
         assertTrue(unit.getCaptured());
         assertFalse(otherUnit.getCaptured());
+    }
+
+    @Test
+    void testIsWinnable() {
+        // Arrange
+        Player player = new Player("Jane Doe");
+        Unit unit = new GISoldier(player);
+        Unit otherUnit = new Conscript(player);
+
+        // Act
+        boolean isWinnable = unit.isWinnable(otherUnit);
+
+        // Assert
+        assertTrue(isWinnable);
+    }
+
+    @Test
+    void testIsNotWinnable() {
+        // Arrange
+        Player player = new Player("Jane Doe");
+        Unit unit = new GISoldier(player);
+        Unit otherUnit = new RhinoTank(player);
+
+        // Act
+        boolean isWinnable = unit.isWinnable(otherUnit);
+
+        // Assert
+        assertFalse(isWinnable);
     }
 }

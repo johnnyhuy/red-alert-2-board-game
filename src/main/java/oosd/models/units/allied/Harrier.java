@@ -21,7 +21,7 @@ public class Harrier extends Allied {
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class, GrizzlyTank.class);
+        return Arrays.asList(KirovAirship.class, RhinoTank.class, Conscript.class);
     }
 
     public String getName() {
