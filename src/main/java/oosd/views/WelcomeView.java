@@ -7,10 +7,9 @@ import oosd.views.components.panes.WelcomeWindowPane;
  * The view should only be responsible for managing the user interface (e.g. interacting with the JavaFX library)
  */
 public class WelcomeView implements View {
-    public WelcomeView() {
-    }
+    private WelcomeWindowPane welcomeWindowPane;
 
     public void welcome() {
-        new WelcomeWindowPane();
+        welcomeWindowPane = new WelcomeWindowPane();
     }
 }

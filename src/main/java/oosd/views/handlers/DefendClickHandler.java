@@ -25,6 +25,6 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        gameController.defendUnit(event, selectedPiece);
+        gameController.defendUnit(selectedPiece);
     }
 }
