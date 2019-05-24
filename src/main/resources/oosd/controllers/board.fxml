@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import oosd.views.components.panes.*?>
-<fx:root xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" type="oosd.views.components.panes.WindowGridPane"
+<fx:root xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" type="GameWindowPane"
          xmlns="http://javafx.com/javafx/8">
     <center>
         <BoardPane xmlns:fx="http://javafx.com/fxml/1" fx:id="boardPane" minHeight="850">

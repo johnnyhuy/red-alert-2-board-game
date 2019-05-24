@@ -1,19 +1,13 @@
 package oosd.controllers;
 
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.views.BoardView;
-import oosd.views.View;
-import oosd.views.components.panes.WindowGridPane;
-
-import java.util.Objects;
+import oosd.views.WelcomeView;
+import oosd.views.components.panes.WelcomeWindowPane;
 
 /**
  * GRASP: The controller
@@ -25,49 +19,18 @@ public class GameController extends Controller {
     private final Engine engine;
     private Stage primaryStage;
     private BoardView boardView;
-    private WindowGridPane windowGridPane;
+    private WelcomeWindowPane welcomeWindowPane;
 
     public GameController(Engine engine, Stage primaryStage) {
         this.engine = engine;
         this.primaryStage = primaryStage;
     }
 
-    @Override
-    public void initialize() {
-        boardView = new BoardView(this, engine, windowGridPane);
-        boardView.render();
-    }
-
     public void start() {
-        final String windowTitle = "Red Alert 2 Board Game";
-        final String windowIcon = "allied.png";
-        final String styles = "style/main.css";
+        boardView = new BoardView(this, engine, primaryStage);
 
-        windowGridPane = new WindowGridPane();
-        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("board.fxml"));
-        loader.setController(this);
-
-        try {
-            loader.setRoot(windowGridPane);
-            loader.load();
-
-            Scene content = new Scene(windowGridPane, 1200, 900);
-            content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(styles)).toString());
-
-            primaryStage.setScene(content);
-            primaryStage.setTitle(windowTitle);
-            primaryStage.setResizable(false);
-            primaryStage.getIcons().add(new Image(View.class.getResource(windowIcon).toString()));
-            primaryStage.show();
-        } catch (Exception exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Game error");
-            alert.setHeaderText("Whoops! Game crashed...");
-            alert.setContentText("I can't seem to load the game window so I'm going to die now :(");
-            alert.showAndWait();
-
-            System.exit(1);
-        }
+        WelcomeView welcomeView = new WelcomeView();
+        welcomeView.welcome();
     }
 
     /**

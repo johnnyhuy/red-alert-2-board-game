@@ -2,6 +2,7 @@ package oosd.views;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
@@ -9,9 +10,9 @@ import oosd.models.game.Engine;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.panes.BoardPane;
+import oosd.views.components.panes.GameWindowPane;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
-import oosd.views.components.panes.WindowGridPane;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
@@ -35,20 +36,19 @@ public class BoardView implements View {
     private final HashMap<Piece, UnitPiecePolygon> unitPieces;
     private final HashMap<Piece, DefendPieceImage> defendPieces;
     private final HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
-    private final BoardPane boardPane;
     private final GameController gameController;
     private final ViewComponentFactory boardFactory;
     private Engine engine;
-    private SidebarPane sidebar;
-    private ToolbarPane toolbar;
     private Text playerTurn;
 
-    public BoardView(GameController gameController, Engine engine, WindowGridPane gameWindow) {
+    public BoardView(GameController gameController, Engine engine, Stage primaryStage) {
+        GameWindowPane gameWindowPane = new GameWindowPane(primaryStage);
+        BoardPane boardPane = gameWindowPane.getBoardPane();
+        SidebarPane sidebar = gameWindowPane.getSidebar();
+        ToolbarPane toolbar = gameWindowPane.getToolbar();
+
         this.gameController = gameController;
         this.engine = engine;
-        this.boardPane = gameWindow.getBoardPane();
-        this.sidebar = gameWindow.getSidebar();
-        this.toolbar = gameWindow.getToolbar();
         this.board = this.engine.getBoard();
         this.playerTurn = sidebar.getPlayerTurnText();
         this.boardFactory = new ViewComponentFactory(board);
@@ -56,9 +56,7 @@ public class BoardView implements View {
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
-    }
 
-    public void render() {
         sidebar.initialise(engine);
         boardPane.initialise(engine, gameController, unitPieces, selectionPieces, defendPieces, backgroundPieces);
         toolbar.initialise(engine, gameController);

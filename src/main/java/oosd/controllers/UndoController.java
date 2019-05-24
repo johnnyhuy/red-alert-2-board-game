@@ -2,7 +2,7 @@ package oosd.controllers;
 
 import javafx.fxml.FXML;
 import oosd.models.game.Engine;
-import oosd.views.components.panes.WindowGridPane;
+import oosd.views.components.panes.GameWindowPane;
 
 /**
  * GRASP: The controller
@@ -14,13 +14,9 @@ public class UndoController extends Controller {
     private final Engine engine;
 
     @FXML
-    private WindowGridPane windowGridPane;
+    private GameWindowPane gameWindowPane;
 
     public UndoController(Engine engine) {
         this.engine = engine;
-    }
-
-    @Override
-    public void initialize() {
     }
 }
