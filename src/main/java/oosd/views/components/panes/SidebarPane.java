@@ -12,16 +12,19 @@ public class SidebarPane extends AnchorPane {
         return (Text) this.lookup("#playerTurn");
     }
 
-    public Text getPlayerTurnCountText() {
-        return (Text) this.lookup("#playerTurnCount");
+    public Text getTurnCountText() {
+        return (Text) this.lookup("#turnCount");
     }
 
     public void initialise(Engine engine) {
         Player player = engine.getTurn();
         Text playerTurn = getPlayerTurnText();
+        Text turnCountText = getTurnCountText();
 
         if (exists(player)) {
             playerTurn.setText("Player turn: " + player.getPlayerName());
         }
+
+        turnCountText.setText("Remaining turns: " + engine.getRemainingTurns());
     }
 }
