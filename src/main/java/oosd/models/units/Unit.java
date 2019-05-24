@@ -38,7 +38,7 @@ public abstract class Unit {
      *
      * @return boolean
      */
-    public boolean getCaptured() {
+    public boolean isCaptured() {
         return this.captured;
     }
 

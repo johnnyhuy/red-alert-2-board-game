@@ -1,6 +1,9 @@
 package oosd.models.board;
 
 import oosd.models.board.history.Snapshot;
+import oosd.models.player.Player;
+
+import java.util.Collection;
 
 public interface Board {
     /**
@@ -52,8 +55,9 @@ public interface Board {
      * Save the board with a snapshot.
      *
      * @return board object
+     * @param players
      */
-    Snapshot<Board> save();
+    Snapshot<Board> save(Collection<Player> players);
 
     /**
      * Restore the board with a given snapshot.

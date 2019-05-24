@@ -128,7 +128,7 @@ public class BoardView implements View {
         updateBoard();
     }
 
-    public void resetGame() {
+    public void endGame() {
         updateBoard();
     }
 

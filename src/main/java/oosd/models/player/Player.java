@@ -1,18 +1,17 @@
 package oosd.models.player;
 
-import de.vksi.c4j.ContractReference;
-import oosd.contracts.models.PlayerContract;
 import oosd.models.units.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ContractReference(PlayerContract.class)
 public class Player {
     private String playerName;
     private List<Unit> units;
     private int undoMoves = 0;
     private int turns = 0;
+    private int wins = 0;
+    private int losses = 0;
     private boolean canUndo = true;
 
     public Player(String playerName) {
@@ -34,7 +33,16 @@ public class Player {
      *
      * @return list of units
      */
-    public List<Unit> getUnits() {
+    public List<Unit> getAllUnits() {
+        return this.units;
+    }
+
+    /**
+     * Get alive units.
+     *
+     * @return number of alive units
+     */
+    public List<Unit> getAliveUnits() {
         return this.units;
     }
 
@@ -114,5 +122,37 @@ public class Player {
      */
     public void incrementTurn() {
         turns++;
+    }
+
+    /**
+     * Get player wins
+     *
+     * @return number of wins
+     */
+    public int getWins() {
+        return wins;
+    }
+
+    /**
+     * Increment wins
+     */
+    public void incrementWin() {
+        this.wins++;
+    }
+
+    /**
+     * Get losses
+     *
+     * @return number of losses
+     */
+    public int getLosses() {
+        return losses;
+    }
+
+    /**
+     * Increment losses.
+     */
+    public void incrementLoss() {
+        this.losses++;
     }
 }

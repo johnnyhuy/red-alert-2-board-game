@@ -39,6 +39,11 @@
                     <Tooltip text="Undo move"/>
                 </tooltip>
             </Button>
+            <Button fx:id="forfeitButton" styleClass="toolbar-button">
+                <tooltip>
+                    <Tooltip text="Forfeit game"/>
+                </tooltip>
+            </Button>
         </ToolbarPane>
     </bottom>
 </fx:root>

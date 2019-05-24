@@ -133,8 +133,8 @@ class UnitTest {
         unit.setCaptured(true);
 
         // Assert
-        assertTrue(unit.getCaptured());
-        assertFalse(otherUnit.getCaptured());
+        assertTrue(unit.isCaptured());
+        assertFalse(otherUnit.isCaptured());
     }
 
     @Test

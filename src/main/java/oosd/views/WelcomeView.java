@@ -12,4 +12,8 @@ public class WelcomeView implements View {
     public void welcome() {
         welcomeWindowPane = new WelcomeWindowPane();
     }
+
+    public void welcome(String title, String description) {
+        welcomeWindowPane = new WelcomeWindowPane(title, description);
+    }
 }

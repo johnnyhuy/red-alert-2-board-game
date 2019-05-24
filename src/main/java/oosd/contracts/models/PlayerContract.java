@@ -23,11 +23,11 @@ public class PlayerContract extends Player {
     @Override
     public void addUnit(Unit newUnit) {
         if (preCondition()) {
-            assert target.getUnits().size() < 20;
+            assert target.getAllUnits().size() < 20;
         }
 
         if (postCondition()) {
-            assert target.getUnits().size() == old(target.getUnits().size() + 1);
+            assert target.getAllUnits().size() == old(target.getAllUnits().size() + 1);
         }
     }
 }

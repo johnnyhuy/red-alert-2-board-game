@@ -2,23 +2,27 @@ package oosd.models;
 
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
-import oosd.models.board.history.BoardHistory;
+import oosd.models.board.history.History;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BoardHistoryTest {
+class HistoryTest {
     @Test
     void testUndoBoardHistoryCommand() {
         // Arrange
         Board board = new GameBoard(2, 2);
         Player player = new Player("John Tester");
+        List<Player> players = Collections.singletonList(player);
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
-        BoardHistory command = new BoardHistory(board);
+        History command = new History(board, players);
 
         // Act
         command.backup();
@@ -35,9 +39,10 @@ class BoardHistoryTest {
         // Arrange
         Board board = new GameBoard(2, 2);
         Player player = new Player("John Tester");
+        List<Player> players = Collections.singletonList(player);
         Unit unit = new GISoldier(player);
         board.getPiece(0, 0).setUnit(unit);
-        BoardHistory command = new BoardHistory(board);
+        History command = new History(board, players);
 
         // Act
         command.backup();
