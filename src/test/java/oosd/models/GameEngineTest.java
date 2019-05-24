@@ -275,4 +275,27 @@ class GameEngineTest {
         // Assert
         assertFalse(unit.getDefendStatus());
     }
+
+    @Test
+    void testCountTotalAmountOfTurns() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit unit = new GISoldier(playerOne);
+        board.getPiece(0, 0).setUnit(unit);
+        board.getPiece(0, 0).getUnit().startDefending();
+        Engine engine = new GameEngine(board, players);
+
+        // Act
+        engine.selectUnit(board.getPiece(0, 0));
+        engine.defendUnit(board.getPiece(0, 0));
+        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        int turns = engine.getTurns();
+
+        // Assert
+        assertEquals(turns, 3);
+    }
 }

@@ -60,4 +60,12 @@ public interface Engine {
      * @param piece to be selected
      */
     void selectUnit(Piece piece);
+
+
+    /**
+     * Get the total amount of turns in the game.
+     *
+     * @return amount of turns
+     */
+    int getTurns();
 }
