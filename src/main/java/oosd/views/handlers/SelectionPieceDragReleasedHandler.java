@@ -28,9 +28,9 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
         boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
 
         if (!unitExists && isValidMove) {
-            gameController.moveUnit(event, selectedPiece, piece);
+            gameController.moveUnit(selectedPiece, piece);
         } else if (isEnemyUnit && !isDefensive && isValidMove) {
-            gameController.attackUnit(event, selectedPiece, piece);
+            gameController.attackUnit(selectedPiece, piece);
         }
     }
 }

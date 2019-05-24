@@ -1,13 +1,10 @@
 package oosd.controllers;
 
-import javafx.event.Event;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.views.BoardView;
 import oosd.views.WelcomeView;
-import oosd.views.components.panes.WelcomeWindowPane;
 
 /**
  * GRASP: The controller
@@ -19,13 +16,15 @@ public class GameController extends Controller {
     private final Engine engine;
     private Stage primaryStage;
     private BoardView boardView;
-    private WelcomeWindowPane welcomeWindowPane;
 
     public GameController(Engine engine, Stage primaryStage) {
         this.engine = engine;
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Startup the game.
+     */
     public void start() {
         boardView = new BoardView(this, engine, primaryStage);
 
@@ -36,11 +35,10 @@ public class GameController extends Controller {
     /**
      * Used to select a unit.
      *
-     * @param event mouse event
      * @param selectedPiece object
      * @param piece object
      */
-    public void selectUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
+    public void selectUnit(Piece selectedPiece, Piece piece) {
         engine.selectUnit(piece);
         boardView.selectUnit(selectedPiece, piece);
     }
@@ -48,11 +46,10 @@ public class GameController extends Controller {
     /**
      * Tasked to move the unit.
      *
-     * @param event mouse event
      * @param selectedPiece object
      * @param piece object
      */
-    public void moveUnit(Event event, Piece selectedPiece, Piece piece) {
+    public void moveUnit(Piece selectedPiece, Piece piece) {
         engine.moveUnit(selectedPiece, piece);
         boardView.moveUnit(selectedPiece, piece);
     }
@@ -60,10 +57,9 @@ public class GameController extends Controller {
     /**
      * Defend a given piece.
      *
-     * @param event mouse event
      * @param piece object
      */
-    public void defendUnit(MouseEvent event, Piece piece) {
+    public void defendUnit(Piece piece) {
         engine.defendUnit(piece);
         boardView.defendUnit(piece);
     }
@@ -71,21 +67,18 @@ public class GameController extends Controller {
     /**
      * Attack a given piece.
      *
-     * @param mouseEvent    mouse event
      * @param selectedPiece object
      * @param piece         object
      */
-    public void attackUnit(MouseEvent mouseEvent, Piece selectedPiece, Piece piece) {
+    public void attackUnit(Piece selectedPiece, Piece piece) {
         engine.attackUnit(selectedPiece, piece);
         boardView.attackUnit(selectedPiece, piece);
     }
 
     /**
      * Undo a move in the game.
-     *
-     * @param mouseEvent mouse event
      */
-    public void undoMove(MouseEvent mouseEvent) {
+    public void undoMove() {
         engine.undoTurn();
         boardView.undoMove();
     }

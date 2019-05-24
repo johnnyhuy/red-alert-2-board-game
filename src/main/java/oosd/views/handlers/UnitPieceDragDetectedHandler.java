@@ -27,6 +27,6 @@ public class UnitPieceDragDetectedHandler implements EventHandler<MouseEvent> {
         }
 
         unitPiecePolygon.startFullDrag();
-        gameController.selectUnit(event, engine.getSelectedPiece(), piece);
+        gameController.selectUnit(engine.getSelectedPiece(), piece);
     }
 }

@@ -28,9 +28,9 @@ public class SelectionPieceClickHandler implements EventHandler<MouseEvent> {
         boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
 
         if (unitExists && isEnemyUnit && !isDefensive && isValidMove) {
-            gameController.attackUnit(event, selectedPiece, piece);
+            gameController.attackUnit(selectedPiece, piece);
         } else if (!unitExists && isValidMove) {
-            gameController.moveUnit(event, selectedPiece, piece);
+            gameController.moveUnit(selectedPiece, piece);
         }
     }
 }

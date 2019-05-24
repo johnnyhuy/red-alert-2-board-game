@@ -20,6 +20,6 @@ public class UndoClickHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        gameController.undoMove(event);
+        gameController.undoMove();
     }
 }
