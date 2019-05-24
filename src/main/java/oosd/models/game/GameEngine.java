@@ -108,6 +108,17 @@ public class GameEngine implements Engine {
         setSelectedPiece(piece);
     }
 
+    @Override
+    public int getTurns() {
+        int turnCount = 0;
+
+        for (Player player : getPlayers()) {
+            turnCount += player.getTurns();
+        }
+
+        return turnCount;
+    }
+
     /**
      * Get the next turn by going through the list sequentially.
      */
@@ -116,6 +127,7 @@ public class GameEngine implements Engine {
             playersIterator = players.listIterator();
         }
 
+        turn.incrementTurn();
         turn = playersIterator.next();
     }
 

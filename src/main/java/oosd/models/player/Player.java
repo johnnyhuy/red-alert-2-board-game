@@ -12,6 +12,7 @@ public class Player {
     private String playerName;
     private List<Unit> units;
     private int undoMoves = 0;
+    private int turns = 0;
     private boolean canUndo = true;
 
     public Player(String playerName) {
@@ -65,21 +66,53 @@ public class Player {
         return player.getPlayerName().equals(getPlayerName());
     }
 
+    /**
+     * Get the amount of moves to undo.
+     *
+     * @return number of undo moves
+     */
     public int getUndoMoves() {
         return undoMoves;
     }
 
+    /**
+     * Increment undo moves.
+     */
     public void incrementUndoMoves() {
         undoMoves++;
     }
 
+    /**
+     * Get the undo status.
+     *
+     * @return boolean to check undo status
+     */
     public boolean getUndoStatus() {
         return undoMoves < 3 && canUndo;
     }
 
+    /**
+     * Update undo status.
+     */
     public void updateUndoStatus() {
         if (undoMoves > 0) {
             canUndo = false;
         }
+    }
+
+    /**
+     * Get the players turns.
+     *
+     * @return amount of turns
+     */
+    public int getTurns() {
+        return turns;
+    }
+
+    /**
+     * Increment a turn to the player.
+     */
+    public void incrementTurn() {
+        turns++;
     }
 }
