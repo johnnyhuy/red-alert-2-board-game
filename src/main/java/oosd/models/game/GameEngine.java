@@ -2,7 +2,7 @@ package oosd.models.game;
 
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
-import oosd.models.board.history.BoardHistory;
+import oosd.models.board.history.History;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 
@@ -13,7 +13,7 @@ import static oosd.helpers.ListHelper.isNotEmpty;
 import static oosd.helpers.ObjectHelper.exists;
 
 public class GameEngine implements Engine {
-    private final BoardHistory history;
+    private final History history;
     private Board board;
     private Piece selectedPiece;
     private Player turn;
@@ -24,7 +24,7 @@ public class GameEngine implements Engine {
     public GameEngine(Board board, List<Player> players) {
         this.board = board;
         this.players = players;
-        this.history = new BoardHistory(board);
+        this.history = new History(board, players);
         this.turnLimit = 10;
 
         // Whoever we add to the players list, the first one takes the turn
@@ -104,6 +104,7 @@ public class GameEngine implements Engine {
     public void attackUnit(Piece attackingPiece, Piece targetPiece) {
         history.backup();
         getTurn().updateUndoStatus();
+        targetPiece.getUnit().setCaptured(true);
         targetPiece.setUnit(attackingPiece.getUnit());
         attackingPiece.setUnit(null);
         setSelectedPiece(null);
@@ -141,7 +142,48 @@ public class GameEngine implements Engine {
 
     @Override
     public void resetGame() {
+        history.reset();
+    }
 
+    @Override
+    public void forfeitGame() {
+        Player playerTurn = getTurn();
+        playerTurn.incrementLoss();
+
+        for (Player player : getPlayers()) {
+            if (playerTurn.equals(player)) {
+                continue;
+            }
+
+            player.incrementWin();
+        }
+
+        resetGame();
+    }
+
+    @Override
+    public void endGame() {
+        Player winningPlayer = null;
+        int winningUnits = 0;
+
+        for (Player player : getPlayers()) {
+            int units = player.getAllUnits().size();
+
+            if (units > winningUnits) {
+                winningPlayer = player;
+                winningUnits = units;
+            }
+        }
+
+        winningPlayer.incrementWin();
+
+        for (Player player : getPlayers()) {
+            if (player.equals(winningPlayer)) {
+                continue;
+            }
+
+            player.incrementLoss();
+        }
     }
 
     /**

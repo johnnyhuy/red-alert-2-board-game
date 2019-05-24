@@ -115,6 +115,9 @@ class GameEngineTest {
         // Assert
         assertNull(engine.getSelectedPiece());
         assertNull(board.getPiece(0, 0).getUnit());
+        assertTrue(targetUnit.isCaptured());
+        assertEquals(1, playerTwo.getAllUnits().size());
+        assertEquals(0, playerTwo.getAliveUnits().size());
         assertEquals(board.getPiece(1, 0).getUnit(), attackingUnit);
         assertEquals(playerTwo, engine.getTurn());
     }
@@ -284,43 +287,20 @@ class GameEngineTest {
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
-        board.getPiece(0, 0).getUnit().startDefending();
+        board.getPiece(1, 1).setUnit(unitTwo);
         Engine engine = new GameEngine(board, players);
 
         // Act
         engine.selectUnit(board.getPiece(0, 0));
         engine.defendUnit(board.getPiece(0, 0));
-        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attackUnit(board.getPiece(1, 0), board.getPiece(1, 1));
         int turns = engine.getTurns();
 
         // Assert
         assertEquals(turns, 3);
-    }
-
-    @Test
-    void testGetRemainingTurns() {
-        // Arrange
-        Player playerOne = new Player("Johnny Dave");
-        Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
-        Board board = new GameBoard(2, 2);
-        Unit unit = new GISoldier(playerOne);
-        board.getPiece(0, 0).setUnit(unit);
-        board.getPiece(0, 0).getUnit().startDefending();
-        Engine engine = new GameEngine(board, players, 1);
-
-        // Act
-        engine.selectUnit(board.getPiece(0, 0));
-        engine.defendUnit(board.getPiece(0, 0));
-        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        int actualTurns = engine.getRemainingTurns();
-        int expectedTurns = 0;
-
-        // Assert
-        assertEquals(expectedTurns, actualTurns);
     }
 
     @Test
@@ -331,19 +311,131 @@ class GameEngineTest {
         List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
-        board.getPiece(0, 0).getUnit().startDefending();
+        board.getPiece(1, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.selectUnit(board.getPiece(0, 0));
+        engine.defendUnit(board.getPiece(0, 0));
+        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attackUnit(board.getPiece(1, 0), board.getPiece(1, 1));
+        int actualTurns = engine.getRemainingTurns();
+        int expectedTurns = 0;
+
+        // Assert
+        assertEquals(expectedTurns, actualTurns);
+    }
+
+    @Test
+    void testGetRemainingTurns() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit unit = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unit);
+        board.getPiece(1, 1).setUnit(unitTwo);
         Engine engine = new GameEngine(board, players);
 
         // Act
         engine.selectUnit(board.getPiece(0, 0));
         engine.defendUnit(board.getPiece(0, 0));
-        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attackUnit(board.getPiece(1, 0), board.getPiece(1, 1));
         int actualTurns = engine.getRemainingTurns();
         int expectedTurns = engine.getTurnLimit() - engine.getTurns();
 
         // Assert
         assertEquals(expectedTurns, actualTurns);
+    }
+
+    @Test
+    void testForfeitGame() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit unit = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unit);
+        board.getPiece(1, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players);
+
+        // Act
+        engine.selectUnit(board.getPiece(0, 0));
+        engine.defendUnit(board.getPiece(0, 0));
+        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 1));
+        engine.moveUnit(board.getPiece(1, 1), board.getPiece(1, 0));
+        engine.forfeitGame();
+
+        // Assert
+        assertEquals(1, playerOne.getWins());
+        assertEquals(0, playerTwo.getWins());
+        assertEquals(0, playerOne.getLosses());
+        assertEquals(1, playerTwo.getLosses());
+        assertEquals(unit, board.getPiece(0, 0).getUnit());
+        assertEquals(unitTwo, board.getPiece(1, 1).getUnit());
+    }
+
+    @Test
+    void testEndGame() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        Unit unitThree = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(1, 0).setUnit(unitThree);
+        board.getPiece(1, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.endGame();
+
+        // Assert
+        assertEquals(1, playerOne.getWins());
+        assertEquals(0, playerTwo.getWins());
+        assertEquals(0, playerOne.getLosses());
+        assertEquals(1, playerTwo.getLosses());
+        assertEquals(unitOne, board.getPiece(0, 0).getUnit());
+        assertEquals(unitTwo, board.getPiece(1, 0).getUnit());
+        assertEquals(unitThree, board.getPiece(1, 1).getUnit());
+    }
+
+    @Test
+    void testEndGameFromTurns() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        Board board = new GameBoard(2, 2);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        Unit unitThree = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(1, 0).setUnit(unitThree);
+        board.getPiece(1, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.selectUnit(board.getPiece(0, 0));
+        engine.moveUnit(board.getPiece(0, 0), board.getPiece(0, 1));
+        engine.defendUnit(board.getPiece(1, 1));
+
+        // Assert
+        assertEquals(0, playerOne.getWins());
+        assertEquals(1, playerTwo.getWins());
+        assertEquals(1, playerOne.getLosses());
+        assertEquals(0, playerTwo.getLosses());
+        assertEquals(unitOne, board.getPiece(0, 0).getUnit());
+        assertEquals(unitTwo, board.getPiece(1, 1).getUnit());
     }
 }

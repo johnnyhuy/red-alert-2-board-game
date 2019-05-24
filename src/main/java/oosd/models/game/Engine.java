@@ -76,8 +76,20 @@ public interface Engine {
      */
     int getRemainingTurns();
 
+    int getTurnLimit();
+
     /**
      * Reset the game to the start.
      */
     void resetGame();
+
+    /**
+     * When a player turn quits the game, all other players win and the game resets.
+     */
+    void forfeitGame();
+
+    /**
+     * End the game and calculate results.
+     */
+    void endGame();
 }

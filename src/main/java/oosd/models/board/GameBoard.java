@@ -4,7 +4,10 @@ import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.GameBoardContract;
 import oosd.models.board.history.GameBoardSnapshot;
 import oosd.models.board.history.Snapshot;
+import oosd.models.player.Player;
 import oosd.models.units.Unit;
+
+import java.util.Collection;
 
 import static oosd.helpers.ObjectHelper.exists;
 
@@ -21,7 +24,7 @@ public class GameBoard implements Board {
         this.apply((column, row) -> this.pieces[column][row] = new Piece(column, row));
     }
 
-    public GameBoard(int columns, int rows, Board board) {
+    public GameBoard(int columns, int rows, Board board, Collection<Player> players) {
         this.rows = rows;
         this.columns = columns;
         this.pieces = new Piece[columns][rows];
@@ -71,8 +74,8 @@ public class GameBoard implements Board {
     }
 
     @Override
-    public Snapshot<Board> save() {
-        return new GameBoardSnapshot(new GameBoard(columns, rows, this));
+    public Snapshot<Board> save(Collection<Player> players) {
+        return new GameBoardSnapshot(new GameBoard(columns, rows, this, players));
     }
 
     @Override
