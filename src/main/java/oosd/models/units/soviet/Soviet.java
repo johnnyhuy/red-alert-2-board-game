@@ -8,7 +8,7 @@ abstract class Soviet extends Unit {
         super(player);
     }
 
-    Soviet(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public Soviet(int defendTurns) {
+        super(defendTurns);
     }
 }

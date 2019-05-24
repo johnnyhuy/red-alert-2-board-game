@@ -15,8 +15,8 @@ public class GrizzlyTank extends Allied {
         super(player);
     }
 
-    private GrizzlyTank(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public GrizzlyTank(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
@@ -35,7 +35,8 @@ public class GrizzlyTank extends Allied {
         return new LinearUnitBehaviour(2);
     }
 
-    public Unit clone() {
-        return new GrizzlyTank(getPlayer(), getDefendTurns());
+    @Override
+    public Unit save() {
+        return new GrizzlyTank(getDefendTurns());
     }
 }

@@ -15,8 +15,8 @@ public class KirovAirship extends Soviet {
         super(player);
     }
 
-    private KirovAirship(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public KirovAirship(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
@@ -35,11 +35,12 @@ public class KirovAirship extends Soviet {
         return new LinearUnitBehaviour(5);
     }
 
-    public Unit clone() {
-        return new KirovAirship(getPlayer(), getDefendTurns());
-    }
-
     public int getDefaultDefendTurns() {
         return 1;
+    }
+
+    @Override
+    public Unit save() {
+        return new KirovAirship(getDefendTurns());
     }
 }

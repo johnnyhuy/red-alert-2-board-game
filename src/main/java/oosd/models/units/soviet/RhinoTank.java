@@ -15,8 +15,8 @@ public class RhinoTank extends Soviet {
         super(player);
     }
 
-    private RhinoTank(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public RhinoTank(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
@@ -35,11 +35,12 @@ public class RhinoTank extends Soviet {
         return new LinearUnitBehaviour(3);
     }
 
-    public Unit clone() {
-        return new RhinoTank(getPlayer(), getDefendTurns());
-    }
-
     public int getDefaultDefendTurns() {
         return 3;
+    }
+
+    @Override
+    public Unit save() {
+        return new RhinoTank(getDefendTurns());
     }
 }

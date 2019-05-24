@@ -1,9 +1,7 @@
 package oosd.models.board.history;
 
-import oosd.models.board.Board;
-import oosd.models.player.Player;
+import oosd.models.game.Engine;
 
-import java.util.Collection;
 import java.util.Stack;
 
 import static oosd.helpers.ListHelper.isEmpty;
@@ -16,20 +14,18 @@ import static oosd.helpers.ListHelper.isEmpty;
  * the history snapshot stack.
  */
 public class History {
-    private final Board board;
-    private Collection<Player> players;
     private Stack<Snapshot> history = new Stack<>();
+    private final Engine engine;
 
-    public History(Board board, Collection<Player> players) {
-        this.board = board;
-        this.players = players;
+    public History(Engine engine) {
+        this.engine = engine;
     }
 
     /**
      * Backup board history.
      */
     public void backup() {
-        this.history.push(board.save(players));
+        this.history.push(engine.save());
     }
 
     /**
@@ -41,13 +37,13 @@ public class History {
         }
 
         Snapshot snapshot = this.history.pop();
-        board.restore(snapshot);
+        engine.restore(snapshot);
     }
 
     /**
      * Go back to the very start of the snapshot.
      */
     public void reset() {
-        board.restore(this.history.firstElement());
+        engine.restore(this.history.firstElement());
     }
 }

@@ -8,7 +8,7 @@ abstract class Allied extends Unit {
         super(player);
     }
 
-    Allied(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public Allied(int defendTurns) {
+        super(defendTurns);
     }
 }

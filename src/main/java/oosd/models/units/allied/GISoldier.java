@@ -14,8 +14,8 @@ public class GISoldier extends Allied {
         super(player);
     }
 
-    private GISoldier(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public GISoldier(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
@@ -34,7 +34,8 @@ public class GISoldier extends Allied {
         return new LinearUnitBehaviour(2);
     }
 
-    public Unit clone() {
-        return new GISoldier(getPlayer(), getDefendTurns());
+    @Override
+    public Unit save() {
+        return new GISoldier(getDefendTurns());
     }
 }

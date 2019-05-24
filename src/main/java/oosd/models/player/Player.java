@@ -1,14 +1,17 @@
 package oosd.models.player;
 
-import de.vksi.c4j.ContractReference;
-import oosd.contracts.models.PlayerContract;
+import oosd.models.Savable;
 import oosd.models.units.Unit;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ContractReference(PlayerContract.class)
-public class Player {
+import static oosd.helpers.ObjectHelper.isNull;
+
+//@ContractReference(PlayerContract.class)
+public class Player implements Savable<Player> {
     private String playerName;
     private List<Unit> units;
     private int undoMoves = 0;
@@ -20,6 +23,14 @@ public class Player {
     public Player(String playerName) {
         this.playerName = playerName;
         this.units = new ArrayList<>();
+    }
+
+    public Player(String playerName, int undoMoves, int turns, int wins, int losses) {
+        this(playerName);
+        this.undoMoves = undoMoves;
+        this.turns = turns;
+        this.wins = wins;
+        this.losses = losses;
     }
 
     /**
@@ -70,11 +81,40 @@ public class Player {
     public boolean equals(Object object) {
         if (!(object instanceof Player)) {
             return false;
-        }
+        } else if (object == this)
+            return true;
 
         Player player = (Player) object;
 
-        return player.getPlayerName().equals(getPlayerName());
+        return this.equals(player);
+    }
+
+    /**
+     * Compare players.
+     *
+     * @param player object
+     * @return whether the player is truly equal
+     */
+    public boolean equals(Player player) {
+        if (isNull(player)) {
+            return false;
+        }
+
+        return new EqualsBuilder()
+                .append(this.playerName, player.getPlayerName())
+                .isEquals();
+    }
+
+    /**
+     * Produce a hash code for the object.
+     *
+     * @return hash code integer
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(this.playerName)
+                .toHashCode();
     }
 
     /**
@@ -89,8 +129,8 @@ public class Player {
     /**
      * Increment undo moves.
      */
-    public void incrementUndoMoves() {
-        undoMoves++;
+    public void setUndoMoves(int moves) {
+        undoMoves = moves;
     }
 
     /**
@@ -157,5 +197,10 @@ public class Player {
      */
     public void incrementLoss() {
         this.losses++;
+    }
+
+    @Override
+    public Player save() {
+        return new Player(playerName, undoMoves, turns, wins, losses);
     }
 }
