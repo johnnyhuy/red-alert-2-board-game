@@ -14,8 +14,8 @@ public class Conscript extends Soviet {
         super(player);
     }
 
-    private Conscript(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public Conscript(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
@@ -34,7 +34,8 @@ public class Conscript extends Soviet {
         return new LinearUnitBehaviour(1);
     }
 
-    public Unit clone() {
-        return new Conscript(getPlayer(), getDefendTurns());
+    @Override
+    public Unit save() {
+        return new Conscript(getDefendTurns());
     }
 }

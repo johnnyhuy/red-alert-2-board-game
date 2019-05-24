@@ -82,7 +82,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         board.getPiece(0, 0).setUnit(unit);
@@ -101,7 +101,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit attackingUnit = new GISoldier(playerOne);
         Unit targetUnit = new Conscript(playerTwo);
@@ -127,7 +127,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         board.getPiece(0, 0).setUnit(unit);
@@ -147,7 +147,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
         Unit playerTwoUnit = new Conscript(playerTwo);
@@ -175,7 +175,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
         Unit playerTwoUnit = new Conscript(playerTwo);
@@ -200,7 +200,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
         Unit playerTwoUnit = new Conscript(playerTwo);
@@ -222,8 +222,8 @@ class GameEngineTest {
         boolean lastUndo = engine.undoTurn();
 
         // Assert
-        Player afterUndoPlayerOne = board.getPiece(0, 0).getUnit().getPlayer();
-        Player afterUndoPlayerTwo = board.getPiece(1, 1).getUnit().getPlayer();
+        Player afterUndoPlayerOne = engine.getBoard().getPiece(0, 0).getUnit().getPlayer();
+        Player afterUndoPlayerTwo = engine.getBoard().getPiece(1, 1).getUnit().getPlayer();
 
         assertEquals(3, afterUndoPlayerOne.getUndoMoves());
         assertEquals(0, afterUndoPlayerTwo.getUndoMoves());
@@ -238,7 +238,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit playerOneUnit = new GISoldier(playerOne);
         Unit playerTwoUnit = new Conscript(playerTwo);
@@ -264,7 +264,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         board.getPiece(0, 0).setUnit(unit);
@@ -284,7 +284,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         Unit unitTwo = new Conscript(playerTwo);
@@ -308,7 +308,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         Unit unitTwo = new Conscript(playerTwo);
@@ -333,7 +333,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         Unit unitTwo = new Conscript(playerTwo);
@@ -358,7 +358,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         Unit unitTwo = new Conscript(playerTwo);
@@ -387,7 +387,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unitOne = new GISoldier(playerOne);
         Unit unitTwo = new Conscript(playerTwo);
@@ -415,7 +415,7 @@ class GameEngineTest {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
         Player playerTwo = new Player("Jane Doe");
-        List<Player> players = new ArrayList<>(Arrays.asList(playerOne, playerTwo));
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unitOne = new GISoldier(playerOne);
         Unit unitTwo = new Conscript(playerTwo);

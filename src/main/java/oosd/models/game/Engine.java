@@ -2,6 +2,7 @@ package oosd.models.game;
 
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.board.history.Snapshot;
 import oosd.models.player.Player;
 
 public interface Engine {
@@ -92,4 +93,18 @@ public interface Engine {
      * End the game and calculate results.
      */
     void endGame();
+
+    /**
+     * Save the game.
+     *
+     * @return saved snapshot
+     */
+    Snapshot save();
+
+    /**
+     * Restore from a certain snapshot.
+     *
+     * @param snapshot to restore from
+     */
+    void restore(Snapshot snapshot);
 }

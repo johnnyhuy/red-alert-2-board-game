@@ -1,5 +1,6 @@
 package oosd.models.units;
 
+import oosd.models.Savable;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -15,10 +16,14 @@ import static oosd.helpers.ObjectHelper.isNull;
  *
  * Design pattern: template behavioural pattern is used to produce multiple types of units.
  */
-public abstract class Unit {
+public abstract class Unit implements Savable<Unit> {
     private Player player;
     private boolean captured;
     private int defendCount = 0;
+
+    public Unit() {
+        this.captured = false;
+    }
 
     public Unit(Player player) {
         this.player = player;
@@ -26,11 +31,9 @@ public abstract class Unit {
         player.addUnit(this);
     }
 
-    public Unit(Player player, int defendTurns) {
-        this.player = player;
-        this.captured = false;
-        player.addUnit(this);
-        setDefendTurns(defendTurns);
+    public Unit(int defendTurns) {
+        this();
+        this.defendCount = defendTurns;
     }
 
     /**
@@ -68,6 +71,13 @@ public abstract class Unit {
     }
 
     /**
+     * Set the player that owns this unit.
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    /**
      * Get the name of this unit.
      *
      * @return string
@@ -87,13 +97,6 @@ public abstract class Unit {
      * @return unit behaviour object
      */
     public abstract UnitBehaviour getUnitBehaviour();
-
-    /**
-     * Clone the unit.
-     *
-     * @return unit behaviour object
-     */
-    public abstract Unit clone();
 
     /**
      * Get the amount of turns to defend the unit.
