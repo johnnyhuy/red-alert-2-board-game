@@ -1,6 +1,5 @@
 package oosd.views;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
@@ -44,20 +43,19 @@ public class BoardView implements View {
     private ToolbarPane toolbar;
     private Text playerTurn;
 
-    public BoardView(GameController gameController, Engine engine, BoardPane boardPane, SidebarPane sidebar, ToolbarPane toolbar) {
+    public BoardView(GameController gameController, Engine engine, WindowGridPane gameWindow) {
         this.gameController = gameController;
         this.engine = engine;
-        this.boardPane = boardPane;
-        this.sidebar = sidebar;
-        this.toolbar = toolbar;
-        this.board = engine.getBoard();
+        this.boardPane = gameWindow.getBoardPane();
+        this.sidebar = gameWindow.getSidebar();
+        this.toolbar = gameWindow.getToolbar();
+        this.board = this.engine.getBoard();
         this.playerTurn = sidebar.getPlayerTurnText();
         this.boardFactory = new ViewComponentFactory(board);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
-
     }
 
     public void render() {

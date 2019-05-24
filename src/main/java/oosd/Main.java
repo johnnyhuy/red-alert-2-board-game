@@ -9,7 +9,6 @@ import oosd.models.board.Board;
 import oosd.models.game.Engine;
 import oosd.models.game.GameEngine;
 import oosd.models.player.Player;
-import oosd.views.components.windows.GameWindow;
 
 import java.util.List;
 
@@ -38,9 +37,8 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        GameController gameController = new GameController(initializeGameEngine());
-        GameWindow gameWindow = new GameWindow();
-        gameWindow.render(primaryStage, gameController);
+        GameController gameController = new GameController(initializeGameEngine(), primaryStage);
+        gameController.start();
     }
 
     /**

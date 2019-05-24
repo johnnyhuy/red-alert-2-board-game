@@ -68,4 +68,16 @@ public interface Engine {
      * @return amount of turns
      */
     int getTurns();
+
+    /**
+     * Get the remaining amount of turns.
+     *
+     * @return remaining turns
+     */
+    int getRemainingTurns();
+
+    /**
+     * Reset the game to the start.
+     */
+    void resetGame();
 }

@@ -17,6 +17,7 @@ public class GameEngine implements Engine {
     private Board board;
     private Piece selectedPiece;
     private Player turn;
+    private int turns;
     private List<Player> players;
     private Iterator<Player> playersIterator;
 
@@ -24,12 +25,18 @@ public class GameEngine implements Engine {
         this.board = board;
         this.players = players;
         this.history = new BoardHistory(board);
+        this.turns = 10;
 
         // Whoever we add to the players list, the first one takes the turn
         if (isNotEmpty(players)) {
             this.playersIterator = players.listIterator();
             this.turn = playersIterator.next();
         }
+    }
+
+    public GameEngine(Board board, List<Player> players, int turns) {
+        this(board, players);
+        this.turns = turns;
     }
 
     @Override
@@ -117,6 +124,16 @@ public class GameEngine implements Engine {
         }
 
         return turnCount;
+    }
+
+    @Override
+    public int getRemainingTurns() {
+        return turns;
+    }
+
+    @Override
+    public void resetGame() {
+
     }
 
     /**
