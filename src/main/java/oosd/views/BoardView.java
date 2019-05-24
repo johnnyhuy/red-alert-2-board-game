@@ -38,15 +38,16 @@ public class BoardView implements View {
     private final HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
     private final GameController gameController;
     private final ViewComponentFactory boardFactory;
+    private final SidebarPane sidebar;
     private Engine engine;
     private Text playerTurn;
 
     public BoardView(GameController gameController, Engine engine, Stage primaryStage) {
         GameWindowPane gameWindowPane = new GameWindowPane(primaryStage);
         BoardPane boardPane = gameWindowPane.getBoardPane();
-        SidebarPane sidebar = gameWindowPane.getSidebar();
         ToolbarPane toolbar = gameWindowPane.getToolbar();
 
+        this.sidebar = gameWindowPane.getSidebar();
         this.gameController = gameController;
         this.engine = engine;
         this.board = this.engine.getBoard();
@@ -58,8 +59,8 @@ public class BoardView implements View {
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
 
         sidebar.initialise(engine);
-        boardPane.initialise(engine, gameController, unitPieces, selectionPieces, defendPieces, backgroundPieces);
-        toolbar.initialise(engine, gameController);
+        boardPane.initialise(engine, gameController, sidebar, unitPieces, selectionPieces, defendPieces, backgroundPieces);
+        toolbar.initialise(engine, gameController, sidebar);
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
@@ -124,6 +125,14 @@ public class BoardView implements View {
     }
 
     public void undoMove() {
+        updateBoard();
+    }
+
+    public void resetGame() {
+        updateBoard();
+    }
+
+    private void updateBoard() {
         board.apply((column, row) -> {
             Piece piece = board.getPiece(column, row);
             UnitPiecePolygon unitPiecePolygon = unitPieces.get(piece);
@@ -131,8 +140,8 @@ public class BoardView implements View {
             Unit unit = piece.getUnit();
 
             selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
-            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece));
-            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece));
+            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, sidebar));
+            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, sidebar));
             unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
             if (exists(unit)) {
