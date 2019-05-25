@@ -130,6 +130,15 @@ public class Player implements Savable<Player> {
     }
 
     /**
+     * Set the player if they can undo.
+     *
+     * @param canUndo boolean
+     */
+    public void setCanUndo(boolean canUndo) {
+        this.canUndo = canUndo;
+    }
+
+    /**
      * Get the amount of moves to undo.
      *
      * @return number of undo moves
@@ -150,7 +159,7 @@ public class Player implements Savable<Player> {
      *
      * @return boolean to check undo status
      */
-    public boolean getUndoStatus() {
+    public boolean canUndo() {
         return undoMoves < 3 && canUndo;
     }
 
