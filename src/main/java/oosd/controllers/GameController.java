@@ -38,8 +38,8 @@ public class GameController extends Controller {
      * @param selectedPiece object
      * @param piece object
      */
-    public void selectUnit(Piece selectedPiece, Piece piece) {
-        engine.selectUnit(piece);
+    public void select(Piece selectedPiece, Piece piece) {
+        engine.select(piece);
         boardView.selectUnit(selectedPiece, piece);
     }
 
@@ -49,8 +49,8 @@ public class GameController extends Controller {
      * @param selectedPiece object
      * @param piece object
      */
-    public void moveUnit(Piece selectedPiece, Piece piece) {
-        engine.moveUnit(selectedPiece, piece);
+    public void move(Piece selectedPiece, Piece piece) {
+        engine.move(selectedPiece, piece);
         boardView.moveUnit(selectedPiece, piece);
     }
 
@@ -59,8 +59,8 @@ public class GameController extends Controller {
      *
      * @param piece object
      */
-    public void defendUnit(Piece piece) {
-        engine.defendUnit(piece);
+    public void defend(Piece piece) {
+        engine.defend(piece);
         boardView.defendUnit(piece);
     }
 
@@ -70,15 +70,15 @@ public class GameController extends Controller {
      * @param selectedPiece object
      * @param piece         object
      */
-    public void attackUnit(Piece selectedPiece, Piece piece) {
-        engine.attackUnit(selectedPiece, piece);
+    public void attack(Piece selectedPiece, Piece piece) {
+        engine.attack(selectedPiece, piece);
         boardView.attackUnit(selectedPiece, piece);
     }
 
     /**
      * Undo a move in the game.
      */
-    public void undoMove() {
+    public void undo() {
         engine.undoTurn();
         boardView.undoMove();
     }
@@ -86,7 +86,7 @@ public class GameController extends Controller {
     /**
      * Forfeit the game.
      */
-    public void forfeitGame() {
+    public void forfeit() {
         engine.forfeitGame();
         welcomeView.welcome();
     }

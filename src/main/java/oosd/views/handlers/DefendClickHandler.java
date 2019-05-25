@@ -22,13 +22,13 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        Piece selectedPiece = engine.getSelectedPiece();
+        Piece selectedPiece = engine.getSelected();
 
         if (isNull(selectedPiece)) {
             return;
         }
 
-        gameController.defendUnit(selectedPiece);
+        gameController.defend(selectedPiece);
 
         sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));
     }

@@ -22,12 +22,12 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        Piece selectedPiece = engine.getSelectedPiece();
+        Piece selectedPiece = engine.getSelected();
 
-        if (engine.canDefendUnit(piece)) {
-            gameController.defendUnit(piece);
-        } else if (engine.canSelectUnit(piece)) {
-            gameController.selectUnit(selectedPiece, piece);
+        if (engine.canDefend(piece)) {
+            gameController.defend(piece);
+        } else if (engine.canSelect(piece)) {
+            gameController.select(selectedPiece, piece);
         }
 
         sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));
