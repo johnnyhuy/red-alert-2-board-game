@@ -506,4 +506,56 @@ class GameEngineTest {
         // Assert
         assertDoesNotThrow(reset);
     }
+
+    @Test
+    void testResetGameEmptiesHistory() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        Unit unitThree = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(0, 1).setUnit(unitTwo);
+        board.getPiece(3, 1).setUnit(unitThree);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(3, 1), board.getPiece(3, 0));
+        engine.move(board.getPiece(1, 0), board.getPiece(1, 1));
+        engine.move(board.getPiece(3, 0), board.getPiece(3, 2));
+        engine.resetGame();
+        engine.undoTurn();
+        Board afterBoard = engine.getBoard();
+
+        // Assert
+        assertNull(afterBoard.getPiece(3, 0).getUnit());
+        assertNull(afterBoard.getPiece(1, 0).getUnit());
+        assertNotNull(afterBoard.getPiece(0, 0).getUnit());
+        assertNotNull(afterBoard.getPiece(3, 1).getUnit());
+    }
+
+    @Test
+    void testResetGameSetsPlayerTurnBack() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(0, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.resetGame();
+
+        // Assert
+        assertEquals(engine.getTurn(), playerOne);
+    }
 }

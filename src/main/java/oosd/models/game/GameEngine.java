@@ -166,12 +166,14 @@ public class GameEngine implements Engine {
 
     @Override
     public int getTurnLimit() {
-        return turnLimit;
+        return this.turnLimit;
     }
 
     @Override
     public void resetGame() {
-        history.reset();
+        this.history.reset();
+        this.playerIterator = getPlayers().listIterator();
+        this.turn = playerIterator.next();
     }
 
     @Override
