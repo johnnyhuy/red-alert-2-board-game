@@ -34,7 +34,7 @@ class HistoryTest {
         command.undo();
 
         // Assert
-        assertEquals(unit, board.getPiece(0, 0).getUnit());
+        assertEquals(unit, engine.getBoard().getPiece(0, 0).getUnit());
     }
 
     @Test
@@ -56,6 +56,6 @@ class HistoryTest {
         command.undo();
 
         // Assert
-        assertEquals(unit, board.getPiece(0, 0).getUnit());
+        assertEquals(unit, engine.getBoard().getPiece(0, 0).getUnit());
     }
 }
