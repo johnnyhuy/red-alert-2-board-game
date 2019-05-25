@@ -161,12 +161,13 @@ class GameEngineTest {
 
         // Act
         engine.undoTurn();
+        Board afterBoard = engine.getBoard();
 
         // Assert
-        assertNotNull(board.getPiece(0, 0).getUnit());
-        assertNotNull(board.getPiece(1, 1).getUnit());
-        assertNull(board.getPiece(1, 0).getUnit());
-        assertNull(board.getPiece(0, 1).getUnit());
+        assertNotNull(afterBoard.getPiece(0, 0).getUnit());
+        assertNotNull(afterBoard.getPiece(1, 1).getUnit());
+        assertNull(afterBoard.getPiece(1, 0).getUnit());
+        assertNull(afterBoard.getPiece(0, 1).getUnit());
         assertEquals(playerOne, engine.getTurn());
     }
 
@@ -189,10 +190,11 @@ class GameEngineTest {
 
         // Act
         engine.undoTurn();
+        Board afterBoard = engine.getBoard();
 
         // Assert
-        assertFalse(board.getPiece(0, 0).getUnit().getDefendStatus());
-        assertFalse(board.getPiece(1, 1).getUnit().getDefendStatus());
+        assertFalse(afterBoard.getPiece(0, 0).getUnit().getDefendStatus());
+        assertFalse(afterBoard.getPiece(1, 1).getUnit().getDefendStatus());
     }
 
     @Test

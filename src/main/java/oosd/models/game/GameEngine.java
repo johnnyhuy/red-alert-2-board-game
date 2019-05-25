@@ -238,7 +238,14 @@ public class GameEngine implements Engine {
         this.board = snapshot.getBoard();
         this.players = new ArrayList<>(snapshot.getPlayers());
         this.playerIterator = players.listIterator();
-        this.turn = playerIterator.next();
+
+        while (playerIterator.hasNext()) {
+            Player nextPlayer = playerIterator.next();
+            if (nextPlayer.equals(turn)) {
+                this.turn = nextPlayer;
+                break;
+            }
+        }
     }
 
     /**
