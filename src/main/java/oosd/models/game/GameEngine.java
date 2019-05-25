@@ -87,7 +87,12 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public void moveUnit(Piece selectedPiece, Piece targetPiece) {
+    public boolean moveUnit(Piece selectedPiece, Piece targetPiece) {
+        if (getRemainingTurns() == 0) {
+            return false;
+        }
+
+        // TODO: move undo count
         undoCount = 0;
         history.backup();
         getTurn().updateUndoStatus();
@@ -96,20 +101,32 @@ public class GameEngine implements Engine {
         setSelectedPiece(null);
         getNextTurn();
         updateDefendPieces();
+
+        return true;
     }
 
     @Override
-    public void defendUnit(Piece piece) {
+    public boolean defendUnit(Piece piece) {
+        if (getRemainingTurns() == 0) {
+            return false;
+        }
+
         undoCount = 0;
         history.backup();
         getTurn().updateUndoStatus();
         piece.getUnit().startDefending();
         setSelectedPiece(null);
         getNextTurn();
+
+        return true;
     }
 
     @Override
-    public void attackUnit(Piece attackingPiece, Piece targetPiece) {
+    public boolean attackUnit(Piece attackingPiece, Piece targetPiece) {
+        if (getRemainingTurns() == 0) {
+            return false;
+        }
+
         undoCount = 0;
         history.backup();
         getTurn().updateUndoStatus();
@@ -118,6 +135,8 @@ public class GameEngine implements Engine {
         attackingPiece.setUnit(null);
         setSelectedPiece(null);
         getNextTurn();
+
+        return true;
     }
 
     @Override
@@ -176,12 +195,16 @@ public class GameEngine implements Engine {
         int winningUnits = 0;
 
         for (Player player : getPlayers()) {
-            int units = player.getAllUnits().size();
+            int units = player.getAliveUnits().size();
 
             if (units > winningUnits) {
                 winningPlayer = player;
                 winningUnits = units;
             }
+        }
+
+        if (isNull(winningPlayer)) {
+            return;
         }
 
         winningPlayer.incrementWin();

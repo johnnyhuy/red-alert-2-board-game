@@ -38,14 +38,14 @@ public interface Engine {
      * @param selectedPiece that wants to move
      * @param targetPiece   to move to
      */
-    void moveUnit(Piece selectedPiece, Piece targetPiece);
+    boolean moveUnit(Piece selectedPiece, Piece targetPiece);
 
     /**
      * Defend a unit in the game.
      *
      * @param piece to be defended
      */
-    void defendUnit(Piece piece);
+    boolean defendUnit(Piece piece);
 
     /**
      * Attack a given unit in the game.
@@ -53,7 +53,7 @@ public interface Engine {
      * @param attackingPiece that want to attack the target piece
      * @param targetPiece    that will be attacked
      */
-    void attackUnit(Piece attackingPiece, Piece targetPiece);
+    boolean attackUnit(Piece attackingPiece, Piece targetPiece);
 
     /**
      * Select a unit on the board.
@@ -77,6 +77,11 @@ public interface Engine {
      */
     int getRemainingTurns();
 
+    /**
+     * Get the limit of turns the game can do in total.
+     *
+     * @return number of turns
+     */
     int getTurnLimit();
 
     /**
