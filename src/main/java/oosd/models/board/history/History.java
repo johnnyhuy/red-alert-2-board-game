@@ -44,6 +44,10 @@ public class History {
      * Go back to the very start of the snapshot.
      */
     public void reset() {
+        if (this.history.empty()) {
+            return;
+        }
+
         engine.restore(this.history.firstElement());
     }
 }
