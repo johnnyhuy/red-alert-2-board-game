@@ -22,7 +22,7 @@ public class UnitPieceDragDetectedHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (!piece.getUnit().getPlayer().equals(engine.getTurn())) {
+        if (!engine.canSelectUnit(piece)) {
             return;
         }
 

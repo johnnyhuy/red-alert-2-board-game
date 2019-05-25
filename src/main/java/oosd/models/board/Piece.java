@@ -2,6 +2,7 @@ package oosd.models.board;
 
 import de.vksi.c4j.ContractReference;
 import oosd.contracts.models.PieceContract;
+import oosd.models.game.Engine;
 import oosd.models.units.Unit;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -100,5 +101,16 @@ public class Piece {
      */
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    /**
+     * Shorthand method to check whether the piece is a valid move.
+     *
+     * @param engine      object
+     * @param targetPiece to check against
+     * @return boolean
+     */
+    public boolean isValidMove(Engine engine, Piece targetPiece) {
+        return getUnit().getUnitBehaviour().isValidMove(engine, targetPiece);
     }
 }

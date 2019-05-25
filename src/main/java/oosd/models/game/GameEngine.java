@@ -55,15 +55,6 @@ public class GameEngine implements Engine {
         return selectedPiece;
     }
 
-    /**
-     * Set the selected piece on in the game.
-     *
-     * @param selectedPiece selected piece
-     */
-    private void setSelectedPiece(Piece selectedPiece) {
-        this.selectedPiece = selectedPiece;
-    }
-
     @Override
     public Player getTurn() {
         return this.turn;
@@ -99,6 +90,14 @@ public class GameEngine implements Engine {
     }
 
     @Override
+    public boolean canMoveUnit(Piece piece) {
+        boolean unitExists = exists(piece.getUnit());
+        boolean isValidMove = this.getSelectedPiece().isValidMove(this, piece);
+
+        return !unitExists && isValidMove;
+    }
+
+    @Override
     public void defendUnit(Piece piece) {
         undoCount = 0;
         history.backup();
@@ -109,14 +108,41 @@ public class GameEngine implements Engine {
     }
 
     @Override
+    public boolean canDefendUnit(Piece piece) {
+        Piece selectedPiece = getSelectedPiece();
+        return exists(selectedPiece) && selectedPiece.equals(piece);
+    }
+
+    @Override
     public void attackUnit(Piece attackingPiece, Piece targetPiece) {
         targetPiece.getUnit().setCaptured(true);
         moveUnit(attackingPiece, targetPiece);
     }
 
     @Override
+    public boolean canAttackUnit(Piece targetPiece) {
+        if (isNull(targetPiece.getUnit())) {
+            return false;
+        }
+
+        boolean isValidMove = this.getSelectedPiece().isValidMove(this, targetPiece);
+        boolean isEnemyUnit = !targetPiece.getUnit().getPlayer().equals(this.getTurn());
+        boolean isDefensive = targetPiece.getUnit().getDefendStatus();
+
+        return isEnemyUnit && !isDefensive && isValidMove;
+    }
+
+    @Override
     public void selectUnit(Piece piece) {
         setSelectedPiece(piece);
+    }
+
+    @Override
+    public boolean canSelectUnit(Piece piece) {
+        boolean isEnemyUnit = !piece.getUnit().getPlayer().equals(getTurn());
+        boolean isDefensive = piece.getUnit().getDefendStatus();
+
+        return !isDefensive && !isEnemyUnit;
     }
 
     @Override
@@ -246,6 +272,15 @@ public class GameEngine implements Engine {
     }
 
     /**
+     * Set the selected piece on in the game.
+     *
+     * @param selectedPiece selected piece
+     */
+    private void setSelectedPiece(Piece selectedPiece) {
+        this.selectedPiece = selectedPiece;
+    }
+
+    /**
      * Get the next turn by going through the list sequentially.
      */
     private void getNextTurn() {
@@ -277,14 +312,5 @@ public class GameEngine implements Engine {
      */
     private List<Player> getPlayers() {
         return this.players;
-    }
-
-    /**
-     * Check whether the game is out of turns.
-     *
-     * @return boolean out of turns
-     */
-    private boolean isOutOfTurns() {
-        return getRemainingTurns() == 0;
     }
 }
