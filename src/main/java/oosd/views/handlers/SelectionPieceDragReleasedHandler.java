@@ -7,8 +7,6 @@ import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.views.components.panes.SidebarPane;
 
-import static oosd.helpers.ObjectHelper.exists;
-
 public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEvent> {
     private Engine engine;
     private GameController gameController;
@@ -25,15 +23,11 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
     @Override
     public void handle(MouseEvent event) {
         Piece selectedPiece = engine.getSelectedPiece();
-        boolean unitExists = exists(piece.getUnit());
-        boolean isValidMove = selectedPiece.getUnit().getUnitBehaviour().isValidMove(engine, piece);
-        boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(engine.getTurn());
-        boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
 
-        if (!unitExists && isValidMove) {
-            gameController.moveUnit(selectedPiece, piece);
-        } else if (isEnemyUnit && !isDefensive && isValidMove) {
+        if (engine.canAttackUnit(piece)) {
             gameController.attackUnit(selectedPiece, piece);
+        } else if (engine.canMoveUnit(piece)) {
+            gameController.moveUnit(selectedPiece, piece);
         }
 
         sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));

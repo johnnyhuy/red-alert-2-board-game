@@ -23,12 +23,10 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         Piece selectedPiece = engine.getSelectedPiece();
-        boolean isEnemyUnit = !piece.getUnit().getPlayer().equals(engine.getTurn());
-        boolean isDefensive = piece.getUnit().getDefendStatus();
 
-        if (piece.equals(selectedPiece)) {
+        if (engine.canDefendUnit(piece)) {
             gameController.defendUnit(piece);
-        } else if (!isDefensive && !isEnemyUnit) {
+        } else if (engine.canSelectUnit(piece)) {
             gameController.selectUnit(selectedPiece, piece);
         }
 

@@ -41,11 +41,27 @@ public interface Engine {
     void moveUnit(Piece selectedPiece, Piece targetPiece);
 
     /**
+     * Check whether the unit can select the piece
+     *
+     * @param piece to move to
+     * @return boolean
+     */
+    boolean canMoveUnit(Piece piece);
+
+    /**
      * Defend a unit in the game.
      *
      * @param piece to be defended
      */
     void defendUnit(Piece piece);
+
+    /**
+     * Check whether the unit can defend the piece
+     *
+     * @param piece to defend
+     * @return boolean
+     */
+    boolean canDefendUnit(Piece piece);
 
     /**
      * Attack a given unit in the game.
@@ -56,12 +72,27 @@ public interface Engine {
     void attackUnit(Piece attackingPiece, Piece targetPiece);
 
     /**
+     * Check whether the unit can attack the piece
+     *
+     * @param targetPiece to attack
+     * @return boolean
+     */
+    boolean canAttackUnit(Piece targetPiece);
+
+    /**
      * Select a unit on the board.
      *
      * @param piece to be selected
      */
     void selectUnit(Piece piece);
 
+    /**
+     * Check whether the unit can select the piece
+     *
+     * @param piece to select
+     * @return boolean
+     */
+    boolean canSelectUnit(Piece piece);
 
     /**
      * Get the total amount of turns in the game.
