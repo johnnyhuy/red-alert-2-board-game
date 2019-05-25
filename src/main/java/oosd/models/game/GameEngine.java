@@ -80,18 +80,13 @@ public class GameEngine implements Engine {
         }
 
         undoCount++;
-
         getTurn().setUndoMoves(undoCount);
 
         return true;
     }
 
     @Override
-    public boolean moveUnit(Piece selectedPiece, Piece targetPiece) {
-        if (getRemainingTurns() == 0) {
-            return false;
-        }
-
+    public void moveUnit(Piece selectedPiece, Piece targetPiece) {
         // TODO: move undo count
         undoCount = 0;
         history.backup();
@@ -101,42 +96,22 @@ public class GameEngine implements Engine {
         setSelectedPiece(null);
         getNextTurn();
         updateDefendPieces();
-
-        return true;
     }
 
     @Override
-    public boolean defendUnit(Piece piece) {
-        if (getRemainingTurns() == 0) {
-            return false;
-        }
-
+    public void defendUnit(Piece piece) {
         undoCount = 0;
         history.backup();
         getTurn().updateUndoStatus();
         piece.getUnit().startDefending();
         setSelectedPiece(null);
         getNextTurn();
-
-        return true;
     }
 
     @Override
-    public boolean attackUnit(Piece attackingPiece, Piece targetPiece) {
-        if (getRemainingTurns() == 0) {
-            return false;
-        }
-
-        undoCount = 0;
-        history.backup();
-        getTurn().updateUndoStatus();
+    public void attackUnit(Piece attackingPiece, Piece targetPiece) {
         targetPiece.getUnit().setCaptured(true);
-        targetPiece.setUnit(attackingPiece.getUnit());
-        attackingPiece.setUnit(null);
-        setSelectedPiece(null);
-        getNextTurn();
-
-        return true;
+        moveUnit(attackingPiece, targetPiece);
     }
 
     @Override
@@ -302,5 +277,14 @@ public class GameEngine implements Engine {
      */
     private List<Player> getPlayers() {
         return this.players;
+    }
+
+    /**
+     * Check whether the game is out of turns.
+     *
+     * @return boolean out of turns
+     */
+    private boolean isOutOfTurns() {
+        return getRemainingTurns() == 0;
     }
 }

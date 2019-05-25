@@ -38,14 +38,14 @@ public interface Engine {
      * @param selectedPiece that wants to move
      * @param targetPiece   to move to
      */
-    boolean moveUnit(Piece selectedPiece, Piece targetPiece);
+    void moveUnit(Piece selectedPiece, Piece targetPiece);
 
     /**
      * Defend a unit in the game.
      *
      * @param piece to be defended
      */
-    boolean defendUnit(Piece piece);
+    void defendUnit(Piece piece);
 
     /**
      * Attack a given unit in the game.
@@ -53,7 +53,7 @@ public interface Engine {
      * @param attackingPiece that want to attack the target piece
      * @param targetPiece    that will be attacked
      */
-    boolean attackUnit(Piece attackingPiece, Piece targetPiece);
+    void attackUnit(Piece attackingPiece, Piece targetPiece);
 
     /**
      * Select a unit on the board.
