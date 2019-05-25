@@ -57,7 +57,17 @@ public class Player implements Savable<Player> {
      * @return number of alive units
      */
     public List<Unit> getAliveUnits() {
-        return this.units;
+        List<Unit> aliveUnits = new ArrayList<>();
+
+        for (Unit unit : this.units) {
+            if (unit.isCaptured()) {
+                continue;
+            }
+
+            aliveUnits.add(unit);
+        }
+
+        return aliveUnits;
     }
 
     /**
