@@ -1,5 +1,7 @@
 package oosd.models.player;
 
+import de.vksi.c4j.ContractReference;
+import oosd.contracts.models.PlayerContract;
 import oosd.models.Savable;
 import oosd.models.units.Unit;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -10,7 +12,7 @@ import java.util.List;
 
 import static oosd.helpers.ObjectHelper.isNull;
 
-//@ContractReference(PlayerContract.class)
+@ContractReference(PlayerContract.class)
 public class Player implements Savable<Player> {
     private String playerName;
     private List<Unit> units;

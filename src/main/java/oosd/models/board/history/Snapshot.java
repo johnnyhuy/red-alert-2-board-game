@@ -3,7 +3,7 @@ package oosd.models.board.history;
 import oosd.models.board.Board;
 import oosd.models.player.Player;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Snapshot {
     /**
@@ -18,5 +18,5 @@ public interface Snapshot {
      *
      * @return list of players.
      */
-    Collection<Player> getPlayers();
+    List<Player> getPlayers();
 }
