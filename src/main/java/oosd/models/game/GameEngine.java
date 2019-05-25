@@ -62,7 +62,7 @@ public class GameEngine implements Engine {
 
     @Override
     public boolean undoTurn() {
-        if (!getTurn().getUndoStatus()) {
+        if (!getTurn().canUndo()) {
             return false;
         }
 
@@ -174,6 +174,11 @@ public class GameEngine implements Engine {
         this.history.reset();
         this.playerIterator = getPlayers().listIterator();
         this.turn = playerIterator.next();
+
+        for (Player player : getPlayers()) {
+            player.setCanUndo(true);
+            player.setUndoMoves(0);
+        }
     }
 
     @Override

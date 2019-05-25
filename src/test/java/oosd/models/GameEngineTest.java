@@ -216,7 +216,7 @@ class GameEngineTest {
         engine.move(board.getPiece(1, 1), board.getPiece(0, 1));
         engine.defend(board.getPiece(1, 0));
         engine.defend(board.getPiece(0, 1));
-        boolean initialUndoStatus = playerOne.getUndoStatus();
+        boolean initialUndoStatus = playerOne.canUndo();
 
         // Act
         engine.undoTurn();
@@ -232,8 +232,8 @@ class GameEngineTest {
         assertEquals(0, afterUndoPlayerTwo.getUndoMoves());
         assertFalse(lastUndo);
         assertTrue(initialUndoStatus);
-        assertFalse(afterUndoPlayerOne.getUndoStatus());
-        assertTrue(afterUndoPlayerTwo.getUndoStatus());
+        assertFalse(afterUndoPlayerOne.canUndo());
+        assertTrue(afterUndoPlayerTwo.canUndo());
     }
 
     @Test
@@ -536,6 +536,38 @@ class GameEngineTest {
         assertNull(afterBoard.getPiece(1, 0).getUnit());
         assertNotNull(afterBoard.getPiece(0, 0).getUnit());
         assertNotNull(afterBoard.getPiece(3, 1).getUnit());
+    }
+
+    @Test
+    void testResetGameCanUndo() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        Unit unitThree = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(0, 1).setUnit(unitTwo);
+        board.getPiece(3, 1).setUnit(unitThree);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(3, 1), board.getPiece(3, 0));
+        engine.undoTurn();
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(3, 1), board.getPiece(3, 0));
+        engine.resetGame();
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(3, 1), board.getPiece(3, 0));
+        boolean undoTurn = engine.undoTurn();
+        boolean canUndo = engine.getTurn().canUndo();
+
+        // Assert
+        assertTrue(undoTurn);
+        assertTrue(canUndo);
     }
 
     @Test
