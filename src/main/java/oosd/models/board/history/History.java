@@ -49,5 +49,9 @@ public class History {
         }
 
         engine.restore(this.history.firstElement());
+
+        while (!this.history.empty()) {
+            this.history.pop();
+        }
     }
 }

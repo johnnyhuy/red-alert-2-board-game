@@ -129,6 +129,10 @@ public class BoardView implements View {
         updateBoard();
     }
 
+    public void resetGame() {
+        updateBoard();
+    }
+
     private void updateBoard() {
         Board board = engine.getBoard();
         board.apply((column, row) -> {

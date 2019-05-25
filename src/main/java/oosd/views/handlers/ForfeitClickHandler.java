@@ -29,8 +29,12 @@ public class ForfeitClickHandler implements EventHandler<MouseEvent> {
         alert.setContentText(String.format("%s wants to forfeit the game, are you sure commander?", player.getPlayerName()));
         Optional<ButtonType> result = alert.showAndWait();
 
-//        result.is
+        if (!result.isPresent()) {
+            return;
+        }
 
-        gameController.forfeit();
+        if (result.get().equals(ButtonType.OK)) {
+            gameController.forfeit();
+        }
     }
 }
