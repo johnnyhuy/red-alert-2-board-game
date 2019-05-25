@@ -5,6 +5,7 @@ import oosd.models.player.Player;
 
 import java.util.List;
 
+// TODO: merge board and players together
 public interface GameSetupFactory {
     /**
      * Setup the board.

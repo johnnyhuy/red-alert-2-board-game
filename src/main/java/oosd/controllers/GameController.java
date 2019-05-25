@@ -83,17 +83,11 @@ public class GameController extends Controller {
         boardView.undoMove();
     }
 
+    /**
+     * Forfeit the game.
+     */
     public void forfeitGame() {
         engine.forfeitGame();
-        welcomeView.welcome();
-    }
-
-    /**
-     * Reset the game.
-     */
-    public void endGame() {
-        engine.endGame();
-        boardView.endGame();
         welcomeView.welcome();
     }
 }
