@@ -51,7 +51,7 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public Piece getSelectedPiece() {
+    public Piece getSelected() {
         return selectedPiece;
     }
 
@@ -77,7 +77,7 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public void moveUnit(Piece selectedPiece, Piece targetPiece) {
+    public void move(Piece selectedPiece, Piece targetPiece) {
         // TODO: move undo count
         undoCount = 0;
         history.backup();
@@ -90,15 +90,15 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public boolean canMoveUnit(Piece piece) {
+    public boolean canMove(Piece piece) {
         boolean unitExists = exists(piece.getUnit());
-        boolean isValidMove = this.getSelectedPiece().isValidMove(this, piece);
+        boolean isValidMove = this.getSelected().isValidMove(this, piece);
 
         return !unitExists && isValidMove;
     }
 
     @Override
-    public void defendUnit(Piece piece) {
+    public void defend(Piece piece) {
         undoCount = 0;
         history.backup();
         getTurn().updateUndoStatus();
@@ -108,24 +108,24 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public boolean canDefendUnit(Piece piece) {
-        Piece selectedPiece = getSelectedPiece();
+    public boolean canDefend(Piece piece) {
+        Piece selectedPiece = getSelected();
         return exists(selectedPiece) && selectedPiece.equals(piece);
     }
 
     @Override
-    public void attackUnit(Piece attackingPiece, Piece targetPiece) {
+    public void attack(Piece attackingPiece, Piece targetPiece) {
         targetPiece.getUnit().setCaptured(true);
-        moveUnit(attackingPiece, targetPiece);
+        move(attackingPiece, targetPiece);
     }
 
     @Override
-    public boolean canAttackUnit(Piece targetPiece) {
+    public boolean canAttack(Piece targetPiece) {
         if (isNull(targetPiece.getUnit())) {
             return false;
         }
 
-        boolean isValidMove = this.getSelectedPiece().isValidMove(this, targetPiece);
+        boolean isValidMove = this.getSelected().isValidMove(this, targetPiece);
         boolean isEnemyUnit = !targetPiece.getUnit().getPlayer().equals(this.getTurn());
         boolean isDefensive = targetPiece.getUnit().getDefendStatus();
 
@@ -133,12 +133,12 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public void selectUnit(Piece piece) {
+    public void select(Piece piece) {
         this.setSelectedPiece(piece);
     }
 
     @Override
-    public boolean canSelectUnit(Piece piece) {
+    public boolean canSelect(Piece piece) {
         boolean isFriendlyUnit = piece.getUnit().getPlayer().equals(getTurn());
         boolean isDefensive = piece.getUnit().getDefendStatus();
 

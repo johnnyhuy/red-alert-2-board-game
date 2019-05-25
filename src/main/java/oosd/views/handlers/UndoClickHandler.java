@@ -23,7 +23,7 @@ public class UndoClickHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        gameController.undoMove();
+        gameController.undo();
 
         sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));
     }

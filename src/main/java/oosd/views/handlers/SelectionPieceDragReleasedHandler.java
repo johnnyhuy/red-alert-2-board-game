@@ -22,12 +22,12 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
 
     @Override
     public void handle(MouseEvent event) {
-        Piece selectedPiece = engine.getSelectedPiece();
+        Piece selectedPiece = engine.getSelected();
 
-        if (engine.canAttackUnit(piece)) {
-            gameController.attackUnit(selectedPiece, piece);
-        } else if (engine.canMoveUnit(piece)) {
-            gameController.moveUnit(selectedPiece, piece);
+        if (engine.canAttack(piece)) {
+            gameController.attack(selectedPiece, piece);
+        } else if (engine.canMove(piece)) {
+            gameController.move(selectedPiece, piece);
         }
 
         sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));

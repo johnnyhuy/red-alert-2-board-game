@@ -18,7 +18,7 @@ public interface Engine {
      *
      * @return selected piece
      */
-    Piece getSelectedPiece();
+    Piece getSelected();
 
     /**
      * Get the turn of the game.
@@ -38,7 +38,7 @@ public interface Engine {
      * @param selectedPiece that wants to move
      * @param targetPiece   to move to
      */
-    void moveUnit(Piece selectedPiece, Piece targetPiece);
+    void move(Piece selectedPiece, Piece targetPiece);
 
     /**
      * Check whether the unit can select the piece
@@ -46,14 +46,14 @@ public interface Engine {
      * @param piece to move to
      * @return boolean
      */
-    boolean canMoveUnit(Piece piece);
+    boolean canMove(Piece piece);
 
     /**
      * Defend a unit in the game.
      *
      * @param piece to be defended
      */
-    void defendUnit(Piece piece);
+    void defend(Piece piece);
 
     /**
      * Check whether the unit can defend the piece
@@ -61,7 +61,7 @@ public interface Engine {
      * @param piece to defend
      * @return boolean
      */
-    boolean canDefendUnit(Piece piece);
+    boolean canDefend(Piece piece);
 
     /**
      * Attack a given unit in the game.
@@ -69,7 +69,7 @@ public interface Engine {
      * @param attackingPiece that want to attack the target piece
      * @param targetPiece    that will be attacked
      */
-    void attackUnit(Piece attackingPiece, Piece targetPiece);
+    void attack(Piece attackingPiece, Piece targetPiece);
 
     /**
      * Check whether the unit can attack the piece
@@ -77,14 +77,14 @@ public interface Engine {
      * @param targetPiece to attack
      * @return boolean
      */
-    boolean canAttackUnit(Piece targetPiece);
+    boolean canAttack(Piece targetPiece);
 
     /**
      * Select a unit on the board.
      *
      * @param piece to be selected
      */
-    void selectUnit(Piece piece);
+    void select(Piece piece);
 
     /**
      * Check whether the unit can select the piece
@@ -92,7 +92,7 @@ public interface Engine {
      * @param piece to select
      * @return boolean
      */
-    boolean canSelectUnit(Piece piece);
+    boolean canSelect(Piece piece);
 
     /**
      * Get the total amount of turns in the game.

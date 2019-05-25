@@ -89,7 +89,7 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.defendUnit(board.getPiece(0, 0));
+        engine.defend(board.getPiece(0, 0));
 
         // Assert
         assertTrue(unit.getDefendStatus());
@@ -110,10 +110,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attack(board.getPiece(0, 0), board.getPiece(1, 0));
 
         // Assert
-        assertNull(engine.getSelectedPiece());
+        assertNull(engine.getSelected());
         assertNull(board.getPiece(0, 0).getUnit());
         assertTrue(targetUnit.isCaptured());
         assertEquals(1, playerTwo.getAllUnits().size());
@@ -134,10 +134,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.selectUnit(board.getPiece(0, 0));
+        engine.select(board.getPiece(0, 0));
 
         // Assert
-        assertNotNull(engine.getSelectedPiece());
+        assertNotNull(engine.getSelected());
         assertNotNull(board.getPiece(0, 0).getUnit());
         assertEquals(playerOne, engine.getTurn());
     }
@@ -156,8 +156,8 @@ class GameEngineTest {
         playerOnePiece.setUnit(playerOneUnit);
         playerTwoPiece.setUnit(playerTwoUnit);
         Engine engine = new GameEngine(board, players);
-        engine.moveUnit(playerOnePiece, board.getPiece(1, 0));
-        engine.moveUnit(playerTwoPiece, board.getPiece(0, 1));
+        engine.move(playerOnePiece, board.getPiece(1, 0));
+        engine.move(playerTwoPiece, board.getPiece(0, 1));
 
         // Act
         engine.undoTurn();
@@ -185,8 +185,8 @@ class GameEngineTest {
         playerOnePiece.setUnit(playerOneUnit);
         playerTwoPiece.setUnit(playerTwoUnit);
         Engine engine = new GameEngine(board, players);
-        engine.defendUnit(playerOnePiece);
-        engine.defendUnit(playerTwoPiece);
+        engine.defend(playerOnePiece);
+        engine.defend(playerTwoPiece);
 
         // Act
         engine.undoTurn();
@@ -209,12 +209,12 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(playerOneUnit);
         board.getPiece(1, 1).setUnit(playerTwoUnit);
         Engine engine = new GameEngine(board, players);
-        engine.defendUnit(board.getPiece(0, 0));
-        engine.defendUnit(board.getPiece(1, 1));
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.moveUnit(board.getPiece(1, 1), board.getPiece(0, 1));
-        engine.defendUnit(board.getPiece(1, 0));
-        engine.defendUnit(board.getPiece(0, 1));
+        engine.defend(board.getPiece(0, 0));
+        engine.defend(board.getPiece(1, 1));
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(1, 1), board.getPiece(0, 1));
+        engine.defend(board.getPiece(1, 0));
+        engine.defend(board.getPiece(0, 1));
         boolean initialUndoStatus = playerOne.getUndoStatus();
 
         // Act
@@ -247,13 +247,13 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(playerOneUnit);
         board.getPiece(1, 1).setUnit(playerTwoUnit);
         Engine engine = new GameEngine(board, players);
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.moveUnit(board.getPiece(1, 1), board.getPiece(0, 1));
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(1, 1), board.getPiece(0, 1));
 
         // Act
         boolean firstUndo = engine.undoTurn();
-        engine.moveUnit(board.getPiece(1, 0), board.getPiece(0, 0));
-        engine.moveUnit(board.getPiece(0, 1), board.getPiece(1, 1));
+        engine.move(board.getPiece(1, 0), board.getPiece(0, 0));
+        engine.move(board.getPiece(0, 1), board.getPiece(1, 1));
         boolean lastUndo = engine.undoTurn();
 
         // Assert
@@ -274,8 +274,8 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.moveUnit(board.getPiece(1, 0), board.getPiece(0, 0));
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(1, 0), board.getPiece(0, 0));
 
         // Assert
         assertFalse(unit.getDefendStatus());
@@ -295,10 +295,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.selectUnit(board.getPiece(0, 0));
-        engine.defendUnit(board.getPiece(0, 0));
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.attackUnit(board.getPiece(1, 0), board.getPiece(1, 1));
+        engine.select(board.getPiece(0, 0));
+        engine.defend(board.getPiece(0, 0));
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attack(board.getPiece(1, 0), board.getPiece(1, 1));
         int turns = engine.getTurns();
 
         // Assert
@@ -319,10 +319,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players, 2);
 
         // Act
-        engine.selectUnit(board.getPiece(0, 0));
-        engine.defendUnit(board.getPiece(0, 0));
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.attackUnit(board.getPiece(1, 0), board.getPiece(1, 1));
+        engine.select(board.getPiece(0, 0));
+        engine.defend(board.getPiece(0, 0));
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attack(board.getPiece(1, 0), board.getPiece(1, 1));
         int actualTurns = engine.getRemainingTurns();
         int expectedTurns = 0;
 
@@ -344,10 +344,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.selectUnit(board.getPiece(0, 0));
-        engine.defendUnit(board.getPiece(0, 0));
-        engine.moveUnit(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.attackUnit(board.getPiece(1, 0), board.getPiece(1, 1));
+        engine.select(board.getPiece(0, 0));
+        engine.defend(board.getPiece(0, 0));
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.attack(board.getPiece(1, 0), board.getPiece(1, 1));
         int actualTurns = engine.getRemainingTurns();
         int expectedTurns = engine.getTurnLimit() - engine.getTurns();
 
@@ -369,10 +369,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.selectUnit(board.getPiece(0, 0));
-        engine.defendUnit(board.getPiece(0, 0));
-        engine.attackUnit(board.getPiece(0, 0), board.getPiece(1, 1));
-        engine.moveUnit(board.getPiece(1, 1), board.getPiece(1, 0));
+        engine.select(board.getPiece(0, 0));
+        engine.defend(board.getPiece(0, 0));
+        engine.attack(board.getPiece(0, 0), board.getPiece(1, 1));
+        engine.move(board.getPiece(1, 1), board.getPiece(1, 0));
         engine.forfeitGame();
         Board afterBoard = engine.getBoard();
 
@@ -427,10 +427,10 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players, 2);
 
         // Act
-        boolean cannotDefendNoSelection = engine.canDefendUnit(board.getPiece(0, 0));
-        engine.selectUnit(board.getPiece(0, 0));
-        boolean canDefend = engine.canDefendUnit(board.getPiece(0, 0));
-        boolean cannotDefendNotSelected = engine.canDefendUnit(board.getPiece(1, 1));
+        boolean cannotDefendNoSelection = engine.canDefend(board.getPiece(0, 0));
+        engine.select(board.getPiece(0, 0));
+        boolean canDefend = engine.canDefend(board.getPiece(0, 0));
+        boolean cannotDefendNotSelected = engine.canDefend(board.getPiece(1, 1));
 
         // Assert
         assertTrue(canDefend);
@@ -454,9 +454,9 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players, 2);
 
         // Act
-        engine.selectUnit(board.getPiece(0, 0));
-        boolean canAttack = engine.canAttackUnit(board.getPiece(0, 1));
-        boolean cannotAttackInvalidMove = engine.canAttackUnit(board.getPiece(3, 1));
+        engine.select(board.getPiece(0, 0));
+        boolean canAttack = engine.canAttack(board.getPiece(0, 1));
+        boolean cannotAttackInvalidMove = engine.canAttack(board.getPiece(3, 1));
 
         // Assert
         assertTrue(canAttack);
@@ -477,12 +477,12 @@ class GameEngineTest {
         board.getPiece(0, 1).setUnit(unitTwo);
         board.getPiece(3, 1).setUnit(unitThree);
         Engine engine = new GameEngine(board, players, 2);
-        engine.defendUnit(board.getPiece(3, 1));
+        engine.defend(board.getPiece(3, 1));
 
         // Act
-        boolean canSelect = engine.canSelectUnit(board.getPiece(0, 1));
-        boolean cannotSelectEnemy = engine.canSelectUnit(board.getPiece(0, 0));
-        boolean cannotSelectOnDefense = engine.canSelectUnit(board.getPiece(3, 1));
+        boolean canSelect = engine.canSelect(board.getPiece(0, 1));
+        boolean cannotSelectEnemy = engine.canSelect(board.getPiece(0, 0));
+        boolean cannotSelectOnDefense = engine.canSelect(board.getPiece(3, 1));
 
         // Assert
         assertTrue(canSelect);

@@ -33,7 +33,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
 
     @Override
     public boolean isValidMove(Engine engine, Piece checkPiece) {
-        for (Piece piece : getValidMoves(engine, engine.getSelectedPiece())) {
+        for (Piece piece : getValidMoves(engine, engine.getSelected())) {
             if (piece.equals(checkPiece)) {
                 return true;
             }
