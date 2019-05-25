@@ -4,7 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import oosd.controllers.Controller;
 import oosd.views.View;
@@ -12,16 +13,24 @@ import oosd.views.components.alerts.ErrorAlert;
 
 import java.util.Objects;
 
-public class WelcomeWindowPane extends VBox {
-    private String title;
-    private String description;
-
-    public WelcomeWindowPane(String title, String description) {
-        this.title = title;
-        this.description = description;
+public class WelcomeWindowPane extends BorderPane {
+    public WelcomeWindowPane(String heading, String description) {
+        createWindow(heading, description);
     }
 
     public WelcomeWindowPane() {
+        this("Welcome commander!", "Start the game below when you're ready.");
+    }
+
+    private Text getWelcomeHeading() {
+        return (Text) this.lookup("#welcomeHeading");
+    }
+
+    private Text getWelcomeDescription() {
+        return (Text) this.lookup("#welcomeDescription");
+    }
+
+    private void createWindow(String heading, String description) {
         final String windowTitle = "Battle control initialised!";
         final String windowIcon = "allied.png";
         final String styles = "style/main.css";
@@ -36,6 +45,9 @@ public class WelcomeWindowPane extends VBox {
             ErrorAlert errorAlert = new ErrorAlert();
             errorAlert.exit();
         }
+
+        getWelcomeHeading().setText(heading);
+        getWelcomeDescription().setText(description);
 
         Scene content = new Scene(this, 400, 320);
         content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(styles)).toString());
