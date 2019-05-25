@@ -31,7 +31,6 @@ import static oosd.helpers.ObjectHelper.exists;
  * The view should only be responsible for managing the user interface (e.g. interacting with the JavaFX library)
  */
 public class BoardView implements View {
-    private final Board board;
     private final HashMap<Piece, SelectionPiecePolygon> selectionPieces;
     private final HashMap<Piece, UnitPiecePolygon> unitPieces;
     private final HashMap<Piece, DefendPieceImage> defendPieces;
@@ -50,9 +49,8 @@ public class BoardView implements View {
         this.sidebar = gameWindowPane.getSidebar();
         this.gameController = gameController;
         this.engine = engine;
-        this.board = this.engine.getBoard();
         this.playerTurn = sidebar.getPlayerTurnText();
-        this.boardFactory = new ViewComponentFactory(board);
+        this.boardFactory = new ViewComponentFactory(engine.getBoard());
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
@@ -64,6 +62,7 @@ public class BoardView implements View {
     }
 
     public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
+        Board board = engine.getBoard();
         board.apply((column, row) -> {
             Piece piece = board.getPiece(column, row);
             Unit unit = piece.getUnit();
@@ -110,6 +109,7 @@ public class BoardView implements View {
     }
 
     public void defendUnit(Piece piece) {
+        Board board = engine.getBoard();
         board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
 
         defendPieces.get(piece).show();
@@ -117,6 +117,7 @@ public class BoardView implements View {
     }
 
     public void attackUnit(Piece selectedPiece, Piece piece) {
+        Board board = engine.getBoard();
         board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
 
         unitPieces.get(selectedPiece).hide();
@@ -128,11 +129,8 @@ public class BoardView implements View {
         updateBoard();
     }
 
-    public void endGame() {
-        updateBoard();
-    }
-
     private void updateBoard() {
+        Board board = engine.getBoard();
         board.apply((column, row) -> {
             Piece piece = board.getPiece(column, row);
             UnitPiecePolygon unitPiecePolygon = unitPieces.get(piece);

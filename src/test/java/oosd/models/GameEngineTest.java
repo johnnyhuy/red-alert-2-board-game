@@ -10,6 +10,7 @@ import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
 import oosd.models.units.soviet.Conscript;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -488,5 +489,21 @@ class GameEngineTest {
         assertTrue(canSelect);
         assertFalse(cannotSelectEnemy);
         assertFalse(cannotSelectOnDefense);
+    }
+
+    @Test
+    void testResetGameOnNoHistoryShouldNotFail() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        Executable reset = engine::resetGame;
+
+        // Assert
+        assertDoesNotThrow(reset);
     }
 }

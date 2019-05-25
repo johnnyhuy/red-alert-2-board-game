@@ -2,10 +2,13 @@ package oosd.views.handlers;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.game.Engine;
 import oosd.models.player.Player;
+
+import java.util.Optional;
 
 public class ForfeitClickHandler implements EventHandler<MouseEvent> {
     private Engine engine;
@@ -20,11 +23,13 @@ public class ForfeitClickHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         Player player = engine.getTurn();
 
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Forfeit game");
         alert.setHeaderText("Forfeiting the game");
         alert.setContentText(String.format("%s wants to forfeit the game, are you sure commander?", player.getPlayerName()));
-        alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
+
+//        result.is
 
         gameController.forfeit();
     }

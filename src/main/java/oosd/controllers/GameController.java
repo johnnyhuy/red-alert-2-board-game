@@ -88,6 +88,6 @@ public class GameController extends Controller {
      */
     public void forfeit() {
         engine.forfeitGame();
-        welcomeView.welcome();
+        welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, let's start again!");
     }
 }
