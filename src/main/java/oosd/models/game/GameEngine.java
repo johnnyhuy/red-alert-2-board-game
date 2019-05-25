@@ -10,7 +10,6 @@ import oosd.models.player.Player;
 import oosd.models.units.Unit;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -199,7 +198,7 @@ public class GameEngine implements Engine {
     @Override
     public Snapshot save() {
         List<Player> oldPlayers = this.players;
-        Collection<Player> savedPlayers = new ArrayList<>();
+        List<Player> savedPlayers = new ArrayList<>();
         Board oldBoard = this.board;
         Board savedBoard = new GameBoard(oldBoard.getColumns(), oldBoard.getRows());
 
