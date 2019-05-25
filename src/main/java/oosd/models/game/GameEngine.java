@@ -134,15 +134,15 @@ public class GameEngine implements Engine {
 
     @Override
     public void selectUnit(Piece piece) {
-        setSelectedPiece(piece);
+        this.setSelectedPiece(piece);
     }
 
     @Override
     public boolean canSelectUnit(Piece piece) {
-        boolean isEnemyUnit = !piece.getUnit().getPlayer().equals(getTurn());
+        boolean isFriendlyUnit = piece.getUnit().getPlayer().equals(getTurn());
         boolean isDefensive = piece.getUnit().getDefendStatus();
 
-        return !isDefensive && !isEnemyUnit;
+        return !isDefensive && isFriendlyUnit;
     }
 
     @Override

@@ -412,4 +412,81 @@ class GameEngineTest {
         assertEquals(unitTwo, board.getPiece(1, 0).getUnit());
         assertEquals(unitThree, board.getPiece(1, 1).getUnit());
     }
+
+    @Test
+    void testCanDefendUnit() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(2, 2);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(1, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        boolean cannotDefendNoSelection = engine.canDefendUnit(board.getPiece(0, 0));
+        engine.selectUnit(board.getPiece(0, 0));
+        boolean canDefend = engine.canDefendUnit(board.getPiece(0, 0));
+        boolean cannotDefendNotSelected = engine.canDefendUnit(board.getPiece(1, 1));
+
+        // Assert
+        assertTrue(canDefend);
+        assertFalse(cannotDefendNoSelection);
+        assertFalse(cannotDefendNotSelected);
+    }
+
+    @Test
+    void testCanAttackUnit() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        Unit unitThree = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(0, 1).setUnit(unitTwo);
+        board.getPiece(3, 1).setUnit(unitThree);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.selectUnit(board.getPiece(0, 0));
+        boolean canAttack = engine.canAttackUnit(board.getPiece(0, 1));
+        boolean cannotAttackInvalidMove = engine.canAttackUnit(board.getPiece(3, 1));
+
+        // Assert
+        assertTrue(canAttack);
+        assertFalse(cannotAttackInvalidMove);
+    }
+
+    @Test
+    void testCanSelectUnit() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        Unit unitThree = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(0, 1).setUnit(unitTwo);
+        board.getPiece(3, 1).setUnit(unitThree);
+        Engine engine = new GameEngine(board, players, 2);
+        engine.defendUnit(board.getPiece(3, 1));
+
+        // Act
+        boolean canSelect = engine.canSelectUnit(board.getPiece(0, 1));
+        boolean cannotSelectEnemy = engine.canSelectUnit(board.getPiece(0, 0));
+        boolean cannotSelectOnDefense = engine.canSelectUnit(board.getPiece(3, 1));
+
+        // Assert
+        assertTrue(canSelect);
+        assertFalse(cannotSelectEnemy);
+        assertFalse(cannotSelectOnDefense);
+    }
 }
