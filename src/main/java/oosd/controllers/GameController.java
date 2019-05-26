@@ -36,7 +36,7 @@ public class GameController {
      * Used to select a unit.
      *
      * @param selectedPiece object
-     * @param piece object
+     * @param piece         object
      */
     public void select(Piece selectedPiece, Piece piece) {
         engine.select(piece);
@@ -47,7 +47,7 @@ public class GameController {
      * Tasked to move the unit.
      *
      * @param selectedPiece object
-     * @param piece object
+     * @param piece         object
      */
     public void move(Piece selectedPiece, Piece piece) {
         engine.move(selectedPiece, piece);
@@ -88,7 +88,7 @@ public class GameController {
      */
     public void forfeit() {
         engine.forfeitGame();
-        welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, let's start again!");
+        welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, lets start again!");
         boardView.updateBoard();
     }
 
@@ -105,5 +105,14 @@ public class GameController {
      */
     public void saveGame() {
         engine.saveGame();
+    }
+
+    /**
+     * End the game.
+     */
+    public void endGame() {
+        engine.endGame();
+        engine.resetGame();
+        welcomeView.welcome(String.format("Player %s wins!", engine.getWinningPlayer().getPlayerName()), "End game! lets start again!");
     }
 }

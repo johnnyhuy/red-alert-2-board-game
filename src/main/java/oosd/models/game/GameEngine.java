@@ -208,18 +208,7 @@ public class GameEngine implements Engine {
 
     @Override
     public void endGame() {
-        Player winningPlayer = null;
-        int winningUnits = 0;
-
-        for (Player player : getPlayers()) {
-            int units = player.getAliveUnits().size();
-
-            if (units > winningUnits) {
-                winningPlayer = player;
-                winningUnits = units;
-            }
-        }
-
+        Player winningPlayer = getWinningPlayer();
         if (isNull(winningPlayer)) {
             return;
         }
@@ -315,6 +304,23 @@ public class GameEngine implements Engine {
     @Override
     public List<Player> getPlayers() {
         return this.players;
+    }
+
+    @Override
+    public Player getWinningPlayer() {
+        Player winningPlayer = null;
+        int winningUnits = 0;
+
+        for (Player player : getPlayers()) {
+            int units = player.getAliveUnits().size();
+
+            if (units > winningUnits) {
+                winningPlayer = player;
+                winningUnits = units;
+            }
+        }
+
+        return winningPlayer;
     }
 
     /**

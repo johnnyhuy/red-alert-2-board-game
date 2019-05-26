@@ -26,6 +26,10 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
 
         if (engine.canDefend(piece)) {
             gameController.defend(piece);
+
+            if (engine.getRemainingTurns() == 0) {
+                gameController.endGame();
+            }
         } else if (engine.canSelect(piece)) {
             gameController.select(selectedPiece, piece);
         }

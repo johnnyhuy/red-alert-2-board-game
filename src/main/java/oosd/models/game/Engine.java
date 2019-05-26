@@ -169,4 +169,11 @@ public interface Engine {
      * @return list of players in the game
      */
     List<Player> getPlayers();
+
+    /**
+     * Get the winning player.
+     *
+     * @return winning player
+     */
+    Player getWinningPlayer();
 }
