@@ -115,8 +115,15 @@ public class GameEngine implements Engine {
 
     @Override
     public void attack(Piece attackingPiece, Piece targetPiece) {
+        undoCount = 0;
+        history.backup();
+        getTurn().updateUndoStatus();
         targetPiece.getUnit().setCaptured(true);
-        move(attackingPiece, targetPiece);
+        targetPiece.setUnit(attackingPiece.getUnit());
+        attackingPiece.setUnit(null);
+        setSelectedPiece(null);
+        getNextTurn();
+        updateDefendPieces();
     }
 
     @Override
@@ -265,8 +272,16 @@ public class GameEngine implements Engine {
 
     @Override
     public void restore(Snapshot snapshot) {
+        for (Player oldPlayer : getPlayers()) {
+            for (Player newPlayer : snapshot.getPlayers()) {
+                if (newPlayer.equals(oldPlayer)) {
+                    newPlayer.setTurns(oldPlayer.getTurns());
+                }
+            }
+        }
+
         this.board = snapshot.getBoard();
-        this.players = new ArrayList<>(snapshot.getPlayers());
+        this.players = snapshot.getPlayers();
         this.playerIterator = players.listIterator();
 
         while (playerIterator.hasNext()) {

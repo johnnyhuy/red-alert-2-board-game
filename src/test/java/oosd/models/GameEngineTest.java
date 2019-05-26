@@ -237,6 +237,27 @@ class GameEngineTest {
     }
 
     @Test
+    void testUndoDoesntAffectRemainingTurns() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(2, 2);
+        Unit playerOneUnit = new GISoldier(playerOne);
+        Unit playerTwoUnit = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(playerOneUnit);
+        board.getPiece(1, 1).setUnit(playerTwoUnit);
+        Engine engine = new GameEngine(board, players);
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+
+        // Act
+        engine.undoTurn();
+
+        // Assert
+        assertEquals(9, engine.getRemainingTurns());
+    }
+
+    @Test
     void testUndoStatusCannotBeTrueAfterSecondUndo() {
         // Arrange
         Player playerOne = new Player("Johnny Dave");
