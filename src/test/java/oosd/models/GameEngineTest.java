@@ -596,6 +596,39 @@ class GameEngineTest {
     }
 
     @Test
+    void testSaveGameAndRestoreAfter() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unitOne = new GISoldier(playerOne);
+        Unit unitTwo = new Conscript(playerTwo);
+        board.getPiece(0, 0).setUnit(unitOne);
+        board.getPiece(0, 1).setUnit(unitTwo);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
+        engine.move(board.getPiece(0, 1), board.getPiece(3, 0));
+        boolean canSaveBefore = engine.saveGameExists();
+        engine.saveGame();
+        engine.move(board.getPiece(1, 0), board.getPiece(2, 0));
+        engine.move(board.getPiece(3, 0), board.getPiece(3, 3));
+        boolean canSaveAfterSave = engine.saveGameExists();
+        engine.restoreGame();
+        boolean canSaveAfterRestore = engine.saveGameExists();
+        Board afterBoard = engine.getBoard();
+
+        // Assert
+        assertTrue(canSaveBefore);
+        assertFalse(canSaveAfterSave);
+        assertTrue(canSaveAfterRestore);
+        assertNotNull(afterBoard.getPiece(3, 0).getUnit());
+        assertNotNull(afterBoard.getPiece(1, 0).getUnit());
+    }
+
+    @Test
     void testResetGameSetsPlayerTurnBack() {
         // Arrange
         Player playerOne = new Player("Johnny Dave");

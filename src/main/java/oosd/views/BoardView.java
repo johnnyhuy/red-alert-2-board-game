@@ -150,6 +150,20 @@ public class BoardView implements View {
         forfeitButton.setOnMousePressed(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_active")));
         forfeitButton.setOnMouseEntered(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_hover")));
         forfeitButton.setOnMouseExited(event -> forfeitButton.setGraphic(new ToolbarIcon("skull")));
+
+        Button saveGameButton = gamePresenter.getSaveGameButton();
+        saveGameButton.setOnMouseClicked(new SaveGameClickHandler(engine, gameController));
+        saveGameButton.setGraphic(new ToolbarIcon("save"));
+        saveGameButton.setOnMousePressed(event -> saveGameButton.setGraphic(new ToolbarIcon("save_active")));
+        saveGameButton.setOnMouseEntered(event -> saveGameButton.setGraphic(new ToolbarIcon("save_hover")));
+        saveGameButton.setOnMouseExited(event -> saveGameButton.setGraphic(new ToolbarIcon("save")));
+
+        Button restoreGameButton = gamePresenter.getRestoreGameButton();
+        restoreGameButton.setOnMouseClicked(new RestoreGameClickHandler(engine, gameController));
+        restoreGameButton.setGraphic(new ToolbarIcon("restore"));
+        restoreGameButton.setOnMousePressed(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore_active")));
+        restoreGameButton.setOnMouseEntered(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore_hover")));
+        restoreGameButton.setOnMouseExited(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore")));
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {

@@ -50,6 +50,16 @@
                     <Tooltip text="Forfeit game"/>
                 </tooltip>
             </Button>
+            <Button fx:id="saveGameButton" styleClass="toolbar-button">
+                <tooltip>
+                    <Tooltip text="Save game"/>
+                </tooltip>
+            </Button>
+            <Button fx:id="restoreGameButton" styleClass="toolbar-button">
+                <tooltip>
+                    <Tooltip text="Restore game"/>
+                </tooltip>
+            </Button>
         </ToolbarPane>
     </bottom>
 </fx:root>
