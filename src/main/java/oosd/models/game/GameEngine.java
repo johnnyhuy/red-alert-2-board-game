@@ -186,6 +186,7 @@ public class GameEngine implements Engine {
         for (Player player : getPlayers()) {
             player.setCanUndo(true);
             player.setUndoMoves(0);
+            player.setTurns(0);
         }
     }
 

@@ -614,5 +614,6 @@ class GameEngineTest {
 
         // Assert
         assertEquals(engine.getTurn(), playerOne);
+        assertEquals(2, engine.getRemainingTurns());
     }
 }
