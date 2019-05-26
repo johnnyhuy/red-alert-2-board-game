@@ -1,16 +1,18 @@
 package oosd;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import oosd.controllers.GameController;
-import oosd.factories.InMemoryGameSetupFactory;
-import oosd.factories.JsonGameSetupFactory;
-import oosd.models.board.Board;
-import oosd.models.game.Engine;
-import oosd.models.game.GameEngine;
-import oosd.models.player.Player;
+import oosd.controllers.Controller;
+import oosd.views.View;
+import oosd.views.components.alerts.ErrorAlert;
+import oosd.views.components.panes.GameWindowPane;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.List;
+import java.util.Objects;
 
 /**
  * GRASP: information expert
@@ -33,35 +35,35 @@ public class Main extends Application {
      * GRASP: The creator
      * Creates the initialized game logic and base UI objects at the start of the program.
      *
-     * @param primaryStage JavaFX primary window
+     * @param stage JavaFX primary window
      */
     @Override
-    public void start(Stage primaryStage) {
-        GameController gameController = new GameController(initializeGameEngine(), primaryStage);
-        gameController.start();
-    }
+    public void start(Stage stage) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+        GameWindowPane gameWindowPane = new GameWindowPane();
 
-    /**
-     * Initialize game configuration data, which can be easily modified.
-     *
-     * @return the game engine
-     */
-    private Engine initializeGameEngine() {
-        int boardRows = 10;
-        int boardColumns = 10;
+        final String windowTitle = "Red Alert 2 Board Game";
+        final String windowIcon = "soviet.png";
+        final String styles = "style/main.css";
 
-    	if (useJSONConfig == false)
-    	{
-        	InMemoryGameSetupFactory factory = new InMemoryGameSetupFactory();
-        	Board board = factory.createBoard(boardColumns, boardRows);
-        	List<Player> players = factory.createPlayers(board);
-            return new GameEngine(board, players);
-    	}
-    	else {
-    		JsonGameSetupFactory factoryJSON = new JsonGameSetupFactory();
-        	Board board = factoryJSON.createBoard(boardColumns, boardRows);
-        	List<Player> players = factoryJSON.createPlayers(board);
-            return new GameEngine(board, players);
-    	}
+        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("board.fxml"));
+        loader.setRoot(gameWindowPane);
+        loader.setControllerFactory(context::getBean);
+
+        try {
+            loader.load();
+        } catch (Exception exception) {
+            ErrorAlert errorAlert = new ErrorAlert();
+            errorAlert.exit();
+        }
+
+        Scene content = new Scene(gameWindowPane, 1200, 900);
+        content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(styles)).toString());
+
+        stage.setScene(content);
+        stage.setTitle(windowTitle);
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(View.class.getResource(windowIcon).toString()));
+        stage.show();
     }
 }
