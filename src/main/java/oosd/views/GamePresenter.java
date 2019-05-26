@@ -41,6 +41,12 @@ public class GamePresenter implements Initializable {
     @FXML
     private Button forfeitButton;
 
+    @FXML
+    private Button saveGameButton;
+
+    @FXML
+    private Button restoreGameButton;
+
     private GameController gameController;
 
     @Override
@@ -79,5 +85,13 @@ public class GamePresenter implements Initializable {
 
     public Button getForfeitButton() {
         return forfeitButton;
+    }
+
+    public Button getSaveGameButton() {
+        return saveGameButton;
+    }
+
+    public Button getRestoreGameButton() {
+        return restoreGameButton;
     }
 }

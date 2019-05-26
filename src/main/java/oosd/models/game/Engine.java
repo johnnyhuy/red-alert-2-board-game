@@ -143,4 +143,21 @@ public interface Engine {
      * @param snapshot to restore from
      */
     void restore(Snapshot snapshot);
+
+    /**
+     * Save the game at a certain state.
+     */
+    void saveGame();
+
+    /**
+     * Check if the game can save.
+     *
+     * @return boolean
+     */
+    boolean saveGameExists();
+
+    /**
+     * Restore a game.
+     */
+    void restoreGame();
 }

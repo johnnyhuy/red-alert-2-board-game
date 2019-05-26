@@ -295,6 +295,21 @@ public class GameEngine implements Engine {
         }
     }
 
+    @Override
+    public void saveGame() {
+        history.save();
+    }
+
+    @Override
+    public boolean saveGameExists() {
+        return history.saveExists();
+    }
+
+    @Override
+    public void restoreGame() {
+        history.restore();
+    }
+
     /**
      * Set the selected piece on in the game.
      *

@@ -91,4 +91,19 @@ public class GameController {
         welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, let's start again!");
         boardView.updateBoard();
     }
+
+    /**
+     * Restore a game.
+     */
+    public void restoreGame() {
+        engine.restoreGame();
+        boardView.updateBoard();
+    }
+
+    /**
+     * Save a game.
+     */
+    public void saveGame() {
+        engine.saveGame();
+    }
 }

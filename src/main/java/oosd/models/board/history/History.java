@@ -5,6 +5,7 @@ import oosd.models.game.Engine;
 import java.util.Stack;
 
 import static oosd.helpers.ListHelper.isEmpty;
+import static oosd.helpers.ObjectHelper.exists;
 
 /**
  * Design pattern: used the command pattern here to encapsulate specific functions
@@ -16,9 +17,34 @@ import static oosd.helpers.ListHelper.isEmpty;
 public class History {
     private Stack<Snapshot> history = new Stack<>();
     private final Engine engine;
+    private Snapshot savedSnapshot;
 
     public History(Engine engine) {
         this.engine = engine;
+    }
+
+    /**
+     * Whether save snapshot exists.
+     *
+     * @return boolean
+     */
+    public boolean saveExists() {
+        return exists(savedSnapshot);
+    }
+
+    /**
+     * Save a the start of the stack.
+     */
+    public void save() {
+        this.savedSnapshot = engine.save();
+    }
+
+    /**
+     * Restore from a saved snapshot.
+     */
+    public void restore() {
+        engine.restore(this.savedSnapshot);
+        this.savedSnapshot = null;
     }
 
     /**
