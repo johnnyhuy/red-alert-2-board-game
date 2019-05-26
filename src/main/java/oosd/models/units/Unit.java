@@ -133,8 +133,26 @@ public abstract class Unit implements Savable<Unit> {
      *
      * @return boolean
      */
-    public boolean getDefendStatus(Piece piece) {
+    public boolean canDefend(Piece piece) {
         return this.defendCount != 0 && piece.equals(this.defendingPiece);
+    }
+
+    /**
+     * Get the defending piece.
+     *
+     * @return piece object
+     */
+    public Piece getDefendingPiece() {
+        return this.defendingPiece;
+    }
+
+    /**
+     * Set the defending piece.
+     *
+     * @param defendingPiece piece object
+     */
+    public void setDefendingPiece(Piece defendingPiece) {
+        this.defendingPiece = defendingPiece;
     }
 
     /**
@@ -142,7 +160,7 @@ public abstract class Unit implements Savable<Unit> {
      *
      * @return number of defend turns
      */
-    protected int getDefendTurns() {
+    public int getDefendTurns() {
         return this.defendCount;
     }
 

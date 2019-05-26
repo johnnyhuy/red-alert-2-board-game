@@ -61,7 +61,7 @@ public class LinearUnitBehaviour extends UnitBehaviour {
             Piece validatingPiece = board.getPiece(columns, rows);
             Unit unit = validatingPiece.getUnit();
             if (exists(unit)) {
-                if (unit.getPlayer().equals(engine.getTurn()) || unit.getDefendStatus(validatingPiece) || !piece.getUnit().isWinnable(unit)) {
+                if (unit.getPlayer().equals(engine.getTurn()) || unit.canDefend(validatingPiece) || !piece.getUnit().isWinnable(unit)) {
                     return;
                 } else {
                     enemyFound = true;
