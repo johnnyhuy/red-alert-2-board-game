@@ -93,7 +93,7 @@ class GameEngineTest {
         engine.defend(board.getPiece(0, 0));
 
         // Assert
-        assertTrue(unit.getDefendStatus());
+        assertTrue(unit.getDefendStatus(board.getPiece(0, 0)));
         assertEquals(playerTwo, engine.getTurn());
     }
 
@@ -194,8 +194,8 @@ class GameEngineTest {
         Board afterBoard = engine.getBoard();
 
         // Assert
-        assertFalse(afterBoard.getPiece(0, 0).getUnit().getDefendStatus());
-        assertFalse(afterBoard.getPiece(1, 1).getUnit().getDefendStatus());
+        assertFalse(afterBoard.getPiece(0, 0).getUnit().getDefendStatus(afterBoard.getPiece(0, 0)));
+        assertFalse(afterBoard.getPiece(1, 1).getUnit().getDefendStatus(afterBoard.getPiece(1, 1)));
     }
 
     @Test
@@ -291,16 +291,18 @@ class GameEngineTest {
         List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
+        Unit unitTwo = new GISoldier(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
-        board.getPiece(0, 0).getUnit().startDefending();
+        board.getPiece(1, 1).setUnit(unitTwo);
+        board.getPiece(0, 0).getUnit().startDefending(board.getPiece(0, 0));
         Engine engine = new GameEngine(board, players);
 
         // Act
-        engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
-        engine.move(board.getPiece(1, 0), board.getPiece(0, 0));
+        engine.move(board.getPiece(1, 1), board.getPiece(0, 1));
+        engine.move(board.getPiece(0, 1), board.getPiece(1, 1));
 
         // Assert
-        assertFalse(unit.getDefendStatus());
+        assertFalse(unit.getDefendStatus(board.getPiece(0, 0)));
     }
 
     @Test
@@ -403,8 +405,10 @@ class GameEngineTest {
         assertEquals(0, playerTwo.getWins());
         assertEquals(0, playerOne.getLosses());
         assertEquals(1, playerTwo.getLosses());
-        assertEquals(unit, afterBoard.getPiece(0, 0).getUnit());
-        assertEquals(unitTwo, afterBoard.getPiece(1, 1).getUnit());
+        assertEquals(false, afterBoard.getPiece(0, 0).getUnit().getDefendStatus(afterBoard.getPiece(0, 0)));
+        assertEquals(false, afterBoard.getPiece(0, 0).getUnit().isCaptured());
+        assertEquals(false, afterBoard.getPiece(1, 1).getUnit().getDefendStatus(afterBoard.getPiece(1, 1)));
+        assertEquals(false, afterBoard.getPiece(1, 1).getUnit().isCaptured());
     }
 
     @Test

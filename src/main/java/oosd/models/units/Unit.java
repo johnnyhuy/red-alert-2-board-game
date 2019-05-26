@@ -1,6 +1,7 @@
 package oosd.models.units;
 
 import oosd.models.Savable;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -20,6 +21,7 @@ public abstract class Unit implements Savable<Unit> {
     private Player player;
     private boolean captured;
     private int defendCount = 0;
+    private Piece defendingPiece;
 
     public Unit() {
         this.captured = false;
@@ -110,15 +112,20 @@ public abstract class Unit implements Savable<Unit> {
     /**
      * Start defending the unit.
      */
-    public void startDefending() {
-        defendCount = getDefaultDefendTurns();
+    public void startDefending(Piece piece) {
+        this.defendCount = getDefaultDefendTurns();
+        this.defendingPiece = piece;
     }
 
     /**
      * Decrement the amount of turns.
      */
     public void decrementDefendTurns() {
-        defendCount--;
+        this.defendCount--;
+
+        if (defendCount == 0) {
+            this.defendingPiece = null;
+        }
     }
 
     /**
@@ -126,8 +133,8 @@ public abstract class Unit implements Savable<Unit> {
      *
      * @return boolean
      */
-    public boolean getDefendStatus() {
-        return defendCount != 0;
+    public boolean getDefendStatus(Piece piece) {
+        return this.defendCount != 0 && piece.equals(this.defendingPiece);
     }
 
     /**
@@ -144,7 +151,7 @@ public abstract class Unit implements Savable<Unit> {
      *
      * @param defendTurns number of turns to set
      */
-    private void setDefendTurns(int defendTurns) {
+    public void setDefendTurns(int defendTurns) {
         defendCount = defendTurns;
     }
 
@@ -177,7 +184,10 @@ public abstract class Unit implements Savable<Unit> {
         }
 
         return new EqualsBuilder()
+                .append(isCaptured(), unit.isCaptured())
+                .append(getPlayer(), unit.getPlayer())
                 .append(getImage(), unit.getImage())
+                .append(getDefendTurns(), unit.getDefendTurns())
                 .append(getName(), unit.getName())
                 .isEquals();
     }
@@ -190,7 +200,10 @@ public abstract class Unit implements Savable<Unit> {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 31)
+                .append(isCaptured())
+                .append(getPlayer())
                 .append(getImage())
+                .append(getDefendTurns())
                 .append(getName())
                 .toHashCode();
     }

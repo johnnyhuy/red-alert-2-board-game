@@ -58,16 +58,17 @@ public class LinearUnitBehaviour extends UnitBehaviour {
                 return;
             }
 
-            Unit unit = board.getPiece(columns, rows).getUnit();
+            Piece validatingPiece = board.getPiece(columns, rows);
+            Unit unit = validatingPiece.getUnit();
             if (exists(unit)) {
-                if (unit.getPlayer().equals(engine.getTurn()) || unit.getDefendStatus() || !piece.getUnit().isWinnable(unit)) {
+                if (unit.getPlayer().equals(engine.getTurn()) || unit.getDefendStatus(validatingPiece) || !piece.getUnit().isWinnable(unit)) {
                     return;
                 } else {
                     enemyFound = true;
                 }
             }
 
-            validMoves.add(board.getPiece(columns, rows));
+            validMoves.add(validatingPiece);
             move++;
         }
     }
