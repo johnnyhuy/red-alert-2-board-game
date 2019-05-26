@@ -188,6 +188,11 @@ public class Player implements Savable<Player> {
         turns++;
     }
 
+    /**
+     * Set the turns.
+     *
+     * @param turns number of turns
+     */
     public void setTurns(int turns) {
         this.turns = turns;
     }
