@@ -152,27 +152,6 @@ public class BoardView implements View {
         forfeitButton.setOnMouseExited(event -> forfeitButton.setGraphic(new ToolbarIcon("shield")));
     }
 
-    public void moveUnit(Piece selectedPiece, Piece clickedPiece) {
-        Board board = engine.getBoard();
-        board.apply((column, row) -> {
-            Piece piece = board.getPiece(column, row);
-            Unit unit = piece.getUnit();
-
-            defendPieces.get(piece).hide();
-            selectionPieces.get(piece).hide();
-
-            if (exists(unit) && unit.getDefendStatus()) {
-                defendPieces.get(piece).show();
-            }
-        });
-
-        selectionPieces.get(selectedPiece).hide();
-        unitPieces.get(selectedPiece).hide();
-        unitPieces.get(clickedPiece).show();
-        unitPieces.get(clickedPiece).setFill(boardFactory.createImage(clickedPiece.getUnit().getImage()));
-        playerTurn.setText("Player turn: " + engine.getTurn().getPlayerName());
-    }
-
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
         if (exists(selectedPiece)) {
             selectionPieces.get(selectedPiece).hide();
@@ -199,32 +178,7 @@ public class BoardView implements View {
         selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
     }
 
-    public void defendUnit(Piece piece) {
-        Board board = engine.getBoard();
-        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
-
-        defendPieces.get(piece).show();
-        playerTurn.setText("Player turn: " + engine.getTurn().getPlayerName());
-    }
-
-    public void attackUnit(Piece selectedPiece, Piece piece) {
-        Board board = engine.getBoard();
-        board.apply((column, row) -> selectionPieces.get(board.getPiece(column, row)).hide());
-
-        unitPieces.get(selectedPiece).hide();
-        unitPieces.get(piece).setFill(boardFactory.createImage(piece.getUnit().getImage()));
-        playerTurn.setText("Player turn: " + engine.getTurn().getPlayerName());
-    }
-
-    public void undoMove() {
-        updateBoard();
-    }
-
-    public void resetGame() {
-        updateBoard();
-    }
-
-    private void updateBoard() {
+    public void updateBoard() {
         Board board = engine.getBoard();
         board.apply((column, row) -> {
             Piece piece = board.getPiece(column, row);

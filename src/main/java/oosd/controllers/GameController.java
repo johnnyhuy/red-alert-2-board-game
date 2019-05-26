@@ -51,7 +51,7 @@ public class GameController {
      */
     public void move(Piece selectedPiece, Piece piece) {
         engine.move(selectedPiece, piece);
-        boardView.moveUnit(selectedPiece, piece);
+        boardView.updateBoard();
     }
 
     /**
@@ -61,7 +61,7 @@ public class GameController {
      */
     public void defend(Piece piece) {
         engine.defend(piece);
-        boardView.defendUnit(piece);
+        boardView.updateBoard();
     }
 
     /**
@@ -72,7 +72,7 @@ public class GameController {
      */
     public void attack(Piece selectedPiece, Piece piece) {
         engine.attack(selectedPiece, piece);
-        boardView.attackUnit(selectedPiece, piece);
+        boardView.updateBoard();
     }
 
     /**
@@ -80,7 +80,7 @@ public class GameController {
      */
     public void undo() {
         engine.undoTurn();
-        boardView.undoMove();
+        boardView.updateBoard();
     }
 
     /**
@@ -89,6 +89,6 @@ public class GameController {
     public void forfeit() {
         engine.forfeitGame();
         welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, let's start again!");
-        boardView.resetGame();
+        boardView.updateBoard();
     }
 }
