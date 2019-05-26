@@ -146,10 +146,10 @@ public class BoardView implements View {
 
         Button forfeitButton = gamePresenter.getForfeitButton();
         forfeitButton.setOnMouseClicked(new ForfeitClickHandler(engine, gameController));
-        forfeitButton.setGraphic(new ToolbarIcon("undo"));
-        forfeitButton.setOnMousePressed(event -> forfeitButton.setGraphic(new ToolbarIcon("shield_active")));
-        forfeitButton.setOnMouseEntered(event -> forfeitButton.setGraphic(new ToolbarIcon("shield_hover")));
-        forfeitButton.setOnMouseExited(event -> forfeitButton.setGraphic(new ToolbarIcon("shield")));
+        forfeitButton.setGraphic(new ToolbarIcon("skull"));
+        forfeitButton.setOnMousePressed(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_active")));
+        forfeitButton.setOnMouseEntered(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_hover")));
+        forfeitButton.setOnMouseExited(event -> forfeitButton.setGraphic(new ToolbarIcon("skull")));
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
