@@ -135,7 +135,7 @@ public class GameEngine implements Engine {
 
         boolean isValidMove = this.getSelected().isValidMove(this, targetPiece);
         boolean isEnemyUnit = !targetPiece.getUnit().getPlayer().equals(this.getTurn());
-        boolean isDefensive = targetPiece.getUnit().getDefendStatus(targetPiece);
+        boolean isDefensive = targetPiece.getUnit().canDefend(targetPiece);
 
         return isEnemyUnit && !isDefensive && isValidMove;
     }
@@ -148,7 +148,7 @@ public class GameEngine implements Engine {
     @Override
     public boolean canSelect(Piece piece) {
         boolean isFriendlyUnit = piece.getUnit().getPlayer().equals(getTurn());
-        boolean isDefensive = piece.getUnit().getDefendStatus(piece);
+        boolean isDefensive = piece.getUnit().canDefend(piece);
 
         return !isDefensive && isFriendlyUnit;
     }
@@ -263,6 +263,8 @@ public class GameEngine implements Engine {
                     Unit savedUnit = unit.save();
                     savedUnit.setPlayer(player);
                     savedUnit.setCaptured(unit.isCaptured());
+                    savedUnit.setDefendTurns(unit.getDefendTurns());
+                    savedUnit.setDefendingPiece(unit.getDefendingPiece());
                     player.addUnit(savedUnit);
                     savedBoard.getPiece(column, row).setUnit(savedUnit);
                 }
@@ -339,7 +341,7 @@ public class GameEngine implements Engine {
             Piece piece = board.getPiece(column, row);
             Unit unit = piece.getUnit();
 
-            if (exists(unit) && unit.getDefendStatus(piece)) {
+            if (exists(unit) && unit.canDefend(piece)) {
                 unit.decrementDefendTurns();
             }
         });

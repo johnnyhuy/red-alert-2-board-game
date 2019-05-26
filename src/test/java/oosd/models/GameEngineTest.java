@@ -93,7 +93,7 @@ class GameEngineTest {
         engine.defend(board.getPiece(0, 0));
 
         // Assert
-        assertTrue(unit.getDefendStatus(board.getPiece(0, 0)));
+        assertTrue(unit.canDefend(board.getPiece(0, 0)));
         assertEquals(playerTwo, engine.getTurn());
     }
 
@@ -194,8 +194,8 @@ class GameEngineTest {
         Board afterBoard = engine.getBoard();
 
         // Assert
-        assertFalse(afterBoard.getPiece(0, 0).getUnit().getDefendStatus(afterBoard.getPiece(0, 0)));
-        assertFalse(afterBoard.getPiece(1, 1).getUnit().getDefendStatus(afterBoard.getPiece(1, 1)));
+        assertFalse(afterBoard.getPiece(0, 0).getUnit().canDefend(afterBoard.getPiece(0, 0)));
+        assertFalse(afterBoard.getPiece(1, 1).getUnit().canDefend(afterBoard.getPiece(1, 1)));
     }
 
     @Test
@@ -302,7 +302,7 @@ class GameEngineTest {
         engine.move(board.getPiece(0, 1), board.getPiece(1, 1));
 
         // Assert
-        assertFalse(unit.getDefendStatus(board.getPiece(0, 0)));
+        assertFalse(unit.canDefend(board.getPiece(0, 0)));
     }
 
     @Test
@@ -405,9 +405,9 @@ class GameEngineTest {
         assertEquals(0, playerTwo.getWins());
         assertEquals(0, playerOne.getLosses());
         assertEquals(1, playerTwo.getLosses());
-        assertEquals(false, afterBoard.getPiece(0, 0).getUnit().getDefendStatus(afterBoard.getPiece(0, 0)));
+        assertEquals(false, afterBoard.getPiece(0, 0).getUnit().canDefend(afterBoard.getPiece(0, 0)));
         assertEquals(false, afterBoard.getPiece(0, 0).getUnit().isCaptured());
-        assertEquals(false, afterBoard.getPiece(1, 1).getUnit().getDefendStatus(afterBoard.getPiece(1, 1)));
+        assertEquals(false, afterBoard.getPiece(1, 1).getUnit().canDefend(afterBoard.getPiece(1, 1)));
         assertEquals(false, afterBoard.getPiece(1, 1).getUnit().isCaptured());
     }
 
@@ -611,21 +611,42 @@ class GameEngineTest {
         // Act
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.move(board.getPiece(0, 1), board.getPiece(3, 0));
-        boolean canSaveBefore = engine.saveGameExists();
+        boolean saveExistsBefore = engine.saveGameExists();
         engine.saveGame();
         engine.move(board.getPiece(1, 0), board.getPiece(2, 0));
         engine.move(board.getPiece(3, 0), board.getPiece(3, 3));
-        boolean canSaveAfterSave = engine.saveGameExists();
+        boolean saveExistsAfterSave = engine.saveGameExists();
         engine.restoreGame();
-        boolean canSaveAfterRestore = engine.saveGameExists();
+        boolean saveExistsAfterRestore = engine.saveGameExists();
         Board afterBoard = engine.getBoard();
 
         // Assert
-        assertTrue(canSaveBefore);
-        assertFalse(canSaveAfterSave);
-        assertTrue(canSaveAfterRestore);
+        assertFalse(saveExistsBefore);
+        assertTrue(saveExistsAfterSave);
+        assertFalse(saveExistsAfterRestore);
         assertNotNull(afterBoard.getPiece(3, 0).getUnit());
         assertNotNull(afterBoard.getPiece(1, 0).getUnit());
+    }
+
+    @Test
+    void testSaveGameAndRestoreOnDefend() {
+        // Arrange
+        Player playerOne = new Player("Johnny Dave");
+        Player playerTwo = new Player("Jane Doe");
+        List<Player> players = Arrays.asList(playerOne, playerTwo);
+        Board board = new GameBoard(4, 4);
+        Unit unit = new GISoldier(playerOne);
+        board.getPiece(0, 0).setUnit(unit);
+        Engine engine = new GameEngine(board, players, 2);
+
+        // Act
+        engine.defend(board.getPiece(0, 0));
+        engine.saveGame();
+        engine.restoreGame();
+        Board afterBoard = engine.getBoard();
+
+        // Assert
+        assertTrue(afterBoard.getPiece(0, 0).getUnit().canDefend(afterBoard.getPiece(0, 0)));
     }
 
     @Test
