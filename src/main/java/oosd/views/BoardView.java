@@ -194,7 +194,7 @@ public class BoardView implements View {
             if (exists(unit)) {
                 unitPiecePolygon.setUnitImage(unit);
 
-                if (unit.getDefendStatus()) {
+                if (unit.getDefendStatus(piece)) {
                     defendPieces.get(piece).show();
                 } else {
                     defendPieces.get(piece).hide();
