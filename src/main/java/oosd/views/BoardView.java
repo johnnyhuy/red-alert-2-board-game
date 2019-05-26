@@ -3,6 +3,7 @@ package oosd.views;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import oosd.controllers.GameController;
@@ -36,11 +37,11 @@ import static oosd.helpers.ObjectHelper.exists;
  */
 @Component
 public class BoardView implements View {
-    private final GamePresenter gamePresenter;
-
-    private final Engine engine;
     @Inject
     private ApplicationContext context;
+
+    private final GamePresenter gamePresenter;
+    private final Engine engine;
     private BoardPane boardPane;
     private GameController gameController;
     private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
@@ -51,6 +52,7 @@ public class BoardView implements View {
     private SidebarPane sidebar;
     private Text playerTurn;
     private ToolbarPane toolbar;
+    private VBox playersBox;
 
     @Inject
     public BoardView(Engine engine, GamePresenter gamePresenter) {
@@ -61,6 +63,7 @@ public class BoardView implements View {
     public void start() {
         this.gameController = gamePresenter.getGameController();
         this.sidebar = gamePresenter.getSidebar();
+        this.playersBox = gamePresenter.getPlayersBox();
         this.playerTurn = sidebar.getPlayerTurnText();
         this.boardPane = gamePresenter.getBoardPane();
         this.toolbar = gamePresenter.getToolbarPane();
@@ -69,6 +72,21 @@ public class BoardView implements View {
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
+
+        for (Player player : engine.getPlayers()) {
+            Text text = new Text();
+            String playerName = player.getPlayerName();
+            int aliveUnits = player.getAliveUnits().size();
+            double wins = player.getWins();
+            double losses = player.getLosses();
+            double ratio = losses != 0 ? wins / losses : 0;
+            text.setFill(Paint.valueOf("#FAFB32"));
+            text.getStyleClass().add("game-text");
+            text.setLayoutX(65);
+            text.setLayoutY(20);
+            text.setText(String.format("\nPlayer: %s\nWin/Lose: %.0f/%.0f (%.2f)\nRemaining units: %d", playerName, wins, losses, ratio, aliveUnits));
+            playersBox.getChildren().add(text);
+        }
 
         Player player = engine.getTurn();
         Text turnCount = gamePresenter.getTurnCount();
