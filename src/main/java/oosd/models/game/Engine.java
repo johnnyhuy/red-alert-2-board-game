@@ -5,6 +5,8 @@ import oosd.models.board.Piece;
 import oosd.models.board.history.Snapshot;
 import oosd.models.player.Player;
 
+import java.util.List;
+
 public interface Engine {
     /**
      * Get the game board.
@@ -160,4 +162,11 @@ public interface Engine {
      * Restore a game.
      */
     void restoreGame();
+
+    /**
+     * Get the players in the game.
+     *
+     * @return list of players in the game
+     */
+    List<Player> getPlayers();
 }

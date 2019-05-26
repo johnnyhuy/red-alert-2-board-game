@@ -312,6 +312,11 @@ public class GameEngine implements Engine {
         history.restore();
     }
 
+    @Override
+    public List<Player> getPlayers() {
+        return this.players;
+    }
+
     /**
      * Set the selected piece on in the game.
      *
@@ -345,14 +350,5 @@ public class GameEngine implements Engine {
                 unit.decrementDefendTurns();
             }
         });
-    }
-
-    /**
-     * Get the players in the game.
-     *
-     * @return list of players in the game
-     */
-    private List<Player> getPlayers() {
-        return this.players;
     }
 }
