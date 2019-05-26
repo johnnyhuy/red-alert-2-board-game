@@ -3,8 +3,10 @@ package oosd.controllers;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.views.BoardView;
-import oosd.views.GamePresenter;
 import oosd.views.WelcomeView;
+import org.springframework.stereotype.Controller;
+
+import javax.inject.Inject;
 
 /**
  * GRASP: The controller
@@ -12,15 +14,17 @@ import oosd.views.WelcomeView;
  * Acts as a middleman that delegates tasks to other objects.
  * Cleanly separates the user interface (view) from the business objects (model)
  */
-public class GameController extends Controller {
+@Controller
+public class GameController {
     private final Engine engine;
     private WelcomeView welcomeView;
     private BoardView boardView;
 
-    public GameController(Engine engine, GamePresenter gamePresenter) {
+    @Inject
+    public GameController(Engine engine, BoardView boardView, WelcomeView welcomeView) {
         this.engine = engine;
-        this.boardView = new BoardView(engine, gamePresenter, this);
-        this.welcomeView = new WelcomeView();
+        this.boardView = boardView;
+        this.welcomeView = welcomeView;
     }
 
     public void start() {

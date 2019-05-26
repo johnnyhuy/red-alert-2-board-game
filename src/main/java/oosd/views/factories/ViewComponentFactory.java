@@ -4,12 +4,15 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
+import oosd.models.game.Engine;
 import oosd.views.View;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 
 /**
@@ -22,11 +25,13 @@ import java.util.HashMap;
  *
  * Design pattern: factory pattern used to produce custom view components for the UI.
  */
+@Component
 public class ViewComponentFactory {
     private Board board;
 
-    public ViewComponentFactory(Board board) {
-        this.board = board;
+    @Inject
+    public ViewComponentFactory(Engine engine) {
+        this.board = engine.getBoard();
     }
 
     public ImagePattern createImage(String imageName) {
