@@ -21,6 +21,8 @@ import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.Hexagon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
+import oosd.views.components.text.PlayerInfoText;
+import oosd.views.components.text.PlayerTurnText;
 import oosd.views.factories.ViewComponentFactory;
 import oosd.views.handlers.*;
 import org.springframework.context.ApplicationContext;
@@ -50,7 +52,7 @@ public class BoardView implements View {
     private HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
     private ViewComponentFactory boardFactory;
     private SidebarPane sidebar;
-    private Text playerTurn;
+    private PlayerTurnText playerTurn;
     private ToolbarPane toolbar;
     private VBox playersBox;
 
@@ -63,10 +65,10 @@ public class BoardView implements View {
     public void start() {
         this.gameController = gamePresenter.getGameController();
         this.sidebar = gamePresenter.getSidebar();
-        this.playersBox = gamePresenter.getPlayersBox();
-        this.playerTurn = sidebar.getPlayerTurnText();
+        this.playersBox = gamePresenter.getPlayers();
+        this.playerTurn = gamePresenter.getPlayerTurn();
         this.boardPane = gamePresenter.getBoardPane();
-        this.toolbar = gamePresenter.getToolbarPane();
+        this.toolbar = gamePresenter.getToolbar();
         this.boardFactory = context.getBean(ViewComponentFactory.class);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
@@ -74,17 +76,7 @@ public class BoardView implements View {
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
 
         for (Player player : engine.getPlayers()) {
-            Text text = new Text();
-            String playerName = player.getPlayerName();
-            int aliveUnits = player.getAliveUnits().size();
-            double wins = player.getWins();
-            double losses = player.getLosses();
-            double ratio = losses != 0 ? wins / losses : 0;
-            text.setFill(Paint.valueOf("#FAFB32"));
-            text.getStyleClass().add("game-text");
-            text.setLayoutX(65);
-            text.setLayoutY(20);
-            text.setText(String.format("\nPlayer: %s\nWin/Lose: %.0f/%.0f (%.2f)\nRemaining units: %d", playerName, wins, losses, ratio, aliveUnits));
+            PlayerInfoText text = new PlayerInfoText(player);
             playersBox.getChildren().add(text);
         }
 
@@ -92,7 +84,7 @@ public class BoardView implements View {
         Text turnCount = gamePresenter.getTurnCount();
 
         if (exists(player)) {
-            playerTurn.setText("Player turn: " + player.getPlayerName());
+            playerTurn.updateTurn(engine);
         }
 
         turnCount.setText("Remaining turns: " + engine.getRemainingTurns());
@@ -126,8 +118,8 @@ public class BoardView implements View {
                 anchor.setLayoutY(y);
 
                 selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
-                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, sidebar));
-                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, sidebar));
+                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
+                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
                 unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
                 group.getChildren().add(anchor);
@@ -149,14 +141,14 @@ public class BoardView implements View {
         boardPane.getChildren().add(group);
 
         Button undoButton = gamePresenter.getUndoButton();
-        undoButton.setOnMouseClicked(new UndoClickHandler(engine, gameController, sidebar));
+        undoButton.setOnMouseClicked(new UndoClickHandler(engine, gameController, gamePresenter));
         undoButton.setGraphic(new ToolbarIcon("undo"));
         undoButton.setOnMousePressed(event -> undoButton.setGraphic(new ToolbarIcon("undo_active")));
         undoButton.setOnMouseEntered(event -> undoButton.setGraphic(new ToolbarIcon("undo_hover")));
         undoButton.setOnMouseExited(event -> undoButton.setGraphic(new ToolbarIcon("undo")));
 
         Button defendButton = gamePresenter.getDefendButton();
-        defendButton.setOnMouseClicked(new DefendClickHandler(engine, gameController, sidebar));
+        defendButton.setOnMouseClicked(new DefendClickHandler(engine, gameController, gamePresenter));
         defendButton.setGraphic(new ToolbarIcon("shield"));
         defendButton.setOnMousePressed(event -> defendButton.setGraphic(new ToolbarIcon("shield_active")));
         defendButton.setOnMouseEntered(event -> defendButton.setGraphic(new ToolbarIcon("shield_hover")));
@@ -219,8 +211,8 @@ public class BoardView implements View {
             Unit unit = piece.getUnit();
 
             selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
-            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, sidebar));
-            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, sidebar));
+            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
+            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
             unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
             if (exists(unit)) {

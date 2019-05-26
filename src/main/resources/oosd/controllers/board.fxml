@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import oosd.views.components.panes.*?>
+<?import oosd.views.components.text.PlayerTurnText?>
+<?import oosd.views.components.text.TurnCountText?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" type="GameWindowPane"
          xmlns="http://javafx.com/javafx/8" fx:controller="oosd.views.GamePresenter">
     <center>
@@ -12,17 +14,17 @@
         </BoardPane>
     </center>
     <right>
-        <SidebarPane fx:id="sidebar" minWidth="255">
+        <SidebarPane fx:id="gamePresenter" minWidth="255">
             <StackPane AnchorPane.topAnchor="6" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0">
-                <Text fx:id="playerTurn" fill="#FAFB32" styleClass="game-text" layoutX="65" layoutY="20"/>
+                <PlayerTurnText fx:id="playerTurn"/>
             </StackPane>
             <VBox fx:id="playersBox" AnchorPane.topAnchor="80" AnchorPane.rightAnchor="30" AnchorPane.leftAnchor="30">
-                <Text fx:id="turnCount" fill="#FAFB32" styleClass="game-text" layoutX="65" layoutY="20"/>
+                <TurnCountText fx:id="turnCount" styleClass="game-text" layoutX="65" layoutY="20"/>
             </VBox>
             <ScrollPane prefHeight="420" AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50"
                         AnchorPane.leftAnchor="50" vbarPolicy="NEVER" hbarPolicy="NEVER">
                 <VBox>
-                    <Text fill="#FAFB32" wrappingWidth="150" text="TestTestTestTestTestTestTestTestTestTestTestTest"
+                    <Text wrappingWidth="150" text="TestTestTestTestTestTestTestTestTestTestTestTest"
                           styleClass="game-text" layoutX="65" layoutY="20"/>
                 </VBox>
             </ScrollPane>

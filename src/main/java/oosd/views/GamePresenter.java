@@ -4,11 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import oosd.controllers.GameController;
 import oosd.views.components.panes.BoardPane;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
+import oosd.views.components.text.PlayerTurnText;
+import oosd.views.components.text.TurnCountText;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 
@@ -31,7 +32,10 @@ public class GamePresenter implements Initializable {
     private BoardPane board;
 
     @FXML
-    private Text turnCount;
+    private TurnCountText turnCount;
+
+    @FXML
+    private PlayerTurnText playerTurn;
 
     @FXML
     private Button undoButton;
@@ -59,7 +63,7 @@ public class GamePresenter implements Initializable {
         gameController.start();
     }
 
-    public ToolbarPane getToolbarPane() {
+    public ToolbarPane getToolbar() {
         return toolbar;
     }
 
@@ -75,7 +79,7 @@ public class GamePresenter implements Initializable {
         return gameController;
     }
 
-    public Text getTurnCount() {
+    public TurnCountText getTurnCount() {
         return turnCount;
     }
 
@@ -99,7 +103,11 @@ public class GamePresenter implements Initializable {
         return restoreGameButton;
     }
 
-    public VBox getPlayersBox() {
+    public VBox getPlayers() {
         return playersBox;
+    }
+
+    public PlayerTurnText getPlayerTurn() {
+        return playerTurn;
     }
 }

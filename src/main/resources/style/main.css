@@ -27,4 +27,5 @@
 
 .game-text {
     -fx-font-weight: bold;
+    -fx-fill: #FAFB32;
 }

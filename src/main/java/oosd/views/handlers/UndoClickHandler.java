@@ -4,17 +4,17 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.game.Engine;
-import oosd.views.components.panes.SidebarPane;
+import oosd.views.GamePresenter;
 
 public class UndoClickHandler implements EventHandler<MouseEvent> {
     private Engine engine;
     private GameController gameController;
-    private SidebarPane sidebar;
+    private GamePresenter gamePresenter;
 
-    public UndoClickHandler(Engine engine, GameController gameController, SidebarPane sidebar) {
+    public UndoClickHandler(Engine engine, GameController gameController, GamePresenter gamePresenter) {
         this.engine = engine;
         this.gameController = gameController;
-        this.sidebar = sidebar;
+        this.gamePresenter = gamePresenter;
     }
 
     @Override
@@ -24,7 +24,6 @@ public class UndoClickHandler implements EventHandler<MouseEvent> {
         }
 
         gameController.undo();
-
-        sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));
+        gamePresenter.getTurnCount().updateTurn(engine);
     }
 }
