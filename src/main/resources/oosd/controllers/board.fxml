@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.*?>
 <?import oosd.views.components.panes.*?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" type="GameWindowPane"
          xmlns="http://javafx.com/javafx/8" fx:controller="oosd.views.GamePresenter">
@@ -18,10 +18,16 @@
             </StackPane>
             <VBox AnchorPane.topAnchor="80" AnchorPane.rightAnchor="30" AnchorPane.leftAnchor="30">
                 <Text fx:id="turnCount" fill="#FAFB32" style="-fx-font-weight: bold" layoutX="65" layoutY="20"/>
+                <Text fx:id="playerOneWins" fill="#FAFB32" style="-fx-font-weight: bold" layoutX="65" layoutY="20"/>
+                <Text fx:id="playerTwoWins" fill="#FAFB32" style="-fx-font-weight: bold" layoutX="65" layoutY="20"/>
             </VBox>
-            <VBox AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50" AnchorPane.leftAnchor="50">
-                <Text fx:id="test" fill="#FAFB32" text="Test" style="-fx-font-weight: bold" layoutX="65" layoutY="20"/>
-            </VBox>
+            <ScrollPane prefHeight="420" AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50"
+                        AnchorPane.leftAnchor="50" vbarPolicy="NEVER" hbarPolicy="NEVER">
+                <VBox>
+                    <Text fill="#FAFB32" wrappingWidth="150" text="TestTestTestTestTestTestTestTestTestTestTestTest"
+                          style="-fx-font-weight: bold" layoutX="65" layoutY="20"/>
+                </VBox>
+            </ScrollPane>
         </SidebarPane>
     </right>
     <bottom>
