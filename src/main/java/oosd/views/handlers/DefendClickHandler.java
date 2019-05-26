@@ -5,19 +5,19 @@ import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-import oosd.views.components.panes.SidebarPane;
+import oosd.views.GamePresenter;
 
 import static oosd.helpers.ObjectHelper.isNull;
 
 public class DefendClickHandler implements EventHandler<MouseEvent> {
     private Engine engine;
     private GameController gameController;
-    private SidebarPane sidebar;
+    private GamePresenter gamePresenter;
 
-    public DefendClickHandler(Engine engine, GameController gameController, SidebarPane sidebar) {
+    public DefendClickHandler(Engine engine, GameController gameController, GamePresenter gamePresenter) {
         this.engine = engine;
         this.gameController = gameController;
-        this.sidebar = sidebar;
+        this.gamePresenter = gamePresenter;
     }
 
     @Override
@@ -29,7 +29,6 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
         }
 
         gameController.defend(selectedPiece);
-
-        sidebar.getTurnCountText().setText(String.format("Remaining turns: %d", engine.getRemainingTurns()));
+        gamePresenter.getTurnCount().updateTurn(engine);
     }
 }
