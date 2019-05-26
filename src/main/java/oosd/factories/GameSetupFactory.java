@@ -10,11 +10,9 @@ public interface GameSetupFactory {
     /**
      * Setup the board.
      *
-     * @param boardColumns columns
-     * @param boardRows    rows
      * @return a board
      */
-    Board createBoard(int boardColumns, int boardRows);
+    Board createBoard();
 
     /**
      * Create players to the game

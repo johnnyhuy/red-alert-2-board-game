@@ -1,9 +1,9 @@
 package oosd.controllers;
 
-import javafx.stage.Stage;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.views.BoardView;
+import oosd.views.GamePresenter;
 import oosd.views.WelcomeView;
 
 /**
@@ -15,20 +15,16 @@ import oosd.views.WelcomeView;
 public class GameController extends Controller {
     private final Engine engine;
     private WelcomeView welcomeView;
-    private Stage primaryStage;
     private BoardView boardView;
 
-    public GameController(Engine engine, Stage primaryStage) {
+    public GameController(Engine engine, GamePresenter gamePresenter) {
         this.engine = engine;
-        this.primaryStage = primaryStage;
+        this.boardView = new BoardView(engine, gamePresenter, this);
+        this.welcomeView = new WelcomeView();
     }
 
-    /**
-     * Startup the game.
-     */
     public void start() {
-        boardView = new BoardView(this, engine, primaryStage);
-        welcomeView = new WelcomeView();
+        boardView.start();
         welcomeView.welcome();
     }
 

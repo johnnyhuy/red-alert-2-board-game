@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InMemoryGameSetupFactory implements GameSetupFactory {
-    public Board createBoard(int boardColumns, int boardRows) {
-        return new GameBoard(boardColumns, boardRows);
+    public Board createBoard() {
+        return new GameBoard(10, 10);
 	}
 
     @Override

@@ -2,7 +2,6 @@ package oosd.views;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
@@ -10,7 +9,6 @@ import oosd.models.game.Engine;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.panes.BoardPane;
-import oosd.views.components.panes.GameWindowPane;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
@@ -31,26 +29,30 @@ import static oosd.helpers.ObjectHelper.exists;
  * The view should only be responsible for managing the user interface (e.g. interacting with the JavaFX library)
  */
 public class BoardView implements View {
-    private final HashMap<Piece, SelectionPiecePolygon> selectionPieces;
-    private final HashMap<Piece, UnitPiecePolygon> unitPieces;
-    private final HashMap<Piece, DefendPieceImage> defendPieces;
-    private final HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
+    private final Engine engine;
+    private final BoardPane boardPane;
     private final GameController gameController;
-    private final ViewComponentFactory boardFactory;
-    private final SidebarPane sidebar;
-    private Engine engine;
+    private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
+    private HashMap<Piece, UnitPiecePolygon> unitPieces;
+    private HashMap<Piece, DefendPieceImage> defendPieces;
+    private HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
+    private ViewComponentFactory boardFactory;
+    private SidebarPane sidebar;
     private Text playerTurn;
+    private ToolbarPane toolbar;
 
-    public BoardView(GameController gameController, Engine engine, Stage primaryStage) {
-        GameWindowPane gameWindowPane = new GameWindowPane(primaryStage);
-        BoardPane boardPane = gameWindowPane.getBoardPane();
-        ToolbarPane toolbar = gameWindowPane.getToolbar();
-
-        this.sidebar = gameWindowPane.getSidebar();
-        this.gameController = gameController;
-        this.engine = engine;
+    public BoardView(Engine engine, GamePresenter gamePresenter, GameController gameController) {
+        this.sidebar = gamePresenter.getSidebar();
         this.playerTurn = sidebar.getPlayerTurnText();
         this.boardFactory = new ViewComponentFactory(engine.getBoard());
+        this.engine = engine;
+        this.gameController = gameController;
+
+        boardPane = gamePresenter.getBoardPane();
+        toolbar = gamePresenter.getToolbarPane();
+    }
+
+    public void start() {
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
