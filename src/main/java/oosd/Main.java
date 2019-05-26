@@ -15,8 +15,6 @@ import java.util.Objects;
  * If a user were to change specific units on the board, they can change it here in the main class.
  */
 public class Main extends Application {
-    private boolean useJSONConfig = true;
-
     /**
      * Boilerplate code for JavaFX.
      *

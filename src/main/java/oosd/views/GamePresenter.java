@@ -1,35 +1,51 @@
 package oosd.views;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import oosd.controllers.GameController;
-import oosd.models.game.Engine;
 import oosd.views.components.panes.BoardPane;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
-import org.springframework.stereotype.Component;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-@Component
-public class GamePresenter implements Presenter {
-    final private Engine engine;
-    private GameController gameController;
+@Controller
+public class GamePresenter implements Initializable {
+    @Inject
+    private ApplicationContext context;
+
     @FXML
     private SidebarPane sidebar;
+
     @FXML
     private ToolbarPane toolbar;
+
     @FXML
     private BoardPane board;
 
-    @Inject
-    public GamePresenter(Engine engine) {
-        this.engine = engine;
-    }
+    @FXML
+    private Text turnCount;
 
     @FXML
+    private Button undoButton;
+
+    @FXML
+    private Button defendButton;
+
+    @FXML
+    private Button forfeitButton;
+
+    private GameController gameController;
+
     @Override
-    public void initialize() {
-        gameController = new GameController(engine, this);
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.gameController = context.getBean(GameController.class);
         gameController.start();
     }
 
@@ -47,5 +63,21 @@ public class GamePresenter implements Presenter {
 
     public GameController getGameController() {
         return gameController;
+    }
+
+    public Text getTurnCount() {
+        return turnCount;
+    }
+
+    public Button getUndoButton() {
+        return undoButton;
+    }
+
+    public Button getDefendButton() {
+        return defendButton;
+    }
+
+    public Button getForfeitButton() {
+        return forfeitButton;
     }
 }
