@@ -34,6 +34,6 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
             gameController.select(selectedPiece, piece);
         }
 
-        gamePresenter.getTurnCount().updateTurn(engine);
+        gamePresenter.getPlayerInfoVBox().update(engine);
     }
 }

@@ -24,6 +24,6 @@ public class UndoClickHandler implements EventHandler<MouseEvent> {
         }
 
         gameController.undo();
-        gamePresenter.getTurnCount().updateTurn(engine);
+        gamePresenter.getPlayerInfoVBox().update(engine);
     }
 }

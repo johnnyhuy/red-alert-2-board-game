@@ -229,6 +229,24 @@ public class Player implements Savable<Player> {
         this.losses++;
     }
 
+    /**
+     * Set the wins.
+     *
+     * @param wins number of wins
+     */
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    /**
+     * Set the number of losses.
+     *
+     * @param losses number of losses
+     */
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
     @Override
     public Player save() {
         return new Player(playerName, undoMoves, turns, wins, losses);

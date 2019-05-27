@@ -29,10 +29,11 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
         }
 
         gameController.defend(selectedPiece);
-        gamePresenter.getTurnCount().updateTurn(engine);
 
         if (engine.getRemainingTurns() == 0) {
             gameController.endGame();
         }
+
+        gamePresenter.getPlayerInfoVBox().update(engine);
     }
 }

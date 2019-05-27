@@ -9,7 +9,7 @@ public class PlayerInfoText extends Text {
         int aliveUnits = player.getAliveUnits().size();
         double wins = player.getWins();
         double losses = player.getLosses();
-        double ratio = losses != 0 ? wins / losses : 0;
+        double ratio = losses != 0 ? wins / losses : wins;
 
         getStyleClass().add("game-text");
         setLayoutX(65);
