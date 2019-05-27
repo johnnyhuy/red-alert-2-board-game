@@ -4,6 +4,7 @@ import oosd.factories.InMemoryGameSetupFactory;
 import oosd.models.board.Board;
 import oosd.models.game.Engine;
 import oosd.models.game.GameEngine;
+import oosd.models.game.GameLogger;
 import oosd.models.player.Player;
 import oosd.views.BoardView;
 import oosd.views.GamePresenter;
@@ -36,12 +37,17 @@ public class Config {
 
     @Bean
     public GamePresenter gamePresenter() {
-        return new GamePresenter();
+        return new GamePresenter(context.getBean(Engine.class), context.getBean(GameLogger.class));
+    }
+
+    @Bean
+    public GameLogger gameLogger() {
+        return new GameLogger();
     }
 
     @Bean
     public BoardView boardView() {
-        return new BoardView(context.getBean(Engine.class), context.getBean(GamePresenter.class));
+        return new BoardView(context.getBean(Engine.class), context.getBean(GamePresenter.class), context.getBean(GameLogger.class));
     }
 
     @Bean

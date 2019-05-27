@@ -3,7 +3,12 @@ package oosd.views;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import oosd.controllers.GameController;
+import oosd.models.game.Engine;
+import oosd.models.game.GameLogger;
+import oosd.models.game.Log;
 import oosd.views.components.panes.BoardPane;
 import oosd.views.components.panes.PlayerInfoVBox;
 import oosd.views.components.panes.SidebarPane;
@@ -55,7 +60,18 @@ public class GamePresenter implements Initializable {
     @FXML
     private PlayerInfoVBox playerInfoVBox;
 
+    @FXML
+    private VBox gameLogVBox;
+
     private GameController gameController;
+    private Engine engine;
+    private GameLogger gameLogger;
+
+    @Inject
+    public GamePresenter(Engine engine, GameLogger gameLogger) {
+        this.engine = engine;
+        this.gameLogger = gameLogger;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,11 +79,26 @@ public class GamePresenter implements Initializable {
         gameController.start();
     }
 
-    public ToolbarPane getToolbar() {
+    public void update() {
+        getGameLogVBox().getChildren().clear();
+
+        for (Log log : gameLogger.getLogs()) {
+            Text text = new Text();
+            text.setText(log.getText());
+            text.setFill(log.getColor());
+            text.getStyleClass().add("game-text");
+            text.setWrappingWidth(150);
+            getGameLogVBox().getChildren().add(text);
+        }
+
+        getPlayerInfoVBox().update(engine);
+    }
+
+    public ToolbarPane getToolbarPane() {
         return toolbar;
     }
 
-    public SidebarPane getSidebar() {
+    public SidebarPane getSidebarPane() {
         return sidebar;
     }
 
@@ -79,7 +110,7 @@ public class GamePresenter implements Initializable {
         return gameController;
     }
 
-    public TurnCountText getTurnCount() {
+    public TurnCountText getTurnCountText() {
         return turnCount;
     }
 
@@ -109,5 +140,9 @@ public class GamePresenter implements Initializable {
 
     public PlayerTurnText getPlayerTurn() {
         return playerTurn;
+    }
+
+    public VBox getGameLogVBox() {
+        return gameLogVBox;
     }
 }

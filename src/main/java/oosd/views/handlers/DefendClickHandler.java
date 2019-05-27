@@ -34,6 +34,6 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
             gameController.endGame();
         }
 
-        gamePresenter.getPlayerInfoVBox().update(engine);
+        gamePresenter.update();
     }
 }
