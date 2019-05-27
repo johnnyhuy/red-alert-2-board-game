@@ -30,10 +30,10 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
             gameController.move(selectedPiece, piece);
         }
 
-        gamePresenter.getTurnCount().updateTurn(engine);
-
         if (engine.getRemainingTurns() == 0) {
             gameController.endGame();
         }
+
+        gamePresenter.getPlayerInfoVBox().update(engine);
     }
 }

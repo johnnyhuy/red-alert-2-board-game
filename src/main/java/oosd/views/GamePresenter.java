@@ -3,9 +3,9 @@ package oosd.views;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import oosd.controllers.GameController;
 import oosd.views.components.panes.BoardPane;
+import oosd.views.components.panes.PlayerInfoVBox;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
 import oosd.views.components.text.PlayerTurnText;
@@ -53,7 +53,7 @@ public class GamePresenter implements Initializable {
     private Button restoreGameButton;
 
     @FXML
-    private VBox playersBox;
+    private PlayerInfoVBox playerInfoVBox;
 
     private GameController gameController;
 
@@ -103,8 +103,8 @@ public class GamePresenter implements Initializable {
         return restoreGameButton;
     }
 
-    public VBox getPlayers() {
-        return playersBox;
+    public PlayerInfoVBox getPlayerInfoVBox() {
+        return playerInfoVBox;
     }
 
     public PlayerTurnText getPlayerTurn() {

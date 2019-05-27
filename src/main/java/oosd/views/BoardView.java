@@ -3,25 +3,22 @@ package oosd.views;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.images.ToolbarIcon;
 import oosd.views.components.panes.BoardPane;
+import oosd.views.components.panes.PlayerInfoVBox;
 import oosd.views.components.panes.SidebarPane;
 import oosd.views.components.panes.ToolbarPane;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.Hexagon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
-import oosd.views.components.text.PlayerInfoText;
 import oosd.views.components.text.PlayerTurnText;
 import oosd.views.factories.ViewComponentFactory;
 import oosd.views.handlers.*;
@@ -54,7 +51,7 @@ public class BoardView implements View {
     private SidebarPane sidebar;
     private PlayerTurnText playerTurn;
     private ToolbarPane toolbar;
-    private VBox playersBox;
+    private PlayerInfoVBox playerInfoVBox;
 
     @Inject
     public BoardView(Engine engine, GamePresenter gamePresenter) {
@@ -65,7 +62,7 @@ public class BoardView implements View {
     public void start() {
         this.gameController = gamePresenter.getGameController();
         this.sidebar = gamePresenter.getSidebar();
-        this.playersBox = gamePresenter.getPlayers();
+        this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
         this.playerTurn = gamePresenter.getPlayerTurn();
         this.boardPane = gamePresenter.getBoardPane();
         this.toolbar = gamePresenter.getToolbar();
@@ -74,20 +71,9 @@ public class BoardView implements View {
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
+        this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
 
-        for (Player player : engine.getPlayers()) {
-            PlayerInfoText text = new PlayerInfoText(player);
-            playersBox.getChildren().add(text);
-        }
-
-        Player player = engine.getTurn();
-        Text turnCount = gamePresenter.getTurnCount();
-
-        if (exists(player)) {
-            playerTurn.updateTurn(engine);
-        }
-
-        turnCount.setText("Remaining turns: " + engine.getRemainingTurns());
+        playerInfoVBox.update(engine);
 
         Board board = engine.getBoard();
         double x = 0;

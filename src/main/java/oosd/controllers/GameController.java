@@ -113,6 +113,7 @@ public class GameController {
     public void endGame() {
         engine.endGame();
         engine.resetGame();
+        boardView.updateBoard();
         welcomeView.welcome(String.format("Player %s wins!", engine.getWinningPlayer().getPlayerName()), "End game! lets start again!");
     }
 }

@@ -1,6 +1,6 @@
 package oosd;
 
-import oosd.factories.JsonGameSetupFactory;
+import oosd.factories.InMemoryGameSetupFactory;
 import oosd.models.board.Board;
 import oosd.models.game.Engine;
 import oosd.models.game.GameEngine;
@@ -28,7 +28,7 @@ public class Config {
 
     @Bean
     public Engine engine() {
-        JsonGameSetupFactory factoryJSON = new JsonGameSetupFactory();
+        InMemoryGameSetupFactory factoryJSON = new InMemoryGameSetupFactory();
         Board board = factoryJSON.createBoard();
         List<Player> players = factoryJSON.createPlayers(board);
         return new GameEngine(board, players);
