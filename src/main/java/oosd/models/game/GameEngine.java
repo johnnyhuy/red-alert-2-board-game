@@ -265,6 +265,7 @@ public class GameEngine implements Engine {
 
     @Override
     public void restore(Snapshot snapshot) {
+        // TODO: restore should reset turns on restore
         for (Player oldPlayer : getPlayers()) {
             for (Player newPlayer : snapshot.getPlayers()) {
                 if (newPlayer.equals(oldPlayer)) {

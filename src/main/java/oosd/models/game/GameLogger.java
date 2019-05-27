@@ -9,7 +9,7 @@ public class GameLogger {
     private List<Log> logs = new ArrayList<>();
 
     public void log(String text) {
-        log(text, Color.BLACK);
+        log(text, Color.valueOf("#FAFB32"));
     }
 
     public void log(String text, Color color) {
