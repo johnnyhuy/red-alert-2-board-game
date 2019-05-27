@@ -196,7 +196,7 @@ public class BoardView implements View {
             SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
             Unit unit = piece.getUnit();
 
-            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece, gamePresenter));
             selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
             unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
             unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
