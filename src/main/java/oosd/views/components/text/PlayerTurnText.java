@@ -5,7 +5,7 @@ import oosd.models.game.Engine;
 
 public class PlayerTurnText extends Text {
     public PlayerTurnText() {
-        getStyleClass().add("game-text");
+        getStyleClass().add("game-text-yellow");
         setLayoutX(65);
         setLayoutY(20);
     }

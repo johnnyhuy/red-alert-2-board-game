@@ -25,7 +25,11 @@
     -fx-background-color: transparent;
 }
 
+.game-text-yellow {
+    -fx-fill: #FAFB32;
+    -fx-font-weight: bold;
+}
+
 .game-text {
     -fx-font-weight: bold;
-    -fx-fill: #FAFB32;
 }

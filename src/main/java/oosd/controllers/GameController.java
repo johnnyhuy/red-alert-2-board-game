@@ -1,5 +1,6 @@
 package oosd.controllers;
 
+import javafx.scene.paint.Color;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.models.game.GameLogger;
@@ -55,7 +56,7 @@ public class GameController {
      * @param piece         object
      */
     public void move(Piece selectedPiece, Piece piece) {
-        gameLogger.log(String.format("%s moved %s unit", engine.getTurn().getPlayerName(), selectedPiece.getUnit().getName()));
+        gameLogger.log(String.format("%s moved %s unit", engine.getTurn().getPlayerName(), selectedPiece.getUnit().getName()), Color.BLUE);
         engine.move(selectedPiece, piece);
         boardView.updateBoard();
     }
@@ -66,7 +67,7 @@ public class GameController {
      * @param piece object
      */
     public void defend(Piece piece) {
-        gameLogger.log(String.format("%s defended %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()));
+        gameLogger.log(String.format("%s defended %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()), Color.GREEN);
         engine.defend(piece);
         boardView.updateBoard();
     }
@@ -78,7 +79,7 @@ public class GameController {
      * @param piece         object
      */
     public void attack(Piece selectedPiece, Piece piece) {
-        gameLogger.log(String.format("%s attacked %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()));
+        gameLogger.log(String.format("%s attacked %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()), Color.RED);
         engine.attack(selectedPiece, piece);
         boardView.updateBoard();
     }
@@ -88,7 +89,7 @@ public class GameController {
      */
     public void undo() {
         Player player = engine.getTurn();
-        gameLogger.log(String.format("%s undone a move %d/3 times", player.getPlayerName(), player.getUndoMoves()));
+        gameLogger.log(String.format("%s undone a move %d/3 times", player.getPlayerName(), player.getUndoMoves()), Color.PURPLE);
         engine.undoTurn();
         boardView.updateBoard();
     }
@@ -97,7 +98,7 @@ public class GameController {
      * Forfeit the game.
      */
     public void forfeit() {
-        gameLogger.log(String.format("%s forfeited the game", engine.getTurn().getPlayerName()));
+        gameLogger.log(String.format("%s forfeited the game", engine.getTurn().getPlayerName()), Color.RED);
         engine.forfeitGame();
         welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, lets start again!");
         boardView.updateBoard();
@@ -107,7 +108,7 @@ public class GameController {
      * Restore a game.
      */
     public void restoreGame() {
-        gameLogger.log(String.format("%s restored a game", engine.getTurn().getPlayerName()));
+        gameLogger.log(String.format("%s restored a game", engine.getTurn().getPlayerName()), Color.GREEN);
         engine.restoreGame();
         boardView.updateBoard();
     }
@@ -116,7 +117,7 @@ public class GameController {
      * Save a game.
      */
     public void saveGame() {
-        gameLogger.log(String.format("%s saved a game", engine.getTurn().getPlayerName()));
+        gameLogger.log(String.format("%s saved a game", engine.getTurn().getPlayerName()), Color.GREEN);
         engine.saveGame();
     }
 
@@ -124,7 +125,7 @@ public class GameController {
      * End the game.
      */
     public void endGame() {
-        gameLogger.log("Game finished!");
+        gameLogger.log("Game finished!", Color.GREEN);
         engine.endGame();
         engine.resetGame();
         boardView.updateBoard();
