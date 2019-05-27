@@ -3,11 +3,13 @@ package oosd.views;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
+import oosd.models.game.GameLogger;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.images.ToolbarIcon;
@@ -41,6 +43,7 @@ public class BoardView implements View {
 
     private final GamePresenter gamePresenter;
     private final Engine engine;
+    private GameLogger gameLogger;
     private BoardPane boardPane;
     private GameController gameController;
     private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
@@ -52,26 +55,29 @@ public class BoardView implements View {
     private PlayerTurnText playerTurn;
     private ToolbarPane toolbar;
     private PlayerInfoVBox playerInfoVBox;
+    private VBox gameLogVBox;
 
     @Inject
-    public BoardView(Engine engine, GamePresenter gamePresenter) {
+    public BoardView(Engine engine, GamePresenter gamePresenter, GameLogger gameLogger) {
         this.gamePresenter = gamePresenter;
         this.engine = engine;
+        this.gameLogger = gameLogger;
     }
 
     public void start() {
         this.gameController = gamePresenter.getGameController();
-        this.sidebar = gamePresenter.getSidebar();
+        this.sidebar = gamePresenter.getSidebarPane();
         this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
         this.playerTurn = gamePresenter.getPlayerTurn();
         this.boardPane = gamePresenter.getBoardPane();
-        this.toolbar = gamePresenter.getToolbar();
+        this.toolbar = gamePresenter.getToolbarPane();
         this.boardFactory = context.getBean(ViewComponentFactory.class);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
         this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
+        this.gameLogVBox = gamePresenter.getGameLogVBox();
 
         playerInfoVBox.update(engine);
 
@@ -103,7 +109,7 @@ public class BoardView implements View {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece, gamePresenter));
                 selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
                 unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
                 unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));

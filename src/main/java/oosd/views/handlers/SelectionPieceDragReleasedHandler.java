@@ -34,6 +34,6 @@ public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEven
             gameController.endGame();
         }
 
-        gamePresenter.getPlayerInfoVBox().update(engine);
+        gamePresenter.update();
     }
 }

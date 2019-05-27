@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 <?import oosd.views.components.panes.*?>
 <?import oosd.views.components.text.PlayerTurnText?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" type="GameWindowPane"
@@ -22,9 +21,7 @@
             </PlayerInfoVBox>
             <ScrollPane prefHeight="420" AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50"
                         AnchorPane.leftAnchor="50" vbarPolicy="NEVER" hbarPolicy="NEVER">
-                <VBox>
-                    <Text wrappingWidth="150" text="TestTestTestTestTestTestTestTestTestTestTestTest"
-                          styleClass="game-text" layoutX="65" layoutY="20"/>
+                <VBox fx:id="gameLogVBox">
                 </VBox>
             </ScrollPane>
         </SidebarPane>
