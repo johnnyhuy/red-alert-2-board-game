@@ -2,10 +2,12 @@ package oosd.models.units.soviet;
 
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
+import oosd.models.units.allied.GISoldier;
+import oosd.models.units.allied.GrizzlyTank;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class RhinoTank extends Soviet {
@@ -13,12 +15,12 @@ public class RhinoTank extends Soviet {
         super(player);
     }
 
-    private RhinoTank(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public RhinoTank(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Collections.singletonList(KirovAirship.class);
+        return Arrays.asList(GISoldier.class, GrizzlyTank.class);
     }
 
     public String getName() {
@@ -33,11 +35,12 @@ public class RhinoTank extends Soviet {
         return new LinearUnitBehaviour(3);
     }
 
-    public Unit clone() {
-        return new RhinoTank(getPlayer(), getDefendTurns());
-    }
-
     public int getDefaultDefendTurns() {
         return 3;
+    }
+
+    @Override
+    public Unit save() {
+        return new RhinoTank(getDefendTurns());
     }
 }

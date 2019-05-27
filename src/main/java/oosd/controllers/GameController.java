@@ -1,15 +1,15 @@
 package oosd.controllers;
 
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
+import oosd.models.game.GameLogger;
+import oosd.models.player.Player;
 import oosd.views.BoardView;
-import oosd.views.components.panes.BoardPane;
-import oosd.views.components.panes.SidebarPane;
-import oosd.views.components.panes.ToolbarPane;
-import oosd.views.components.panes.WindowGridPane;
+import oosd.views.WelcomeView;
+import org.springframework.stereotype.Controller;
+
+import javax.inject.Inject;
 
 /**
  * GRASP: The controller
@@ -17,87 +17,118 @@ import oosd.views.components.panes.WindowGridPane;
  * Acts as a middleman that delegates tasks to other objects.
  * Cleanly separates the user interface (view) from the business objects (model)
  */
-public class GameController extends Controller {
+@Controller
+public class GameController {
     private final Engine engine;
-
-    @FXML
-    private WindowGridPane windowGridPane;
-
-    @FXML
-    private BoardPane boardPane;
-
-    @FXML
-    private SidebarPane sidebar;
-
-    @FXML
-    private ToolbarPane toolbar;
-
+    private WelcomeView welcomeView;
+    private GameLogger gameLogger;
     private BoardView boardView;
 
-    public GameController(Engine engine) {
+    @Inject
+    public GameController(Engine engine, GameLogger gameLogger, BoardView boardView, WelcomeView welcomeView) {
         this.engine = engine;
+        this.gameLogger = gameLogger;
+        this.boardView = boardView;
+        this.welcomeView = welcomeView;
     }
 
-    @Override
-    public void initialize() {
-        boardView = new BoardView(this, engine, boardPane, sidebar, toolbar);
-        boardView.render();
+    public void start() {
+        boardView.start();
+        welcomeView.welcome();
     }
 
     /**
      * Used to select a unit.
      *
-     * @param event mouse event
      * @param selectedPiece object
-     * @param piece object
+     * @param piece         object
      */
-    public void selectUnit(MouseEvent event, Piece selectedPiece, Piece piece) {
-        engine.selectUnit(piece);
+    public void select(Piece selectedPiece, Piece piece) {
+        gameLogger.log(String.format("%s selected %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()));
+        engine.select(piece);
         boardView.selectUnit(selectedPiece, piece);
     }
 
     /**
      * Tasked to move the unit.
      *
-     * @param event mouse event
      * @param selectedPiece object
-     * @param piece object
+     * @param piece         object
      */
-    public void moveUnit(Event event, Piece selectedPiece, Piece piece) {
-        engine.moveUnit(selectedPiece, piece);
-        boardView.moveUnit(selectedPiece, piece);
+    public void move(Piece selectedPiece, Piece piece) {
+        gameLogger.log(String.format("%s moved %s unit", engine.getTurn().getPlayerName(), selectedPiece.getUnit().getName()), Color.BLUE);
+        engine.move(selectedPiece, piece);
+        boardView.updateBoard();
     }
 
     /**
      * Defend a given piece.
      *
-     * @param event mouse event
      * @param piece object
      */
-    public void defendUnit(MouseEvent event, Piece piece) {
-        engine.defendUnit(piece);
-        boardView.defendUnit(piece);
+    public void defend(Piece piece) {
+        gameLogger.log(String.format("%s defended %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()), Color.GREEN);
+        engine.defend(piece);
+        boardView.updateBoard();
     }
 
     /**
      * Attack a given piece.
      *
-     * @param mouseEvent    mouse event
      * @param selectedPiece object
      * @param piece         object
      */
-    public void attackUnit(MouseEvent mouseEvent, Piece selectedPiece, Piece piece) {
-        engine.attackUnit(selectedPiece, piece);
-        boardView.attackUnit(selectedPiece, piece);
+    public void attack(Piece selectedPiece, Piece piece) {
+        gameLogger.log(String.format("%s attacked %s unit", engine.getTurn().getPlayerName(), piece.getUnit().getName()), Color.RED);
+        engine.attack(selectedPiece, piece);
+        boardView.updateBoard();
     }
 
     /**
      * Undo a move in the game.
-     *
-     * @param mouseEvent mouse event
      */
-    public void undoMove(MouseEvent mouseEvent) {
+    public void undo() {
+        Player player = engine.getTurn();
+        gameLogger.log(String.format("%s undone a move %d/3 times", player.getPlayerName(), player.getUndoMoves()), Color.PURPLE);
         engine.undoTurn();
-        boardView.undoMove();
+        boardView.updateBoard();
+    }
+
+    /**
+     * Forfeit the game.
+     */
+    public void forfeit() {
+        gameLogger.log(String.format("%s forfeited the game", engine.getTurn().getPlayerName()), Color.RED);
+        engine.forfeitGame();
+        welcomeView.welcome("Greetings commander", "It seems like someone has forfeited the game, lets start again!");
+        boardView.updateBoard();
+    }
+
+    /**
+     * Restore a game.
+     */
+    public void restoreGame() {
+        gameLogger.log(String.format("%s restored a game", engine.getTurn().getPlayerName()), Color.GREEN);
+        engine.restoreGame();
+        boardView.updateBoard();
+    }
+
+    /**
+     * Save a game.
+     */
+    public void saveGame() {
+        gameLogger.log(String.format("%s saved a game", engine.getTurn().getPlayerName()), Color.GREEN);
+        engine.saveGame();
+    }
+
+    /**
+     * End the game.
+     */
+    public void endGame() {
+        gameLogger.log("Game finished!", Color.GREEN);
+        engine.endGame();
+        engine.resetGame();
+        boardView.updateBoard();
+        welcomeView.welcome(String.format("Player %s wins!", engine.getWinningPlayer().getPlayerName()), "End game! lets start again!");
     }
 }

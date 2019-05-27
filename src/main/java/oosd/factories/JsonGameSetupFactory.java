@@ -15,7 +15,7 @@ public class JsonGameSetupFactory implements GameSetupFactory {
     }
 
     @Override
-    public Board createBoard(int boardColumns, int boardRows) {
+    public Board createBoard() {
         return new GameBoard(gameSetupReader.getBoardColumns(), gameSetupReader.getBoardRows());
     }
 

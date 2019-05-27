@@ -5,32 +5,35 @@ import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-
-import static oosd.helpers.ObjectHelper.exists;
+import oosd.views.GamePresenter;
 
 public class SelectionPieceDragReleasedHandler implements EventHandler<MouseEvent> {
     private Engine engine;
     private GameController gameController;
     private Piece piece;
+    private GamePresenter gamePresenter;
 
-    public SelectionPieceDragReleasedHandler(Engine engine, GameController gameController, Piece piece) {
+    public SelectionPieceDragReleasedHandler(Engine engine, GameController gameController, Piece piece, GamePresenter gamePresenter) {
         this.engine = engine;
         this.gameController = gameController;
         this.piece = piece;
+        this.gamePresenter = gamePresenter;
     }
 
     @Override
     public void handle(MouseEvent event) {
-        Piece selectedPiece = engine.getSelectedPiece();
-        boolean unitExists = exists(piece.getUnit());
-        boolean isValidMove = selectedPiece.getUnit().getUnitBehaviour().isValidMove(engine, piece);
-        boolean isEnemyUnit = unitExists && !piece.getUnit().getPlayer().equals(engine.getTurn());
-        boolean isDefensive = unitExists && piece.getUnit().getDefendStatus();
+        Piece selectedPiece = engine.getSelected();
 
-        if (!unitExists && isValidMove) {
-            gameController.moveUnit(event, selectedPiece, piece);
-        } else if (isEnemyUnit && !isDefensive && isValidMove) {
-            gameController.attackUnit(event, selectedPiece, piece);
+        if (engine.canAttack(piece)) {
+            gameController.attack(selectedPiece, piece);
+        } else if (engine.canMove(piece)) {
+            gameController.move(selectedPiece, piece);
         }
+
+        if (engine.getRemainingTurns() == 0) {
+            gameController.endGame();
+        }
+
+        gamePresenter.update();
     }
 }

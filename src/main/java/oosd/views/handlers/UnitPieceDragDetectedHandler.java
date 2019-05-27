@@ -22,11 +22,11 @@ public class UnitPieceDragDetectedHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (!piece.getUnit().getPlayer().equals(engine.getTurn())) {
+        if (!engine.canSelect(piece)) {
             return;
         }
 
         unitPiecePolygon.startFullDrag();
-        gameController.selectUnit(event, engine.getSelectedPiece(), piece);
+        gameController.select(engine.getSelected(), piece);
     }
 }
