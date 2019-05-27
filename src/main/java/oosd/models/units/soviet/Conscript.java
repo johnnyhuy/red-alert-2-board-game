@@ -6,7 +6,7 @@ import oosd.models.units.allied.GISoldier;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Conscript extends Soviet {
@@ -14,12 +14,12 @@ public class Conscript extends Soviet {
         super(player);
     }
 
-    private Conscript(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public Conscript(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class);
+        return Collections.singletonList(GISoldier.class);
     }
 
     public String getName() {
@@ -34,7 +34,8 @@ public class Conscript extends Soviet {
         return new LinearUnitBehaviour(1);
     }
 
-    public Unit clone() {
-        return new Conscript(getPlayer(), getDefendTurns());
+    @Override
+    public Unit save() {
+        return new Conscript(getDefendTurns());
     }
 }

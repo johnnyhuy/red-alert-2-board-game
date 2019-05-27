@@ -31,6 +31,17 @@ public class LinearUnitBehaviour extends UnitBehaviour {
         return validMoves;
     }
 
+    @Override
+    public boolean isValidMove(Engine engine, Piece checkPiece) {
+        for (Piece piece : getValidMoves(engine, engine.getSelected())) {
+            if (piece.equals(checkPiece)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void validateDirection(Engine engine, Piece piece, Board board, LinearDirections direction) {
         int columns = piece.getColumn();
         int rows = piece.getRow();
@@ -47,28 +58,18 @@ public class LinearUnitBehaviour extends UnitBehaviour {
                 return;
             }
 
-            Unit unit = board.getPiece(columns, rows).getUnit();
+            Piece validatingPiece = board.getPiece(columns, rows);
+            Unit unit = validatingPiece.getUnit();
             if (exists(unit)) {
-                if (unit.getPlayer().equals(engine.getTurn()) || unit.getDefendStatus()) {
+                if (unit.getPlayer().equals(engine.getTurn()) || unit.canDefend(validatingPiece) || !piece.getUnit().isWinnable(unit)) {
                     return;
                 } else {
                     enemyFound = true;
                 }
             }
 
-            validMoves.add(board.getPiece(columns, rows));
+            validMoves.add(validatingPiece);
             move++;
         }
-    }
-
-    @Override
-    public boolean isValidMove(Engine engine, Piece checkPiece) {
-        for (Piece piece : getValidMoves(engine, engine.getSelectedPiece())) {
-            if (piece.equals(checkPiece)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

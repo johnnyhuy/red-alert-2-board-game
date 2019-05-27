@@ -33,7 +33,7 @@ class PlayerTest {
         new KirovAirship(player);
 
         // Act
-        List<Unit> units = player.getUnits();
+        List<Unit> units = player.getAllUnits();
 
         // Assert
         assertEquals(2, units.size());

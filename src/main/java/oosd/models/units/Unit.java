@@ -1,5 +1,7 @@
 package oosd.models.units;
 
+import oosd.models.Savable;
+import oosd.models.board.Piece;
 import oosd.models.player.Player;
 import oosd.models.units.behaviour.UnitBehaviour;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -15,10 +17,15 @@ import static oosd.helpers.ObjectHelper.isNull;
  *
  * Design pattern: template behavioural pattern is used to produce multiple types of units.
  */
-public abstract class Unit {
+public abstract class Unit implements Savable<Unit> {
     private Player player;
     private boolean captured;
     private int defendCount = 0;
+    private Piece defendingPiece;
+
+    public Unit() {
+        this.captured = false;
+    }
 
     public Unit(Player player) {
         this.player = player;
@@ -26,11 +33,9 @@ public abstract class Unit {
         player.addUnit(this);
     }
 
-    public Unit(Player player, int defendTurns) {
-        this.player = player;
-        this.captured = false;
-        player.addUnit(this);
-        setDefendTurns(defendTurns);
+    public Unit(int defendTurns) {
+        this();
+        this.defendCount = defendTurns;
     }
 
     /**
@@ -38,7 +43,7 @@ public abstract class Unit {
      *
      * @return boolean
      */
-    public boolean getCaptured() {
+    public boolean isCaptured() {
         return this.captured;
     }
 
@@ -68,6 +73,13 @@ public abstract class Unit {
     }
 
     /**
+     * Set the player that owns this unit.
+     */
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    /**
      * Get the name of this unit.
      *
      * @return string
@@ -89,13 +101,6 @@ public abstract class Unit {
     public abstract UnitBehaviour getUnitBehaviour();
 
     /**
-     * Clone the unit.
-     *
-     * @return unit behaviour object
-     */
-    public abstract Unit clone();
-
-    /**
      * Get the amount of turns to defend the unit.
      *
      * @return number of turns
@@ -107,15 +112,20 @@ public abstract class Unit {
     /**
      * Start defending the unit.
      */
-    public void startDefending() {
-        defendCount = getDefaultDefendTurns();
+    public void startDefending(Piece piece) {
+        this.defendCount = getDefaultDefendTurns();
+        this.defendingPiece = piece;
     }
 
     /**
      * Decrement the amount of turns.
      */
     public void decrementDefendTurns() {
-        defendCount--;
+        this.defendCount--;
+
+        if (defendCount == 0) {
+            this.defendingPiece = null;
+        }
     }
 
     /**
@@ -123,8 +133,26 @@ public abstract class Unit {
      *
      * @return boolean
      */
-    public boolean getDefendStatus() {
-        return defendCount != 0;
+    public boolean canDefend(Piece piece) {
+        return this.defendCount != 0 && piece.equals(this.defendingPiece);
+    }
+
+    /**
+     * Get the defending piece.
+     *
+     * @return piece object
+     */
+    public Piece getDefendingPiece() {
+        return this.defendingPiece;
+    }
+
+    /**
+     * Set the defending piece.
+     *
+     * @param defendingPiece piece object
+     */
+    public void setDefendingPiece(Piece defendingPiece) {
+        this.defendingPiece = defendingPiece;
     }
 
     /**
@@ -132,7 +160,7 @@ public abstract class Unit {
      *
      * @return number of defend turns
      */
-    protected int getDefendTurns() {
+    public int getDefendTurns() {
         return this.defendCount;
     }
 
@@ -141,7 +169,7 @@ public abstract class Unit {
      *
      * @param defendTurns number of turns to set
      */
-    private void setDefendTurns(int defendTurns) {
+    public void setDefendTurns(int defendTurns) {
         defendCount = defendTurns;
     }
 
@@ -174,7 +202,10 @@ public abstract class Unit {
         }
 
         return new EqualsBuilder()
+                .append(isCaptured(), unit.isCaptured())
+                .append(getPlayer(), unit.getPlayer())
                 .append(getImage(), unit.getImage())
+                .append(getDefendTurns(), unit.getDefendTurns())
                 .append(getName(), unit.getName())
                 .isEquals();
     }
@@ -187,8 +218,27 @@ public abstract class Unit {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 31)
+                .append(isCaptured())
+                .append(getPlayer())
                 .append(getImage())
+                .append(getDefendTurns())
                 .append(getName())
                 .toHashCode();
+    }
+
+    /**
+     * Compare whether the unit is winnable against another.
+     *
+     * @param otherUnit to compare
+     * @return is winnable
+     */
+    public boolean isWinnable(Unit otherUnit) {
+        for (Class<? extends Unit> winnable : getWinnables()) {
+            if (winnable.equals(otherUnit.getClass())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

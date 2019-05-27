@@ -1,17 +1,13 @@
 package oosd;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import oosd.controllers.GameController;
-import oosd.factories.InMemoryGameSetupFactory;
-import oosd.factories.JsonGameSetupFactory;
-import oosd.models.board.Board;
-import oosd.models.game.Engine;
-import oosd.models.game.GameEngine;
-import oosd.models.player.Player;
-import oosd.views.components.windows.GameWindow;
+import oosd.views.View;
+import oosd.views.components.panes.GameWindowPane;
 
-import java.util.List;
+import java.util.Objects;
 
 /**
  * GRASP: information expert
@@ -19,8 +15,6 @@ import java.util.List;
  * If a user were to change specific units on the board, they can change it here in the main class.
  */
 public class Main extends Application {
-    private boolean useJSONConfig = true;
-
     /**
      * Boilerplate code for JavaFX.
      *
@@ -34,36 +28,23 @@ public class Main extends Application {
      * GRASP: The creator
      * Creates the initialized game logic and base UI objects at the start of the program.
      *
-     * @param primaryStage JavaFX primary window
+     * @param stage JavaFX primary window
      */
     @Override
-    public void start(Stage primaryStage) {
-        GameController gameController = new GameController(initializeGameEngine());
-        GameWindow gameWindow = new GameWindow();
-        gameWindow.render(primaryStage, gameController);
-    }
+    public void start(Stage stage) {
+        final String windowTitle = "Red Alert 2 Board Game";
+        final String windowIcon = "soviet.png";
+        final String styles = "style/main.css";
 
-    /**
-     * Initialize game configuration data, which can be easily modified.
-     *
-     * @return the game engine
-     */
-    private Engine initializeGameEngine() {
-        int boardRows = 10;
-        int boardColumns = 10;
+        GameWindowPane gameWindowPane = new GameWindowPane();
 
-    	if (useJSONConfig == false)
-    	{
-        	InMemoryGameSetupFactory factory = new InMemoryGameSetupFactory();
-        	Board board = factory.createBoard(boardColumns, boardRows);
-        	List<Player> players = factory.createPlayers(board);
-            return new GameEngine(board, players);
-    	}
-    	else {
-    		JsonGameSetupFactory factoryJSON = new JsonGameSetupFactory();
-        	Board board = factoryJSON.createBoard(boardColumns, boardRows);
-        	List<Player> players = factoryJSON.createPlayers(board);
-            return new GameEngine(board, players);
-    	}
+        Scene content = new Scene(gameWindowPane, 1200, 900);
+        content.getStylesheets().add(Objects.requireNonNull(getClass().getClassLoader().getResource(styles)).toString());
+
+        stage.setScene(content);
+        stage.setTitle(windowTitle);
+        stage.setResizable(false);
+        stage.getIcons().add(new Image(View.class.getResource(windowIcon).toString()));
+        stage.show();
     }
 }

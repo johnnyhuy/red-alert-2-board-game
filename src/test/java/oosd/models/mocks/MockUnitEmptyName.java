@@ -35,4 +35,9 @@ public class MockUnitEmptyName extends Unit {
     public Unit clone() {
         return null;
     }
+
+    @Override
+    public Unit save() {
+        return null;
+    }
 }

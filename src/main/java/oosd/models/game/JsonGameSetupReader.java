@@ -69,6 +69,7 @@ public class JsonGameSetupReader {
 
                 try {
                     Unit newUnit = unitMap.get(unitName).call();
+                    player.addUnit(newUnit);
 
                     for (Object unitLocationObject : unitLocations) {
                         JSONObject unitLocation = (JSONObject) unitLocationObject;
@@ -82,7 +83,6 @@ public class JsonGameSetupReader {
                 }
             }
         }
-
     }
 
     private Map<String, Callable<Unit>> getUnitMap(Player player) {

@@ -4,10 +4,9 @@ import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.behaviour.LinearUnitBehaviour;
 import oosd.models.units.behaviour.UnitBehaviour;
-import oosd.models.units.soviet.KirovAirship;
-import oosd.models.units.soviet.RhinoTank;
+import oosd.models.units.soviet.Conscript;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GISoldier extends Allied {
@@ -15,12 +14,12 @@ public class GISoldier extends Allied {
         super(player);
     }
 
-    private GISoldier(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public GISoldier(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class);
+        return Collections.singletonList(Conscript.class);
     }
 
     public String getName() {
@@ -35,7 +34,8 @@ public class GISoldier extends Allied {
         return new LinearUnitBehaviour(2);
     }
 
-    public Unit clone() {
-        return new GISoldier(getPlayer(), getDefendTurns());
+    @Override
+    public Unit save() {
+        return new GISoldier(getDefendTurns());
     }
 }

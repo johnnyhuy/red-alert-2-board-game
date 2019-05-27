@@ -16,12 +16,12 @@ public class Harrier extends Allied {
         super(player);
     }
 
-    private Harrier(Player player, int defendTurns) {
-        super(player, defendTurns);
+    public Harrier(int defendTurns) {
+        super(defendTurns);
     }
 
     public List<Class<? extends Unit>> getWinnables() {
-        return Arrays.asList(KirovAirship.class, RhinoTank.class, GISoldier.class, Conscript.class, GrizzlyTank.class);
+        return Arrays.asList(KirovAirship.class, RhinoTank.class, Conscript.class);
     }
 
     public String getName() {
@@ -36,7 +36,8 @@ public class Harrier extends Allied {
         return new LinearUnitBehaviour(6);
     }
 
-    public Unit clone() {
-        return new Harrier(getPlayer(), getDefendTurns());
+    @Override
+    public Unit save() {
+        return new Harrier(getDefendTurns());
     }
 }

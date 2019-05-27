@@ -32,7 +32,8 @@ public class MockUnitNotWinnables extends Unit {
         return null;
     }
 
-    public Unit clone() {
+    @Override
+    public Unit save() {
         return null;
     }
 }
