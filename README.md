@@ -19,7 +19,7 @@ The project is a 2D gameBoard game using different shapes from standard squares 
 
 We have units that can move depending on their unit behaviour by clicking and moving units on the board. This is similar to a traditional chess game but with a few twists!
 
-![Game view](./.repository/game_view.png)
+![](images/2019-05-28-08-58-55.png)
 
 ### Gameplay
 
