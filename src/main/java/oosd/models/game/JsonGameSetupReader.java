@@ -67,19 +67,18 @@ public class JsonGameSetupReader {
                     continue;
                 }
 
-                try {
-                    Unit newUnit = unitMap.get(unitName).call();
-                    player.addUnit(newUnit);
 
-                    for (Object unitLocationObject : unitLocations) {
-                        JSONObject unitLocation = (JSONObject) unitLocationObject;
-                        int column = Integer.parseInt((String) unitLocation.get("column"));
-                        int row = Integer.parseInt((String) unitLocation.get("row"));
+                for (Object unitLocationObject : unitLocations) {
+                    JSONObject unitLocation = (JSONObject) unitLocationObject;
+                    int column = Integer.parseInt((String) unitLocation.get("column"));
+                    int row = Integer.parseInt((String) unitLocation.get("row"));
 
+                    try {
+                        Unit newUnit = unitMap.get(unitName).call();
                         board.getPiece(column, row).setUnit(newUnit);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -87,12 +86,12 @@ public class JsonGameSetupReader {
 
     private Map<String, Callable<Unit>> getUnitMap(Player player) {
         return Map.of(
-            "conscript", () -> new Conscript(player),
-            "kirov_airship", () -> new KirovAirship(player),
-            "rhino_tank", () -> new RhinoTank(player),
-            "gi_soldier", () -> new GISoldier(player),
-            "grizzly_tank", () -> new GrizzlyTank(player),
-            "harrier", () -> new Harrier(player)
+                "conscript", () -> new Conscript(player),
+                "kirov_airship", () -> new KirovAirship(player),
+                "rhino_tank", () -> new RhinoTank(player),
+                "gi_soldier", () -> new GISoldier(player),
+                "grizzly_tank", () -> new GrizzlyTank(player),
+                "harrier", () -> new Harrier(player)
         );
     }
 
