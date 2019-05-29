@@ -89,7 +89,7 @@ public class GameController {
      */
     public void undo() {
         Player player = engine.getTurn();
-        gameLogger.log(String.format("%s undone a move %d/3 times", player.getPlayerName(), player.getUndoMoves()), Color.PURPLE);
+        gameLogger.log(String.format("%s undone a move %d/3 times", player.getPlayerName(), player.getUndoMoves() + 1), Color.PURPLE);
         engine.undoTurn();
         boardView.updateBoard();
     }

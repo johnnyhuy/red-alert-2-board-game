@@ -269,7 +269,6 @@ public class GameEngine implements Engine {
         for (Player oldPlayer : getPlayers()) {
             for (Player newPlayer : snapshot.getPlayers()) {
                 if (newPlayer.equals(oldPlayer)) {
-                    newPlayer.setTurns(oldPlayer.getTurns());
                     newPlayer.setWins(oldPlayer.getWins());
                     newPlayer.setLosses(oldPlayer.getLosses());
                 }
