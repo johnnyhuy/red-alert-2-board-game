@@ -45,7 +45,7 @@ public class Config {
 
     @Bean
     public ToolbarPresenter toolbarPresenter() {
-        return new ToolbarPresenter();
+        return new ToolbarPresenter(context, context.getBean(Engine.class));
     }
 
     @Bean
