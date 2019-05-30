@@ -174,6 +174,8 @@ public class BoardView implements View {
         }
 
         selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
+
+        gamePresenter.update();
     }
 
     public void updateBoard() {
