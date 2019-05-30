@@ -91,9 +91,9 @@ public class BoardView implements View {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece, gamePresenter));
-                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
-                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
+                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece));
+                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece));
                 unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
                 group.getChildren().add(anchor);
@@ -115,14 +115,14 @@ public class BoardView implements View {
         boardPane.getChildren().add(group);
 
         Button undoButton = gamePresenter.getUndoButton();
-        undoButton.setOnMouseClicked(new UndoClickHandler(engine, gameController, gamePresenter));
+        undoButton.setOnMouseClicked(new UndoClickHandler(engine, gameController));
         undoButton.setGraphic(new ToolbarIcon("undo"));
         undoButton.setOnMousePressed(event -> undoButton.setGraphic(new ToolbarIcon("undo_active")));
         undoButton.setOnMouseEntered(event -> undoButton.setGraphic(new ToolbarIcon("undo_hover")));
         undoButton.setOnMouseExited(event -> undoButton.setGraphic(new ToolbarIcon("undo")));
 
         Button defendButton = gamePresenter.getDefendButton();
-        defendButton.setOnMouseClicked(new DefendClickHandler(engine, gameController, gamePresenter));
+        defendButton.setOnMouseClicked(new DefendClickHandler(engine, gameController));
         defendButton.setGraphic(new ToolbarIcon("shield"));
         defendButton.setOnMousePressed(event -> defendButton.setGraphic(new ToolbarIcon("shield_active")));
         defendButton.setOnMouseEntered(event -> defendButton.setGraphic(new ToolbarIcon("shield_hover")));
@@ -184,9 +184,9 @@ public class BoardView implements View {
             SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
             Unit unit = piece.getUnit();
 
-            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece, gamePresenter));
-            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
-            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
+            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece));
+            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece));
             unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
             if (exists(unit)) {
@@ -203,5 +203,7 @@ public class BoardView implements View {
 
             selectionPieces.get(piece).hide();
         });
+
+        gamePresenter.update();
     }
 }

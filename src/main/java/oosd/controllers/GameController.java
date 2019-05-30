@@ -119,6 +119,7 @@ public class GameController {
     public void saveGame() {
         gameLogger.log(String.format("%s saved a game", engine.getTurn().getPlayerName()), Color.GREEN);
         engine.saveGame();
+        boardView.updateBoard();
     }
 
     /**
