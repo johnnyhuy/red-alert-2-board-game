@@ -3,7 +3,6 @@ package oosd.views;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
@@ -15,13 +14,10 @@ import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.images.ToolbarIcon;
 import oosd.views.components.panes.BoardPane;
 import oosd.views.components.panes.PlayerInfoVBox;
-import oosd.views.components.panes.SidebarPane;
-import oosd.views.components.panes.ToolbarPane;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.Hexagon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
-import oosd.views.components.text.PlayerTurnText;
 import oosd.views.factories.ViewComponentFactory;
 import oosd.views.handlers.*;
 import org.springframework.context.ApplicationContext;
@@ -43,41 +39,27 @@ public class BoardView implements View {
 
     private final GamePresenter gamePresenter;
     private final Engine engine;
-    private GameLogger gameLogger;
-    private BoardPane boardPane;
     private GameController gameController;
     private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
     private HashMap<Piece, UnitPiecePolygon> unitPieces;
     private HashMap<Piece, DefendPieceImage> defendPieces;
-    private HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
-    private ViewComponentFactory boardFactory;
-    private SidebarPane sidebar;
-    private PlayerTurnText playerTurn;
-    private ToolbarPane toolbar;
-    private PlayerInfoVBox playerInfoVBox;
-    private VBox gameLogVBox;
 
     @Inject
     public BoardView(Engine engine, GamePresenter gamePresenter, GameLogger gameLogger) {
         this.gamePresenter = gamePresenter;
         this.engine = engine;
-        this.gameLogger = gameLogger;
     }
 
     public void start() {
         this.gameController = gamePresenter.getGameController();
-        this.sidebar = gamePresenter.getSidebarPane();
-        this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
-        this.playerTurn = gamePresenter.getPlayerTurn();
-        this.boardPane = gamePresenter.getBoardPane();
-        this.toolbar = gamePresenter.getToolbarPane();
-        this.boardFactory = context.getBean(ViewComponentFactory.class);
+        PlayerInfoVBox playerInfoVBox;
+        BoardPane boardPane = gamePresenter.getBoardPane();
+        ViewComponentFactory boardFactory = context.getBean(ViewComponentFactory.class);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
-        this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
-        this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
-        this.gameLogVBox = gamePresenter.getGameLogVBox();
+        HashMap<Piece, BackgroundPiecePolygon> backgroundPieces = boardFactory.createBackgroundPiecePolygons();
+        playerInfoVBox = gamePresenter.getPlayerInfoVBox();
 
         playerInfoVBox.update(engine);
 
