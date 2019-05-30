@@ -30,14 +30,15 @@ import static oosd.helpers.ObjectHelper.exists;
  */
 @Component
 public class BoardView implements View {
-    @Inject
-    private ApplicationContext context;
-
     private final GamePresenter gamePresenter;
     private final Engine engine;
+    private BoardPolygonMap boardPolygonMap;
     private ToolbarPresenter toolbarPresenter;
     private SidebarPresenter sidebarPresenter;
     private GameController gameController;
+
+    @Inject
+    private ApplicationContext context;
 
     @Inject
     public BoardView(Engine engine, GamePresenter gamePresenter, ToolbarPresenter toolbarPresenter, SidebarPresenter sidebarPresenter) {
@@ -48,9 +49,9 @@ public class BoardView implements View {
     }
 
     public void start() {
-        this.gameController = gamePresenter.getGameController();
+        this.boardPolygonMap = context.getBean(BoardPolygonMap.class);
+        this.gameController = context.getBean(GameController.class);
         BoardPane boardPane = gamePresenter.getBoardPane();
-        BoardPolygonMap boardPolygonMap = context.getBean(BoardPolygonMap.class);
 
         Board board = engine.getBoard();
         double x = 0;
@@ -105,8 +106,6 @@ public class BoardView implements View {
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
-        BoardPolygonMap boardPolygonMap = context.getBean(BoardPolygonMap.class);
-
         if (exists(selectedPiece)) {
             boardPolygonMap.getSelectionPiece(selectedPiece).hide();
 
@@ -134,7 +133,6 @@ public class BoardView implements View {
 
     public void updateBoard() {
         Board board = engine.getBoard();
-        BoardPolygonMap boardPolygonMap = context.getBean(BoardPolygonMap.class);
 
         board.apply((column, row) -> {
             Piece piece = board.getPiece(column, row);
