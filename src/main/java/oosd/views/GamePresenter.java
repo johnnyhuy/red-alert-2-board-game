@@ -91,6 +91,7 @@ public class GamePresenter implements Initializable {
             getGameLogVBox().getChildren().add(text);
         }
 
+        getPlayerTurnText().updateTurn(engine);
         getPlayerInfoVBox().update(engine);
     }
 
@@ -138,7 +139,7 @@ public class GamePresenter implements Initializable {
         return playerInfoVBox;
     }
 
-    public PlayerTurnText getPlayerTurn() {
+    public PlayerTurnText getPlayerTurnText() {
         return playerTurn;
     }
 

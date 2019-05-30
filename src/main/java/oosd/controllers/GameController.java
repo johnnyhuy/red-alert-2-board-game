@@ -35,6 +35,7 @@ public class GameController {
     public void start() {
         boardView.start();
         welcomeView.welcome();
+        boardView.updateBoard();
     }
 
     /**
