@@ -1,7 +1,6 @@
 package oosd.views;
 
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
@@ -9,15 +8,16 @@ import oosd.models.board.Piece;
 import oosd.models.game.Engine;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
-import oosd.views.components.images.ToolbarIcon;
 import oosd.views.components.panes.BoardPane;
-import oosd.views.components.panes.PlayerInfoVBox;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.Hexagon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
 import oosd.views.factories.ViewComponentFactory;
-import oosd.views.handlers.*;
+import oosd.views.handlers.SelectionPieceClickHandler;
+import oosd.views.handlers.SelectionPieceDragReleasedHandler;
+import oosd.views.handlers.UnitPieceClickHandler;
+import oosd.views.handlers.UnitPieceDragDetectedHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -54,16 +54,12 @@ public class BoardView implements View {
 
     public void start() {
         this.gameController = gamePresenter.getGameController();
-        PlayerInfoVBox playerInfoVBox;
         BoardPane boardPane = gamePresenter.getBoardPane();
         ViewComponentFactory boardFactory = context.getBean(ViewComponentFactory.class);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
         HashMap<Piece, BackgroundPiecePolygon> backgroundPieces = boardFactory.createBackgroundPiecePolygons();
-        playerInfoVBox = sidebarPresenter.getPlayerInfoVBox();
-
-        playerInfoVBox.update(engine);
 
         Board board = engine.getBoard();
         double x = 0;
@@ -115,41 +111,6 @@ public class BoardView implements View {
         }
 
         boardPane.getChildren().add(group);
-
-        Button undoButton = toolbarPresenter.getUndoButton();
-        undoButton.setOnMouseClicked(new UndoClickHandler(engine, gameController));
-        undoButton.setGraphic(new ToolbarIcon("undo"));
-        undoButton.setOnMousePressed(event -> undoButton.setGraphic(new ToolbarIcon("undo_active")));
-        undoButton.setOnMouseEntered(event -> undoButton.setGraphic(new ToolbarIcon("undo_hover")));
-        undoButton.setOnMouseExited(event -> undoButton.setGraphic(new ToolbarIcon("undo")));
-
-        Button defendButton = toolbarPresenter.getDefendButton();
-        defendButton.setOnMouseClicked(new DefendClickHandler(engine, gameController));
-        defendButton.setGraphic(new ToolbarIcon("shield"));
-        defendButton.setOnMousePressed(event -> defendButton.setGraphic(new ToolbarIcon("shield_active")));
-        defendButton.setOnMouseEntered(event -> defendButton.setGraphic(new ToolbarIcon("shield_hover")));
-        defendButton.setOnMouseExited(event -> defendButton.setGraphic(new ToolbarIcon("shield")));
-
-        Button forfeitButton = toolbarPresenter.getForfeitButton();
-        forfeitButton.setOnMouseClicked(new ForfeitClickHandler(engine, gameController));
-        forfeitButton.setGraphic(new ToolbarIcon("skull"));
-        forfeitButton.setOnMousePressed(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_active")));
-        forfeitButton.setOnMouseEntered(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_hover")));
-        forfeitButton.setOnMouseExited(event -> forfeitButton.setGraphic(new ToolbarIcon("skull")));
-
-        Button saveGameButton = toolbarPresenter.getSaveGameButton();
-        saveGameButton.setOnMouseClicked(new SaveGameClickHandler(engine, gameController));
-        saveGameButton.setGraphic(new ToolbarIcon("save"));
-        saveGameButton.setOnMousePressed(event -> saveGameButton.setGraphic(new ToolbarIcon("save_active")));
-        saveGameButton.setOnMouseEntered(event -> saveGameButton.setGraphic(new ToolbarIcon("save_hover")));
-        saveGameButton.setOnMouseExited(event -> saveGameButton.setGraphic(new ToolbarIcon("save")));
-
-        Button restoreGameButton = toolbarPresenter.getRestoreGameButton();
-        restoreGameButton.setOnMouseClicked(new RestoreGameClickHandler(engine, gameController));
-        restoreGameButton.setGraphic(new ToolbarIcon("restore"));
-        restoreGameButton.setOnMousePressed(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore_active")));
-        restoreGameButton.setOnMouseEntered(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore_hover")));
-        restoreGameButton.setOnMouseExited(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore")));
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
