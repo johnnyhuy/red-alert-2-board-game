@@ -19,6 +19,13 @@ import org.springframework.context.annotation.Configuration;
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * Dependency injection: used to de-couple high level components from low level components
+ * where we're generally using singleton objects to initialize and capture components.
+ * <p>
+ * Design pattern: creator pattern is used since where managing mostly singletons in the
+ * startup Spring application context.
+ */
 @Configuration
 @ComponentScan("oosd")
 public class Config {

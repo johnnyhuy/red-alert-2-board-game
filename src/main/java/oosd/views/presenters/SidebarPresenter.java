@@ -59,19 +59,19 @@ public class SidebarPresenter implements Initializable {
         getGameLogScrollPane().setVvalue(1.0);
     }
 
-    public PlayerInfoVBox getPlayerInfoVBox() {
+    private PlayerInfoVBox getPlayerInfoVBox() {
         return playerInfoVBox;
     }
 
-    public PlayerTurnText getPlayerTurnText() {
+    private PlayerTurnText getPlayerTurnText() {
         return playerTurnText;
     }
 
-    public ScrollPane getGameLogScrollPane() {
+    private ScrollPane getGameLogScrollPane() {
         return gameLogScrollPane;
     }
 
-    public VBox getGameLogVBox() {
+    private VBox getGameLogVBox() {
         return gameLogVBox;
     }
 }

@@ -78,23 +78,23 @@ public class ToolbarPresenter implements Initializable {
         restoreGameButton.setOnMouseExited(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore")));
     }
 
-    public Button getUndoButton() {
+    private Button getUndoButton() {
         return undoButton;
     }
 
-    public Button getDefendButton() {
+    private Button getDefendButton() {
         return defendButton;
     }
 
-    public Button getForfeitButton() {
+    private Button getForfeitButton() {
         return forfeitButton;
     }
 
-    public Button getSaveGameButton() {
+    private Button getSaveGameButton() {
         return saveGameButton;
     }
 
-    public Button getRestoreGameButton() {
+    private Button getRestoreGameButton() {
         return restoreGameButton;
     }
 }
