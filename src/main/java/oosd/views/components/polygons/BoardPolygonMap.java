@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 import java.util.HashMap;
 
+/**
+ * GRASP: information expert where the board polygon map is responsible for
+ * getting all hash maps of every individual polygon object.
+ * <p>
+ * Each polygon has it's own attributes, which justifies having layers of polygons on the board.
+ */
 @Component
 public class BoardPolygonMap {
     private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
