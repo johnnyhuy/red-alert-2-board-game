@@ -35,6 +35,7 @@ public class GameController {
     public void start() {
         boardView.start();
         welcomeView.welcome();
+        boardView.updateBoard();
     }
 
     /**
@@ -119,6 +120,7 @@ public class GameController {
     public void saveGame() {
         gameLogger.log(String.format("%s saved a game", engine.getTurn().getPlayerName()), Color.GREEN);
         engine.saveGame();
+        boardView.updateBoard();
     }
 
     /**

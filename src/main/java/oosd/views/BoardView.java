@@ -1,29 +1,23 @@
 package oosd.views;
 
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-import oosd.models.game.GameLogger;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
-import oosd.views.components.images.ToolbarIcon;
 import oosd.views.components.panes.BoardPane;
-import oosd.views.components.panes.PlayerInfoVBox;
-import oosd.views.components.panes.SidebarPane;
-import oosd.views.components.panes.ToolbarPane;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.Hexagon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
 import oosd.views.components.polygons.UnitPiecePolygon;
-import oosd.views.components.text.PlayerTurnText;
 import oosd.views.factories.ViewComponentFactory;
-import oosd.views.handlers.*;
+import oosd.views.handlers.SelectionPieceClickHandler;
+import oosd.views.handlers.SelectionPieceDragReleasedHandler;
+import oosd.views.handlers.UnitPieceClickHandler;
+import oosd.views.handlers.UnitPieceDragDetectedHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -43,43 +37,29 @@ public class BoardView implements View {
 
     private final GamePresenter gamePresenter;
     private final Engine engine;
-    private GameLogger gameLogger;
-    private BoardPane boardPane;
+    private ToolbarPresenter toolbarPresenter;
+    private SidebarPresenter sidebarPresenter;
     private GameController gameController;
     private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
     private HashMap<Piece, UnitPiecePolygon> unitPieces;
     private HashMap<Piece, DefendPieceImage> defendPieces;
-    private HashMap<Piece, BackgroundPiecePolygon> backgroundPieces;
-    private ViewComponentFactory boardFactory;
-    private SidebarPane sidebar;
-    private PlayerTurnText playerTurn;
-    private ToolbarPane toolbar;
-    private PlayerInfoVBox playerInfoVBox;
-    private VBox gameLogVBox;
 
     @Inject
-    public BoardView(Engine engine, GamePresenter gamePresenter, GameLogger gameLogger) {
+    public BoardView(Engine engine, GamePresenter gamePresenter, ToolbarPresenter toolbarPresenter, SidebarPresenter sidebarPresenter) {
         this.gamePresenter = gamePresenter;
         this.engine = engine;
-        this.gameLogger = gameLogger;
+        this.toolbarPresenter = toolbarPresenter;
+        this.sidebarPresenter = sidebarPresenter;
     }
 
     public void start() {
         this.gameController = gamePresenter.getGameController();
-        this.sidebar = gamePresenter.getSidebarPane();
-        this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
-        this.playerTurn = gamePresenter.getPlayerTurn();
-        this.boardPane = gamePresenter.getBoardPane();
-        this.toolbar = gamePresenter.getToolbarPane();
-        this.boardFactory = context.getBean(ViewComponentFactory.class);
+        BoardPane boardPane = gamePresenter.getBoardPane();
+        ViewComponentFactory boardFactory = context.getBean(ViewComponentFactory.class);
         this.unitPieces = boardFactory.createUnitPiecePolygons();
         this.selectionPieces = boardFactory.createSelectionPiecePolygons();
         this.defendPieces = boardFactory.createDefendPieceImage();
-        this.backgroundPieces = boardFactory.createBackgroundPiecePolygons();
-        this.playerInfoVBox = gamePresenter.getPlayerInfoVBox();
-        this.gameLogVBox = gamePresenter.getGameLogVBox();
-
-        playerInfoVBox.update(engine);
+        HashMap<Piece, BackgroundPiecePolygon> backgroundPieces = boardFactory.createBackgroundPiecePolygons();
 
         Board board = engine.getBoard();
         double x = 0;
@@ -109,9 +89,9 @@ public class BoardView implements View {
                 anchor.setLayoutX(x);
                 anchor.setLayoutY(y);
 
-                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece, gamePresenter));
-                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
-                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
+                selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+                selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece));
+                unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece));
                 unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
                 group.getChildren().add(anchor);
@@ -131,41 +111,6 @@ public class BoardView implements View {
         }
 
         boardPane.getChildren().add(group);
-
-        Button undoButton = gamePresenter.getUndoButton();
-        undoButton.setOnMouseClicked(new UndoClickHandler(engine, gameController, gamePresenter));
-        undoButton.setGraphic(new ToolbarIcon("undo"));
-        undoButton.setOnMousePressed(event -> undoButton.setGraphic(new ToolbarIcon("undo_active")));
-        undoButton.setOnMouseEntered(event -> undoButton.setGraphic(new ToolbarIcon("undo_hover")));
-        undoButton.setOnMouseExited(event -> undoButton.setGraphic(new ToolbarIcon("undo")));
-
-        Button defendButton = gamePresenter.getDefendButton();
-        defendButton.setOnMouseClicked(new DefendClickHandler(engine, gameController, gamePresenter));
-        defendButton.setGraphic(new ToolbarIcon("shield"));
-        defendButton.setOnMousePressed(event -> defendButton.setGraphic(new ToolbarIcon("shield_active")));
-        defendButton.setOnMouseEntered(event -> defendButton.setGraphic(new ToolbarIcon("shield_hover")));
-        defendButton.setOnMouseExited(event -> defendButton.setGraphic(new ToolbarIcon("shield")));
-
-        Button forfeitButton = gamePresenter.getForfeitButton();
-        forfeitButton.setOnMouseClicked(new ForfeitClickHandler(engine, gameController));
-        forfeitButton.setGraphic(new ToolbarIcon("skull"));
-        forfeitButton.setOnMousePressed(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_active")));
-        forfeitButton.setOnMouseEntered(event -> forfeitButton.setGraphic(new ToolbarIcon("skull_hover")));
-        forfeitButton.setOnMouseExited(event -> forfeitButton.setGraphic(new ToolbarIcon("skull")));
-
-        Button saveGameButton = gamePresenter.getSaveGameButton();
-        saveGameButton.setOnMouseClicked(new SaveGameClickHandler(engine, gameController));
-        saveGameButton.setGraphic(new ToolbarIcon("save"));
-        saveGameButton.setOnMousePressed(event -> saveGameButton.setGraphic(new ToolbarIcon("save_active")));
-        saveGameButton.setOnMouseEntered(event -> saveGameButton.setGraphic(new ToolbarIcon("save_hover")));
-        saveGameButton.setOnMouseExited(event -> saveGameButton.setGraphic(new ToolbarIcon("save")));
-
-        Button restoreGameButton = gamePresenter.getRestoreGameButton();
-        restoreGameButton.setOnMouseClicked(new RestoreGameClickHandler(engine, gameController));
-        restoreGameButton.setGraphic(new ToolbarIcon("restore"));
-        restoreGameButton.setOnMousePressed(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore_active")));
-        restoreGameButton.setOnMouseEntered(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore_hover")));
-        restoreGameButton.setOnMouseExited(event -> restoreGameButton.setGraphic(new ToolbarIcon("restore")));
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
@@ -185,13 +130,13 @@ public class BoardView implements View {
 
             Unit unit = piece.getUnit();
             if (exists(unit) && !unit.getPlayer().equals(engine.getTurn())) {
-                selectionPieces.get(piece).setFill(Paint.valueOf("#FF0000"));
+                selectionPieces.get(piece).fillRed();
             } else {
-                selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
+                selectionPieces.get(piece).fillGreen();
             }
         }
 
-        selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
+        sidebarPresenter.update();
     }
 
     public void updateBoard() {
@@ -202,9 +147,9 @@ public class BoardView implements View {
             SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
             Unit unit = piece.getUnit();
 
-            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece, gamePresenter));
-            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece, gamePresenter));
-            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece, gamePresenter));
+            selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
+            selectionPiecePolygon.setOnMouseDragReleased(new SelectionPieceDragReleasedHandler(engine, gameController, piece));
+            unitPiecePolygon.setOnMouseClicked(new UnitPieceClickHandler(engine, gameController, piece));
             unitPiecePolygon.setOnDragDetected(new UnitPieceDragDetectedHandler(engine, gameController, piece, unitPiecePolygon));
 
             if (exists(unit)) {
@@ -221,5 +166,7 @@ public class BoardView implements View {
 
             selectionPieces.get(piece).hide();
         });
+
+        sidebarPresenter.update();
     }
 }

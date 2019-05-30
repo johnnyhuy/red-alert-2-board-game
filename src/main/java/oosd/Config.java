@@ -6,9 +6,7 @@ import oosd.models.game.Engine;
 import oosd.models.game.GameEngine;
 import oosd.models.game.GameLogger;
 import oosd.models.player.Player;
-import oosd.views.BoardView;
-import oosd.views.GamePresenter;
-import oosd.views.WelcomeView;
+import oosd.views.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,7 +35,17 @@ public class Config {
 
     @Bean
     public GamePresenter gamePresenter() {
-        return new GamePresenter(context.getBean(Engine.class), context.getBean(GameLogger.class));
+        return new GamePresenter(context);
+    }
+
+    @Bean
+    public SidebarPresenter sidebarPresenter() {
+        return new SidebarPresenter(context.getBean(Engine.class), context.getBean(GameLogger.class));
+    }
+
+    @Bean
+    public ToolbarPresenter toolbarPresenter() {
+        return new ToolbarPresenter(context, context.getBean(Engine.class));
     }
 
     @Bean
@@ -47,7 +55,7 @@ public class Config {
 
     @Bean
     public BoardView boardView() {
-        return new BoardView(context.getBean(Engine.class), context.getBean(GamePresenter.class), context.getBean(GameLogger.class));
+        return new BoardView(context.getBean(Engine.class), context.getBean(GamePresenter.class), context.getBean(ToolbarPresenter.class), context.getBean(SidebarPresenter.class));
     }
 
     @Bean
