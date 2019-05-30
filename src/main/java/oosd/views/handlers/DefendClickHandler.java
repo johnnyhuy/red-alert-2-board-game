@@ -5,19 +5,16 @@ import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-import oosd.views.GamePresenter;
 
 import static oosd.helpers.ObjectHelper.isNull;
 
 public class DefendClickHandler implements EventHandler<MouseEvent> {
     private Engine engine;
     private GameController gameController;
-    private GamePresenter gamePresenter;
 
-    public DefendClickHandler(Engine engine, GameController gameController, GamePresenter gamePresenter) {
+    public DefendClickHandler(Engine engine, GameController gameController) {
         this.engine = engine;
         this.gameController = gameController;
-        this.gamePresenter = gamePresenter;
     }
 
     @Override
@@ -33,7 +30,5 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
         if (engine.getRemainingTurns() == 0) {
             gameController.endGame();
         }
-
-        gamePresenter.update();
     }
 }

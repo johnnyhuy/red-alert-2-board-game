@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<?import oosd.views.components.panes.PlayerInfoVBox?>
+<?import oosd.views.components.panes.SidebarPane?>
+<?import oosd.views.components.text.PlayerTurnText?>
+<SidebarPane xmlns:fx="http://javafx.com/fxml/1" fx:id="sidebar" minHeight="50"
+             xmlns="http://javafx.com/javafx/8" fx:controller="oosd.views.SidebarPresenter" minWidth="255">
+    <StackPane AnchorPane.topAnchor="6" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <PlayerTurnText fx:id="playerTurnText"/>
+    </StackPane>
+    <PlayerInfoVBox fx:id="playerInfoVBox" AnchorPane.topAnchor="80" AnchorPane.rightAnchor="30"
+                    AnchorPane.leftAnchor="30">
+    </PlayerInfoVBox>
+    <ScrollPane prefHeight="420" AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50"
+                AnchorPane.leftAnchor="50" vbarPolicy="NEVER" hbarPolicy="NEVER">
+        <VBox fx:id="gameLogVBox">
+        </VBox>
+    </ScrollPane>
+</SidebarPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import oosd.views.components.panes.ToolbarPane?>
+<ToolbarPane xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" fx:id="toolbar" minHeight="50"
+             xmlns="http://javafx.com/javafx/8" fx:controller="oosd.views.ToolbarPresenter">
+    <padding>
+        <Insets top="13" right="30" bottom="15" left="60"/>
+    </padding>
+    <Button fx:id="defendButton" styleClass="toolbar-button">
+        <tooltip>
+            <Tooltip text="Defend piece"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="undoButton" styleClass="toolbar-button">
+        <tooltip>
+            <Tooltip text="Undo move"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="forfeitButton" styleClass="toolbar-button">
+        <tooltip>
+            <Tooltip text="Forfeit game"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="saveGameButton" styleClass="toolbar-button">
+        <tooltip>
+            <Tooltip text="Save game"/>
+        </tooltip>
+    </Button>
+    <Button fx:id="restoreGameButton" styleClass="toolbar-button">
+        <tooltip>
+            <Tooltip text="Restore game"/>
+        </tooltip>
+    </Button>
+</ToolbarPane>
