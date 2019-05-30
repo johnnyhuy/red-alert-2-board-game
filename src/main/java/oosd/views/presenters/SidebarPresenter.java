@@ -2,6 +2,7 @@ package oosd.views.presenters;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import oosd.models.game.Engine;
@@ -23,6 +24,9 @@ public class SidebarPresenter implements Initializable {
 
     @FXML
     private PlayerInfoVBox playerInfoVBox;
+
+    @FXML
+    private ScrollPane gameLogScrollPane;
 
     @FXML
     private VBox gameLogVBox;
@@ -52,6 +56,7 @@ public class SidebarPresenter implements Initializable {
 
         getPlayerTurnText().updateTurn(engine);
         getPlayerInfoVBox().update(engine);
+        getGameLogScrollPane().setVvalue(1.0);
     }
 
     public PlayerInfoVBox getPlayerInfoVBox() {
@@ -60,6 +65,10 @@ public class SidebarPresenter implements Initializable {
 
     public PlayerTurnText getPlayerTurnText() {
         return playerTurnText;
+    }
+
+    public ScrollPane getGameLogScrollPane() {
+        return gameLogScrollPane;
     }
 
     public VBox getGameLogVBox() {

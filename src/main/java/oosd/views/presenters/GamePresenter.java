@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 
 @Controller
 public class GamePresenter implements Initializable {
-    private GameController gameController;
     private ApplicationContext context;
 
     @FXML
@@ -26,15 +25,11 @@ public class GamePresenter implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.gameController = context.getBean(GameController.class);
+        GameController gameController = context.getBean(GameController.class);
         gameController.start();
     }
 
     public BoardPane getBoardPane() {
         return board;
-    }
-
-    public GameController getGameController() {
-        return gameController;
     }
 }

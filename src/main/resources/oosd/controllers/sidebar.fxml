@@ -13,7 +13,7 @@
     <PlayerInfoVBox fx:id="playerInfoVBox" AnchorPane.topAnchor="80" AnchorPane.rightAnchor="30"
                     AnchorPane.leftAnchor="30">
     </PlayerInfoVBox>
-    <ScrollPane prefHeight="420" AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50"
+    <ScrollPane fx:id="gameLogScrollPane" prefHeight="420" AnchorPane.topAnchor="355" AnchorPane.rightAnchor="50"
                 AnchorPane.leftAnchor="50" vbarPolicy="NEVER" hbarPolicy="NEVER">
         <VBox fx:id="gameLogVBox">
         </VBox>
