@@ -15,19 +15,13 @@ public class PlayerContract extends Player {
     public PlayerContract(String playerName) {
         super(playerName);
 
-        if (preCondition()) {
-            assert !playerName.isEmpty();
-        }
+        assert !preCondition() || !playerName.isEmpty();
     }
 
     @Override
     public void addUnit(Unit newUnit) {
-        if (preCondition()) {
-            assert target.getAllUnits().size() < 20;
-        }
+        assert !preCondition() || target.getAllUnits().size() < 20;
 
-        if (postCondition()) {
-            assert target.getAllUnits().size() == old(target.getAllUnits().size() + 1);
-        }
+        assert !postCondition() || target.getAllUnits().size() == old(target.getAllUnits().size() + 1);
     }
 }
