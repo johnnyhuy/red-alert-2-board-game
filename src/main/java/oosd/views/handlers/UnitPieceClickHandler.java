@@ -5,19 +5,16 @@ import javafx.scene.input.MouseEvent;
 import oosd.controllers.GameController;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-import oosd.views.GamePresenter;
 
 public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
     private Engine engine;
     private GameController gameController;
     private Piece piece;
-    private GamePresenter gamePresenter;
 
-    public UnitPieceClickHandler(Engine engine, GameController gameController, Piece piece, GamePresenter gamePresenter) {
+    public UnitPieceClickHandler(Engine engine, GameController gameController, Piece piece) {
         this.engine = engine;
         this.gameController = gameController;
         this.piece = piece;
-        this.gamePresenter = gamePresenter;
     }
 
     @Override
@@ -33,7 +30,5 @@ public class UnitPieceClickHandler implements EventHandler<MouseEvent> {
         } else if (engine.canSelect(piece)) {
             gameController.select(selectedPiece, piece);
         }
-
-        gamePresenter.update();
     }
 }
