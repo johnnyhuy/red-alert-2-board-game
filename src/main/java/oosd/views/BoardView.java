@@ -9,20 +9,18 @@ import oosd.models.game.Engine;
 import oosd.models.units.Unit;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.panes.BoardPane;
-import oosd.views.components.polygons.BackgroundPiecePolygon;
-import oosd.views.components.polygons.Hexagon;
-import oosd.views.components.polygons.SelectionPiecePolygon;
-import oosd.views.components.polygons.UnitPiecePolygon;
-import oosd.views.factories.ViewComponentFactory;
+import oosd.views.components.polygons.*;
 import oosd.views.handlers.SelectionPieceClickHandler;
 import oosd.views.handlers.SelectionPieceDragReleasedHandler;
 import oosd.views.handlers.UnitPieceClickHandler;
 import oosd.views.handlers.UnitPieceDragDetectedHandler;
+import oosd.views.presenters.GamePresenter;
+import oosd.views.presenters.SidebarPresenter;
+import oosd.views.presenters.ToolbarPresenter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.HashMap;
 
 import static oosd.helpers.ObjectHelper.exists;
 
@@ -40,9 +38,6 @@ public class BoardView implements View {
     private ToolbarPresenter toolbarPresenter;
     private SidebarPresenter sidebarPresenter;
     private GameController gameController;
-    private HashMap<Piece, SelectionPiecePolygon> selectionPieces;
-    private HashMap<Piece, UnitPiecePolygon> unitPieces;
-    private HashMap<Piece, DefendPieceImage> defendPieces;
 
     @Inject
     public BoardView(Engine engine, GamePresenter gamePresenter, ToolbarPresenter toolbarPresenter, SidebarPresenter sidebarPresenter) {
@@ -55,11 +50,7 @@ public class BoardView implements View {
     public void start() {
         this.gameController = gamePresenter.getGameController();
         BoardPane boardPane = gamePresenter.getBoardPane();
-        ViewComponentFactory boardFactory = context.getBean(ViewComponentFactory.class);
-        this.unitPieces = boardFactory.createUnitPiecePolygons();
-        this.selectionPieces = boardFactory.createSelectionPiecePolygons();
-        this.defendPieces = boardFactory.createDefendPieceImage();
-        HashMap<Piece, BackgroundPiecePolygon> backgroundPieces = boardFactory.createBackgroundPiecePolygons();
+        BoardPolygonMap boardPolygonMap = context.getBean(BoardPolygonMap.class);
 
         Board board = engine.getBoard();
         double x = 0;
@@ -71,10 +62,10 @@ public class BoardView implements View {
         for (int row = 0; row < board.getRows(); row++) {
             for (int column = 0; column < board.getColumns(); column++) {
                 Piece piece = board.getPiece(column, row);
-                UnitPiecePolygon unitPiecePolygon = unitPieces.get(piece);
-                BackgroundPiecePolygon backgroundPiecePolygon = backgroundPieces.get(piece);
-                SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
-                DefendPieceImage defendPieceImage = defendPieces.get(piece);
+                UnitPiecePolygon unitPiecePolygon = boardPolygonMap.getUnitPiece(piece);
+                BackgroundPiecePolygon backgroundPiecePolygon = boardPolygonMap.getBackgroundPiece(piece);
+                SelectionPiecePolygon selectionPiecePolygon = boardPolygonMap.getSelectionPiece(piece);
+                DefendPieceImage defendPieceImage = boardPolygonMap.getDefendPiece(piece);
 
                 if (piece.getUnit() != null) {
                     unitPiecePolygon.setUnitImage(piece.getUnit());
@@ -114,25 +105,27 @@ public class BoardView implements View {
     }
 
     public void selectUnit(Piece selectedPiece, Piece clickedPiece) {
+        BoardPolygonMap boardPolygonMap = context.getBean(BoardPolygonMap.class);
+
         if (exists(selectedPiece)) {
-            selectionPieces.get(selectedPiece).hide();
+            boardPolygonMap.getSelectionPiece(selectedPiece).hide();
 
             Unit unit = selectedPiece.getUnit();
             if (exists(unit)) {
                 for (Piece piece : unit.getUnitBehaviour().getValidMoves(engine, selectedPiece)) {
-                    selectionPieces.get(piece).hide();
+                    boardPolygonMap.getSelectionPiece(piece).hide();
                 }
             }
         }
 
         for (Piece piece : clickedPiece.getUnit().getUnitBehaviour().getValidMoves(engine, clickedPiece)) {
-            selectionPieces.get(piece).show();
+            boardPolygonMap.getSelectionPiece(piece).show();
 
             Unit unit = piece.getUnit();
             if (exists(unit) && !unit.getPlayer().equals(engine.getTurn())) {
-                selectionPieces.get(piece).fillRed();
+                boardPolygonMap.getSelectionPiece(piece).fillRed();
             } else {
-                selectionPieces.get(piece).fillGreen();
+                boardPolygonMap.getSelectionPiece(piece).fillGreen();
             }
         }
 
@@ -141,10 +134,12 @@ public class BoardView implements View {
 
     public void updateBoard() {
         Board board = engine.getBoard();
+        BoardPolygonMap boardPolygonMap = context.getBean(BoardPolygonMap.class);
+
         board.apply((column, row) -> {
             Piece piece = board.getPiece(column, row);
-            UnitPiecePolygon unitPiecePolygon = unitPieces.get(piece);
-            SelectionPiecePolygon selectionPiecePolygon = selectionPieces.get(piece);
+            UnitPiecePolygon unitPiecePolygon = boardPolygonMap.getUnitPiece(piece);
+            SelectionPiecePolygon selectionPiecePolygon = boardPolygonMap.getSelectionPiece(piece);
             Unit unit = piece.getUnit();
 
             selectionPiecePolygon.setOnMouseClicked(new SelectionPieceClickHandler(engine, gameController, piece));
@@ -156,15 +151,15 @@ public class BoardView implements View {
                 unitPiecePolygon.setUnitImage(unit);
 
                 if (unit.canDefend(piece)) {
-                    defendPieces.get(piece).show();
+                    boardPolygonMap.getDefendPiece(piece).show();
                 } else {
-                    defendPieces.get(piece).hide();
+                    boardPolygonMap.getDefendPiece(piece).hide();
                 }
             } else {
                 unitPiecePolygon.hide();
             }
 
-            selectionPieces.get(piece).hide();
+            boardPolygonMap.getSelectionPiece(piece).hide();
         });
 
         sidebarPresenter.update();

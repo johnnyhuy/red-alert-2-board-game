@@ -1,4 +1,4 @@
-package oosd.views;
+package oosd.views.presenters;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

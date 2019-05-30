@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import oosd.views.components.panes.ToolbarPane?>
 <ToolbarPane xmlns:fx="http://javafx.com/fxml/1" minWidth="1200" fx:id="toolbar" minHeight="50"
-             xmlns="http://javafx.com/javafx/8" fx:controller="oosd.views.ToolbarPresenter">
+             xmlns="http://javafx.com/javafx/8" fx:controller="oosd.views.presenters.ToolbarPresenter">
     <padding>
         <Insets top="13" right="30" bottom="15" left="60"/>
     </padding>
