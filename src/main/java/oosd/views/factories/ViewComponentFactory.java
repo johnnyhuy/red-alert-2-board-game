@@ -1,11 +1,8 @@
 package oosd.views.factories;
 
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
 import oosd.models.game.Engine;
-import oosd.views.View;
 import oosd.views.components.images.DefendPieceImage;
 import oosd.views.components.polygons.BackgroundPiecePolygon;
 import oosd.views.components.polygons.SelectionPiecePolygon;
@@ -32,11 +29,6 @@ public class ViewComponentFactory {
     @Inject
     public ViewComponentFactory(Engine engine) {
         this.board = engine.getBoard();
-    }
-
-    public ImagePattern createImage(String imageName) {
-        Image image = new Image(View.class.getResource(imageName + ".png").toString());
-        return new ImagePattern(image);
     }
 
     public HashMap<Piece, UnitPiecePolygon> createUnitPiecePolygons() {

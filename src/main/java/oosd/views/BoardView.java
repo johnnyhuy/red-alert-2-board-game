@@ -3,7 +3,6 @@ package oosd.views;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
 import oosd.controllers.GameController;
 import oosd.models.board.Board;
 import oosd.models.board.Piece;
@@ -170,13 +169,11 @@ public class BoardView implements View {
 
             Unit unit = piece.getUnit();
             if (exists(unit) && !unit.getPlayer().equals(engine.getTurn())) {
-                selectionPieces.get(piece).setFill(Paint.valueOf("#FF0000"));
+                selectionPieces.get(piece).fillRed();
             } else {
-                selectionPieces.get(piece).setFill(Paint.valueOf("#00C400"));
+                selectionPieces.get(piece).fillGreen();
             }
         }
-
-        selectionPieces.get(clickedPiece).setFill(Paint.valueOf("#dadada"));
 
         sidebarPresenter.update();
     }
