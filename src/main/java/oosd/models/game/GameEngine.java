@@ -16,23 +16,18 @@ import static oosd.helpers.ObjectHelper.exists;
 import static oosd.helpers.ObjectHelper.isNull;
 
 public class GameEngine implements Engine {
-    private final History history;
+    private History history;
     private TurnService turnService;
     private PlayerService playerService;
     private Board board;
     private Piece selectedPiece;
     private int undoCount = 0;
 
-    public GameEngine(Board board, List<Player> players) {
+    public GameEngine(Board board, PlayerService playerService, TurnService turnService) {
         this.board = board;
         this.history = new History(this);
-        this.playerService = new GamePlayerService(players);
-        this.turnService = new GameTurnService(playerService, 10);
-    }
-
-    public GameEngine(Board board, List<Player> players, int turnLimit) {
-        this(board, players);
-        this.turnService = new GameTurnService(playerService, turnLimit);
+        this.playerService = playerService;
+        this.turnService = turnService;
     }
 
     @Override

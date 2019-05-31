@@ -3,8 +3,7 @@ package oosd.models;
 import oosd.models.board.Board;
 import oosd.models.board.GameBoard;
 import oosd.models.board.Piece;
-import oosd.models.game.Engine;
-import oosd.models.game.GameEngine;
+import oosd.models.game.*;
 import oosd.models.player.Player;
 import oosd.models.units.Unit;
 import oosd.models.units.allied.GISoldier;
@@ -23,7 +22,9 @@ class GameEngineTest {
     void testCheckBoardExistsOnGameEngine() {
         // Act
         Board board = new GameBoard(2, 2);
-        Engine engine = new GameEngine(board, new ArrayList<>());
+        PlayerService playerService = new GamePlayerService(new ArrayList<>());
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Assert
         assertNotNull(engine);
@@ -38,7 +39,9 @@ class GameEngineTest {
 
         // Act
         Board board = new GameBoard(columns, rows);
-        Engine engine = new GameEngine(board, new ArrayList<>());
+        PlayerService playerService = new GamePlayerService(new ArrayList<>());
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Assert
         assertEquals(engine.getBoard().getRows(), rows);
@@ -52,7 +55,9 @@ class GameEngineTest {
         Player player = new Player("John Tester");
         Unit unit = new GISoldier(player);
         Board board = new GameBoard(2, 2);
-        Engine engine = new GameEngine(board, new ArrayList<>());
+        PlayerService playerService = new GamePlayerService(new ArrayList<>());
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
         Piece piece = engine.getBoard().getPiece(0, 1);
         piece.setUnit(unit);
 
@@ -69,7 +74,9 @@ class GameEngineTest {
         Board board = new GameBoard(2, 2);
         List<Player> players = new ArrayList<>();
         players.add(new Player("John Tester"));
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         Player player = engine.getTurnService().getTurn();
@@ -87,7 +94,9 @@ class GameEngineTest {
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         board.getPiece(0, 0).setUnit(unit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.defend(board.getPiece(0, 0));
@@ -108,7 +117,9 @@ class GameEngineTest {
         Unit targetUnit = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(attackingUnit);
         board.getPiece(1, 0).setUnit(targetUnit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.attack(board.getPiece(0, 0), board.getPiece(1, 0));
@@ -132,7 +143,9 @@ class GameEngineTest {
         Board board = new GameBoard(2, 2);
         Unit unit = new GISoldier(playerOne);
         board.getPiece(0, 0).setUnit(unit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.select(board.getPiece(0, 0));
@@ -156,7 +169,9 @@ class GameEngineTest {
         Piece playerTwoPiece = board.getPiece(1, 1);
         playerOnePiece.setUnit(playerOneUnit);
         playerTwoPiece.setUnit(playerTwoUnit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
         engine.move(playerOnePiece, board.getPiece(1, 0));
         engine.move(playerTwoPiece, board.getPiece(0, 1));
 
@@ -185,7 +200,9 @@ class GameEngineTest {
         Piece playerTwoPiece = board.getPiece(1, 1);
         playerOnePiece.setUnit(playerOneUnit);
         playerTwoPiece.setUnit(playerTwoUnit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
         engine.defend(playerOnePiece);
         engine.defend(playerTwoPiece);
 
@@ -209,7 +226,9 @@ class GameEngineTest {
         Unit playerTwoUnit = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(playerOneUnit);
         board.getPiece(1, 1).setUnit(playerTwoUnit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
         engine.defend(board.getPiece(0, 0));
         engine.defend(board.getPiece(1, 1));
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
@@ -247,7 +266,9 @@ class GameEngineTest {
         Unit playerTwoUnit = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(playerOneUnit);
         board.getPiece(1, 1).setUnit(playerTwoUnit);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.move(board.getPiece(1, 1), board.getPiece(0, 1));
 
@@ -274,7 +295,9 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(unit);
         board.getPiece(1, 1).setUnit(unitTwo);
         board.getPiece(0, 0).getUnit().startDefending(board.getPiece(0, 0));
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.move(board.getPiece(1, 1), board.getPiece(0, 1));
@@ -295,7 +318,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
         board.getPiece(1, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.select(board.getPiece(0, 0));
@@ -319,7 +344,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
         board.getPiece(1, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.select(board.getPiece(0, 0));
@@ -344,7 +371,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
         board.getPiece(1, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.select(board.getPiece(0, 0));
@@ -369,7 +398,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unit);
         board.getPiece(1, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 10);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.select(board.getPiece(0, 0));
@@ -403,7 +434,9 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(1, 0).setUnit(unitThree);
         board.getPiece(1, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.endGame();
@@ -429,7 +462,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(1, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         boolean cannotDefendNoSelection = engine.canDefend(board.getPiece(0, 0));
@@ -456,7 +491,9 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(0, 1).setUnit(unitTwo);
         board.getPiece(3, 1).setUnit(unitThree);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.select(board.getPiece(0, 0));
@@ -481,7 +518,9 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(0, 1).setUnit(unitTwo);
         board.getPiece(3, 1).setUnit(unitThree);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
         engine.defend(board.getPiece(3, 1));
 
         // Act
@@ -502,7 +541,9 @@ class GameEngineTest {
         Player playerTwo = new Player("Jane Doe");
         List<Player> players = Arrays.asList(playerOne, playerTwo);
         Board board = new GameBoard(4, 4);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         Executable reset = engine::resetGame;
@@ -524,7 +565,9 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(0, 1).setUnit(unitTwo);
         board.getPiece(3, 1).setUnit(unitThree);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
@@ -555,7 +598,9 @@ class GameEngineTest {
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(0, 1).setUnit(unitTwo);
         board.getPiece(3, 1).setUnit(unitThree);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
@@ -585,7 +630,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(0, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
@@ -616,7 +663,9 @@ class GameEngineTest {
         Board board = new GameBoard(4, 4);
         Unit unit = new GISoldier(playerOne);
         board.getPiece(0, 0).setUnit(unit);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.defend(board.getPiece(0, 0));
@@ -639,7 +688,9 @@ class GameEngineTest {
         Unit unitTwo = new Conscript(playerTwo);
         board.getPiece(0, 0).setUnit(unitOne);
         board.getPiece(0, 1).setUnit(unitTwo);
-        Engine engine = new GameEngine(board, players, 2);
+        PlayerService playerService = new GamePlayerService(players);
+        TurnService turnService = new GameTurnService(playerService, 2);
+        Engine engine = new GameEngine(board, playerService, turnService);
 
         // Act
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
