@@ -5,6 +5,7 @@ import oosd.models.board.Board;
 import oosd.models.game.Engine;
 import oosd.models.game.GameEngine;
 import oosd.models.game.GameLogger;
+import oosd.models.game.Logger;
 import oosd.models.player.Player;
 import oosd.views.BoardView;
 import oosd.views.WelcomeView;
@@ -60,7 +61,7 @@ public class Config {
     }
 
     @Bean
-    public GameLogger gameLogger() {
+    public Logger gameLogger() {
         return new GameLogger();
     }
 

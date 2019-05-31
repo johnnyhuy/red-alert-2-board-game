@@ -6,8 +6,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import oosd.models.game.Engine;
-import oosd.models.game.GameLogger;
 import oosd.models.game.Log;
+import oosd.models.game.Logger;
 import oosd.views.components.panes.PlayerInfoVBox;
 import oosd.views.components.text.PlayerTurnText;
 
@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class SidebarPresenter implements Initializable {
     private final Engine engine;
-    private final GameLogger gameLogger;
+    private final Logger logger;
 
     @FXML
     private PlayerTurnText playerTurnText;
@@ -32,9 +32,9 @@ public class SidebarPresenter implements Initializable {
     private VBox gameLogVBox;
 
     @Inject
-    public SidebarPresenter(Engine engine, GameLogger gameLogger) {
+    public SidebarPresenter(Engine engine, Logger logger) {
         this.engine = engine;
-        this.gameLogger = gameLogger;
+        this.logger = logger;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SidebarPresenter implements Initializable {
     public void update() {
         getGameLogVBox().getChildren().clear();
 
-        for (Log log : gameLogger.getLogs()) {
+        for (Log log : logger.getLogs()) {
             Text text = new Text();
             text.setText(log.getText());
             text.setFill(log.getColor());

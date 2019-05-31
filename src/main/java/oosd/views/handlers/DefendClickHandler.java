@@ -27,7 +27,7 @@ public class DefendClickHandler implements EventHandler<MouseEvent> {
 
         gameController.defend(selectedPiece);
 
-        if (engine.getRemainingTurns() == 0) {
+        if (engine.getTurnService().getRemainingTurns() == 0) {
             gameController.endGame();
         }
     }

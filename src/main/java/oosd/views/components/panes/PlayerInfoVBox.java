@@ -13,7 +13,7 @@ public class PlayerInfoVBox extends VBox {
         getChildren().clear();
         getChildren().add(new TurnCountText(engine));
 
-        for (Player player : engine.getPlayers()) {
+        for (Player player : engine.playerService().getPlayers()) {
             PlayerInfoText text = new PlayerInfoText(player);
             getChildren().add(text);
         }

@@ -72,7 +72,7 @@ class GameEngineTest {
         Engine engine = new GameEngine(board, players);
 
         // Act
-        Player player = engine.getTurn();
+        Player player = engine.getTurnService().getTurn();
 
         // Assert
         assertNotNull(player);
@@ -94,7 +94,7 @@ class GameEngineTest {
 
         // Assert
         assertTrue(unit.canDefend(board.getPiece(0, 0)));
-        assertEquals(playerTwo, engine.getTurn());
+        assertEquals(playerTwo, engine.getTurnService().getTurn());
     }
 
     @Test
@@ -120,7 +120,7 @@ class GameEngineTest {
         assertEquals(1, playerTwo.getAllUnits().size());
         assertEquals(0, playerTwo.getAliveUnits().size());
         assertEquals(board.getPiece(1, 0).getUnit(), attackingUnit);
-        assertEquals(playerTwo, engine.getTurn());
+        assertEquals(playerTwo, engine.getTurnService().getTurn());
     }
 
     @Test
@@ -140,7 +140,7 @@ class GameEngineTest {
         // Assert
         assertNotNull(engine.getSelected());
         assertNotNull(board.getPiece(0, 0).getUnit());
-        assertEquals(playerOne, engine.getTurn());
+        assertEquals(playerOne, engine.getTurnService().getTurn());
     }
 
     @Test
@@ -169,7 +169,7 @@ class GameEngineTest {
         assertNotNull(afterBoard.getPiece(1, 1).getUnit());
         assertNull(afterBoard.getPiece(1, 0).getUnit());
         assertNull(afterBoard.getPiece(0, 1).getUnit());
-        assertEquals(playerOne, engine.getTurn());
+        assertEquals(playerOne, engine.getTurnService().getTurn());
     }
 
     @Test
@@ -302,7 +302,7 @@ class GameEngineTest {
         engine.defend(board.getPiece(0, 0));
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.attack(board.getPiece(1, 0), board.getPiece(1, 1));
-        int turns = engine.getTurns();
+        int turns = engine.getTurnService().getTurns();
 
         // Assert
         assertEquals(turns, 3);
@@ -326,7 +326,7 @@ class GameEngineTest {
         engine.defend(board.getPiece(0, 0));
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.attack(board.getPiece(1, 0), board.getPiece(1, 1));
-        int actualTurns = engine.getRemainingTurns();
+        int actualTurns = engine.getTurnService().getRemainingTurns();
         int expectedTurns = 0;
 
         // Assert
@@ -351,8 +351,8 @@ class GameEngineTest {
         engine.defend(board.getPiece(0, 0));
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.attack(board.getPiece(1, 0), board.getPiece(1, 1));
-        int actualTurns = engine.getRemainingTurns();
-        int expectedTurns = engine.getTurnLimit() - engine.getTurns();
+        int actualTurns = engine.getTurnService().getRemainingTurns();
+        int expectedTurns = engine.getTurnService().getTurnLimit() - engine.getTurnService().getTurns();
 
         // Assert
         assertEquals(expectedTurns, actualTurns);
@@ -567,7 +567,7 @@ class GameEngineTest {
         engine.move(board.getPiece(0, 0), board.getPiece(1, 0));
         engine.move(board.getPiece(3, 1), board.getPiece(3, 0));
         boolean undoTurn = engine.undoTurn();
-        boolean canUndo = engine.getTurn().canUndo();
+        boolean canUndo = engine.getTurnService().getTurn().canUndo();
 
         // Assert
         assertTrue(undoTurn);
@@ -646,7 +646,7 @@ class GameEngineTest {
         engine.resetGame();
 
         // Assert
-        assertEquals(engine.getTurn(), playerOne);
-        assertEquals(2, engine.getRemainingTurns());
+        assertEquals(engine.getTurnService().getTurn(), playerOne);
+        assertEquals(2, engine.getTurnService().getRemainingTurns());
     }
 }

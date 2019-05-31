@@ -31,7 +31,7 @@ public class RestoreGameClickHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        Player player = engine.getTurn();
+        Player player = engine.getTurnService().getTurn();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Restore game");
         alert.setHeaderText("Restore from the last saved state of the game.");

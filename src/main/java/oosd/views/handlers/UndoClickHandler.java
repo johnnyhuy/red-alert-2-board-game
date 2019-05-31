@@ -16,7 +16,7 @@ public class UndoClickHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        if (!engine.getTurn().canUndo()) {
+        if (!engine.getTurnService().getTurn().canUndo()) {
             return;
         }
 
