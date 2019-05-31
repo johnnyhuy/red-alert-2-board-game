@@ -127,7 +127,7 @@ We've produced a few class diagrams to show our iterative process in developing 
 
 ### Current class diagram
 
-![Class diagram V10](./diagrams/ClassDiagrams-V10.png)
+![Class diagram V12](./diagrams/ClassDiagrams-V12.png)
 
 ### Mouse click handling on gameBoard sequence diagram
 
