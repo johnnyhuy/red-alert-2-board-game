@@ -31,7 +31,7 @@ public class SaveGameClickHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        Player player = engine.getTurn();
+        Player player = engine.getTurnService().getTurn();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Save game");
         alert.setHeaderText("Save the current state of the game");

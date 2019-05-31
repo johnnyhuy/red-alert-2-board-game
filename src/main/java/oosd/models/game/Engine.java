@@ -5,8 +5,6 @@ import oosd.models.board.Piece;
 import oosd.models.board.history.Snapshot;
 import oosd.models.player.Player;
 
-import java.util.List;
-
 public interface Engine {
     /**
      * Get the game board.
@@ -23,11 +21,11 @@ public interface Engine {
     Piece getSelected();
 
     /**
-     * Get the turn of the game.
+     * Get the turn service setup in the engine.
      *
-     * @return a player in the turn
+     * @return turn service
      */
-    Player getTurn();
+    TurnService getTurnService();
 
     /**
      * Undo player turns.
@@ -97,27 +95,6 @@ public interface Engine {
     boolean canSelect(Piece piece);
 
     /**
-     * Get the total amount of turns in the game.
-     *
-     * @return amount of turns
-     */
-    int getTurns();
-
-    /**
-     * Get the remaining amount of turns.
-     *
-     * @return remaining turns
-     */
-    int getRemainingTurns();
-
-    /**
-     * Get the limit of turns the game can do in total.
-     *
-     * @return number of turns
-     */
-    int getTurnLimit();
-
-    /**
      * Reset the game to the start.
      */
     void resetGame();
@@ -164,16 +141,16 @@ public interface Engine {
     void restoreGame();
 
     /**
-     * Get the players in the game.
-     *
-     * @return list of players in the game
-     */
-    List<Player> getPlayers();
-
-    /**
      * Get the winning player.
      *
      * @return winning player
      */
     Player getWinningPlayer();
+
+    /**
+     * Get the player service.
+     *
+     * @return player service
+     */
+    PlayerService playerService();
 }

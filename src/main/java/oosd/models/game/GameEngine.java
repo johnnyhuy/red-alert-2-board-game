@@ -10,39 +10,29 @@ import oosd.models.player.Player;
 import oosd.models.units.Unit;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import static oosd.helpers.ListHelper.isNotEmpty;
 import static oosd.helpers.ObjectHelper.exists;
 import static oosd.helpers.ObjectHelper.isNull;
 
 public class GameEngine implements Engine {
     private final History history;
+    private TurnService turnService;
+    private PlayerService playerService;
     private Board board;
     private Piece selectedPiece;
-    private Player turn;
-    private int turnLimit;
     private int undoCount = 0;
-    private List<Player> players;
-    private Iterator<Player> playerIterator;
 
     public GameEngine(Board board, List<Player> players) {
         this.board = board;
-        this.players = players;
         this.history = new History(this);
-        this.turnLimit = 10;
-
-        // Whoever we add to the players list, the first one takes the turn
-        if (isNotEmpty(players)) {
-            this.playerIterator = players.listIterator();
-            this.turn = playerIterator.next();
-        }
+        this.playerService = new GamePlayerService(players);
+        this.turnService = new GameTurnService(playerService, 10);
     }
 
-    public GameEngine(Board board, List<Player> players, int turns) {
+    public GameEngine(Board board, List<Player> players, int turnLimit) {
         this(board, players);
-        this.turnLimit = turns;
+        this.turnService = new GameTurnService(playerService, turnLimit);
     }
 
     @Override
@@ -56,8 +46,13 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public Player getTurn() {
-        return this.turn;
+    public TurnService getTurnService() {
+        return this.turnService;
+    }
+
+    @Override
+    public PlayerService playerService() {
+        return this.playerService;
     }
 
     @Override
@@ -78,7 +73,6 @@ public class GameEngine implements Engine {
 
     @Override
     public void move(Piece selectedPiece, Piece targetPiece) {
-        // TODO: move undo count
         undoCount = 0;
         history.backup();
         getTurn().updateUndoStatus();
@@ -134,7 +128,7 @@ public class GameEngine implements Engine {
         }
 
         boolean isValidMove = this.getSelected().isValidMove(this, targetPiece);
-        boolean isEnemyUnit = !targetPiece.getUnit().getPlayer().equals(this.getTurn());
+        boolean isEnemyUnit = !targetPiece.getUnit().getPlayer().equals(getTurn());
         boolean isDefensive = targetPiece.getUnit().canDefend(targetPiece);
 
         return isEnemyUnit && !isDefensive && isValidMove;
@@ -154,34 +148,9 @@ public class GameEngine implements Engine {
     }
 
     @Override
-    public int getTurns() {
-        int turnCount = 0;
-
-        for (Player player : getPlayers()) {
-            turnCount += player.getTurns();
-        }
-
-        return turnCount;
-    }
-
-    @Override
-    public int getRemainingTurns() {
-        int turns = turnLimit - getTurns();
-
-        // A bit of defensive programming here
-        return turns < 0 ? 0 : turns;
-    }
-
-    @Override
-    public int getTurnLimit() {
-        return this.turnLimit;
-    }
-
-    @Override
     public void resetGame() {
         this.history.reset();
-        this.playerIterator = getPlayers().listIterator();
-        this.turn = playerIterator.next();
+        this.turnService.resetTurn();
 
         for (Player player : getPlayers()) {
             player.setCanUndo(true);
@@ -226,7 +195,7 @@ public class GameEngine implements Engine {
 
     @Override
     public Snapshot save() {
-        List<Player> oldPlayers = this.players;
+        List<Player> oldPlayers = getPlayers();
         List<Player> savedPlayers = new ArrayList<>();
         Board oldBoard = this.board;
         Board savedBoard = new GameBoard(oldBoard.getColumns(), oldBoard.getRows());
@@ -260,12 +229,11 @@ public class GameEngine implements Engine {
             }
         }
 
-        return new GameSnapshot(savedBoard, savedPlayers);
+        return new GameSnapshot(savedBoard, savedPlayers, turnService.getTurn());
     }
 
     @Override
     public void restore(Snapshot snapshot) {
-        // TODO: restore should reset turns on restore
         for (Player oldPlayer : getPlayers()) {
             for (Player newPlayer : snapshot.getPlayers()) {
                 if (newPlayer.equals(oldPlayer)) {
@@ -276,16 +244,8 @@ public class GameEngine implements Engine {
         }
 
         this.board = snapshot.getBoard();
-        this.players = snapshot.getPlayers();
-        this.playerIterator = players.listIterator();
-
-        while (playerIterator.hasNext()) {
-            Player nextPlayer = playerIterator.next();
-            if (nextPlayer.equals(turn)) {
-                this.turn = nextPlayer;
-                break;
-            }
-        }
+        this.playerService.setPlayers(snapshot.getPlayers());
+        this.turnService.setTurn(snapshot.getTurn());
     }
 
     @Override
@@ -301,11 +261,6 @@ public class GameEngine implements Engine {
     @Override
     public void restoreGame() {
         history.restore();
-    }
-
-    @Override
-    public List<Player> getPlayers() {
-        return this.players;
     }
 
     @Override
@@ -326,24 +281,37 @@ public class GameEngine implements Engine {
     }
 
     /**
+     * Get players convenience method.
+     *
+     * @return list of players
+     */
+    private List<Player> getPlayers() {
+        return this.playerService.getPlayers();
+    }
+
+    /**
+     * Get turn convenience method.
+     *
+     * @return player turn
+     */
+    private Player getTurn() {
+        return this.turnService.getTurn();
+    }
+
+    /**
+     * Get the next turn
+     */
+    private void getNextTurn() {
+        this.turnService.getNextTurn();
+    }
+
+    /**
      * Set the selected piece on in the game.
      *
      * @param selectedPiece selected piece
      */
     private void setSelectedPiece(Piece selectedPiece) {
         this.selectedPiece = selectedPiece;
-    }
-
-    /**
-     * Get the next turn by going through the list sequentially.
-     */
-    private void getNextTurn() {
-        if (!playerIterator.hasNext()) {
-            playerIterator = players.listIterator();
-        }
-
-        turn.incrementTurn();
-        turn = playerIterator.next();
     }
 
     /**

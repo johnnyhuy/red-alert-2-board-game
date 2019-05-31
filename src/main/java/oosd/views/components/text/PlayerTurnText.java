@@ -11,6 +11,6 @@ public class PlayerTurnText extends Text {
     }
 
     public void updateTurn(Engine engine) {
-        setText(String.format("Player turn: %s", engine.getTurn().getPlayerName()));
+        setText(String.format("Player turn: %s", engine.getTurnService().getTurn().getPlayerName()));
     }
 }

@@ -27,7 +27,7 @@ public class SelectionPieceClickHandler implements EventHandler<MouseEvent> {
             gameController.move(selectedPiece, piece);
         }
 
-        if (engine.getRemainingTurns() == 0) {
+        if (engine.getTurnService().getRemainingTurns() == 0) {
             gameController.endGame();
         }
     }

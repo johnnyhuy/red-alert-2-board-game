@@ -19,4 +19,6 @@ public interface Snapshot {
      * @return list of players.
      */
     List<Player> getPlayers();
+
+    Player getTurn();
 }

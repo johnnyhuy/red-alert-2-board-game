@@ -21,7 +21,7 @@ public class ForfeitClickHandler implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        Player player = engine.getTurn();
+        Player player = engine.getTurnService().getTurn();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Forfeit game");

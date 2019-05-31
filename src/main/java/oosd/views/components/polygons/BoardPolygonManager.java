@@ -150,7 +150,7 @@ public class BoardPolygonManager {
             boardPolygonMap.getSelectionPiece(piece).show();
 
             Unit unit = piece.getUnit();
-            if (exists(unit) && !unit.getPlayer().equals(engine.getTurn())) {
+            if (exists(unit) && !unit.getPlayer().equals(engine.getTurnService().getTurn())) {
                 boardPolygonMap.getSelectionPiece(piece).fillRed();
             } else {
                 boardPolygonMap.getSelectionPiece(piece).fillGreen();
