@@ -1,12 +1,9 @@
 package oosd;
 
+import oosd.factories.GameSetupFactory;
 import oosd.factories.JsonGameSetupFactory;
 import oosd.models.board.Board;
-import oosd.models.game.Engine;
-import oosd.models.game.GameEngine;
-import oosd.models.game.GameLogger;
-import oosd.models.game.Logger;
-import oosd.models.player.Player;
+import oosd.models.game.*;
 import oosd.views.BoardView;
 import oosd.views.WelcomeView;
 import oosd.views.presenters.GamePresenter;
@@ -18,7 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * Dependency injection: used to de-couple high level components from low level components
@@ -38,11 +34,30 @@ public class Config {
     }
 
     @Bean
+    public GameSetupFactory jsonGameSetupFactory() {
+        return new JsonGameSetupFactory();
+    }
+
+    @Bean
     public Engine engine() {
-        JsonGameSetupFactory factoryJSON = new JsonGameSetupFactory();
-        Board board = factoryJSON.createBoard();
-        List<Player> players = factoryJSON.createPlayers(board);
-        return new GameEngine(board, players);
+        return new GameEngine(context.getBean(Board.class), context.getBean(PlayerService.class), context.getBean(TurnService.class));
+    }
+
+    @Bean
+    public Board board() {
+        GameSetupFactory factory = context.getBean(GameSetupFactory.class);
+        return factory.createBoard();
+    }
+
+    @Bean
+    public PlayerService playerService() {
+        GameSetupFactory factory = context.getBean(GameSetupFactory.class);
+        return new GamePlayerService(factory.createPlayers(context.getBean(Board.class)));
+    }
+
+    @Bean
+    public TurnService turnService() {
+        return new GameTurnService(context.getBean(PlayerService.class), 10);
     }
 
     @Bean
