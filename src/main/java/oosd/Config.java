@@ -33,16 +33,31 @@ public class Config {
         this.context = applicationContext;
     }
 
+    /**
+     * Switch this to factory out for in-memory or JSON game setup.
+     *
+     * @return game setup factory
+     */
     @Bean
-    public GameSetupFactory jsonGameSetupFactory() {
+    public GameSetupFactory gameSetupFactory() {
         return new JsonGameSetupFactory();
     }
 
+    /**
+     * Low level component, the game engine.
+     *
+     * @return game engine
+     */
     @Bean
     public Engine engine() {
         return new GameEngine(context.getBean(Board.class), context.getBean(PlayerService.class), context.getBean(TurnService.class));
     }
 
+    /**
+     * The game board
+     *
+     * @return game board
+     */
     @Bean
     public Board board() {
         GameSetupFactory factory = context.getBean(GameSetupFactory.class);
@@ -82,7 +97,7 @@ public class Config {
 
     @Bean
     public BoardView boardView() {
-        return new BoardView(context.getBean(Engine.class), context.getBean(GamePresenter.class), context.getBean(ToolbarPresenter.class), context.getBean(SidebarPresenter.class));
+        return new BoardView();
     }
 
     @Bean
