@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: red-alert-2-board-game
+  title: Red Alert 2 Board Game
+  description: Red Alert 2 board game project
+  tags:
+    - java
+spec:
+  type: service
+  lifecycle: experimental
+  owner: johnnyhuy
